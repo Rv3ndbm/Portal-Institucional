@@ -1,0 +1,418 @@
+/* ============================================
+   ESTILOS ESPECÍFICOS - PÁGINA DE DOCUMENTOS
+   I.E. Gilberto Alzate Avendaño
+   ============================================ */
+
+/* === HERO SECTION === */
+.documentos-hero {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    margin-top: 0;
+    padding-top: 100px;
+}
+
+.documentos-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0.5) 100%);
+    z-index: 1;
+}
+
+.documentos-hero-content {
+    position: relative;
+    z-index: 2;
+    color: var(--color-white);
+    max-width: 600px;
+    padding: 40px 20px;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.documentos-hero-title {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.2;
+}
+
+.documentos-hero-description {
+    font-size: var(--font-size-lg);
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
+/* === MAIN CONTENT === */
+.documentos-main {
+    padding: 60px 0;
+    background-color: var(--color-white);
+}
+
+/* === SECTION HEADER === */
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.title-underline {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* === DOCUMENTS GRID === */
+.documentos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.document-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: 12px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.document-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(30, 60, 114, 0.15);
+    border-color: var(--color-primary);
+}
+
+.document-icon {
+    font-size: 48px;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.1) 0%, rgba(42, 82, 152, 0.1) 100%);
+    border-radius: 12px;
+}
+
+.document-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.document-title {
+    font-size: var(--font-size-lg);
+    color: var(--color-primary);
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.document-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.document-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.document-category {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: var(--color-white);
+    padding: 5px 12px;
+    border-radius: 16px;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+}
+
+.document-size {
+    display: inline-block;
+    color: var(--color-gray-600);
+    font-size: var(--font-size-xs);
+    padding: 5px 0;
+}
+
+.document-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-view-online,
+.btn-download {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: var(--color-white);
+    border: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.btn-view-online:hover,
+.btn-download:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(30, 60, 114, 0.25);
+}
+
+.btn-view-online:active,
+.btn-download:active {
+    transform: scale(0.98);
+}
+
+.btn-view-online i,
+.btn-download i {
+    font-size: var(--font-size-base);
+}
+
+.btn-document {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    color: var(--color-white);
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.btn-document:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(30, 60, 114, 0.25);
+}
+
+.btn-document:active {
+    transform: scale(0.98);
+}
+
+.btn-document i {
+    font-size: var(--font-size-base);
+}
+
+/* === INFO SECTIONS === */
+.info-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(42, 82, 152, 0.05) 100%);
+    border-radius: 12px;
+    margin-top: 40px;
+}
+
+.info-boxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.info-box {
+    background: var(--color-white);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.info-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.info-box .info-icon {
+    font-size: 48px;
+    color: var(--color-secondary);
+    margin-bottom: 20px;
+}
+
+.info-box h3 {
+    font-size: var(--font-size-lg);
+    color: var(--color-primary);
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.info-box p {
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-size: var(--font-size-sm);
+}
+
+.link-btn {
+    display: inline-block;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-bottom: 2px solid var(--color-primary);
+    transition: all 0.3s ease;
+}
+
+.link-btn:hover {
+    color: var(--color-secondary);
+    border-bottom-color: var(--color-secondary);
+}
+
+/* === CONTAINER === */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+    .documentos-hero {
+        height: 50vh;
+        min-height: 300px;
+        margin-top: 15px;
+    }
+
+    .documentos-hero-title {
+        font-size: var(--font-size-2xl);
+    }
+
+    .documentos-hero-description {
+        font-size: var(--font-size-base);
+    }
+
+    .documentos-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .section-title {
+        font-size: var(--font-size-xl);
+    }
+
+    .document-card {
+        padding: 20px;
+    }
+
+    .info-boxes {
+        grid-template-columns: 1fr;
+    }
+
+    .documentos-main {
+        padding: 40px 0;
+    }
+
+    .info-section {
+        padding: 40px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .documentos-hero {
+        height: 40vh;
+        min-height: 250px;
+    }
+
+    .documentos-hero-title {
+        font-size: var(--font-size-xl);
+    }
+
+    .hero-badge {
+        font-size: var(--font-size-xs);
+        padding: 6px 12px;
+    }
+
+    .document-card {
+        padding: 15px;
+    }
+
+    .document-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 36px;
+    }
+
+    .btn-document {
+        padding: 10px 15px;
+        font-size: var(--font-size-xs);
+    }
+
+    .section-title {
+        font-size: var(--font-size-lg);
+    }
+}
+
+/* === ANIMATIONS === */
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+

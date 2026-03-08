@@ -1,0 +1,229 @@
+/* ============================================
+   MODERN THEME - I.E. Gilberto Alzate Avendaño
+   ============================================ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* === COLORES PREMIUM === */
+    --color-primary: #1a365d;
+    /* Azul Slate oscuro */
+    --color-primary-light: #2c5282;
+    /* Azul Slate medio */
+    --color-primary-dark: #0f1c3f;
+    --color-secondary: #e53e3e;
+    /* Crimson vibrante */
+    --color-secondary-light: #fc8181;
+    --color-secondary-dark: #c53030;
+    --color-gray-100: #f7fafc;
+    --color-gray-200: #edf2f7;
+    --color-gray-900: #1a202c;
+
+    /* === TIPOGRAFÍA === */
+    --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-family-heading: 'Inter', system-ui, -apple-system, sans-serif;
+
+    /* === BORDES MODERNOS === */
+    --border-radius-sm: 10px;
+    --border-radius-md: 16px;
+    --border-radius-lg: 20px;
+    --border-radius-xl: 24px;
+
+    /* === SOMBRAS GLASSMORPHISM === */
+    --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+
+    /* === TRANSICIONES SUTILES === */
+    --transition-base: 400ms;
+    --transition-slow: 600ms;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+body {
+    background-color: var(--color-gray-100);
+}
+
+/* === HEADINGS === */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    letter-spacing: -0.02em;
+}
+
+/* === BOTONES Y CTA === */
+.hero-cta,
+.cta-button,
+.btn {
+    border-radius: 9999px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 14px 0 rgba(229, 62, 62, 0.39);
+    transition: transform var(--transition-base) var(--ease-out), box-shadow var(--transition-base) var(--ease-out);
+}
+
+.hero-cta:hover,
+.cta-button:hover,
+.btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(229, 62, 62, 0.6);
+}
+
+/* === HEADER (GLASSMORPHISM) === */
+.main-header.scrolled {
+    background: rgba(26, 54, 93, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* === HEADER DROPDOWN MENU (SEO & ACCESSIBILITY FIX) === */
+@media (min-width: 1025px) {
+    .dropdown-menu {
+        display: block !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none;
+        transform: translateY(15px) !important;
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease !important;
+        z-index: 999999 !important;
+        /* Capa más alta garantizada */
+        will-change: transform, opacity;
+        /* SEO: Hardware acceleration */
+        margin-top: 12px !important;
+    }
+
+    /* Puente invisible para no perder el hover al pasar el ratón */
+    .dropdown-menu::before {
+        content: '';
+        position: absolute;
+        top: -15px;
+        left: 0;
+        right: 0;
+        height: 15px;
+        background: transparent;
+    }
+
+    /* Mostrar menú en hover o cuando tiene foco interno (teclado) */
+    .nav-item:hover .dropdown-menu,
+    .nav-item:focus-within .dropdown-menu {
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto;
+        transform: translateY(0) !important;
+    }
+
+    /* Evitar conflictos con z-index en elementos contenedores */
+    .main-nav,
+    .nav-container,
+    .nav-menu,
+    .nav-item {
+        position: static !important;
+    }
+
+    .nav-item {
+        position: relative !important;
+    }
+}
+
+/* === TARJETAS === */
+.info-card,
+.preview-card,
+.card,
+.history-content section,
+.news-card,
+.headquarters-card {
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    border-radius: var(--border-radius-lg);
+    background: var(--color-white);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    will-change: transform, box-shadow;
+}
+
+.info-card:hover,
+.preview-card:hover,
+.card:hover,
+.news-card:hover,
+.headquarters-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+    border-color: transparent;
+    z-index: 0;
+    position: relative;
+    background: #ffffff;
+}
+
+/* Reducir movimiento para accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+
+    .info-card,
+    .preview-card,
+    .card,
+    .history-content section,
+    .news-card,
+    .headquarters-card {
+        transition: none;
+    }
+
+    .info-card:hover,
+    .preview-card:hover,
+    .card:hover,
+    .news-card:hover,
+    .headquarters-card:hover {
+        transform: none;
+    }
+}
+
+/* Asegurar imágenes en tarjetas sin distorsión */
+.card-image img,
+.info-card img:not(.info-icon img),
+.preview-card img,
+img.cover,
+.headquarters-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover !important;
+    transition: transform 0.6s var(--ease-out);
+}
+
+/* Hover effect en imagen de tarjetas */
+.preview-card:hover .card-image img,
+.news-card:hover img,
+.headquarters-card:hover .headquarters-image img {
+    transform: scale(1.05);
+}
+
+/* === NAVEGACIÓN === */
+.nav-link {
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-base) var(--ease-out), color var(--transition-base) var(--ease-out), transform var(--transition-base) var(--ease-out);
+}
+
+.nav-item.active-page .nav-link {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Fix for shadow texts in Hero making it hard to read */
+.hero-title {
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8) !important;
+}
+
+.hero-subtitle {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8) !important;
+}
+
+.hero-overlay {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.7) 100%) !important;
+}
+
+/* Fix text legibility in history specifically if .history-content is used */
+.history-content p {
+    color: var(--color-gray-900);
+    letter-spacing: 0.3px;
+    font-size: 1.05rem;
+}

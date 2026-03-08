@@ -1,0 +1,420 @@
+/* ============================================
+   NOTICIAS SECTION STYLES
+   I.E. Gilberto Alzate Avendaño
+   ============================================ */
+
+/* === NEWS HERO SECTION === */
+.news-hero {
+    position: relative;
+    height: 60vh;
+    min-height: 400px;
+    background: linear-gradient(rgba(30, 60, 114, 0.8), rgba(42, 82, 152, 0.8)), url('../img/colegio_fondo.jpg');
+    /* Fallback or generic placeholder */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-white);
+    margin-top: var(--header-height-desktop);
+    /* Adjust for fixed header */
+    overflow: hidden;
+}
+
+/* Fallback background if image is missing */
+.news-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, var(--color-primary-light), var(--color-primary-dark));
+    z-index: -1;
+}
+
+.news-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 20px;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-badge {
+    display: inline-block;
+    background-color: var(--color-accent);
+    color: var(--color-primary-dark);
+    font-weight: var(--font-weight-bold);
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: var(--font-size-sm);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.news-hero-title {
+    font-size: var(--font-size-5xl);
+    font-weight: var(--font-weight-black);
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.news-hero-description {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-light);
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* === FEATURED NEWS SECTION === */
+.featured-news {
+    padding-top: var(--spacing-3xl);
+    padding-bottom: var(--spacing-2xl);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.section-title {
+    font-size: var(--font-size-3xl);
+    color: var(--color-primary-dark);
+    margin-bottom: 0.5rem;
+    font-weight: var(--font-weight-bold);
+}
+
+.title-underline {
+    width: 60px;
+    height: 4px;
+    background: var(--color-secondary);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.featured-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--color-gray-200);
+}
+
+@media (min-width: 1024px) {
+    .featured-card {
+        grid-template-columns: 1.2fr 1fr;
+    }
+}
+
+.featured-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-2xl);
+}
+
+.featured-image-container {
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.featured-image-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 5rem;
+}
+
+.featured-content {
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.meta-tags {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: var(--font-size-sm);
+}
+
+.tag {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    color: var(--color-white);
+}
+
+.tag-academic {
+    background-color: var(--color-primary);
+}
+
+.tag-sports {
+    background-color: #27ae60;
+}
+
+.tag-culture {
+    background-color: #9b59b6;
+}
+
+.tag-institutional {
+    background-color: #e67e22;
+}
+
+.date {
+    color: var(--color-gray-600);
+    font-weight: var(--font-weight-medium);
+}
+
+.featured-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary-dark);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.featured-excerpt {
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.btn-read-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-secondary);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+    transition: gap 0.3s ease;
+}
+
+.btn-read-more:hover {
+    gap: 0.8rem;
+    color: var(--color-secondary-dark);
+}
+
+/* === FILTERS === */
+.news-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: var(--spacing-xl);
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--color-gray-200);
+    background: transparent;
+    border-radius: 50px;
+    color: var(--color-gray-600);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-family-base);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* === NEWS GRID === */
+.news-list {
+    padding-bottom: var(--spacing-3xl);
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.news-card {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid var(--color-gray-100);
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+.card-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 3rem;
+    transition: transform 0.5s ease;
+}
+
+.news-card:hover .card-image-placeholder {
+    transform: scale(1.1);
+}
+
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
+
+.category {
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+}
+
+.category-sports {
+    color: #27ae60;
+}
+
+.category-culture {
+    color: #9b59b6;
+}
+
+.category-institutional {
+    color: #e67e22;
+}
+
+.category-academic {
+    color: var(--color-primary);
+}
+
+.card-date {
+    color: var(--color-gray-500);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-800);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.news-card:hover .card-title {
+    color: var(--color-primary);
+}
+
+.card-excerpt {
+    color: var(--color-gray-600);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.card-link {
+    color: var(--color-secondary);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 2px;
+}
+
+.card-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-secondary);
+    transition: width 0.3s ease;
+}
+
+.news-card:hover .card-link::after {
+    width: 100%;
+}
+
+/* === PAGINATION === */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-2xl);
+}
+
+.btn-load-more {
+    background-color: transparent;
+    border: 2px solid var(--color-secondary);
+    color: var(--color-secondary);
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-family-base);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-load-more:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(220, 20, 60, 0.3);
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

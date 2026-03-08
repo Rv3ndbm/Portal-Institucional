@@ -1,0 +1,65 @@
+====================================
+GUÍA DE LAZY LOADING DE IMÁGENES
+====================================
+
+OPCIÓN 1: LAZY LOADING AUTOMÁTICO (RECOMENDADO - SIN CÓDIGO)
+============================================================
+
+En HTML 5.2+, los navegadores modernos soportan lazy loading nativo.
+Solo agreg "loading="lazy"" a cualquier tag <img>
+
+Ejemplo:
+<img src="imagen.jpg" loading="lazy" alt="Descripción">
+
+Beneficio: No requiere JavaScript, funciona automáticamente.
+Navegadores soportados: Chrome, Firefox, Safari, Edge (versiones recientes)
+
+---
+
+OPCIÓN 2: LAZY LOADING CON JAVASCRIPT (YA IMPLEMENTADO)
+========================================================
+
+El script.js ya tiene la función initLazyLoading() activada.
+Para usar con tus imágenes existentes:
+
+1. Cambia "src" por "data-src"
+2. El script automáticamente detectará y cargará cuando sea visible
+
+Ejemplo ANTES:
+<img src="../img/ejemplo.jpg" alt="Descripción">
+
+Ejemplo DESPUÉS:
+<img src="" data-src="../img/ejemplo.jpg" alt="Descripción">
+
+O mejor aún, combina ambos:
+<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E" 
+     data-src="../img/ejemplo.jpg" 
+     loading="lazy" 
+     alt="Descripción">
+
+---
+
+RECOMENDACIÓN FINAL
+===================
+
+Usa OPCIÓN 1 (loading="lazy") para simplificar:
+- Menos código
+- Mejor rendimiento
+- Los navegadores lo optimizan nativamente
+- Funciona en el 95% de navegadores modernos
+
+Agregalo así a todas las imágenes:
+<img src="../img/logo del colegio.jpg" loading="lazy" alt="Logo Institución">
+
+---
+
+PARA ACTIVAR EN TUS HTML:
+
+1. Index.html: Ya tiene loading-logo en loading screen (es OK dejarla sin lazy loading)
+2. Otras páginas: Busca todos los <img> y agrega loading="lazy"
+
+Ejemplo con buscar/reemplazar en VS Code:
+- Buscar: <img src="
+- Reemplazar: <img loading="lazy" src="
+
+====================================

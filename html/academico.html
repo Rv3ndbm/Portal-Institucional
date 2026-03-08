@@ -1,0 +1,459 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modalidad Académica - I.E. Gilberto Alzate Avendaño</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/academico.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header Principal -->
+    <header class="main-header" id="mainHeader">
+        <div class="header-background" id="headerBackground"></div>
+
+        <div class="header-content">
+            <div class="header-top" id="headerTop">
+                <div class="logo-title-container">
+                    <div class="logo-container">
+                        <a href="index.html"><img loading="lazy"
+                                src="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png"
+                                alt="Logo Institución" class="logo"></a>
+                    </div>
+                    <div class="institution-name">
+                        <h1>I.E. GILBERTO ALZATE AVENDAÑO</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menú de Navegación -->
+            <nav class="main-nav" id="mainNav">
+                <div class="nav-container">
+                    <ul class="nav-menu nav-menu-left">
+                        <li class="nav-item" data-bg="inicio">
+                            <a href="index.html" class="nav-link">INICIO</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="historia.html">Historia</a></li>
+                                <li><a href="calendario.html">Eventos</a></li>
+                                <li><a href="deportes.html">Deportes</a></li>
+                                <li><a href="documentos.html">Documentos</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="sedes">
+                            <a href="sedes.html" class="nav-link">SEDES</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="sede-san-isidro.html">Sede san isidro</a></li>
+                                <li><a href="sede-seguro-bolivar.html">Sede seguro bolívar</a></li>
+                                <li><a href="sede-tomas-carrasquilla.html">Sede tomás carrasquilla</a></li>
+                                <li><a href="sede-carlos-villa.html">Sede carlos villa</a></li>
+                                <li><a href="sede-central.html">Sede central</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="nav-menu nav-menu-right">
+                        <li class="nav-item" data-bg="departamentos">
+                            <a href="departamentos.html" class="nav-link">DEPARTAMENTOS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="departamentos.html#rectoria">Rectoría</a></li>
+                                <li><a href="departamentos.html#coordinacion">Coordinación</a></li>
+                                <li><a href="departamentos.html#psicologia">Psicología</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="medias">
+                            <a href="tecnicas.html" class="nav-link">MEDIAS TÉCNICAS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="tecnicas/pascual.html">Programación de software - pascual bravo</a></li>
+                                <li><a href="tecnicas/musica.html">Música</a></li>
+                                <li><a href="tecnicas/ambiental.html">Gestión ambiental</a></li>
+                                <li><a href="tecnicas/contenidos.html">Contenidos digitales</a></li>
+                                <li><a href="tecnicas/sena.html">SENA</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item active-page" data-bg="academico">
+                            <a href="academico.html" class="nav-link">ACADÉMICO</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://docente.alzate.edu.co/">Sistema docente</a></li>
+                                <li><a href="https://estudiante.alzate.edu.co/">Sistema estudiante</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="servicios">
+                            <a href="otros-servicios.html" class="nav-link">OTROS SERVICIOS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://luisarango64.wixsite.com/bibliositio">Biblioteca</a></li>
+                                <li><a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf">Manual de convivencia</a></li>
+                                <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform">Formulario PQRSF</a></li>
+                                <li><a href="https://www.youtube.com/@alzatevirtual8374/videos">Alzate virtual</a></li>
+                                <li><a href="pre.html">Preinscripción</a></li>
+                                <li><a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508">Canal institucional</a></li>
+                                <li><a href="contacto.html">Contáctanos</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+
+        <!-- HERO -->
+        <section class="hero-academico">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-badge">I.E. Gilberto Alzate Avendaño</span>
+                <h1 class="hero-title">Modalidad<br>Académica</h1>
+                <p class="hero-subtitle">Una formación integral, flexible y de alta calidad para quienes buscan
+                    profundizar en el conocimiento sin una especialización técnica.</p>
+                <div class="hero-cta-group">
+                    <a href="#beneficios" class="btn-primary-hero">Conoce los Beneficios</a>
+                    <a href="pre.html" class="btn-secondary-hero">Pre-Inscríbete</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS BAR -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-number">+<span>1</span> h</span>
+                <span class="stat-label">Extra por materia<br>a la semana</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number"><span>10</span></span>
+                <span class="stat-label">Áreas del<br>conocimiento</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number"><span>100</span>%</span>
+                <span class="stat-label">Formación<br>académica</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number"><span>+50</span></span>
+                <span class="stat-label">Años de<br>trayectoria</span>
+            </div>
+        </div>
+
+        <!-- INTRO -->
+        <section class="acad-intro">
+            <span class="section-label">¿Qué es?</span>
+            <h2>La Modalidad Académica del Gilberto Alzate</h2>
+            <p>La Modalidad Académica es el camino educativo para quienes desean una formación sólida y completa
+                en todas las áreas del saber, sin estar vinculados a una especialización técnica. A diferencia
+                de las medias técnicas, aquí se profundiza en materias como Matemáticas, Ciencias, Humanidades,
+                Inglés y más – con una o dos horas adicionales por asignatura a la semana, garantizando un
+                aprendizaje más robusto y preparación óptima para la educación superior.</p>
+        </section>
+
+        <!-- BENEFITS SECTION -->
+        <section class="benefits-section" id="beneficios">
+            <div class="section-header-centered">
+                <span class="section-label">¿Por qué elegirla?</span>
+                <h2>Razones para escoger la Modalidad Académica</h2>
+                <p>Una opción diseñada para potenciar tu conocimiento integral y prepararte para los retos del futuro.
+                </p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">ðŸ“š</div>
+                    <h3>Profundización en Todas las Áreas</h3>
+                    <p>Más horas de Matemáticas, Ciencias, Lengua, Inglés y Ciencias Sociales: una a dos horas
+                        adicionales por materia a la semana para afianzar el conocimiento.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">â°</div>
+                    <h3>Flexible para quienes Trabajan</h3>
+                    <p>Jornada organizada pensando en estudiantes que trabajan, realizan oficios o tienen
+                        responsabilidades fuera del colegio. Sin sacrificar la calidad educativa.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">ðŸŽ“</div>
+                    <h3>Preparación para la Universidad</h3>
+                    <p>La modalidad Académica es la mejor carta de presentación para la educación superior.
+                        Pruebas Saber, ICFES y exámenes de admisión tendrán menos obstáculos para ti.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">ðŸŒ</div>
+                    <h3>Formación en Pensamiento Crítico</h3>
+                    <p>Aprende a analizar, argumentar y proponer soluciones. Desarrollamos ciudadanos capaces de
+                        comprender y transformar su entorno con criterio y valores.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">ðŸ¤</div>
+                    <h3>Ambiente Inclusivo</h3>
+                    <p>Abierto a todos los estudiantes, sin importar su contexto socioeconómico, ritmo de
+                        aprendizaje o situación laboral. La educación es un derecho para todos.</p>
+                </div>
+
+                <div class="benefit-card">
+                    <div class="benefit-icon">ðŸ”¬</div>
+                    <h3>Sin Renuncia a la Ciencia ni el Arte</h3>
+                    <p>Matemáticas, Física, Química, Biología, Literatura y Arte conviven en un currículo equilibrado
+                        que desarrolla al ser humano de forma integral.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOR WHO SECTION -->
+        <section class="forwho-section">
+            <div class="forwho-wrapper">
+                <div class="forwho-image-side" id="forwhoLeft">
+                    <div class="forwho-main-card">
+                        <span class="big-icon">ðŸ«</span>
+                        <h3>La Modalidad Académica es para ti</h3>
+                        <p>Si tu meta es la universidad, si trabajas o tienes compromisos, si amas el conocimiento
+                            sin fronteras técnicas — este es tu camino en el Gilberto Alzate.</p>
+                    </div>
+                </div>
+
+                <div class="forwho-content-side" id="forwhoRight">
+                    <span class="section-label">¿Para quién es?</span>
+                    <h2>Ideal para estudiantes que...</h2>
+                    <p>La Modalidad Académica es la opción perfecta si te identificas con alguno de estos perfiles:</p>
+
+                    <ul class="forwho-list">
+                        <li>
+                            <span class="list-icon">ðŸ’¼</span>
+                            <span>Trabajan o realizan algún oficio que les impide permanecer mucho tiempo en la
+                                Institución.</span>
+                        </li>
+                        <li>
+                            <span class="list-icon">ðŸŽ¯</span>
+                            <span>Tienen como objetivo ingresar a la universidad y quieren llegar lo mejor preparados
+                                posible.</span>
+                        </li>
+                        <li>
+                            <span class="list-icon">ðŸ“–</span>
+                            <span>Prefieren una Formación amplia en todas las materias antes que especializarse en un
+                                área técnica.</span>
+                        </li>
+                        <li>
+                            <span class="list-icon">ðŸ </span>
+                            <span>Tienen responsabilidades familiares o del hogar que requieren mayor flexibilidad
+                                horaria.</span>
+                        </li>
+                        <li>
+                            <span class="list-icon">ðŸŒŸ</span>
+                            <span>Quieren fortalecer habilidades como la argumentación, el análisis y la resolución de
+                                problemas.</span>
+                        </li>
+                        <li>
+                            <span class="list-icon">ðŸ“</span>
+                            <span>Desean mejorar sus resultados en las Pruebas Saber y exámenes de admisión
+                                universitarios.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVENTOS SECTION -->
+        <section class="eventos-section" id="eventos">
+            <div class="section-header-centered">
+                <span class="section-label">Actividades</span>
+                <h2>Eventos y Actividades Académicas</h2>
+                <p>El calendario Académico está lleno de espacios para el crecimiento intelectual, cultural y personal
+                    de nuestros estudiantes.</p>
+            </div>
+
+            <div class="eventos-grid">
+                <div class="evento-card">
+                    <div class="evento-img bg-blue">ðŸ†</div>
+                    <div class="evento-body">
+                        <span class="evento-tag">Académico</span>
+                        <h3>Olimpiadas del Conocimiento</h3>
+                        <p>Competencias internas y externas en Matemáticas, Ciencias y Lengua donde nuestros
+                            estudiantes demuestran su talento y dedicación.</p>
+                    </div>
+                </div>
+
+                <div class="evento-card">
+                    <div class="evento-img bg-red">ðŸ“£</div>
+                    <div class="evento-body">
+                        <span class="evento-tag">Cultura</span>
+                        <h3>Feria de Emprendimiento y Proyectos</h3>
+                        <p>Los estudiantes presentan sus investigaciones y proyectos ante la comunidad educativa,
+                            desarrollando habilidades comunicativas y de pensamiento Crítico.</p>
+                    </div>
+                </div>
+
+                <div class="evento-card">
+                    <div class="evento-img bg-purple">ðŸŽ¤</div>
+                    <div class="evento-body">
+                        <span class="evento-tag">Formación</span>
+                        <h3>Jornadas de Orientación Vocacional</h3>
+                        <p>Espacios para que los estudiantes de la modalidad Académica exploren carreras
+                            universitarias, habilidades personales y oportunidades de futuro.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="acad-cta">
+            <div class="cta-content">
+                <h2>¿Listo para iniciar tu camino Académico?</h2>
+                <p>Únete a la Institución Educativa Gilberto Alzate Avendaño y forma parte de una comunidad
+                    comprometida con la excelencia, la inclusión y el futuro de Colombia.</p>
+                <a href="pre.html" class="btn-cta">Pre-Inscríbete Ahora</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <!-- Sección 1: InFormación -->
+            <div class="footer-section">
+                <h3 class="footer-title">Sobre Nosotros</h3>
+                <p class="footer-text">Institución educativa comprometida con la excelencia Académica y la Formación
+                    integral de nuestros estudiantes.</p>
+                <div class="footer-logo">
+                    <img loading="lazy" src="../img/logo del colegio.jpg" alt="Logo Institución">
+                </div>
+            </div>
+
+            <!-- Sección 2: Sedes -->
+            <div class="footer-section">
+                <h3 class="footer-title">Nuestras Sedes</h3>
+                <ul class="footer-links">
+                    <li><a href="sede-san-isidro.html">Sede San Isidro</a></li>
+                    <li><a href="sede-seguro-bolivar.html">Sede Seguro Bolívar</a></li>
+                    <li><a href="sede-tomas-carrasquilla.html">Sede Tomás Carrasquilla</a></li>
+                    <li><a href="sede-carlos-villa.html">Sede Carlos Villa</a></li>
+                    <li><a href="sede-central.html">Sede Central</a></li>
+                </ul>
+            </div>
+
+            <!-- Sección 3: Enlaces Rápidos -->
+            <div class="footer-section">
+                <h3 class="footer-title">Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="historia.html">Nuestra Historia</a></li>
+                    <li><a href="departamentos.html">Departamentos</a></li>
+                    <li><a href="tecnicas.html">Medias técnicas</a></li>
+                    <li><a href="academico.html">Modalidad Académica</a></li>
+                    <li><a href="sedes.html">Nuestras Sedes</a></li>
+                    <li><a href="deportes.html">Deportes</a></li>
+                    <li><a href="pre.html">Pre-Inscripción</a></li>
+                    <li><a href="https://www.youtube.com/@alzatevirtual8374/videos" target="_blank">Alzate Virtual</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sección 4: Contacto -->
+            <div class="footer-section">
+                <h3 class="footer-title">Contacto</h3>
+                <div class="footer-contact">
+                    <div class="contact-item">
+                        <span class="contact-label">ðŸ“ž Teléfono:</span>
+                        <p>+57 1 (555) 1234</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">ðŸ“§ Email:</span>
+                        <p><a href="mailto:info@alzate.edu.co">info@alzate.edu.co</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">ðŸ“ Ubicación:</span>
+                        <p><a href="https://maps.google.com/?q=Cl.+92+%2351a100,+Aranjuez,+Medellín,+Antioquia"
+                                target="_blank" class="location-link"
+                                style="color: inherit; text-decoration: none; cursor: pointer; transition: color 0.3s;">Medellín,
+                                Antioquia</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 5: Redes Sociales -->
+            <div class="footer-section">
+                <h3 class="footer-title">Síguenos</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/gilbertoalzate.tarde" target="_blank" class="social-icon facebook"
+                        aria-label="Facebook"><img src="../img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/elalzateviveporvos/" target="_blank"
+                        class="social-icon instagram" aria-label="Instagram"><img src="../img/ig.png"
+                            alt="Instagram"></a>
+                    <a href="https://www.youtube.com/@alzatevirtual8374" target="_blank" class="social-icon youtube"
+                        aria-label="YouTube"><img src="../img/yt.png" alt="YouTube"></a>
+                    <a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508" target="_blank"
+                        class="social-icon whatsapp" aria-label="WhatsApp"><img src="../img/whatsap.png"
+                            alt="WhatsApp"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2026 I.E. Gilberto Alzate Avendaño. Todos los derechos reservados.</p>
+                <div class="footer-bottom-links">
+                    <a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf"
+                        target="_blank">Manual de Convivencia</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform"
+                        target="_blank">PQRSF</a>
+                    <a href="https://luisarango64.wixsite.com/bibliositio" target="_blank">Biblioteca</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js" defer></script>
+
+    <script>
+        // Smooth scroll con offset del header para botones del hero
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.length > 1) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const header = document.getElementById('mainHeader');
+                        const headerHeight = header ? header.offsetHeight : 120;
+                        const offset = 30;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - headerHeight - offset;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // IntersectionObserver para animaciones de entrada
+        const animatedEls = document.querySelectorAll(
+            '.benefit-card, .evento-card, .stat-item, #forwhoLeft, #forwhoRight'
+        );
+
+        const academicObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const siblings = Array.from(entry.target.parentElement.children);
+                    const index = siblings.indexOf(entry.target);
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 120);
+                    academicObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        animatedEls.forEach(el => academicObserver.observe(el));
+    </script>
+
+</body>
+
+</html>
+
+

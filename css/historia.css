@@ -1,0 +1,827 @@
+/* ============================================================
+   HISTORIA.CSS - I.E. Gilberto Alzate Avendaño
+   Tipografía consistente con el resto del sitio (Inter / sistema)
+   ============================================================ */
+
+/* ============================================================
+   LAYOUT - Espaciado correcto bajo header fijo
+   El header fijo mide ~150px (header-top ~90px + nav ~54px)
+   ============================================================ */
+body {
+    padding-top: 160px;
+}
+
+@media (max-width: 1024px) {
+    body {
+        padding-top: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-top: 100px;
+    }
+}
+
+.historia-content {
+    padding: 0 40px 60px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .historia-content {
+        padding: 0 20px 40px;
+    }
+}
+
+/* ============================================================
+   HERO BANNER
+   z-index inferior al dropdown (z-index del dropdown = 999999)
+   ============================================================ */
+.historia-hero {
+    position: relative;
+    z-index: 1;
+    /* Muy por debajo del menú */
+    width: 100%;
+    padding: 64px 60px;
+    background:
+        linear-gradient(135deg,
+            rgba(26, 54, 93, 0.93) 0%,
+            rgba(44, 82, 152, 0.88) 55%,
+            rgba(197, 48, 48, 0.82) 100%),
+        url('https://images.unsplash.com/photo-1577036421869-7c8d388d2123?w=1600') center / cover no-repeat;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 16px 50px rgba(26, 54, 93, 0.30);
+    margin-bottom: 50px;
+}
+
+.historia-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg,
+            transparent,
+            transparent 20px,
+            rgba(255, 255, 255, 0.025) 20px,
+            rgba(255, 255, 255, 0.025) 40px);
+    pointer-events: none;
+}
+
+.historia-hero::after {
+    content: '📜';
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 110px;
+    opacity: 0.13;
+    pointer-events: none;
+}
+
+.historia-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.historia-hero-eyebrow {
+    display: inline-block;
+    background: rgba(197, 48, 48, 0.85);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 50px;
+    margin-bottom: 18px;
+}
+
+.historia-hero h1 {
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    letter-spacing: -0.02em;
+}
+
+.historia-hero p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 560px;
+    line-height: 1.75;
+}
+
+@media (max-width: 768px) {
+    .historia-hero {
+        padding: 44px 28px;
+    }
+
+    .historia-hero::after {
+        display: none;
+    }
+
+    .historia-hero h1 {
+        font-size: 26px;
+    }
+}
+
+/* ============================================================
+   QUICK NAV
+   ============================================================ */
+.quick-nav {
+    max-width: 1100px;
+    margin: 0 auto 60px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+.quick-nav-item {
+    background: #ffffff;
+    padding: 16px 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(26, 54, 93, 0.10);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-bottom: 4px solid #1a365d;
+    min-width: 160px;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.quick-nav-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1a365d, #2c5282);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.quick-nav-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(26, 54, 93, 0.22);
+    border-bottom-color: #e53e3e;
+}
+
+.quick-nav-item:hover::before {
+    opacity: 1;
+}
+
+.nav-icon {
+    font-size: 22px;
+    position: relative;
+    z-index: 1;
+    transition: transform 0.25s ease;
+}
+
+.quick-nav-item:hover .nav-icon {
+    transform: scale(1.2);
+}
+
+.nav-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: #1a365d;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    z-index: 1;
+    transition: color 0.25s ease;
+}
+
+.quick-nav-item:hover .nav-text {
+    color: #ffffff;
+}
+
+/* ============================================================
+   TÍTULOS DE SECCIÓN
+   ============================================================ */
+.section-title {
+    text-align: center;
+    font-size: clamp(26px, 3.5vw, 38px);
+    color: #1a365d;
+    margin-bottom: 44px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    position: relative;
+    padding-bottom: 22px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #1a365d, #e53e3e);
+    border-radius: 2px;
+}
+
+/* ============================================================
+   PERGAMINO DE HISTORIA
+   ============================================================ */
+.historia-container {
+    margin-bottom: 80px;
+}
+
+.historia-text-box {
+    background: linear-gradient(155deg, #fdf6e3 0%, #f9ecd4 40%, #f2e0bc 100%);
+    padding: 60px 70px;
+    border-radius: 20px;
+    box-shadow:
+        0 2px 0 #d0a060,
+        0 4px 0 #c09050,
+        0 16px 50px rgba(0, 0, 0, 0.15),
+        inset 0 0 60px rgba(0, 0, 0, 0.04);
+    border: 2px solid #d0a060;
+    border-left: 5px solid rgba(197, 48, 48, 0.30);
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Líneas de cuaderno */
+.historia-text-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(transparent,
+            transparent 32px,
+            rgba(160, 120, 60, 0.10) 32px,
+            rgba(160, 120, 60, 0.10) 33px);
+    pointer-events: none;
+    border-radius: 20px;
+}
+
+/* Ornamento de esquina */
+.historia-text-box::after {
+    content: '✦';
+    position: absolute;
+    top: 26px;
+    right: 36px;
+    font-size: 30px;
+    color: rgba(160, 120, 60, 0.28);
+    pointer-events: none;
+}
+
+/* Párrafo con indicador de timeline */
+.historia-paragraph {
+    opacity: 0;
+    transform: translateX(-24px);
+    transition: all 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 32px;
+    position: relative;
+    padding-left: 26px;
+}
+
+.historia-paragraph::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 9px;
+    height: 9px;
+    background: #e53e3e;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.18);
+}
+
+.historia-paragraph::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 20px;
+    bottom: -32px;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(229, 62, 62, 0.25), transparent);
+}
+
+.historia-paragraph:last-child::after {
+    display: none;
+}
+
+.historia-paragraph.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.historia-paragraph p {
+    font-size: 16.5px;
+    line-height: 1.95;
+    color: #2c1e10;
+    text-align: justify;
+    font-style: italic;
+    text-indent: 22px;
+    letter-spacing: 0.2px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Capital drop inicial */
+.historia-paragraph:first-child p::first-letter {
+    font-size: 72px;
+    float: left;
+    line-height: 56px;
+    padding-right: 10px;
+    margin-top: 4px;
+    font-weight: 800;
+    color: #8b4513;
+    font-style: normal;
+}
+
+@media (max-width: 768px) {
+    .historia-text-box {
+        padding: 36px 24px;
+    }
+
+    .historia-paragraph p {
+        font-size: 15px;
+    }
+
+    .historia-paragraph:first-child p::first-letter {
+        font-size: 54px;
+        line-height: 44px;
+    }
+}
+
+/* ============================================================
+   MISIÓN Y VISIÓN - Cards con iconos SVG inline funcionando
+   ============================================================ */
+.mision-vision-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 80px;
+}
+
+@media (max-width: 860px) {
+    .mision-vision-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+.mv-box {
+    background: #ffffff;
+    border-radius: 18px;
+    box-shadow: 0 6px 24px rgba(26, 54, 93, 0.10);
+    overflow: visible;
+    /* Permite que el icono sobresalga */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: translateY(36px);
+    border: 1px solid rgba(26, 54, 93, 0.08);
+    position: relative;
+    padding-top: 52px;
+    /* Espacio para el icono flotante */
+    margin-top: 40px;
+    /* Margen para el icono que sobresale arriba */
+}
+
+.mv-box.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mv-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(26, 54, 93, 0.18);
+}
+
+/* Icono circular flotante encima de la card */
+.mv-icon-wrapper {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 2;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* Misión → azul, Visión → rojo */
+.mv-box:nth-child(1) .mv-icon-wrapper {
+    background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+}
+
+.mv-box:nth-child(2) .mv-icon-wrapper {
+    background: linear-gradient(135deg, #c53030 0%, #e53e3e 100%);
+}
+
+.mv-box:hover .mv-icon-wrapper {
+    transform: translateX(-50%) scale(1.12) rotate(-8deg);
+}
+
+.mv-icon-wrapper svg {
+    width: 38px;
+    height: 38px;
+    fill: #ffffff;
+    flex-shrink: 0;
+}
+
+/* Fallback: si hay una imagen real, mostrarla */
+.mv-image-container {
+    display: none;
+    /* ocultamos el contenedor viejo */
+}
+
+.mv-icon {
+    display: none;
+}
+
+/* Franja de color identidad bajo el icono */
+.mv-title {
+    background: transparent;
+    color: #1a365d;
+    padding: 4px 24px 18px;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    position: relative;
+    border-bottom: 3px solid #e53e3e;
+    margin: 0 24px 8px;
+}
+
+.mv-box:nth-child(2) .mv-title {
+    color: #c53030;
+    border-bottom-color: #1a365d;
+}
+
+.mv-content {
+    padding: 20px 28px 32px;
+}
+
+.mv-content p {
+    color: #444;
+    font-size: 15px;
+    line-height: 1.82;
+    text-align: justify;
+}
+
+/* ============================================================
+   HIMNO INSTITUCIONAL
+   ============================================================ */
+.himno-section {
+    margin-bottom: 80px;
+}
+
+.himno-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.himno-estrofa,
+.himno-coro {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 5px 20px rgba(26, 54, 93, 0.09);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: scale(0.93) translateY(16px);
+    cursor: pointer;
+    border: 1px solid rgba(26, 54, 93, 0.07);
+    border-top: 4px solid #1a365d;
+    position: relative;
+    overflow: hidden;
+}
+
+.himno-estrofa::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1a365d, #2c5282);
+    opacity: 0;
+    transition: opacity 0.28s ease;
+}
+
+.himno-estrofa.visible,
+.himno-coro.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.himno-estrofa:hover {
+    transform: scale(1.05) translateY(-4px);
+    z-index: 10;
+    box-shadow: 0 18px 44px rgba(26, 54, 93, 0.22);
+    border-top-color: #e53e3e;
+}
+
+.himno-estrofa:hover::before {
+    opacity: 1;
+}
+
+.himno-estrofa:hover .estrofa-numero,
+.himno-estrofa:hover .estrofa-content p {
+    color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.himno-coro {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+    border-top: 4px solid #e53e3e;
+}
+
+.himno-coro:hover {
+    transform: scale(1.02) translateY(-3px);
+    z-index: 10;
+    box-shadow: 0 18px 44px rgba(26, 54, 93, 0.30);
+}
+
+.estrofa-numero {
+    font-size: 42px;
+    font-weight: 800;
+    color: #e53e3e;
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+    transition: color 0.28s ease;
+    line-height: 1;
+}
+
+.coro-badge {
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    text-align: center;
+    padding: 9px 22px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    letter-spacing: 4px;
+    display: inline-block;
+    width: 100%;
+}
+
+.estrofa-content p {
+    font-size: 15px;
+    line-height: 1.88;
+    color: #3a3a4a;
+    text-align: center;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+    transition: color 0.28s ease;
+}
+
+.coro-content p {
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.95);
+    text-align: center;
+    font-style: italic;
+}
+
+.himno-autores {
+    grid-column: 1 / -1;
+    padding: 18px 28px;
+    background: #f7fafc;
+    border-radius: 12px;
+    text-align: center;
+    color: #666;
+    border: 1px solid rgba(26, 54, 93, 0.07);
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.himno-autores p {
+    margin: 0;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.himno-autores strong {
+    color: #1a365d;
+    font-style: normal;
+    font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+    .himno-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .himno-coro,
+    .himno-autores {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 700px) {
+    .himno-container {
+        grid-template-columns: 1fr;
+    }
+
+    .himno-coro,
+    .himno-autores {
+        grid-column: 1;
+    }
+
+    .himno-autores {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* ============================================================
+   SÍMBOLOS INSTITUCIONALES
+   ============================================================ */
+.simbolos-section {
+    margin-bottom: 70px;
+}
+
+.simbolo-box {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 36px;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 40px;
+    margin-bottom: 24px;
+    box-shadow: 0 5px 24px rgba(26, 54, 93, 0.09);
+    transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: translateX(-36px);
+    border: 1px solid rgba(26, 54, 93, 0.07);
+    position: relative;
+    overflow: hidden;
+}
+
+.simbolo-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background: linear-gradient(180deg, #1a365d, #e53e3e);
+    border-radius: 4px 0 0 4px;
+}
+
+.simbolo-box:nth-child(even) {
+    grid-template-columns: 1fr 340px;
+    transform: translateX(36px);
+}
+
+.simbolo-box:nth-child(even)::before {
+    left: auto;
+    right: 0;
+    border-radius: 0 4px 4px 0;
+}
+
+.simbolo-box:nth-child(even) .simbolo-image {
+    order: 2;
+}
+
+.simbolo-box:nth-child(even) .simbolo-descripcion {
+    order: 1;
+}
+
+.simbolo-box.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.simbolo-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(26, 54, 93, 0.16);
+}
+
+.simbolo-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+    border-radius: 14px;
+    padding: 32px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    border: 1px solid rgba(26, 54, 93, 0.08);
+}
+
+.simbolo-box:hover .simbolo-image {
+    transform: scale(1.03);
+    background: linear-gradient(135deg, #e6edfa 0%, #dae3f6 100%);
+}
+
+.simbolo-image img {
+    max-width: 100%;
+    height: auto;
+    max-height: 240px;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.16));
+    transition: filter 0.3s ease;
+}
+
+.simbolo-box:hover .simbolo-image img {
+    filter: drop-shadow(0 10px 24px rgba(26, 54, 93, 0.22));
+}
+
+.simbolo-descripcion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.simbolo-descripcion h3 {
+    color: #1a365d;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: 800;
+    padding-bottom: 12px;
+    position: relative;
+    letter-spacing: -0.01em;
+}
+
+.simbolo-descripcion h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 44px;
+    height: 3px;
+    background: linear-gradient(90deg, #e53e3e, #fc8181);
+    border-radius: 2px;
+}
+
+.simbolo-descripcion p {
+    color: #4a5568;
+    font-size: 15px;
+    line-height: 1.82;
+    margin-bottom: 14px;
+    text-align: justify;
+}
+
+.simbolo-descripcion p:last-child {
+    margin-bottom: 0;
+}
+
+.simbolo-descripcion strong {
+    color: #e53e3e;
+    font-weight: 700;
+}
+
+@media (max-width: 1100px) {
+
+    .simbolo-box,
+    .simbolo-box:nth-child(even) {
+        grid-template-columns: 1fr;
+    }
+
+    .simbolo-box:nth-child(even) .simbolo-image {
+        order: 1;
+    }
+
+    .simbolo-box:nth-child(even) .simbolo-descripcion {
+        order: 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .simbolo-box {
+        padding: 28px 20px;
+    }
+}
+
+/* ============================================================
+   ANIMACIONES
+   ============================================================ */
+@keyframes rippleHistory {
+    to {
+        width: 400px;
+        height: 400px;
+        opacity: 0;
+    }
+}

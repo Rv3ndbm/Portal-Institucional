@@ -1,0 +1,338 @@
+/* ============================================
+   CALENDARIO.CSS - REDISEÑO ESTÉTICO
+   I.E. Gilberto Alzate Avendaño
+   ============================================ */
+
+/* === HERO SECTION REDUCIDO === */
+.calendar-hero {
+    position: relative;
+    height: 40vh;
+    /* Altura reducida para dar protagonismo al calendario */
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-white);
+    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+    overflow: hidden;
+    margin-top: 0;
+    box-shadow: var(--shadow-md);
+}
+
+.calendar-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/patron-hero.png');
+    /* Si existe, sino degradado simple */
+    opacity: 0.1;
+    background-size: cover;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: var(--spacing-lg);
+    max-width: 900px;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-black);
+    margin-bottom: var(--spacing-xs);
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-light);
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* === LAYOUT PRINCIPAL === */
+.calendar-main-container {
+    background-color: var(--color-gray-100);
+    padding-bottom: var(--spacing-3xl);
+    position: relative;
+}
+
+/* === SECCIÓN CALENDARIO PROMINENTE === */
+.calendar-prominent-section {
+    padding: var(--spacing-xl) var(--spacing-md);
+    margin-top: -60px;
+    /* Overlay sobre el hero */
+    position: relative;
+    z-index: 10;
+}
+
+.calendar-container-xl {
+    width: 95%;
+    /* Ocupa casi todo el ancho disponible */
+    max-width: 1600px;
+    /* Límite para pantallas ultra-wide */
+    margin: 0 auto;
+    background: var(--color-white);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-2xl);
+    overflow: hidden;
+    padding: var(--spacing-lg);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.calendar-header-styled {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.calendar-header-styled h2 {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary-dark);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-xs);
+}
+
+.calendar-decor-line {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
+    border-radius: var(--border-radius-full);
+}
+
+/* Wrapper del Iframe */
+.calendar-wrapper-large {
+    width: 100%;
+    background: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+}
+
+.responsive-iframe-container-large {
+    position: relative;
+    width: 100%;
+    /* Altura dinámica basada en vh para ocupar buena parte de la pantalla */
+    height: 75vh;
+    min-height: 600px;
+}
+
+.responsive-iframe-container-large iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* === SECCIÓN SECUNDARIA (Noticias y Deportes) === */
+.secondary-info-section {
+    padding: var(--spacing-xl) var(--spacing-md);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+}
+
+@media (max-width: 1024px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+        /* Una columna en tablets/móviles */
+    }
+
+    .calendar-container-xl {
+        width: 100%;
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        margin-top: 0;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .calendar-prominent-section {
+        margin-top: -40px;
+        padding-left: var(--spacing-sm);
+        padding-right: var(--spacing-sm);
+    }
+
+    .responsive-iframe-container-large {
+        height: 60vh;
+        min-height: 500px;
+    }
+}
+
+/* === ESTILOS TARJETAS PEQUEÑAS === */
+.info-column {
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    border-top: 5px solid var(--color-primary);
+    /* Default */
+    transition: transform var(--transition-base);
+}
+
+.info-column:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.news-column {
+    border-color: var(--color-secondary);
+}
+
+.sports-column {
+    border-color: var(--color-primary);
+}
+
+.section-header-small {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--color-gray-100);
+}
+
+.section-header-small h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-800);
+}
+
+.header-icon {
+    font-size: 1.5rem;
+}
+
+/* Listas compactas */
+.news-list-compact,
+.sports-list-compact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Items individuales (cargados por JS) */
+.news-card,
+.sport-card {
+    background: var(--color-gray-100);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-base);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.news-card:hover,
+.sport-card:hover {
+    background: var(--color-white);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+.news-date {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-600);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-xs);
+    display: block;
+}
+
+.news-headline {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-xs);
+    line-height: var(--line-height-tight);
+}
+
+.news-snippet {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    line-height: var(--line-height-normal);
+}
+
+/* Estilos específicos para Sport Cards */
+.sport-card {
+    height: 140px;
+    display: flex;
+    align-items: flex-end;
+    padding: 0;
+}
+
+.sport-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform var(--transition-base);
+}
+
+.sport-card:hover .sport-bg {
+    transform: scale(1.1);
+}
+
+.sport-info {
+    position: relative;
+    z-index: 2;
+    padding: var(--spacing-sm);
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: var(--color-white);
+}
+
+.sport-date {
+    font-size: var(--font-size-xs);
+    color: var(--color-accent);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+}
+
+.sport-match {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    margin-top: 4px;
+    color: var(--color-white);
+}
+
+.sport-tag {
+    position: absolute;
+    top: var(--spacing-xs);
+    right: var(--spacing-xs);
+    background: var(--color-secondary);
+    color: var(--color-white);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    z-index: 3;
+}
+
+/* === ANIMACIONES === */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

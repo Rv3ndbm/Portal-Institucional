@@ -1,0 +1,24 @@
+
+Pagina Colegio:
+
+-añadir apartados como lo son: 	
+
+	-crear un apartado para noticias mas amplio 
+
+	-incluir todo ese voleo de cartillas de apoyo psicopedagogico que esta ahorita en la pagina actual
+
+- arreglar bugs
+
+- cambiar la cuenta de google viculada al calendario
+
+- pedir imagenes a darío
+
+
+-acomadar header para que no se vea tan vacio 
+
+-acomdar el hoover para que el texto se vea bien(en media tecnicas mayormente spñucionadas w)
+
+-cambiar los iconos de las tecnicas por imagenes w ya
+
+-pedirle el avatar a dario w ya
+

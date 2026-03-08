@@ -1,0 +1,369 @@
+/* =========================================
+   SEDES_LANDING.CSS - Rediseño Visual Premium
+   I.E. Gilberto Alzate Avendaño
+   ========================================= */
+
+/* --- Hero Section --- */
+.hero-sedes {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: var(--header-height-desktop);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: var(--color-white);
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(15, 23, 42, 0.85) 0%, 
+        rgba(30, 60, 114, 0.7) 100%);
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    padding: var(--spacing-xl);
+    max-width: 900px;
+    animation: fadeInUp var(--transition-slow) var(--ease-out) forwards;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 800;
+    margin-bottom: var(--spacing-md);
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hero-description {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: rgba(255, 255, 255, 0.95);
+    font-weight: 400;
+    max-width: 750px;
+    margin: 0 auto;
+    line-height: var(--line-height-relaxed);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Grid de Sedes --- */
+.sedes-container {
+    max-width: 1400px;
+    margin: -40px auto 100px;
+    padding: 0 var(--spacing-lg);
+    position: relative;
+    z-index: 10;
+}
+
+.sedes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+/* Las últimas dos tarjetas se centran en pantallas grandes */
+.sedes-grid > *:nth-child(4) {
+    grid-column: 1 / 2;
+}
+.sedes-grid > *:nth-child(5) {
+    grid-column: 2 / 3;
+}
+
+@media (min-width: 1025px) {
+    .sedes-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+    }
+    .sedes-grid > *:nth-child(1),
+    .sedes-grid > *:nth-child(2),
+    .sedes-grid > *:nth-child(3) {
+        grid-column: span 2;
+    }
+    .sedes-grid > *:nth-child(4) {
+        grid-column: 2 / 4;
+    }
+    .sedes-grid > *:nth-child(5) {
+        grid-column: 4 / 6;
+    }
+}
+
+/* --- Tarjetas (Cards) --- */
+.sede-card {
+    position: relative;
+    height: 420px;
+    border-radius: var(--border-radius-xl);
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base) var(--ease-in-out);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--sede-bg);
+    background-position: center;
+    background-size: cover;
+    transition: transform var(--transition-slow) var(--ease-out);
+    z-index: 1;
+    filter: brightness(0.9);
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.2) 30%,
+            rgba(15, 23, 42, 0.95) 100%);
+    z-index: 2;
+    transition: all var(--transition-base) var(--ease-in-out);
+}
+
+.card-content {
+    position: relative;
+    z-index: 3;
+    transition: transform var(--transition-base) var(--ease-out);
+}
+
+.card-icon {
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-md);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all var(--transition-base) var(--ease-bounce);
+    color: var(--color-white);
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-white);
+    letter-spacing: -0.5px;
+}
+
+.card-desc {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all var(--transition-base) var(--ease-out);
+}
+
+.card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    padding: 10px 20px;
+    background: var(--color-white);
+    color: var(--color-primary-dark);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    transition: all var(--transition-base) var(--ease-in-out);
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+/* --- Hover Effects --- */
+.sede-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.sede-card:hover .card-bg {
+    transform: scale(1.05);
+}
+
+.sede-card:hover .card-overlay {
+    background: linear-gradient(to bottom,
+            rgba(30, 60, 114, 0.3) 0%,
+            rgba(30, 60, 114, 0.7) 40%,
+            rgba(15, 23, 42, 0.98) 100%);
+}
+
+.sede-card:hover .card-icon {
+    transform: scale(1.1);
+    background: var(--color-secondary);
+    border-color: var(--color-secondary);
+}
+
+.sede-card:hover .card-desc {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.sede-card:hover .card-cta {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-cta:hover {
+    background: var(--color-secondary);
+    color: var(--color-white);
+}
+
+.card-cta i {
+    transition: transform var(--transition-base) var(--ease-in-out);
+}
+
+.sede-card:hover .card-cta i {
+    transform: translateX(5px);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+    .sedes-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .sedes-grid > *:nth-child(4),
+    .sedes-grid > *:nth-child(5) {
+        grid-column: auto;
+    }
+
+    .sedes-container {
+        margin-top: -20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-sedes {
+        height: auto;
+        min-height: 320px;
+        padding: 140px 0 40px; /* Ajustado: 140px es suficiente para el header móvil usualmente */
+        background-attachment: scroll;
+    }
+
+    .sedes-container {
+        margin-top: 10px; /* Reducido para que estén más cerca */
+        padding: 0 var(--spacing-md);
+    }
+
+    .hero-content {
+        padding: 0 var(--spacing-md);
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        max-width: 320px; /* Evitar que el texto se estire demasiado a lo ancho */
+    }
+
+    .sedes-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .sede-card {
+        height: 350px;
+        padding: var(--spacing-lg);
+    }
+
+    .card-desc {
+        opacity: 1;
+        transform: translateY(0);
+        margin-bottom: var(--spacing-md);
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .card-cta {
+        opacity: 1;
+        transform: translateY(0);
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-sedes {
+        min-height: 280px;
+        padding: 120px 0 30px;
+    }
+
+    .hero-title {
+        font-size: 2.1rem;
+    }
+
+    .hero-description {
+        font-size: 0.95rem;
+        max-width: 280px;
+    }
+
+    .sede-card {
+        height: 320px;
+    }
+}
+
+/* --- Accessibility --- */
+@media (prefers-reduced-motion: reduce) {
+
+    .sede-card,
+    .card-bg,
+    .card-icon,
+    .card-desc,
+    .card-cta {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .sede-card:hover .card-bg {
+        transform: none;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

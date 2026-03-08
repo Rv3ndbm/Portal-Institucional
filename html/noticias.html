@@ -1,0 +1,348 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias - I.E. Gilberto Alzate Avendaño</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/modern-theme.css">
+    <link rel="stylesheet" href="../css/noticias.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body data-news-page>
+
+    <!-- Header Principal (Copiado de deportes.html para consistencia) -->
+    <header class="main-header" id="mainHeader">
+        <div class="header-background" id="headerBackground"></div>
+
+        <div class="header-content">
+            <div class="header-top" id="headerTop">
+                <div class="logo-title-container">
+                    <div class="logo-container">
+                        <a href="index.html"><img loading="lazy"
+                                src="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png"
+                                alt="Logo Institución" class="logo"></a>
+
+                    </div>
+                    <div class="institution-name">
+                        <h1>I.E. GILBERTO ALZATE AVENDAÑO</h1>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Menú de Navegación -->
+            <nav class="main-nav" id="mainNav">
+                <div class="nav-container">
+                    <ul class="nav-menu nav-menu-left">
+                        <li class="nav-item" data-bg="inicio">
+                            <a href="index.html" class="nav-link">INICIO</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="historia.html">Historia</a></li>
+                                <li><a href="calendario.html">Eventos</a></li>
+                                <li><a href="deportes.html">Deportes</a></li>
+                                <li><a href="documentos.html">Documentos</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="sedes">
+                            <a href="#" class="nav-link">SEDES</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="sede-san-isidro.html">Sede san isidro</a></li>
+                                <li><a href="sede-seguro-bolivar.html">Sede seguro bolívar</a></li>
+                                <li><a href="sede-tomas-carrasquilla.html">Sede tomás carrasquilla</a></li>
+                                <li><a href="sede-carlos-villa.html">Sede carlos villa</a></li>
+                                <li><a href="sede-central.html">Sede central</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="nav-menu nav-menu-right">
+                        <li class="nav-item" data-bg="departamentos">
+                            <a href="departamentos.html" class="nav-link">DEPARTAMENTOS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="departamentos.html#coordinacion">Coordinación</a></li>
+                                <li><a href="departamentos.html#rectoria">Rectoría</a></li>
+                                <li><a href="departamentos.html#psicologia">Psicología</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="medias">
+                            <a href="tecnicas.html" class="nav-link">MEDIAS TÉCNICAS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="tecnicas/pascual.html">Programación de software - pascual bravo</a></li>
+                                <li><a href="tecnicas/musica.html">Música</a></li>
+                                <li><a href="tecnicas/ambiental.html">Gestión ambiental</a></li>
+                                <li><a href="tecnicas/contenidos.html">Contenidos digitales</a></li>
+                                <li><a href="tecnicas/sena.html">SENA</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="academico">
+                            <a href="academico.html" class="nav-link">ACADÉMICO</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://docente.alzate.edu.co/">Sistema docente</a></li>
+                                <li><a href="https://estudiante.alzate.edu.co/">Sistema estudiante</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="servicios">
+                            <a href="otros-servicios.html" class="nav-link">OTROS SERVICIOS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://luisarango64.wixsite.com/bibliositio">Biblioteca</a></li>
+                                <li><a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf">Manual de convivencia</a></li>
+                                <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform">Formulario PQRSF</a></li>
+                                <li><a href="https://www.youtube.com/@alzatevirtual8374/videos">Alzate virtual</a></li>
+                                <li><a href="pre.html">Preinscripción</a></li>
+                                <li><a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508">Canal institucional</a></li>
+                                <li><a href="contacto.html">Contáctanos</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- News Hero Section -->
+    <section class="news-hero">
+        <div class="news-hero-content">
+            <span class="hero-badge">Actualidad Institucional</span>
+            <h1 class="news-hero-title">Noticias y Novedades</h1>
+            <p class="news-hero-description">
+                Mantente informado con los últimos acontecimientos, logros y comunicados de nuestra comunidad educativa.
+            </p>
+        </div>
+        <div class="news-hero-overlay"></div>
+    </section>
+
+    <!-- Featured News Section -->
+    <section class="featured-news container">
+        <div class="section-header">
+            <h2 class="section-title">Noticia Destacada</h2>
+            <div class="title-underline"></div>
+        </div>
+
+        <article class="featured-card">
+            <div class="featured-image-container">
+                <!-- Placeholder image using a gradient since I don't have a specific file, or reuse a generic one -->
+                <div class="featured-image-placeholder">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+            </div>
+            <div class="featured-content">
+                <div class="meta-tags">
+                    <span class="tag tag-academic">Académico</span>
+                    <span class="date"><i class="far fa-calendar-alt"></i> 10 Feb, 2026</span>
+                </div>
+                <h3 class="featured-title">Inicio del Año Escolar 2026: Nuevos Retos y Oportunidades</h3>
+                <p class="featured-excerpt">
+                    Damos la bienvenida a todos nuestros estudiantes a un nuevo ciclo de aprendizaje.
+                    Este año implementamos nuevas metodologías y espacios para fortalecer la excelencia académica y la
+                    convivencia.
+                </p>
+                <a href="#" class="btn-read-more">Leer Noticia Completa <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </article>
+    </section>
+
+    <!-- News Filter/Categories (Visual only for now) -->
+    <div class="news-filters container">
+        <button class="filter-btn active">Todas</button>
+        <button class="filter-btn">Académico</button>
+        <button class="filter-btn">Cultural</button>
+        <button class="filter-btn">Deportes</button>
+        <button class="filter-btn">Institucional</button>
+    </div>
+
+    <!-- News Grid -->
+    <section class="news-list container">
+        <div class="news-grid">
+            <!-- News Item 1 -->
+            <article class="news-card">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #1e3c72, #2a5298);">
+                        <i class="fas fa-award"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sports">Deportes</span>
+                        <span class="card-date">05 Feb, 2026</span>
+                    </div>
+                    <h3 class="card-title">Campeones en Microfútbol Intercolegiados</h3>
+                    <p class="card-excerpt">
+                        Nuestro equipo representativo logró el primer lugar en el torneo local, demostrando gran
+                        disciplina y talento.
+                    </p>
+                    <a href="#" class="card-link">Leer más</a>
+                </div>
+            </article>
+
+            <!-- News Item 2 -->
+            <article class="news-card">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #dc143c, #ff4757);">
+                        <i class="fas fa-theater-masks"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-culture">Cultural</span>
+                        <span class="card-date">01 Feb, 2026</span>
+                    </div>
+                    <h3 class="card-title">Semana de la Cultura y la Ciencia</h3>
+                    <p class="card-excerpt">
+                        Prepárate para una semana llena de exposiciones, presentaciones artísticas y muestras de
+                        proyectos estudiantiles.
+                    </p>
+                    <a href="#" class="card-link">Leer más</a>
+                </div>
+            </article>
+
+            <!-- News Item 3 -->
+            <article class="news-card">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #11998e, #38ef7d);">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-institutional">Institucional</span>
+                        <span class="card-date">28 Ene, 2026</span>
+                    </div>
+                    <h3 class="card-title">Jornada de Padres de Familia</h3>
+                    <p class="card-excerpt">
+                        Invitamos a todos los acudientes a la primera reunión del año para presentar el cronograma y
+                        pautas de convivencia.
+                    </p>
+                    <a href="#" class="card-link">Leer más</a>
+                </div>
+            </article>
+
+            <!-- News Item 4 -->
+            <article class="news-card">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #f7971e, #ffd200);">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-academic">Académico</span>
+                        <span class="card-date">20 Ene, 2026</span>
+                    </div>
+                    <h3 class="card-title">Inscripciones Abiertas Media Técnica</h3>
+                    <p class="card-excerpt">
+                        Amplía tus horizontes con nuestros programas de media técnica en articulación con el SENA y
+                        universidades.
+                    </p>
+                    <a href="#" class="card-link">Leer más</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="pagination-container">
+            <button class="btn-load-more">Cargar Más Noticias</button>
+        </div>
+    </section>
+
+    <!-- Footer (Copiado de deportes.html para consistencia) -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <!-- Sección 1: Información -->
+            <div class="footer-section">
+                <h3 class="footer-title">Sobre Nosotros</h3>
+                <p class="footer-text">Institución educativa comprometida con la excelencia académica y la formación
+                    integral de nuestros estudiantes.</p>
+                <div class="footer-logo">
+                    <img loading="lazy" src="../img/logo del colegio.jpg" alt="Logo Institución">
+                </div>
+            </div>
+
+            <!-- Sección 2: Sedes -->
+            <div class="footer-section">
+                <h3 class="footer-title">Nuestras Sedes</h3>
+                <ul class="footer-links">
+                    <li><a href="sede-san-isidro.html">Sede San Isidro</a></li>
+                    <li><a href="sede-seguro-bolivar.html">Sede Seguro Bolívar</a></li>
+                    <li><a href="sede-tomas-carrasquilla.html">Sede Tomás Carrasquilla</a></li>
+                    <li><a href="sede-carlos-villa.html">Sede Carlos Villa</a></li>
+                    <li><a href="sede-central.html">Sede Central</a></li>
+                </ul>
+            </div>
+
+            <!-- Sección 3: Enlaces Rápidos -->
+            <div class="footer-section">
+                <h3 class="footer-title">Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="historia.html">Nuestra Historia</a></li>
+                    <li><a href="departamentos.html">Departamentos</a></li>
+                    <li><a href="tecnicas.html">Medias Técnicas</a></li>
+                    <li><a href="pre.html">Pre-Inscripción</a></li>
+                    <li><a href="https://www.youtube.com/@alzatevirtual8374/videos" target="_blank">Alzate Virtual</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Sección 4: Contacto -->
+            <div class="footer-section">
+                <h3 class="footer-title">Contacto</h3>
+                <div class="footer-contact">
+                    <div class="contact-item">
+                        <span class="contact-label">📞 Teléfono:</span>
+                        <p>+57 1 (555) 1234</p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">📧 Email:</span>
+                        <p><a href="mailto:info@alzate.edu.co">info@alzate.edu.co</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-label">📍 Ubicación:</span>
+                        <p>Medellín, Antioquia</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 5: Redes Sociales -->
+            <div class="footer-section">
+                <h3 class="footer-title">Síguenos</h3>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/gilbertoalzate.tarde" target="_blank" class="social-icon facebook"
+                        aria-label="Facebook"><img src="../img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/elalzateviveporvos/" target="_blank"
+                        class="social-icon instagram" aria-label="Instagram"><img src="../img/ig.png"
+                            alt="Instagram"></a>
+                    <a href="https://www.youtube.com/@alzatevirtual8374" target="_blank" class="social-icon youtube"
+                        aria-label="YouTube"><img src="../img/yt.png" alt="YouTube"></a>
+                    <a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508" target="_blank"
+                        class="social-icon whatsapp" aria-label="WhatsApp"><img src="../img/whatsap.png"
+                            alt="WhatsApp"></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2026 I.E. Gilberto Alzate Avendaño. Todos los derechos reservados.</p>
+                <div class="footer-bottom-links">
+                    <a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf"
+                        target="_blank">Manual de Convivencia</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform"
+                        target="_blank">PQRSF</a>
+                    <a href="https://luisarango64.wixsite.com/bibliositio" target="_blank">Biblioteca</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/noticias.js"></script>
+</body>
+
+</html>
+

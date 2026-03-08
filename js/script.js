@@ -1,0 +1,977 @@
+// ============================================
+// SCRIPT.JS - MENÚ HAMBURGUESA PROFESIONAL
+// I.E. Gilberto Alzate Avendaño
+// ============================================
+
+// === LOADING SCREEN ===
+function hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        // Esperar un poco para asegurar que todo está renderizado
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+        }, 500);
+    }
+}
+
+// Ocultar loading screen cuando la página carga completamente
+window.addEventListener('load', hideLoadingScreen);
+
+// También ocultar si el DOM está listo (para páginas rápidas)
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(hideLoadingScreen, 300);
+    initLazyLoading();
+});
+
+// === LAZY LOADING DE IMÁGENES ===
+function initLazyLoading() {
+    // Si el navegador soporta Intersection Observer (más eficiente)
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src || img.src;
+                    img.classList.add('loaded');
+                    observer.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px 0px',
+            threshold: 0.01
+        });
+
+        document.querySelectorAll('img[data-src]').forEach(img => {
+            imageObserver.observe(img);
+        });
+    }
+
+    // Fallback para navegadores antiguos: cargar todas las imágenes inmediatamente
+    document.querySelectorAll('img[data-src]').forEach(img => {
+        if (!img.src) {
+            img.src = img.dataset.src;
+        }
+    });
+}
+
+// === CONFIGURACIÓN GLOBAL ===
+const BREAKPOINT_TABLET = 1024;
+const SCROLL_THRESHOLD = 50;
+
+// Imágenes de fondo para cada sección del menú
+const backgroundImages = {
+    inicio: 'url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200")',
+    sedes: 'url("https://images.unsplash.com/photo-1562774053-701939374585?w=1200")',
+    departamentos: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200")',
+    medias: 'url("https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200")',
+    academico: 'url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200")'
+};
+
+// Obtener elementos del DOM
+const navItems = document.querySelectorAll('.nav-item');
+const headerBackground = document.getElementById('headerBackground');
+const mainHeader = document.getElementById('mainHeader');
+const mainNav = document.getElementById('mainNav');
+
+// === MENÚ HAMBURGUESA ===
+let hamburgerButton = null;
+let isMenuOpen = false;
+
+// Crear botón hamburguesa dinámicamente
+function createHamburgerButton() {
+    // Verificar si ya existe
+    if (document.querySelector('.hamburger-button')) return;
+
+    hamburgerButton = document.createElement('button');
+    hamburgerButton.className = 'hamburger-button';
+    hamburgerButton.setAttribute('aria-label', 'Menú de navegación');
+    hamburgerButton.setAttribute('aria-expanded', 'false');
+
+    // Crear las 3 líneas del hamburguesa
+    for (let i = 0; i < 3; i++) {
+        const line = document.createElement('span');
+        line.className = 'hamburger-line';
+        hamburgerButton.appendChild(line);
+    }
+
+    // Insertar en el header-top
+    const headerTop = document.querySelector('.header-top');
+    if (headerTop) {
+        headerTop.insertBefore(hamburgerButton, headerTop.firstChild);
+    }
+
+    // Event listener
+    hamburgerButton.addEventListener('click', toggleMenu);
+}
+
+// Toggle del menú
+function toggleMenu() {
+    isMenuOpen = !isMenuOpen;
+
+    if (isMenuOpen) {
+        openMenu();
+    } else {
+        closeMenu();
+    }
+}
+
+// Abrir menú
+function openMenu() {
+    hamburgerButton?.classList.add('active');
+    mainNav?.classList.add('active');
+    document.body.classList.add('menu-open');
+    hamburgerButton?.setAttribute('aria-expanded', 'true');
+
+    // Crear botón X de cierre si no existe
+    if (!document.querySelector('.menu-close-button')) {
+        const closeButton = document.createElement('button');
+        closeButton.className = 'menu-close-button';
+        closeButton.setAttribute('aria-label', 'Cerrar menú');
+        closeButton.innerHTML = '✕';
+
+        const navContainer = mainNav?.querySelector('.nav-container');
+        if (navContainer) {
+            navContainer.insertBefore(closeButton, navContainer.firstChild);
+            closeButton.addEventListener('click', closeMenu);
+        }
+    }
+
+    // Cerrar al hacer click en el overlay
+    setTimeout(() => {
+        document.addEventListener('click', handleOutsideClick);
+    }, 100);
+}
+
+// Cerrar menú
+function closeMenu() {
+    isMenuOpen = false;
+    hamburgerButton?.classList.remove('active');
+    mainNav?.classList.remove('active');
+    document.body.classList.remove('menu-open');
+    hamburgerButton?.setAttribute('aria-expanded', 'false');
+
+    // Cerrar todos los dropdowns
+    document.querySelectorAll('.nav-item.dropdown-open').forEach(item => {
+        item.classList.remove('dropdown-open');
+    });
+
+    // Remover botón X de cierre
+    const closeButton = document.querySelector('.menu-close-button');
+    if (closeButton) {
+        closeButton.remove();
+    }
+
+    document.removeEventListener('click', handleOutsideClick);
+}
+
+// Cerrar al hacer click fuera del menú
+function handleOutsideClick(e) {
+    if (!mainNav?.contains(e.target) && !hamburgerButton?.contains(e.target)) {
+        closeMenu();
+    }
+}
+
+// Manejar dropdowns en móvil
+function handleMobileDropdowns() {
+    if (window.innerWidth <= BREAKPOINT_TABLET) {
+        navItems.forEach(item => {
+            const dropdown = item.querySelector('.dropdown-menu');
+
+            if (dropdown && dropdown.children.length > 0) {
+                // Crear o actualizar el botón de toggle
+                let toggleBtn = item.querySelector('.dropdown-toggle');
+
+                if (!toggleBtn) {
+                    toggleBtn = document.createElement('button');
+                    toggleBtn.className = 'dropdown-toggle';
+                    toggleBtn.setAttribute('aria-label', 'Expandir submenu');
+                    toggleBtn.innerHTML = '<span class="toggle-arrow">▼</span>';
+                    item.appendChild(toggleBtn);
+
+                    toggleBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        // Cerrar otros dropdowns
+                        document.querySelectorAll('.nav-item.dropdown-open').forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('dropdown-open');
+                            }
+                        });
+
+                        // Toggle este dropdown
+                        item.classList.toggle('dropdown-open');
+                    });
+                }
+            }
+        });
+    }
+}
+
+// Cerrar menú al cambiar a desktop
+function handleResize() {
+    if (window.innerWidth > BREAKPOINT_TABLET && isMenuOpen) {
+        closeMenu();
+    }
+
+    handleMobileDropdowns();
+}
+
+// Inicializar menú hamburguesa
+function initHamburgerMenu() {
+    createHamburgerButton();
+    handleMobileDropdowns();
+
+    window.addEventListener('resize', handleResize);
+}
+
+// === MARCADOR DE PÁGINA ACTUAL ===
+function highlightCurrentPage() {
+    const currentPath = window.location.pathname;
+    const currentPage = currentPath.split('/').pop() || 'index.html';
+
+    navItems.forEach(item => {
+        const link = item.querySelector('.nav-link');
+        const dropdown = item.querySelector('.dropdown-menu');
+        let isActive = false;
+
+        if (link) {
+            const href = link.getAttribute('href');
+            // Comparar el href con la página actual
+            if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+                isActive = true;
+            }
+        }
+
+        // Si no hay coincidencia exacta, buscar en el dropdown
+        if (!isActive && dropdown) {
+            const dropdownLinks = dropdown.querySelectorAll('a');
+            for (let dropLink of dropdownLinks) {
+                const href = dropLink.getAttribute('href');
+
+                // Coincidencia exacta por nombre de archivo
+                if (href === currentPage) {
+                    isActive = true;
+                    break;
+                }
+
+                // Coincidencia por ruta completa (para subdirectorios)
+                // Verificar si el href contiene la ruta actual
+                if (href && currentPath.includes(href)) {
+                    isActive = true;
+                    break;
+                }
+
+                // Verificar si estamos en un subdirectorio relacionado
+                // Por ejemplo: si href es "tecnicas/ambiental.html" y estamos en ambiental.html
+                if (href && href.includes('/')) {
+                    const hrefPage = href.split('/').pop();
+                    if (hrefPage === currentPage) {
+                        isActive = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Verificar si estamos en un subdirectorio y el menú principal apunta a ese directorio
+        // Ejemplo: estamos en /tecnicas/ambiental.html y el link principal es tecnicas.html
+        if (!isActive && link) {
+            const href = link.getAttribute('href');
+            // Extraer la carpeta del href (ej: "tecnicas.html" -> "tecnicas")
+            const hrefBase = href ? href.replace('.html', '') : '';
+            // Verificar si la ruta actual contiene esa carpeta
+            if (hrefBase && currentPath.includes('/' + hrefBase + '/')) {
+                isActive = true;
+            }
+        }
+
+        // Aplicar clase activa
+        if (isActive) {
+            item.classList.add('active-page');
+        } else {
+            item.classList.remove('active-page');
+        }
+    });
+}
+
+// Llamar cuando carga la página
+document.addEventListener('DOMContentLoaded', highlightCurrentPage);
+
+// También llamar después de cambios de hash (para SPAs)
+window.addEventListener('hashchange', highlightCurrentPage);
+
+// === FONDOS DINÁMICOS DEL HEADER ===
+navItems.forEach(item => {
+    item.addEventListener('mouseenter', function () {
+        // Solo en desktop
+        if (window.innerWidth > BREAKPOINT_TABLET) {
+            const bgType = this.getAttribute('data-bg');
+            if (backgroundImages[bgType]) {
+                headerBackground.style.backgroundImage = backgroundImages[bgType];
+                headerBackground.classList.add('active');
+            }
+        }
+    });
+
+    item.addEventListener('mouseleave', function () {
+        if (window.innerWidth > BREAKPOINT_TABLET) {
+            headerBackground.classList.remove('active');
+        }
+    });
+});
+
+// === SCROLL HANDLER ===
+let lastScrollTop = 0;
+let ticking = false;
+
+window.addEventListener('scroll', function () {
+    lastScrollTop = window.scrollY;
+
+    if (!ticking) {
+        window.requestAnimationFrame(handleScroll);
+        ticking = true;
+    }
+});
+
+function handleScroll() {
+    const scrollPosition = lastScrollTop;
+
+    if (scrollPosition > SCROLL_THRESHOLD) {
+        mainHeader.classList.add('scrolled');
+    } else {
+        mainHeader.classList.remove('scrolled');
+    }
+
+    ticking = false;
+}
+
+// === INTERSECTION OBSERVER ===
+const observerOptions = {
+    threshold: 0.2,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }, index * 100);
+        }
+    });
+}, observerOptions);
+
+// Aplicar animación a todas las cajas de contenido
+document.querySelectorAll('.content-box').forEach((box, index) => {
+    box.style.opacity = '0';
+    box.style.transform = 'translateY(40px)';
+    box.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    box.style.transitionDelay = `${index * 0.1}s`;
+    observer.observe(box);
+});
+
+// === EFECTOS DE HOVER (OPTIMIZADOS) ===
+// Delegación de eventos para hover en nav-links
+const isDesktop = () => window.innerWidth > BREAKPOINT_TABLET;
+
+document.addEventListener('mouseover', function (e) {
+    if (e.target.matches('.nav-link') && isDesktop()) {
+        e.target.style.transform = 'translateY(-3px)';
+    }
+    if (e.target.matches('.dropdown-menu a') && isDesktop()) {
+        e.target.style.transform = 'scale(1.05) translateX(5px)';
+        e.target.style.transition = 'all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    }
+});
+
+document.addEventListener('mouseout', function (e) {
+    if (e.target.matches('.nav-link') && isDesktop()) {
+        e.target.style.transform = 'translateY(0)';
+    }
+    if (e.target.matches('.dropdown-menu a') && isDesktop()) {
+        e.target.style.transform = 'scale(1) translateX(0)';
+    }
+});
+
+// === EFECTO DE ONDA EN BOTÓN CTA ===
+const ctaButton = document.querySelector('.cta-button');
+if (ctaButton) {
+    ctaButton.addEventListener('click', function (e) {
+        const ripple = document.createElement('span');
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+        ripple.style.width = '20px';
+        ripple.style.height = '20px';
+        ripple.style.left = e.offsetX + 'px';
+        ripple.style.top = e.offsetY + 'px';
+        ripple.style.transform = 'translate(-50%, -50%)';
+        ripple.style.animation = 'rippleEffect 0.6s ease-out';
+
+        this.appendChild(ripple);
+
+        setTimeout(() => {
+            ripple.remove();
+        }, 600);
+    });
+}
+
+// Añadir animación de ripple al CSS dinámicamente
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes rippleEffect {
+        to {
+            width: 200px;
+            height: 200px;
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// === ANIMACIÓN SUAVE PARA EL VIDEO ===
+const videoContainer = document.querySelector('.video-container video');
+if (videoContainer) {
+    const videoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.transform = 'scale(1)';
+                entry.target.style.opacity = '1';
+            }
+        });
+    }, { threshold: 0.3 });
+
+    videoContainer.style.transform = 'scale(0.95)';
+    videoContainer.style.opacity = '0';
+    videoContainer.style.transition = 'all 1s cubic-bezier(0.4, 0, 0.2, 1)';
+    videoObserver.observe(videoContainer);
+}
+
+
+
+// === CERRAR MENÚ AL HACER CLICK EN UN ENLACE ===
+document.addEventListener('click', function (e) {
+    // Solo cerrar si es un link directo (no un toggle button)
+    if (e.target.matches('.nav-link') &&
+        window.innerWidth <= BREAKPOINT_TABLET) {
+        // Verificar si el nav-item tiene dropdown con items
+        const navItem = e.target.closest('.nav-item');
+        const dropdown = navItem?.querySelector('.dropdown-menu');
+
+        // Solo cerrar si no tiene dropdown o si es móvil
+        if (!dropdown || dropdown.children.length === 0) {
+            closeMenu();
+        }
+    }
+});
+
+// === PREVENCIÓN DE SCROLL EN MÓVIL CUANDO EL MENÚ ESTÁ ABIERTO ===
+let scrollPosition = 0;
+
+function preventScroll() {
+    scrollPosition = window.pageYOffset;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollPosition}px`;
+    document.body.style.width = '100%';
+}
+
+function allowScroll() {
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('position');
+    document.body.style.removeProperty('top');
+    document.body.style.removeProperty('width');
+    window.scrollTo(0, scrollPosition);
+}
+
+// Observar cambios en la clase menu-open
+const bodyObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+            if (document.body.classList.contains('menu-open')) {
+                preventScroll();
+            } else {
+                allowScroll();
+            }
+        }
+    });
+});
+
+bodyObserver.observe(document.body, {
+    attributes: true,
+    attributeFilter: ['class']
+});
+
+// === INICIALIZACIÓN ===
+document.addEventListener('DOMContentLoaded', () => {
+    initHamburgerMenu();
+    console.log('🎯 Página web del I.E. Gilberto Alzate Avendaño cargada con éxito!');
+    console.log('📱 Menú hamburguesa activado para móviles y tablets');
+});
+
+// === ACCESIBILIDAD - NAVEGACIÓN CON TECLADO ===
+document.addEventListener('keydown', (e) => {
+    // Cerrar menú con ESC
+    if (e.key === 'Escape' && isMenuOpen) {
+        closeMenu();
+    }
+
+    // Toggle menú con Space o Enter cuando el botón tiene focus
+    if ((e.key === ' ' || e.key === 'Enter') && document.activeElement === hamburgerButton) {
+        e.preventDefault();
+        toggleMenu();
+    }
+});
+
+// === MEJORA PARA TÁCTIL ===
+let touchStartX = 0;
+let touchEndX = 0;
+
+if (mainNav) {
+    mainNav.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    mainNav.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+}
+
+function handleSwipe() {
+    // Swipe hacia la izquierda para cerrar
+    if (touchStartX - touchEndX > 50 && isMenuOpen) {
+        closeMenu();
+    }
+}
+
+// ============================================
+// NAVEGACIÓN DINÁMICA - OCULTAR PÁGINA ACTUAL
+// ============================================
+
+/**
+ * DESACTIVADA - El usuario quiere todos los botones del header siempre visibles
+ * Oculta el botón de navegación de la página actual en el header
+ * Excepción: SEDES siempre se muestra
+ */
+function hideCurrentPageNav() {
+    // Función desactivada - todos los botones permanecen visibles
+    return;
+
+    /* CÓDIGO ORIGINAL COMENTADO
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+    // Mapeo de páginas a data-bg attributes
+    const pageNavMap = {
+        'index.html': 'inicio',
+        'historia.html': 'inicio',
+        'deportes.html': null, // Deportes no tiene botón principal, está en dropdown
+        'departamentos.html': 'departamentos',
+        'tecnicas.html': 'medias',
+        'sedes.html': 'sedes',
+        // Páginas de sedes individuales
+        'sede-san-isidro.html': 'sedes',
+        'sede-seguro-bolivar.html': 'sedes',
+        'sede-tomas-carrasquilla.html': 'sedes',
+        'sede-carlos-villa.html': 'sedes',
+        'sede-central.html': 'sedes'
+    };
+
+    const navBg = pageNavMap[currentPage];
+
+    // No ocultar SEDES nunca, ni ACADÉMICO, ni OTROS SERVICIOS
+    if (navBg && navBg !== 'sedes' && navBg !== 'academico') {
+        navItems.forEach(item => {
+            if (item.dataset.bg === navBg) {
+                item.style.display = 'none';
+            }
+        });
+    }
+    */
+}
+
+/**
+ * Oculta los enlaces del footer que corresponden a la página actual
+ */
+function hideCurrentPageFooter() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const footerLinks = document.querySelectorAll('.footer-links a');
+
+    footerLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href) {
+            // Comparar nombre de archivo
+            const linkPage = href.split('/').pop().split('#')[0];
+            if (linkPage === currentPage) {
+                link.parentElement.style.display = 'none';
+            }
+        }
+    });
+}
+
+/**
+ * Oculta "Nuestras Sedes" en el footer solo cuando estamos en sedes.html
+ */
+function hideSedesInFooter() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+    if (currentPage === 'sedes.html') {
+        const footerLinks = document.querySelectorAll('.footer-links a');
+        footerLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === 'sedes.html') {
+                link.parentElement.style.display = 'none';
+            }
+        });
+    }
+}
+
+// Ejecutar las funciones cuando la página carga
+document.addEventListener('DOMContentLoaded', function () {
+    hideCurrentPageFooter();
+    hideSedesInFooter();
+    initCoverflow3D();
+    initScrollAnimations();
+});
+
+// === 3D CYLINDER CAROUSEL - GALERÍA INFINITA ===
+class CylinderCarousel3D {
+    constructor() {
+        this.gallery = document.getElementById('scene3D');
+        this.track = document.getElementById('cylinderTrack');
+        this.prevBtn = document.getElementById('cylinderPrevBtn');
+        this.nextBtn = document.getElementById('cylinderNextBtn');
+
+        if (!this.gallery || !this.track) return;
+
+        this.cards = Array.from(this.track.querySelectorAll('.cylinder-card'));
+        this.numCards = this.cards.length;
+        this.theta = 360 / this.numCards; // Ángulo entre cada tarjeta
+        this.radius = 0;
+        this.currentAngle = 0; // Ángulo total girado
+        this.currentIndex = 0; // Índice visual actual
+
+        // Variables para arrastrar
+        this.isDragging = false;
+        this.hasDragged = false;
+        this.startX = 0;
+        this.currentX = 0;
+        this.dragSensitivity = 0.5;
+        this.startAngle = 0;
+
+        this.init();
+    }
+
+    init() {
+        this.calculateRadius();
+        this.positionCards();
+        this.attachEventListeners();
+        this.updateActiveCard();
+        this.rotateCarousel(false);
+    }
+
+    calculateRadius() {
+        // Tarjeta tiene ancho fijo de 520px (CSS)
+        const CARD_WIDTH = 520;
+        // Radio correcto para que las tarjetas no se solapen ni queden muy separadas
+        this.radius = Math.round((CARD_WIDTH / 2) / Math.tan(Math.PI / this.numCards)) + 100;
+    }
+
+    positionCards() {
+        this.cards.forEach((card, i) => {
+            const cardAngle = this.theta * i;
+            /*
+             * Posición 3D correcta:
+             * 1. Rotamos la tarjeta alrededor del eje Y del track
+             * 2. La desplazamos hacia afuera (translateZ) por el radio
+             * El track es un nodo 0x0 en el centro => cada tarjeta queda
+             * en su posición orbitando alrededor de ese punto central.
+             */
+            card.style.transform = `rotateY(${cardAngle}deg) translateZ(${this.radius}px)`;
+        });
+        /*
+         * No necesitamos transformOrigin en el track:
+         * su tamaño es 0x0, el origen ya es su centro.
+         */
+    }
+
+    attachEventListeners() {
+        // Controles de botones
+        if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.rotateBy(-1));
+        if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.rotateBy(1));
+
+        // Drag con mouse
+        this.gallery.addEventListener('mousedown', (e) => this.dragStart(e));
+        document.addEventListener('mousemove', (e) => this.dragMove(e));
+        document.addEventListener('mouseup', (e) => this.dragEnd(e));
+
+        // Swipe con touch
+        this.gallery.addEventListener('touchstart', (e) => this.dragStart(e), { passive: false });
+        document.addEventListener('touchmove', (e) => this.dragMove(e), { passive: false });
+        document.addEventListener('touchend', (e) => this.dragEnd(e));
+
+        // Recalcular al cambiar el tamaño de la ventana
+        window.addEventListener('resize', () => {
+            this.calculateRadius();
+            this.positionCards();
+            this.rotateCarousel(false);
+        });
+
+        // Click en tarjetas específicas para navegar o traerlas al frente
+        this.cards.forEach((card, i) => {
+            // Prevent image drag
+            card.querySelectorAll('img').forEach(img => {
+                img.addEventListener('dragstart', (e) => e.preventDefault());
+            });
+
+            card.addEventListener('click', (e) => {
+                // Si se arrastró, no hacer nada
+                if (this.hasDragged) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    return;
+                }
+
+                if (i === this.currentIndex) {
+                    // Si ya está activa frente a mí, ir al link
+                    const link = card.dataset.link;
+                    if (link) window.location.href = link;
+                } else {
+                    // Si está al lado, girar hacia ella
+                    let diff = i - this.currentIndex;
+                    // Ajustar para el camino más corto
+                    if (diff > this.numCards / 2) diff -= this.numCards;
+                    if (diff < -this.numCards / 2) diff += this.numCards;
+                    this.rotateBy(diff);
+                }
+            });
+        });
+    }
+
+    rotateBy(direction) {
+        this.currentIndex = (this.currentIndex + direction + this.numCards) % this.numCards;
+        this.currentAngle -= direction * this.theta;
+        this.rotateCarousel(true);
+        this.updateActiveCard();
+    }
+
+    dragStart(e) {
+        e.preventDefault(); // Evitar selección de texto y arrastre nativo de imágenes
+        this.isDragging = true;
+        this.hasDragged = false;
+        this.startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        this.startAngle = this.currentAngle;
+
+        this.track.style.transition = 'none';
+        this.gallery.style.cursor = 'grabbing';
+    }
+
+    dragMove(e) {
+        if (!this.isDragging) return;
+        e.preventDefault(); // Evitar scroll de la página
+
+        this.currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        const diffX = this.currentX - this.startX;
+
+        // Marcar que hubo movimiento real (umbral de 5px)
+        if (Math.abs(diffX) > 5) {
+            this.hasDragged = true;
+        }
+
+        // Girar de forma dinámica y suave según cuánto arrastramos
+        this.currentAngle = this.startAngle + (diffX * this.dragSensitivity);
+        this.track.style.transform = `translateZ(${-this.radius}px) rotateY(${this.currentAngle}deg)`;
+    }
+
+    dragEnd() {
+        if (!this.isDragging) return;
+        this.isDragging = false;
+        this.gallery.style.cursor = 'grab';
+
+        // Ajustar al ángulo (tarjeta) más cercano al soltar
+        const exactIndex = Math.round(this.currentAngle / -this.theta);
+
+        // Actualizar el índice garantizando valores positivos (módulo)
+        this.currentIndex = ((exactIndex % this.numCards) + this.numCards) % this.numCards;
+
+        // Fijar en una posición exacta
+        this.currentAngle = exactIndex * -this.theta;
+
+        this.rotateCarousel(true);
+        this.updateActiveCard();
+    }
+
+    rotateCarousel(animate = true) {
+        this.track.style.transition = animate ? 'transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)' : 'none';
+        this.track.style.transform = `translateZ(${-this.radius}px) rotateY(${this.currentAngle}deg)`;
+    }
+
+    updateActiveCard() {
+        this.cards.forEach((card, i) => {
+            if (i === this.currentIndex) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+    }
+}
+
+function initCoverflow3D() {
+    new CylinderCarousel3D();
+}
+
+// === SCROLL ANIMATIONS - Elementos aparecen según scroll ===
+function initScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('scroll-animated');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observar todos los elementos con data-scroll-animate
+    document.querySelectorAll('[data-scroll-animate]').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// === INFINITE SLIDER (SMOOTH CONTINUOUS MARQUEE) ===
+class ContinuousInfiniteSlider {
+    constructor() {
+        this.slider = document.getElementById('infiniteSlider');
+        this.container = document.querySelector('.slider-container');
+        if (!this.slider || !this.container) return;
+
+        this.items = Array.from(this.slider.querySelectorAll('.slider-item'));
+        if (this.items.length === 0) return;
+
+        this.position = 0;
+        this.speed = 0.8; // Velocidad del scroll automático
+        this.isHovered = false;
+        this.isDragging = false;
+        this.dragStartX = 0;
+
+        this.init();
+    }
+
+    init() {
+        // Clonar elementos para crear el efecto infinito (2 copias extra = 3 sets en total)
+        this.cloneItems();
+
+        this.attachEventListeners();
+        this.startAnimation();
+    }
+
+    cloneItems() {
+        const clones1 = this.items.map(item => item.cloneNode(true));
+        const clones2 = this.items.map(item => item.cloneNode(true));
+
+        clones1.forEach(clone => this.slider.appendChild(clone));
+        clones2.forEach(clone => this.slider.appendChild(clone));
+
+        this.allItems = Array.from(this.slider.querySelectorAll('.slider-item'));
+    }
+
+    attachEventListeners() {
+        // Pausar auto-scroll al pasar el mouse
+        this.container.addEventListener('mouseenter', () => this.isHovered = true);
+        this.container.addEventListener('mouseleave', () => {
+            this.isHovered = false;
+            this.isDragging = false;
+            this.container.style.cursor = 'grab';
+        });
+
+        // Control de Drag y Touch
+        const startDrag = (e) => {
+            if (e.target.tagName.toLowerCase() === 'img') e.preventDefault();
+            this.isDragging = true;
+            this.container.style.cursor = 'grabbing';
+            this.dragStartX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        };
+
+        const moveDrag = (e) => {
+            if (!this.isDragging) return;
+            e.preventDefault();
+            const currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const diff = currentX - this.dragStartX;
+
+            this.position -= diff;
+            this.dragStartX = currentX;
+            this.updateTransform();
+        };
+
+        const stopDrag = () => {
+            this.isDragging = false;
+            this.container.style.cursor = 'grab';
+        };
+
+        this.container.addEventListener('mousedown', startDrag);
+        window.addEventListener('mousemove', moveDrag);
+        window.addEventListener('mouseup', stopDrag);
+
+        this.container.addEventListener('touchstart', startDrag, { passive: true });
+        window.addEventListener('touchmove', moveDrag, { passive: false });
+        window.addEventListener('touchend', stopDrag);
+
+        // Soporte para Trackpad (Gesto de dos dedos)
+        this.container.addEventListener('wheel', (e) => {
+            // Si el scroll horizontal es mayor al vertical, es un gesto de galería (prevenir scroll de página)
+            if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+                e.preventDefault();
+            }
+
+            // Usar deltaX para scroll horizontal, sino usar deltaY si usan un ratón común sobre él
+            const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+            this.position += delta;
+            this.updateTransform();
+        }, { passive: false });
+    }
+
+    startAnimation() {
+        const animate = () => {
+            if (!this.isHovered && !this.isDragging) {
+                this.position += this.speed;
+            }
+            this.updateTransform();
+            requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+    }
+
+    updateTransform() {
+        if (this.items.length === 0) return;
+
+        // Medir ancho dinámicamente usando offset del primer clon vs original
+        const firstItem = this.items[0];
+        const firstClone = this.allItems[this.items.length];
+
+        if (!firstItem || !firstClone) return;
+
+        const setWidth = firstClone.offsetLeft - firstItem.offsetLeft;
+        if (setWidth <= 0) return;
+
+        // Logica de looping infinito
+        if (this.position >= setWidth) {
+            this.position -= setWidth;
+        } else if (this.position < 0) {
+            this.position += setWidth;
+        }
+
+        this.slider.style.transform = `translate3d(${-this.position}px, 0, 0)`;
+    }
+}
+
+// Inicializar slider
+document.addEventListener('DOMContentLoaded', () => {
+    new ContinuousInfiniteSlider();
+});
