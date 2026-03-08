@@ -163,20 +163,20 @@
     color: var(--color-white);
 }
 
-.tag-academic {
-    background-color: var(--color-primary);
-}
-
-.tag-sports {
-    background-color: #27ae60;
-}
-
-.tag-culture {
+.tag-culturales {
     background-color: #9b59b6;
 }
 
-.tag-institutional {
-    background-color: #e67e22;
+.tag-deportivas {
+    background-color: #27ae60;
+}
+
+.tag-parroquiales {
+    background-color: #f39c12;
+}
+
+.tag-sedes {
+    background-color: #e74c3c;
 }
 
 .date {
@@ -312,20 +312,20 @@
     letter-spacing: 0.5px;
 }
 
-.category-sports {
-    color: #27ae60;
-}
-
-.category-culture {
+.category-culturales {
     color: #9b59b6;
 }
 
-.category-institutional {
-    color: #e67e22;
+.category-deportivas {
+    color: #27ae60;
 }
 
-.category-academic {
-    color: var(--color-primary);
+.category-parroquiales {
+    color: #f39c12;
+}
+
+.category-sedes {
+    color: #e74c3c;
 }
 
 .card-date {
