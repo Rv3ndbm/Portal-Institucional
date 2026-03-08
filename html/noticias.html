@@ -164,9 +164,9 @@
 
     <!-- News Grid -->
     <section class="news-list container">
-        <div class="news-grid">
-            <!-- News Item 1 -->
-            <article class="news-card">
+        <div class="news-grid" id="newsGrid">
+            <!-- 1. Encuentro artístico cultural (Culturales) -->
+            <article class="news-card" data-category="culturales">
                 <div class="card-image">
                     <div class="card-image-placeholder" style="background: linear-gradient(45deg, #1e3c72, #2a5298);">
                         <i class="fas fa-theater-masks"></i>
@@ -178,15 +178,20 @@
                         <span class="card-date">05 Feb, 2026</span>
                     </div>
                     <h3 class="card-title">Encuentro Artístico y Cultural</h3>
-                    <p class="card-excerpt">
-                        Gran participación de nuestros estudiantes en el festival municipal de arte y música.
-                    </p>
-                    <a href="#" class="card-link">Leer más</a>
+                    <p class="card-excerpt">Gran participación de nuestros estudiantes en el festival municipal de arte
+                        y música.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Nuestros estudiantes brillaron en el festival municipal demostrando sus talentos artísticos.
+                            Hubo presentaciones de teatro, música y danza folclórica.</p>
+                        <p>La institución continúa apoyando la expresión artística como pilar fundamental en la
+                            educación integral de nuestra comunidad estudiantil.</p>
+                    </div>
                 </div>
             </article>
 
-            <!-- News Item 2 -->
-            <article class="news-card">
+            <!-- 2. Campeonato intercolegial de fútbol (Deportivas) -->
+            <article class="news-card" data-category="deportivas">
                 <div class="card-image">
                     <div class="card-image-placeholder" style="background: linear-gradient(45deg, #dc143c, #ff4757);">
                         <i class="fas fa-futbol"></i>
@@ -198,15 +203,19 @@
                         <span class="card-date">01 Feb, 2026</span>
                     </div>
                     <h3 class="card-title">Campeonato Intercolegiado de Fútbol</h3>
-                    <p class="card-excerpt">
-                        Nuestra institución se consagra campeona en la categoría juvenil.
-                    </p>
-                    <a href="#" class="card-link">Leer más</a>
+                    <p class="card-excerpt">Nuestra institución se consagra campeona en la categoría juvenil.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Con un marcador final de 3 a 1, nuestro equipo de fútbol masculino se coronó campeón en el
+                            torneo intercolegiado de la ciudad.</p>
+                        <p>Felicitamos a todos los jugadores y al cuerpo técnico por su disciplina, trabajo en equipo y
+                            dedicación a lo largo de este exigente campeonato.</p>
+                    </div>
                 </div>
             </article>
 
-            <!-- News Item 3 -->
-            <article class="news-card">
+            <!-- 3. Jornada de solidaridad comunitaria (Parroquiales) -->
+            <article class="news-card" data-category="parroquiales">
                 <div class="card-image">
                     <div class="card-image-placeholder" style="background: linear-gradient(45deg, #f39c12, #e67e22);">
                         <i class="fas fa-church"></i>
@@ -218,15 +227,20 @@
                         <span class="card-date">28 Ene, 2026</span>
                     </div>
                     <h3 class="card-title">Jornada de Solidaridad Comunitaria</h3>
-                    <p class="card-excerpt">
-                        Apoyo conjunto entre la parroquia y los estudiantes para ayudar a familias vulnerables.
-                    </p>
-                    <a href="#" class="card-link">Leer más</a>
+                    <p class="card-excerpt">Apoyo conjunto entre la parroquia y los estudiantes para ayudar a familias
+                        vulnerables.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Una exitosa jornada de recolección de víveres y ropa se llevó a cabo en conjunto con la
+                            parroquia local, logrando beneficiar a más de 50 familias de la comunidad.</p>
+                        <p>Nuestros estudiantes demostraron un profundo sentido de solidaridad y empatía, reafirmando
+                            los valores que promovemos en nuestra institución.</p>
+                    </div>
                 </div>
             </article>
 
-            <!-- News Item 4 -->
-            <article class="news-card">
+            <!-- 4. Mejoras en la infraestructura (Sedes) -->
+            <article class="news-card" data-category="sedes">
                 <div class="card-image">
                     <div class="card-image-placeholder" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">
                         <i class="fas fa-school"></i>
@@ -238,10 +252,264 @@
                         <span class="card-date">20 Ene, 2026</span>
                     </div>
                     <h3 class="card-title">Mejoras en la Infraestructura de la Sede San Isidro</h3>
-                    <p class="card-excerpt">
-                        Inauguración de nuevas aulas y dotación tecnológica para mejorar la calidad educativa.
+                    <p class="card-excerpt">Inauguración de nuevas aulas y dotación tecnológica para mejorar la calidad
+                        educativa.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>La sede San Isidro ahora cuenta con tres nuevas aulas interactivas completamente equipadas
+                            con pantallas inteligentes y conexión a internet de alta velocidad.</p>
+                        <p>Estas mejoras de infraestructura apuntan a brindar espacios más cómodos y modernos para
+                            optimizar el aprendizaje de nuestros alumnos.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 5. Noticia destacada: Inicia el año escolar 2026 (Sedes) -->
+            <article class="news-card" data-category="sedes">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #3498db, #2980b9);">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">10 Ene, 2026</span>
+                    </div>
+                    <h3 class="card-title">Inicia el Año Escolar 2026</h3>
+                    <p class="card-excerpt">Damos la bienvenida a todos nuestros estudiantes en todas las sedes a un
+                        nuevo ciclo escolar.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Con gran entusiasmo iniciamos este nuevo año escolar 2026 en todas nuestras sedes.
+                            Directivos, docentes y personal administrativo hemos preparado todo para recibir a nuestros
+                            alumnos.</p>
+                        <p>Nos esperan nuevos retos académicos y proyectos que fortalecerán nuestra gran comunidad
+                            educativa. ¡Bienvenidos!</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 6. Red comunitaria (Parroquiales) -->
+            <article class="news-card" data-category="parroquiales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-parroquiales">Parroquiales</span>
+                        <span class="card-date">08 Ene, 2026</span>
+                    </div>
+                    <h3 class="card-title">Proyecto Red Comunitaria</h3>
+                    <p class="card-excerpt">Creación de redes de apoyo emocional y espiritual para jóvenes en nuestro
+                        sector.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Se ha lanzado oficialmente la iniciativa de "Red Comunitaria", un espacio diseñado por grupos
+                            parroquiales y directivos para ofrecer atención y acompañamiento a los jóvenes.</p>
+                        <p>Este proyecto incluye charlas, actividades recreativas y consejería personalizada orientada
+                            al bienestar integral.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 7. Feria de ciencia y creatividad estudiantil (Culturales) -->
+            <article class="news-card" data-category="culturales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #1abc9c, #16a085);">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">02 Mar, 2026</span>
+                    </div>
+                    <h3 class="card-title">Feria de Ciencia y Creatividad Estudiantil</h3>
+                    <p class="card-excerpt">Exposición de proyectos científicos innovadores fabricados con materiales
+                        reciclables.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>La imaginación no tiene límites, y así lo demostraron los alumnos durante la Feria de Ciencia
+                            Anual. Se presentaron más de 40 proyectos enfocados en energías renovables y reciclaje.</p>
+                        <p>Invitamos a la comunidad a seguir fomentando la investigación y la conciencia ambiental desde
+                            las aulas.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 8. Festival de danza y música escolar (Culturales) -->
+            <article class="news-card" data-category="culturales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #f1c40f, #f39c12);">
+                        <i class="fas fa-music"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">25 Feb, 2026</span>
+                    </div>
+                    <h3 class="card-title">Festival de Danza y Música Escolar</h3>
+                    <p class="card-excerpt">Color, ritmo y tradición se vivieron en la presentación anual de ritmos
+                        colombianos.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>El coliseo principal fue el escenario de una hermosa muestra de danzas folclóricas y
+                            ensambles musicales preparados por los estudiantes bajo la guía de sus maestros de arte.</p>
+                        <p>El público asistente disfrutó de cumbias, pasillos y bambucos, celebrando nuestra rica
+                            herencia cultural y musical.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 9. Torneo interno de baloncesto (Deportivas) -->
+            <article class="news-card" data-category="deportivas">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #e67e22, #d35400);">
+                        <i class="fas fa-basketball-ball"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-deportivas">Deportivas</span>
+                        <span class="card-date">18 Feb, 2026</span>
+                    </div>
+                    <h3 class="card-title">Torneo Interno de Baloncesto</h3>
+                    <p class="card-excerpt">Emocionantes encuentros deportivos entre los grados décimo y once.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Se dio inicio al torneo de baloncesto interno que busca promover la actividad física y el
+                            sano esparcimiento en nuestras horas extracurriculares.</p>
+                        <p>Los equipos han mostrado un gran nivel de juego limpio y camaradería, valores fundamentales
+                            de nuestro programa deportivo.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 10. Jornada deportiva intersedes (Deportivas) -->
+            <article class="news-card" data-category="deportivas">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #2ecc71, #27ae60);">
+                        <i class="fas fa-running"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-deportivas">Deportivas</span>
+                        <span class="card-date">12 Feb, 2026</span>
+                    </div>
+                    <h3 class="card-title">Jornada Deportiva Intersedes</h3>
+                    <p class="card-excerpt">Integración deportiva y recreativa entre los estudiantes de todas nuestras
+                        sedes escolares.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Las diferentes sedes se unieron en un festival de atletismo y deportes de conjunto,
+                            estrechando lazos de amistad entre los alumnos.</p>
+                        <p>Este tipo de jornadas continuarán realizándose bimensualmente para mantener la unidad
+                            institucional y la salud física de nuestros jóvenes.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 11. Jornada de reflexión y convivencia escolar (Parroquiales) -->
+            <article class="news-card" data-category="parroquiales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #95a5a6, #7f8c8d);">
+                        <i class="fas fa-people-arrows"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-parroquiales">Parroquiales</span>
+                        <span class="card-date">22 Feb, 2026</span>
+                    </div>
+                    <h3 class="card-title">Jornada de Reflexión y Convivencia Escolar</h3>
+                    <p class="card-excerpt">Actividades guiadas para fortalecer los lazos afectivos y el respeto mutuo.
                     </p>
-                    <a href="#" class="card-link">Leer más</a>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Guiados por el equipo de pastoral, docentes y alumnos de básica secundaria participaron de un
+                            retiro espiritual de media jornada.</p>
+                        <p>Se abordaron temas como la tolerancia, la prevención del acoso escolar y la importancia de la
+                            paz interior y social.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 12. Actividad solidaria con la comunidad (Parroquiales) -->
+            <article class="news-card" data-category="parroquiales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #e84393, #d63031);">
+                        <i class="fas fa-box-open"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-parroquiales">Parroquiales</span>
+                        <span class="card-date">15 Feb, 2026</span>
+                    </div>
+                    <h3 class="card-title">Actividad Solidaria con la Comunidad</h3>
+                    <p class="card-excerpt">Entrega de kits escolares y alimentos a zonas vulnerables del municipio.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Gracias al aporte voluntario de padres y estudiantes, logramos donar más de 100 kits
+                            escolares a niños de bajos recursos.</p>
+                        <p>La generosidad de la familia Alzatista sigue marcando la diferencia en nuestro entorno
+                            aportando esperanza a quienes más lo necesitan.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 13. Mejoras en la biblioteca de la sede primaria (Sedes) -->
+            <article class="news-card" data-category="sedes">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #0984e3, #74b9ff);">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">28 Feb, 2026</span>
+                    </div>
+                    <h3 class="card-title">Mejoras en la Biblioteca de la Sede Primaria</h3>
+                    <p class="card-excerpt">Nuevos rincones de lectura y ampliación del catálogo infantil para los más
+                        pequeños.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Hemos remodelado la biblioteca de nuestra sede infantil, añadiendo cojines, estantes
+                            accesibles y una nueva dotación de cuentos ilustrados.</p>
+                        <p>El objetivo es despertar el amor por la lectura en las primeras etapas escolares, ofreciendo
+                            un ambiente mágico e invitante.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 14. Actividades ambientales en la sede rural (Sedes) -->
+            <article class="news-card" data-category="sedes">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #00b894, #55efc4);">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">20 Feb, 2026</span>
+                    </div>
+                    <h3 class="card-title">Actividades Ambientales en la Sede Rural</h3>
+                    <p class="card-excerpt">Jornada de reforestación y creación de huertas orgánicas institucionales.
+                    </p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Los alumnos de la sede rural participaron de una valiosa jornada de siembra de árboles
+                            nativos en los alrededores del colegio.</p>
+                        <p>Además, se establecieron las bases para la nueva huerta comunitaria, que servirá de
+                            laboratorio vivo para sus clases de ciencias naturales.</p>
+                    </div>
                 </div>
             </article>
         </div>
@@ -250,6 +518,25 @@
             <button class="btn-load-more">Cargar Más Noticias</button>
         </div>
     </section>
+
+    <!-- News Modal -->
+    <div id="newsModal" class="news-modal" role="dialog" aria-modal="true">
+        <div class="news-modal-overlay"></div>
+        <div class="news-modal-content">
+            <button class="news-modal-close" aria-label="Cerrar modal">&times;</button>
+            <div class="news-modal-image">
+                <div id="modalImageDisplay" class="modal-image-placeholder"></div>
+            </div>
+            <div class="news-modal-body">
+                <div class="news-modal-meta">
+                    <span id="modalCategoryBadge" class="category"></span>
+                    <span id="modalDateText" class="card-date"></span>
+                </div>
+                <h2 id="modalTitleText" class="news-modal-title"></h2>
+                <div id="modalFullContent" class="news-modal-text"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer (Copiado de deportes.html para consistencia) -->
     <footer class="main-footer">

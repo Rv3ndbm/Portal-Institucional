@@ -1,6 +1,6 @@
-/* ============================================
+﻿/* ============================================
    NOTICIAS SECTION STYLES
-   I.E. Gilberto Alzate Avendaño
+   I.E. Gilberto Alzate AvendaÃ±o
    ============================================ */
 
 /* === NEWS HERO SECTION === */
@@ -417,4 +417,160 @@
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* === NEWS MODAL === */
+.news-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.news-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.news-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    cursor: pointer;
+}
+
+.news-modal-content {
+    position: relative;
+    background-color: var(--color-white);
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    border-radius: var(--border-radius-xl);
+    overflow-y: auto;
+    box-shadow: var(--shadow-2xl);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-modal.show .news-modal-content {
+    transform: scale(1);
+}
+
+.news-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    font-size: 1.5rem;
+    color: var(--color-white);
+    cursor: pointer;
+    z-index: 1002;
+    transition: transform 0.3s ease, background 0.3s ease;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.news-modal-close:hover {
+    transform: scale(1.1);
+    background: rgba(0,0,0,0.8);
+}
+
+.news-modal-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    background-color: var(--color-gray-200);
+}
+
+.news-modal-image .modal-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.news-modal-body {
+    padding: var(--spacing-2xl);
+}
+
+.news-modal-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.news-modal-title {
+    font-size: 1.8rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary-dark);
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+}
+
+.news-modal-text {
+    color: var(--color-gray-700);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.news-modal-text p {
+    margin-bottom: 1rem;
+}
+
+.news-modal-text p:last-child {
+    margin-bottom: 0;
+}
+
+.btn-read-more-card {
+    background: transparent;
+    border: none;
+    color: var(--color-secondary);
+    font-weight: var(--font-weight-semibold);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0;
+    text-align: left;
+    display: inline-flex;
+    position: relative;
+    padding-bottom: 2px;
+    font-family: var(--font-family-base);
+}
+
+.btn-read-more-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-secondary);
+    transition: width 0.3s ease;
+}
+
+.news-card:hover .btn-read-more-card::after {
+    width: 100%;
 }
