@@ -1,0 +1,378 @@
+/* ============================================
+   SEARCH.CSS - COMPONENTE DE BÚSQUEDA RESPONSIVO
+   I.E. Gilberto Alzate Avendaño
+   Breakpoint móvil: 1024px (igual que el resto del proyecto)
+   ============================================ */
+
+/* ====================================================
+   BOTÓN DE LUPA EN EL NAV (solo visible en desktop)
+   ==================================================== */
+/* SEARCH: inicio */
+.search-toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-radius: var(--border-radius-full);
+    color: var(--color-white);
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    transition: background var(--transition-base) var(--ease-out),
+        border-color var(--transition-base) var(--ease-out),
+        transform var(--transition-base) var(--ease-out);
+    flex-shrink: 0;
+    font-size: 1rem;
+    margin-left: var(--spacing-md);
+    /* Animar el ícono internamente */
+    position: relative;
+    overflow: hidden;
+}
+
+.search-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: scale(1.08);
+}
+
+.search-toggle-btn:active {
+    transform: scale(0.96);
+}
+
+.search-toggle-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--color-white);
+}
+
+/* El ícono rota ligeramente cuando está activo */
+.search-toggle-btn.active i {
+    transform: rotate(15deg);
+}
+
+.search-toggle-btn i {
+    transition: transform var(--transition-base) var(--ease-out);
+}
+
+/* Ocultar la lupa en móvil */
+@media (max-width: 1024px) {
+    .search-toggle-btn {
+        display: none;
+    }
+}
+
+
+/* ====================================================
+   PANEL DE BÚSQUEDA DESKTOP (slide down bajo el header)
+   ==================================================== */
+.search-bar-panel {
+    background: var(--color-primary-dark);
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.38s var(--ease-out),
+        opacity 0.3s var(--ease-out);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /* Importante: el panel vive DENTRO de .main-header (fixed),
+       por lo que emerge debajo del nav sin desplazar el resto del contenido */
+}
+
+.search-bar-panel.search-open {
+    max-height: 80px;
+    opacity: 1;
+}
+
+/* Respeta prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .search-bar-panel {
+        transition: none;
+    }
+
+    .search-toggle-btn {
+        transition: none;
+    }
+}
+
+.search-bar-inner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    height: 80px;
+}
+
+/* Input de búsqueda */
+.search-input {
+    flex: 1;
+    height: 42px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--border-radius-full);
+    color: var(--color-white);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    padding: 0 var(--spacing-md);
+    outline: none;
+    transition: border-color var(--transition-base) var(--ease-out),
+        background var(--transition-base) var(--ease-out);
+    /* Estilos nativos del input de tipo search */
+    -webkit-appearance: none;
+}
+
+.search-input::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.search-input:focus {
+    border-color: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+/* Quitar el botón de cancelar nativo en webkit */
+.search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+}
+
+/* Normalizar el campo search */
+.search-input {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Botón submit */
+.search-submit-btn {
+    height: 42px;
+    padding: 0 var(--spacing-md);
+    background: var(--color-secondary);
+    border: none;
+    border-radius: var(--border-radius-full);
+    color: var(--color-white);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background var(--transition-base) var(--ease-out),
+        transform var(--transition-base) var(--ease-out);
+    white-space: nowrap;
+}
+
+.search-submit-btn:hover {
+    background: var(--color-secondary-dark);
+    transform: translateY(-1px);
+}
+
+.search-submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Ocultar el panel desktop en móvil */
+@media (max-width: 1024px) {
+    .search-bar-panel {
+        display: none;
+    }
+}
+
+
+/* ====================================================
+   BUSCADOR DENTRO DEL MENÚ HAMBURGUESA (solo móvil)
+   ==================================================== */
+.mobile-search-wrapper {
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.mobile-search-form {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--border-radius-full);
+    padding: 6px var(--spacing-sm);
+    transition: border-color var(--transition-base) var(--ease-out),
+        background var(--transition-base) var(--ease-out);
+}
+
+.mobile-search-form:focus-within {
+    border-color: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.mobile-search-form label {
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    padding-left: 2px;
+}
+
+.mobile-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--color-white);
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-sm);
+    outline: none;
+    min-width: 0;
+    -webkit-appearance: none;
+}
+
+.mobile-search-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.mobile-search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+}
+
+/* Normalizar el campo search móvil */
+.mobile-search-input {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.mobile-search-submit {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.75);
+    cursor: pointer;
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: color var(--transition-base) var(--ease-out);
+}
+
+.mobile-search-submit:hover {
+    color: var(--color-white);
+}
+
+/* Ocultar el buscador móvil en desktop */
+@media (min-width: 1025px) {
+    .mobile-search-wrapper {
+        display: none;
+    }
+}
+
+/* SEARCH: fin */
+
+/* ====================================================
+   SEARCH DROPDOWN — resultados de autocompletado
+   position:fixed => flota sobre cualquier contenido,
+   incluyendo el menú hamburguesa en móvil.
+   ==================================================== */
+
+/* Contenedor del dropdown */
+.search-dropdown {
+    position: fixed;
+    z-index: 99999;
+    background: #1a2340;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45),
+        0 2px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: none;
+    /* oculto por defecto */
+    flex-direction: column;
+    max-height: 320px;
+    overflow-y: auto;
+    /* scroll suave */
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Visible cuando tiene la clase --visible */
+.search-dropdown--visible {
+    display: flex;
+    animation: searchDropdownIn 0.18s ease-out both;
+}
+
+@keyframes searchDropdownIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ítem de resultado */
+.search-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    color: rgba(255, 255, 255, 0.88);
+    font-family: var(--font-family-base, 'Outfit', sans-serif);
+    font-size: 0.88rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.search-dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.search-dropdown-item::before {
+    content: '\f0a9';
+    /* fa-circle-arrow-right */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: var(--color-secondary, #e63946);
+    flex-shrink: 0;
+}
+
+.search-dropdown-item:hover,
+.search-dropdown-item:focus {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    outline: none;
+}
+
+/* Scrollbar personalizada (Webkit) */
+.search-dropdown::-webkit-scrollbar {
+    width: 4px;
+}
+
+.search-dropdown::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.search-dropdown::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+/* Mensaje "sin resultados" */
+.search-dropdown-empty {
+    padding: 14px 16px;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: var(--font-family-base, 'Outfit', sans-serif);
+    font-size: 0.85rem;
+    text-align: center;
+    font-style: italic;
+}

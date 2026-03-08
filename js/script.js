@@ -504,11 +504,328 @@ bodyObserver.observe(document.body, {
     attributeFilter: ['class']
 });
 
+// === SEARCH: inicio ===
+// COMPONENTE DE BÚSQUEDA RESPONSIVO CON AUTOCOMPLETADO
+// Arquitectura: un único componente con dos puntos de montaje controlado por CSS.
+// - Desktop (>1024px): botón lupa en el nav + panel slide-down bajo el header.
+// - Móvil (≤1024px): campo de búsqueda como primer ítem del menú hamburguesa.
+// El dropdown es position:fixed y flota sobre cualquier contenido, incluso el menú móvil.
+
+// ── UTILIDADES DE BÚSQUEDA ──────────────────────────────────────────────────
+
+/**
+ * Normaliza texto: minúsculas + quita tildes/diacríticos.
+ * Permite búsqueda "musica" que encuentre "música", etc.
+ */
+function normalizeText(str) {
+    return str
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
+}
+
+/**
+ * Filtra SEARCH_INDEX con la query del usuario.
+ * Busca en título y keywords (case-insensitive, sin tildes).
+ * @param {string} query
+ * @returns {Array} hasta 6 resultados
+ */
+function runSearch(query) {
+    if (!query || !query.trim() || typeof SEARCH_INDEX === 'undefined') return [];
+    const q = normalizeText(query.trim());
+    if (q.length < 2) return [];
+
+    return SEARCH_INDEX.filter(item => {
+        const titleMatch = normalizeText(item.titulo).includes(q);
+        const keywordMatch = item.keywords.some(kw => normalizeText(kw).includes(q));
+        return titleMatch || keywordMatch;
+    }).slice(0, 6);
+}
+
+/**
+ * Crea o actualiza el dropdown flotante de resultados bajo el input dado.
+ * Usa position:fixed para flotar sobre cualquier elemento.
+ * @param {Array}       results  — array de resultados de runSearch()
+ * @param {HTMLElement} anchor   — el <input> bajo el cual se posiciona el dropdown
+ * @param {Function}    onClose  — callback para cerrar el dropdown
+ */
+function renderDropdown(results, anchor, onClose) {
+    // Reutilizar o crear el contenedor del dropdown
+    let dropdown = document.getElementById('searchDropdown');
+    if (!dropdown) {
+        dropdown = document.createElement('div');
+        dropdown.id = 'searchDropdown';
+        dropdown.className = 'search-dropdown';
+        dropdown.setAttribute('role', 'listbox');
+        document.body.appendChild(dropdown);
+    }
+
+    // Vaciar contenido previo
+    dropdown.innerHTML = '';
+
+    if (results.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'search-dropdown-empty';
+        empty.textContent = 'No se encontraron resultados';
+        dropdown.appendChild(empty);
+    } else {
+        results.forEach((item, idx) => {
+            const el = document.createElement('a');
+            el.className = 'search-dropdown-item';
+            el.setAttribute('role', 'option');
+            el.setAttribute('href', item.url);
+            // Si es URL externa, abrir en nueva pestaña
+            if (item.url.startsWith('http')) {
+                el.setAttribute('target', '_blank');
+                el.setAttribute('rel', 'noopener noreferrer');
+            }
+            el.textContent = item.titulo;
+
+            el.addEventListener('click', () => {
+                closeDropdown();
+                if (typeof onClose === 'function') onClose();
+            });
+            dropdown.appendChild(el);
+        });
+    }
+
+    // Posicionar bajo el input
+    positionDropdown(dropdown, anchor);
+    dropdown.classList.add('search-dropdown--visible');
+}
+
+/**
+ * Posiciona el dropdown bajo el input anchor usando getBoundingClientRect().
+ */
+function positionDropdown(dropdown, anchor) {
+    const rect = anchor.getBoundingClientRect();
+    dropdown.style.top = (rect.bottom + 4) + 'px';
+    dropdown.style.left = rect.left + 'px';
+    dropdown.style.width = rect.width + 'px';
+}
+
+/** Oculta y vacía el dropdown */
+function closeDropdown() {
+    const dropdown = document.getElementById('searchDropdown');
+    if (dropdown) {
+        dropdown.classList.remove('search-dropdown--visible');
+        dropdown.innerHTML = '';
+    }
+}
+
+// ── COMPONENTE PRINCIPAL ─────────────────────────────────────────────────────
+
+function initSearchComponent() {
+    const header = document.getElementById('mainHeader');
+    const nav = document.getElementById('mainNav');
+    if (!header || !nav) return;
+
+    const navContainer = nav.querySelector('.nav-container');
+    if (!navContainer) return;
+
+    // Evitar doble inicialización
+    if (document.querySelector('.search-bar-panel')) return;
+
+    // ── 1. BOTÓN LUPA (desktop nav) ──────────────────────────────────────────
+    const searchToggleBtn = document.createElement('button');
+    searchToggleBtn.className = 'search-toggle-btn';
+    searchToggleBtn.setAttribute('aria-label', 'Abrir buscador');
+    searchToggleBtn.setAttribute('aria-expanded', 'false');
+    searchToggleBtn.setAttribute('aria-controls', 'searchBarPanel');
+    searchToggleBtn.innerHTML = '<i class="fas fa-magnifying-glass"></i>';
+    navContainer.appendChild(searchToggleBtn);
+
+    // ── 2. PANEL DESKTOP (slide down bajo el header) ─────────────────────────
+    const searchBarPanel = document.createElement('div');
+    searchBarPanel.className = 'search-bar-panel';
+    searchBarPanel.id = 'searchBarPanel';
+    searchBarPanel.setAttribute('role', 'search');
+    searchBarPanel.innerHTML = `
+        <div class="search-bar-inner">
+            <input
+                type="search"
+                class="search-input"
+                id="searchInputDesktop"
+                placeholder="Buscar en el sitio…"
+                aria-label="Buscar en el sitio"
+                autocomplete="off"
+            >
+            <button class="search-submit-btn" type="button" aria-label="Realizar búsqueda">
+                <i class="fas fa-magnifying-glass"></i>
+                Buscar
+            </button>
+        </div>
+    `;
+    header.appendChild(searchBarPanel);
+
+    // ── 3. BUSCADOR MÓVIL (primer hijo del nav-container) ────────────────────
+    const mobileSearchWrapper = document.createElement('div');
+    mobileSearchWrapper.className = 'mobile-search-wrapper';
+    mobileSearchWrapper.setAttribute('role', 'search');
+    mobileSearchWrapper.innerHTML = `
+        <form class="mobile-search-form" autocomplete="off">
+            <label for="searchInputMobile" aria-label="Buscar">
+                <i class="fas fa-magnifying-glass"></i>
+            </label>
+            <input
+                type="search"
+                class="mobile-search-input"
+                id="searchInputMobile"
+                placeholder="Buscar en el sitio…"
+                aria-label="Buscar en el sitio"
+            >
+            <button class="mobile-search-submit" type="submit" aria-label="Realizar búsqueda">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+    `;
+    navContainer.insertBefore(mobileSearchWrapper, navContainer.firstChild);
+
+    // ── ESTADO ───────────────────────────────────────────────────────────────
+    let isSearchOpen = false;
+
+    function openSearch() {
+        isSearchOpen = true;
+        searchBarPanel.classList.add('search-open');
+        searchToggleBtn.classList.add('active');
+        searchToggleBtn.setAttribute('aria-expanded', 'true');
+        searchToggleBtn.setAttribute('aria-label', 'Cerrar buscador');
+        const input = document.getElementById('searchInputDesktop');
+        if (input) setTimeout(() => input.focus(), 50);
+        setTimeout(() => {
+            document.addEventListener('click', handleSearchOutsideClick);
+        }, 50);
+    }
+
+    function closeSearch() {
+        isSearchOpen = false;
+        searchBarPanel.classList.remove('search-open');
+        searchToggleBtn.classList.remove('active');
+        searchToggleBtn.setAttribute('aria-expanded', 'false');
+        searchToggleBtn.setAttribute('aria-label', 'Abrir buscador');
+        closeDropdown();
+        document.removeEventListener('click', handleSearchOutsideClick);
+    }
+
+    function handleSearchOutsideClick(e) {
+        const dropdown = document.getElementById('searchDropdown');
+        const isInPanel = searchBarPanel.contains(e.target);
+        const isInToggle = searchToggleBtn.contains(e.target);
+        const isInDropdown = dropdown && dropdown.contains(e.target);
+        if (!isInPanel && !isInToggle && !isInDropdown) {
+            closeSearch();
+            closeDropdown();
+        }
+    }
+
+    // Toggle botón lupa
+    searchToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (isSearchOpen) closeSearch(); else openSearch();
+    });
+
+    // Cerrar con Escape (desktop)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (isSearchOpen) {
+                closeSearch();
+                searchToggleBtn.focus();
+            }
+            closeDropdown();
+        }
+    });
+
+    // Cerrar panel al cambiar a móvil
+    window.addEventListener('resize', () => {
+        if (window.innerWidth <= BREAKPOINT_TABLET && isSearchOpen) closeSearch();
+        // Reposicionar dropdown si está visible
+        const desktopInput = document.getElementById('searchInputDesktop');
+        const mobileInput = document.getElementById('searchInputMobile');
+        const dropdown = document.getElementById('searchDropdown');
+        if (dropdown && dropdown.classList.contains('search-dropdown--visible')) {
+            const activeInput = document.activeElement;
+            if (activeInput === desktopInput || activeInput === mobileInput) {
+                positionDropdown(dropdown, activeInput);
+            }
+        }
+    });
+
+    // ── AUTOCOMPLETADO — DESKTOP ─────────────────────────────────────────────
+    const desktopInput = document.getElementById('searchInputDesktop');
+    const desktopSubmitBtn = searchBarPanel.querySelector('.search-submit-btn');
+
+    if (desktopInput) {
+        // Mostrar dropdown mientras el usuario escribe
+        desktopInput.addEventListener('input', () => {
+            const q = desktopInput.value.trim();
+            if (q.length < 2) { closeDropdown(); return; }
+            const results = runSearch(q);
+            renderDropdown(results, desktopInput, closeSearch);
+        });
+
+        // Enter navega al primer resultado (o no hace nada si está vacío)
+        desktopInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const first = document.querySelector('.search-dropdown-item');
+                if (first) first.click();
+            }
+        });
+    }
+
+    if (desktopSubmitBtn) {
+        desktopSubmitBtn.addEventListener('click', () => {
+            const first = document.querySelector('.search-dropdown-item');
+            if (first) first.click();
+        });
+    }
+
+    // ── AUTOCOMPLETADO — MÓVIL ───────────────────────────────────────────────
+    const mobileForm = mobileSearchWrapper.querySelector('.mobile-search-form');
+    const mobileInput = document.getElementById('searchInputMobile');
+
+    if (mobileInput) {
+        mobileInput.addEventListener('input', () => {
+            const q = mobileInput.value.trim();
+            if (q.length < 2) { closeDropdown(); return; }
+            const results = runSearch(q);
+            renderDropdown(results, mobileInput, null);
+        });
+    }
+
+    if (mobileForm) {
+        mobileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const first = document.querySelector('.search-dropdown-item');
+            if (first) { first.click(); closeDropdown(); }
+        });
+    }
+
+    // Cerrar dropdown global al hacer clic fuera (también para móvil)
+    document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('searchDropdown');
+        if (!dropdown) return;
+        const activeInput = document.getElementById('searchInputMobile') ||
+            document.getElementById('searchInputDesktop');
+        if (
+            dropdown.classList.contains('search-dropdown--visible') &&
+            !dropdown.contains(e.target) &&
+            e.target !== desktopInput &&
+            e.target !== mobileInput
+        ) {
+            closeDropdown();
+        }
+    });
+}
+// === SEARCH: fin ===
+
 // === INICIALIZACIÓN ===
 document.addEventListener('DOMContentLoaded', () => {
     initHamburgerMenu();
+    initSearchComponent();
     console.log('🎯 Página web del I.E. Gilberto Alzate Avendaño cargada con éxito!');
     console.log('📱 Menú hamburguesa activado para móviles y tablets');
+    console.log('🔍 Componente de búsqueda responsivo activado');
 });
 
 // === ACCESIBILIDAD - NAVEGACIÓN CON TECLADO ===
