@@ -120,6 +120,7 @@
         background var(--transition-base) var(--ease-out);
     /* Estilos nativos del input de tipo search */
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .search-input::placeholder {
@@ -226,6 +227,7 @@
     outline: none;
     min-width: 0;
     -webkit-appearance: none;
+    appearance: none;
 }
 
 .mobile-search-input::placeholder {

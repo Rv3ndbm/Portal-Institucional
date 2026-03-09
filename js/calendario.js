@@ -84,6 +84,10 @@ function renderNews() {
         const card = document.createElement('div');
         card.className = 'news-card fade-in';
         card.style.animationDelay = `${index * 0.1}s`;
+        card.style.cursor = 'pointer';
+        card.onclick = () => {
+            window.location.href = 'noticias.html';
+        };
 
         card.innerHTML = `
             <span class="news-date">${item.date}</span>
@@ -106,6 +110,10 @@ function renderSports() {
         const card = document.createElement('div');
         card.className = 'sport-card fade-in';
         card.style.animationDelay = `${(index * 0.1) + 0.3}s`; // Un poco de retraso respecto a noticias
+        card.style.cursor = 'pointer';
+        card.onclick = () => {
+            window.location.href = 'deportes.html';
+        };
 
         // Fallback por si la imagen no carga o no existe
         const imgStyle = item.image ? `background-image: url('${item.image}');` : `background-color: var(--color-primary);`;

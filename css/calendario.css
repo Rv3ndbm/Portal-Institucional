@@ -3,6 +3,29 @@
    I.E. Gilberto Alzate Avendaño
    ============================================ */
 
+/* === COMPENSAR HEADER FIJO === */
+main {
+    position: relative;
+    z-index: 0;
+    isolation: isolate;
+    margin-top: 140px;
+    /* altura del header en PC */
+}
+
+@media (max-width: 1024px) {
+    main {
+        margin-top: 110px;
+        /* altura del header en tablet */
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        margin-top: 90px;
+        /* altura del header en móvil */
+    }
+}
+
 /* === HERO SECTION REDUCIDO === */
 .calendar-hero {
     position: relative;
