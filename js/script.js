@@ -890,7 +890,7 @@ function hideCurrentPageNav() {
         'sedes.html': 'sedes',
         // Páginas de sedes individuales
         'sede-san-isidro.html': 'sedes',
-        'sede-seguro-bolivar.html': 'sedes',
+        'sede-seguros-bolivar.html': 'sedes',
         'sede-tomas-carrasquilla.html': 'sedes',
         'sede-carlos-villa.html': 'sedes',
         'sede-central.html': 'sedes'

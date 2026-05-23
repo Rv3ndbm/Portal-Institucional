@@ -21,7 +21,7 @@ nav_content_template = '''<nav class="main-nav" id="mainNav">
                             <a href="{prefix}sedes.html" class="nav-link">SEDES</a>
                             <ul class="dropdown-menu">
                                 <li><a href="{prefix}sede-san-isidro.html">Sede san isidro</a></li>
-                                <li><a href="{prefix}sede-seguro-bolivar.html">Sede seguro bolívar</a></li>
+                                <li><a href="{prefix}sede-seguros-bolivar.html">Sede seguros bolívar</a></li>
                                 <li><a href="{prefix}sede-tomas-carrasquilla.html">Sede tomás carrasquilla</a></li>
                                 <li><a href="{prefix}sede-carlos-villa.html">Sede carlos villa</a></li>
                                 <li><a href="{prefix}sede-central.html">Sede central</a></li>
