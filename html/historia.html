@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historia - I.E. Gilberto Alzate Avendaño</title>
+    <link rel="icon" type="image/png" href="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png">
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/modern-theme.css">
@@ -147,6 +148,11 @@
         <!-- Cuadro de Historia -->
         <section id="historia" class="historia-container">
             <h2 class="section-title">LA HISTORIA DEL GILBERTO ALZATE AVENDAÑO</h2>
+            <button class="historia-toggle-btn active" id="historiaToggle">
+                <span>Mostrar Historia Completa</span>
+                <span class="toggle-icon">▼</span>
+            </button>
+            <div class="historia-content-accordion active" id="historiaAccordion">
             <div class="historia-text-box">
                 <div class="historia-paragraph">
                     <p>El 1 de octubre de 1958, 800 personas del barrio Aranjuez presentaron a la Honorable Asamblea
@@ -228,6 +234,7 @@
                         testimonio vivo del impacto positivo de nuestra institución, mirando hacia el futuro con la
                         misma pasión y dedicación que caracterizó sus inicios.</p>
                 </div>
+            </div>
             </div>
         </section>
 
@@ -329,6 +336,19 @@
                     <p><strong>Música:</strong> Luis Carlos Uribe</p>
                 </div>
             </div>
+            <div class="himno-audio-wrapper">
+                <div class="himno-audio-art">
+                    <!-- Puedes reemplazar esta imagen por la portada del himno -->
+                    <img src="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png" alt="Himno" loading="lazy">
+                </div>
+                <div class="himno-audio-content">
+                    <h3 class="himno-audio-title">Himno Institucional (reproductor)</h3>
+                    <audio id="himnoAudio" controls preload="none">
+                        <source src="../media/himno gilberto alzate avendaño.mp3" type="audio/mpeg">
+                        Tu navegador no soporta reproducir audio.
+                    </audio>
+                </div>
+            </div>
         </section>
 
         <!-- Escudo y Bandera -->
@@ -353,7 +373,7 @@
 
             <div class="simbolo-box">
                 <div class="simbolo-image">
-                    <img loading="lazy" src="../img/escudo.jpg" alt="Escudo Institucional">
+                    <img loading="lazy" src="../img/escudo.jpg" alt="Escudo Institucional" class="escudo-image">
                 </div>
                 <div class="simbolo-descripcion">
                     <h3>El Escudo</h3>
