@@ -14,13 +14,13 @@
 /* --- Hero Section --- */
 .hero-orientacion {
     position: relative;
-    height: 60vh;
-    min-height: 400px;
+    height: 48vh;
+    min-height: 320px;
     display: flex;
     align-items: center;
     justify-content: center;
     /* Ajuste para el header fijo */
-    margin-top: 80px;
+    margin-top: 180px;
     background: linear-gradient(135deg, #2c3e50, #4ca1af);
     overflow: hidden;
     color: #fff;
@@ -383,4 +383,29 @@
 .cta-footer .btn:hover {
     transform: translateY(-5px);
     background: #0056b3;
+}
+
+/* Responsive overrides for Hero */
+@media (max-width: 1024px) {
+    .hero-orientacion {
+        margin-top: 120px;
+        height: 35vh;
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-orientacion {
+        margin-top: 70px;
+        height: 35vh;
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-orientacion {
+        margin-top: 60px;
+        height: 30vh;
+        min-height: 200px;
+    }
 }

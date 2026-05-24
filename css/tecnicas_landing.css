@@ -5,12 +5,12 @@
 /* --- Hero Section --- */
 .hero-tecnicas {
     position: relative;
-    height: 60vh;
-    min-height: 400px;
+    height: 40vh;
+    min-height: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 80px;
+    margin-top: 180px;
     /* Ajuste para el header fijo */
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     overflow: hidden;
@@ -61,8 +61,8 @@
 /* --- Grid de Técnicas --- */
 .tecnicas-container {
     max-width: 1200px;
-    margin: -50px auto 80px;
-    /* Margen negativo para solapar con el hero */
+    margin: 0 auto 80px;
+    /* Sin margen negativo para alinear correctamente */
     padding: 0 20px;
     position: relative;
     z-index: 3;
@@ -235,10 +235,16 @@
 }
 
 /* --- Responsive --- */
+@media (max-width: 1024px) {
+    .hero-tecnicas {
+        margin-top: 120px;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-tecnicas {
-        height: 50vh;
-        margin-top: 60px;
+        height: 35vh;
+        margin-top: 70px;
     }
 
     .hero-title {
@@ -246,6 +252,6 @@
     }
 
     .tecnicas-container {
-        margin-top: -30px;
+        margin-top: 0;
     }
 }

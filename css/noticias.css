@@ -1,4 +1,4 @@
-﻿/* ============================================
+/* ============================================
    NOTICIAS SECTION STYLES
    I.E. Gilberto Alzate AvendaÃ±o
    ============================================ */
@@ -18,8 +18,7 @@
     justify-content: center;
     text-align: center;
     color: var(--color-white);
-    margin-top: var(--header-height-desktop);
-    /* Adjust for fixed header */
+    margin-top: 200px; /* Separación de 20px respecto al navbar de 180px en desktop */
     overflow: hidden;
 }
 
@@ -249,7 +248,7 @@
 
 .news-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
     gap: var(--spacing-lg);
 }
 
@@ -573,4 +572,95 @@
 
 .news-card:hover .btn-read-more-card::after {
     width: 100%;
+}
+
+/* === RESPONSIVE LAYOUT & MEDIA QUERIES === */
+
+@media (max-width: 1024px) {
+    .news-hero {
+        margin-top: 140px; /* Separación de 20px respecto al navbar de 120px en tablet */
+        height: 50vh;
+        min-height: 350px;
+        background-attachment: scroll; /* Previene bugs en dispositivos móviles */
+    }
+}
+
+@media (max-width: 768px) {
+    .news-hero {
+        margin-top: 90px; /* Separación de 20px respecto al navbar de 70px en móvil */
+        height: auto;
+        min-height: 280px;
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+
+    .news-hero-title {
+        font-size: var(--font-size-3xl);
+    }
+
+    .news-hero-description {
+        font-size: var(--font-size-base);
+    }
+
+    .featured-news {
+        padding-top: var(--spacing-xl);
+        padding-bottom: var(--spacing-lg);
+    }
+
+    .featured-image-container {
+        min-height: 220px;
+    }
+
+    .featured-image-placeholder {
+        min-height: 220px;
+        font-size: 3.5rem;
+    }
+
+    .featured-content {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .news-modal-content {
+        width: 95%;
+        max-height: 95vh;
+        border-radius: var(--border-radius-lg);
+    }
+
+    .news-modal-image {
+        height: 200px;
+    }
+
+    .news-modal-body {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .news-modal-title {
+        font-size: var(--font-size-xl);
+        margin-bottom: 1rem;
+    }
+
+    .news-modal-text {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .news-hero {
+        margin-top: 80px; /* Separación de 20px respecto al navbar de 60px en móvil pequeño */
+        min-height: 240px;
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .news-hero-title {
+        font-size: var(--font-size-2xl);
+    }
+
+    .news-filters {
+        gap: 0.5rem;
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: var(--font-size-xs);
+    }
 }

@@ -8,18 +8,18 @@
    El header fijo mide ~150px (header-top ~90px + nav ~54px)
    ============================================================ */
 body {
-    padding-top: 160px;
+    padding-top: 250px; /* Separado del navbar (~180px) por aprox 70px */
 }
 
 @media (max-width: 1024px) {
     body {
-        padding-top: 120px;
+        padding-top: 140px; /* Separado del navbar (~120px) por aprox 20px */
     }
 }
 
 @media (max-width: 768px) {
     body {
-        padding-top: 100px;
+        padding-top: 90px; /* Separado del navbar (~70px) por aprox 20px */
     }
 }
 

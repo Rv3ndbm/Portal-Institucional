@@ -6,12 +6,12 @@
 /* --- Hero Section --- */
 .hero-sedes {
     position: relative;
-    height: 70vh;
-    min-height: 500px;
+    height: 48vh;
+    min-height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: var(--header-height-desktop);
+    margin-top: 200px; /* Ajuste para el header fijo en desktop (con margen) */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -250,6 +250,10 @@
 
 /* --- Responsive --- */
 @media (max-width: 1024px) {
+    .hero-sedes {
+        margin-top: 140px;
+    }
+
     .sedes-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 24px;
@@ -268,8 +272,9 @@
 @media (max-width: 768px) {
     .hero-sedes {
         height: auto;
-        min-height: 320px;
-        padding: 140px 0 40px; /* Ajustado: 140px es suficiente para el header móvil usualmente */
+        min-height: 280px;
+        margin-top: 0;
+        padding: 120px 0 40px; /* Ajustado: 120px es suficiente para el header móvil usualmente */
         background-attachment: scroll;
     }
 

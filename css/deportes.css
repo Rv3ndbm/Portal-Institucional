@@ -15,11 +15,11 @@
 /* --- HERO SECTION DINÁMICO Y SUPER IMPACTANTE --- */
 .hero-deportes {
     position: relative;
-    height: clamp(600px, 110vh, 900px);
+    height: clamp(420px, 65vh, 550px);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 80px;
+    margin-top: 230px; /* Ajuste para el header fijo en desktop con separación */
     background: linear-gradient(135deg, #0a1620 0%, #1a2633 25%, #203a43 50%, #2c5364 75%, #1a3a52 100%);
     background-size: 400% 400%;
     overflow: hidden;
@@ -320,13 +320,24 @@
     letter-spacing: 1px;
 }
 
+.intro-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    max-width: 800px;
+    margin: 30px auto 0;
+    text-align: center;
+    font-weight: 400;
+}
+
 .section-title {
     font-size: clamp(2.5rem, 5vw, 3.5rem);
     font-weight: 800;
     color: var(--sport-primary);
     margin-bottom: 30px;
     position: relative;
-    display: inline-block;
+    display: block;
+    text-align: center;
 }
 
 /* Método 4: Subrayado animado */
@@ -1366,6 +1377,10 @@
 
 /* Responsive - Para tablets (1024px) */
 @media (max-width: 1024px) {
+    .hero-deportes {
+        margin-top: 140px;
+    }
+
     .curtain-gallery-container {
         height: 380px;
         gap: 8px;
@@ -1399,7 +1414,7 @@
 /* Responsive - Para móviles (768px) */
 @media (max-width: 768px) {
     .hero-deportes {
-        margin-top: 70px;
+        margin-top: 90px;
         height: clamp(400px, 90vh, 600px);
     }
 
@@ -1439,7 +1454,7 @@
 @media (max-width: 480px) {
     .hero-deportes {
         height: clamp(350px, 80vh, 500px);
-        margin-top: 60px;
+        margin-top: 80px;
     }
 
     .hero-title {
@@ -1720,9 +1735,8 @@
         display: flex;
     }
 
-    /* Hero */
     .hero-deportes {
-        margin-top: 70px;
+        margin-top: 90px;
         height: clamp(400px, 85vh, 550px);
         padding: 30px 0;
     }
@@ -1904,9 +1918,8 @@
    ======================================== */
 @media (max-width: 480px) {
 
-    /* Hero */
     .hero-deportes {
-        margin-top: 60px;
+        margin-top: 80px;
         height: clamp(350px, 75vh, 450px);
     }
 
