@@ -1,0 +1,492 @@
+﻿diff --git a/html/academico.html b/html/academico.html
+index 3d71f..49364 100644
+--- a/html/academico.html
++++ b/html/academico.html
+@@ -5,6 +5,7 @@
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Modalidad Acad├®mica - I.E. Gilberto Alzate Avenda├▒o</title>
++    <link rel="icon" type="image/png" href="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png">
+     <link rel="stylesheet" href="../css/styles.css">
+     <link rel="stylesheet" href="../css/variables.css">
+     <link rel="stylesheet" href="../css/academico.css">
+@@ -16,14 +17,11 @@
+     <!-- Header Principal -->
+     <header class="main-header" id="mainHeader">
+         <div class="header-background" id="headerBackground"></div>
+-
+         <div class="header-content">
+             <div class="header-top" id="headerTop">
+                 <div class="logo-title-container">
+                     <div class="logo-container">
+-                        <a href="index.html"><img loading="lazy"
+-                                src="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png"
+-                                alt="Logo Instituci├│n" class="logo"></a>
++                        <a href="index.html"><img loading="lazy" src="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png" alt="Logo Instituci├│n" class="logo"></a>
+                     </div>
+                     <div class="institution-name">
+                         <h1>I.E. GILBERTO ALZATE AVENDA├æO</h1>
+@@ -91,16 +89,11 @@
+                             <a href="otros-servicios.html" class="nav-link">OTROS SERVICIOS</a>
+                             <ul class="dropdown-menu">
+                                 <li><a href="https://luisarango64.wixsite.com/bibliositio">Biblioteca</a></li>
+-                                <li><a
+-                                        href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf">Manual
+-                                        de convivencia</a></li>
+-                                <li><a
+-                                        href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform">Formulario
+-                                        PQRSF</a></li>
++                                <li><a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf">Manual de convivencia</a></li>
++                                <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform">Formulario PQRSF</a></li>
+                                 <li><a href="https://www.youtube.com/@alzatevirtual8374/videos">Alzate virtual</a></li>
+                                 <li><a href="pre.html">Preinscripci├│n</a></li>
+-                                <li><a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508">Canal
+-                                        institucional</a></li>
++                                <li><a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508">Canal institucional</a></li>
+                                 <li><a href="contacto.html">Cont├íctanos</a></li>
+                             </ul>
+                         </li>
+@@ -113,208 +106,156 @@
+     <!-- MAIN CONTENT -->
+     <main>
+ 
+-        <!-- HERO -->
++        <!-- HERO SECTION MODERNO -->
+         <section class="hero-academico">
+             <div class="hero-overlay"></div>
++            <div class="hero-shapes">
++                <div class="shape shape-1"></div>
++                <div class="shape shape-2"></div>
++                <div class="shape shape-3"></div>
++            </div>
+             <div class="hero-content">
+-                <span class="hero-badge">I.E. Gilberto Alzate Avenda├▒o</span>
+-                <h1 class="hero-title">Modalidad<br>Acad├®mica</h1>
+-                <p class="hero-subtitle">Una formaci├│n integral, flexible y de alta calidad para quienes buscan
+-                    profundizar en el conocimiento sin una especializaci├│n t├®cnica.</p>
++                <span class="hero-badge"><i class="fas fa-graduation-cap"></i> Modalidad 100% Acad├®mica</span>
++                <h1 class="hero-title">Tu Camino<br>a la Universidad</h1>
++                <p class="hero-subtitle">Preparaci├│n integral enfocada en ICFES, ex├ímenes de admisi├│n y desarrollo de competencias acad├®micas de excelencia.</p>
++                <div class="hero-stats-quick">
++                    <div class="hero-stat">
++                        <span class="stat-icon"><i class="fas fa-book"></i></span>
++                        <span class="stat-text">Materia extra: Investigaci├│n</span>
++                    </div>
++                    <div class="hero-stat">
++                        <span class="stat-icon"><i class="fas fa-graduation-cap"></i></span>
++                        <span class="stat-text">Enfoque Universitario</span>
++                    </div>
++                </div>
+                 <div class="hero-cta-group">
+-                    <a href="#beneficios" class="btn-primary-hero">Conoce los Beneficios</a>
+-                    <a href="pre.html" class="btn-secondary-hero">Pre-Inscr├¡bete</a>
++                    <a href="#icfes-prep" class="btn-primary-hero">Descubre el Programa</a>
++                    <a href="pre.html" class="btn-secondary-hero">Pre-Inscr├¡bete Hoy</a>
+                 </div>
+             </div>
+         </section>
+ 
+-        <!-- STATS BAR -->
+-        <div class="stats-bar">
+-            <div class="stat-item">
+-                <span class="stat-number">+<span>1</span> h</span>
+-                <span class="stat-label">Extra por materia<br>a la semana</span>
+-            </div>
+-            <div class="stat-item">
+-                <span class="stat-number"><span>10</span></span>
+-                <span class="stat-label">├üreas del<br>conocimiento</span>
+-            </div>
+-            <div class="stat-item">
+-                <span class="stat-number"><span>100</span>%</span>
+-                <span class="stat-label">Formaci├│n<br>acad├®mica</span>
+-            </div>
+-            <div class="stat-item">
+-                <span class="stat-number"><span>+50</span></span>
+-                <span class="stat-label">A├▒os de<br>trayectoria</span>
+-            </div>
+-        </div>
+-
+-        <!-- INTRO -->
+-        <section class="acad-intro">
+-            <span class="section-label">┬┐Qu├® es?</span>
+-            <h2>La Modalidad Acad├®mica del Gilberto Alzate</h2>
+-            <p>La Modalidad Acad├®mica es el camino educativo para quienes desean una formaci├│n s├│lida y completa
+-                en todas las ├íreas del saber, sin estar vinculados a una especializaci├│n t├®cnica. A diferencia
+-                de las medias t├®cnicas, aqu├¡ se profundiza en materias como Matem├íticas, Ciencias, Humanidades,
+-                Ingl├®s y m├ís ÔÇô con una o dos horas adicionales por asignatura a la semana, garantizando un
+-                aprendizaje m├ís robusto y preparaci├│n ├│ptima para la educaci├│n superior.</p>
+-        </section>
+-
+-        <!-- BENEFITS SECTION -->
+-        <section class="benefits-section" id="beneficios">
+-            <div class="section-header-centered">
+-                <span class="section-label">┬┐Por qu├® elegirla?</span>
+-                <h2>Razones para escoger la Modalidad Acad├®mica</h2>
+-                <p>Una opci├│n dise├▒ada para potenciar tu conocimiento integral y prepararte para los retos del futuro.
+-                </p>
+-            </div>
+-
+-            <div class="benefits-grid">
+-                <div class="benefit-card">
+-                    <div class="benefit-icon">├░┼©ÔÇ£┼í</div>
+-                    <h3>Profundizaci├│n en Todas las ├üreas</h3>
+-                    <p>M├ís horas de Matem├íticas, Ciencias, Lengua, Ingl├®s y Ciencias Sociales: una a dos horas
+-                        adicionales por materia a la semana para afianzar el conocimiento.</p>
+-                </div>
+-
+-                <div class="benefit-card">
+-                    <div class="benefit-icon">├ó┬Å┬░</div>
+-                    <h3>Flexible para quienes Trabajan</h3>
+-                    <p>Jornada organizada pensando en estudiantes que trabajan, realizan oficios o tienen
+-                        responsabilidades fuera del colegio. Sin sacrificar la calidad educativa.</p>
++        <!-- ICFES & UNIVERSITY FOCUS SECTION -->
++        <section class="icfes-focus-section" id="icfes-prep">
++            <div class="icfes-container">
++                <div class="icfes-header">
++                    <span class="section-label"><i class="fas fa-bullseye"></i> Enfoque Estrat├®gico</span>
++                    <h2>ICFES y Preparaci├│n Universitaria</h2>
++                    <p>Dise├▒ado espec├¡ficamente para prepararte exitosamente para el ICFES y ex├ímenes de admisi├│n</p>
+                 </div>
+ 
+-                <div class="benefit-card">
+-                    <div class="benefit-icon">├░┼©┼¢ÔÇ£</div>
+-                    <h3>Preparaci├│n para la Universidad</h3>
+-                    <p>La modalidad Acad├®mica es la mejor carta de presentaci├│n para la educaci├│n superior.
+-                        Pruebas Saber, ICFES y ex├ímenes de admisi├│n tendr├ín menos obst├ículos para ti.</p>
++        <!-- WHY ACADEMIC SECTION -->
++        <section class="why-academic-section">
++            <div class="why-container">
++                <div class="why-header">
++                    <span class="section-label"><i class="fas fa-lightbulb"></i> ┬┐Por Qu├® Elegir?</span>
++                    <h2>La Opci├│n Inteligente para tu Futuro</h2>
+                 </div>
+ 
+-                <div class="benefit-card">
+-                    <div class="benefit-icon">├░┼©┼Æ┬ì</div>
+-                    <h3>Formaci├│n en Pensamiento Cr├¡tico</h3>
+-                    <p>Aprende a analizar, argumentar y proponer soluciones. Desarrollamos ciudadanos capaces de
+-                        comprender y transformar su entorno con criterio y valores.</p>
+-                </div>
+-
+-                <div class="benefit-card">
+-                    <div class="benefit-icon">├░┼©┬ñ┬Ø</div>
+-                    <h3>Ambiente Inclusivo</h3>
+-                    <p>Abierto a todos los estudiantes, sin importar su contexto socioecon├│mico, ritmo de
+-                        aprendizaje o situaci├│n laboral. La educaci├│n es un derecho para todos.</p>
+-                </div>
++                    <div class="reason-card-v2">
++                        <div class="reason-icon"><i class="fas fa-clock"></i></div>
++                        <h3>Flexible para Trabajadores</h3>
++                        <p>Jornada dise├▒ada para quienes trabajan sin sacrificar calidad acad├®mica.</p>
++                    </div>
+ 
+-                <div class="benefit-card">
+-                    <div class="benefit-icon">├░┼©ÔÇØ┬¼</div>
+-                    <h3>Sin Renuncia a la Ciencia ni el Arte</h3>
+-                    <p>Matem├íticas, F├¡sica, Qu├¡mica, Biolog├¡a, Literatura y Arte conviven en un curr├¡culo equilibrado
+-                        que desarrolla al ser humano de forma integral.</p>
++                    <div class="reason-card-v2">
++                        <div class="reason-icon"><i class="fas fa-people-arrows"></i></div>
++                        <h3>Comunidad Inclusiva</h3>
++                        <p>Abierto a todos con soporte especializado. Nadie se queda atr├ís.</p>
++                    </div>
+                 </div>
+             </div>
+         </section>
+ 
+         <!-- FOR WHO SECTION -->
+-        <section class="forwho-section">
++        <section class="forwho-section-v2">
+             <div class="forwho-wrapper">
+                 <div class="forwho-image-side" id="forwhoLeft">
+                     <div class="forwho-main-card">
+-                        <span class="big-icon">├░┼©┬Å┬½</span>
++                        <span class="big-icon"><i class="fas fa-users-line"></i></span>
+                         <h3>La Modalidad Acad├®mica es para ti</h3>
+-                        <p>Si tu meta es la universidad, si trabajas o tienes compromisos, si amas el conocimiento
+-                            sin fronteras t├®cnicas ÔÇö este es tu camino en el Gilberto Alzate.</p>
++                        <p>Si tu meta es la universidad, si trabajas o tienes compromisos, este es tu camino en el Gilberto Alzate.</p>
+                     </div>
+                 </div>
+ 
+                 <div class="forwho-content-side" id="forwhoRight">
+-                    <span class="section-label">┬┐Para qui├®n es?</span>
++                    <span class="section-label"><i class="fas fa-target"></i> ┬┐Para qui├®n es?</span>
+                     <h2>Ideal para estudiantes que...</h2>
+-                    <p>La Modalidad Acad├®mica es la opci├│n perfecta si te identificas con alguno de estos perfiles:</p>
+ 
+                     <ul class="forwho-list">
+                         <li>
+-                            <span class="list-icon">├░┼©ÔÇÖ┬╝</span>
+-                            <span>Trabajan o realizan alg├║n oficio que les impide permanecer mucho tiempo en la
+-                                Instituci├│n.</span>
++                            <span class="list-icon"><i class="fas fa-briefcase"></i></span>
++                            <span>Trabajan o realizan alg├║n oficio y necesitan jornada flexible</span>
+                         </li>
+                         <li>
+-                            <span class="list-icon">├░┼©┼¢┬»</span>
+-                            <span>Tienen como objetivo ingresar a la universidad y quieren llegar lo mejor preparados
+-                                posible.</span>
++                            <span class="list-icon"><i class="fas fa-bullseye"></i></span>
++                            <span>Tienen objetivo ingresar a la universidad</span>
+                         </li>
+                         <li>
+-                            <span class="list-icon">├░┼©ÔÇ£ÔÇô</span>
+-                            <span>Prefieren una Formaci├│n amplia en todas las materias antes que especializarse en un
+-                                ├írea t├®cnica.</span>
++                            <span class="list-icon"><i class="fas fa-book-open"></i></span>
++                            <span>Prefieren formaci├│n amplia en todas las materias</span>
+                         </li>
+                         <li>
+-                            <span class="list-icon">├░┼©┬Å┬á</span>
+-                            <span>Tienen responsabilidades familiares o del hogar que requieren mayor flexibilidad
+-                                horaria.</span>
++                            <span class="list-icon"><i class="fas fa-home"></i></span>
++                            <span>Tienen responsabilidades familiares que requieren flexibilidad</span>
+                         </li>
+                         <li>
+-                            <span class="list-icon">├░┼©┼Æ┼©</span>
+-                            <span>Quieren fortalecer habilidades como la argumentaci├│n, el an├ílisis y la resoluci├│n de
+-                                problemas.</span>
++                            <span class="list-icon"><i class="fas fa-lightbulb"></i></span>
++                            <span>Quieren fortalecer argumentaci├│n y resoluci├│n de problemas e investigaci├│n</span>
+                         </li>
+                         <li>
+-                            <span class="list-icon">├░┼©ÔÇ£┬Ø</span>
+-                            <span>Desean mejorar sus resultados en las Pruebas Saber y ex├ímenes de admisi├│n
+-                                universitarios.</span>
++                            <span class="list-icon"><i class="fas fa-chart-line"></i></span>
++                            <span>Desean mejorar resultados en ICFES y ex├ímenes de admisi├│n</span>
+                         </li>
+                     </ul>
+                 </div>
+             </div>
+         </section>
+-
+-        <!-- EVENTOS SECTION -->
+-        <section class="eventos-section" id="eventos">
+-            <div class="section-header-centered">
+-                <span class="section-label">Actividades</span>
+-                <h2>Eventos y Actividades Acad├®micas</h2>
+-                <p>El calendario Acad├®mico est├í lleno de espacios para el crecimiento intelectual, cultural y personal
+-                    de nuestros estudiantes.</p>
+-            </div>
+-
+-            <div class="eventos-grid">
+-                <div class="evento-card">
+-                    <div class="evento-img bg-blue">├░┼©┬ÅÔÇá</div>
+-                    <div class="evento-body">
+-                        <span class="evento-tag">Acad├®mico</span>
+-                        <h3>Olimpiadas del Conocimiento</h3>
+-                        <p>Competencias internas y externas en Matem├íticas, Ciencias y Lengua donde nuestros
+-                            estudiantes demuestran su talento y dedicaci├│n.</p>
+-                    </div>
++        <!-- LEARNING PROCESS SECTION -->
++        <section class="learning-process-section">
++            <div class="process-container">
++                <div class="process-header">
++                    <span class="section-label"><i class="fas fa-graduation-cap"></i> Nuestro Proceso</span>
++                    <h2>C├│mo Preparamos tu Futuro</h2>
+                 </div>
+ 
+-                <div class="evento-card">
+-                    <div class="evento-img bg-red">├░┼©ÔÇ£┬ú</div>
+-                    <div class="evento-body">
+-                        <span class="evento-tag">Cultura</span>
+-                        <h3>Feria de Emprendimiento y Proyectos</h3>
+-                        <p>Los estudiantes presentan sus investigaciones y proyectos ante la comunidad educativa,
+-                            desarrollando habilidades comunicativas y de pensamiento Cr├¡tico.</p>
++                <div class="process-timeline">
++                    <div class="process-step">
++                        <div class="step-number">1</div>
++                        <div class="step-icon"><i class="fas fa-magnifying-glass-chart"></i></div>
++                        <h3>Diagn├│stico Inicial</h3>
++                        <p>Evaluamos fortalezas, debilidades y objetivos universitarios</p>
+                     </div>
+-                </div>
+-
+-                <div class="evento-card">
+-                    <div class="evento-img bg-purple">├░┼©┼¢┬ñ</div>
+-                    <div class="evento-body">
+-                        <span class="evento-tag">Formaci├│n</span>
+-                        <h3>Jornadas de Orientaci├│n Vocacional</h3>
+-                        <p>Espacios para que los estudiantes de la modalidad Acad├®mica exploren carreras
+-                            universitarias, habilidades personales y oportunidades de futuro.</p>
++                    <div class="process-step">
++                        <div class="step-number">2</div>
++                        <div class="step-icon"><i class="fas fa-book-reader"></i></div>
++                        <h3>Ense├▒anza Estructurada</h3>
++                        <p>Clases especializadas con ├®nfasis en ICFES y horas extras</p>
++                    </div>
++                    <div class="process-step">
++                        <div class="step-number">3</div>
++                        <div class="step-icon"><i class="fas fa-user-tie"></i></div>
++                        <h3>Orientaci├│n Vocacional</h3>
++                        <p>Asesor├¡a en selecci├│n de carrera y universidades</p>
++                    </div>
++                    <div class="process-step">
++                        <div class="step-number">4</div>
++                        <div class="step-icon"><i class="fas fa-star"></i></div>
++                        <h3>Futuro Proceso Educativo</h3>
++                        <p>Acompa├▒amiento en procesos como el icfes como tambi├®n de admisi├│n final a las universidades</p>
+                     </div>
+                 </div>
+             </div>
+         </section>
+-
+-        <!-- CTA -->
+-        <section class="acad-cta">
++        <!-- CTA SECTION -->
++        <section class="acad-cta-v2">
+             <div class="cta-content">
+-                <h2>┬┐Listo para iniciar tu camino Acad├®mico?</h2>
+-                <p>├Ünete a la Instituci├│n Educativa Gilberto Alzate Avenda├▒o y forma parte de una comunidad
+-                    comprometida con la excelencia, la inclusi├│n y el futuro de Colombia.</p>
+-                <a href="pre.html" class="btn-cta">Pre-Inscr├¡bete Ahora</a>
++                <h2>┬┐Listo para tu Transformaci├│n Acad├®mica?</h2>
++                <p>├Ünete a la Modalidad Acad├®mica del Gilberto Alzate Avenda├▒o y forma parte de una comunidad de excelencia.</p>
++                <div class="cta-buttons">
++                    <a href="pre.html" class="btn-cta-primary">Comienza Hoy</a>
++                    <a href="contacto.html" class="btn-cta-secondary">M├ís Informaci├│n</a>
++                </div>
+             </div>
+         </section>
+ 
+@@ -323,11 +264,10 @@
+     <!-- Footer -->
+     <footer class="main-footer">
+         <div class="footer-container">
+-            <!-- Secci├│n 1: InFormaci├│n -->
++            <!-- Secci├│n 1: Informaci├│n -->
+             <div class="footer-section">
+                 <h3 class="footer-title">Sobre Nosotros</h3>
+-                <p class="footer-text">Instituci├│n educativa comprometida con la excelencia Acad├®mica y la Formaci├│n
+-                    integral de nuestros estudiantes.</p>
++                <p class="footer-text">Instituci├│n educativa comprometida con la excelencia acad├®mica y la formaci├│n integral de nuestros estudiantes.</p>
+                 <div class="footer-logo">
+                     <img loading="lazy" src="../img/logo del colegio.jpg" alt="Logo Instituci├│n">
+                 </div>
+@@ -352,13 +292,11 @@
+                     <li><a href="index.html">Inicio</a></li>
+                     <li><a href="historia.html">Nuestra Historia</a></li>
+                     <li><a href="departamentos.html">Departamentos</a></li>
+-                    <li><a href="tecnicas.html">Medias t├®cnicas</a></li>
++                    <li><a href="tecnicas.html">Medias T├®cnicas</a></li>
+                     <li><a href="academico.html">Modalidad Acad├®mica</a></li>
+                     <li><a href="sedes.html">Nuestras Sedes</a></li>
+                     <li><a href="deportes.html">Deportes</a></li>
+                     <li><a href="pre.html">Pre-Inscripci├│n</a></li>
+-                    <li><a href="https://www.youtube.com/@alzatevirtual8374/videos" target="_blank" rel="noopener noreferrer">Alzate Virtual</a>
+-                    </li>
+                 </ul>
+             </div>
+ 
+@@ -367,19 +305,16 @@
+                 <h3 class="footer-title">Contacto</h3>
+                 <div class="footer-contact">
+                     <div class="contact-item">
+-                        <span class="contact-label">├░┼©ÔÇ£┼¥ Tel├®fono:</span>
++                        <span class="contact-label"><i class="fas fa-phone"></i> Tel├®fono:</span>
+                         <p>+57 1 (555) 1234</p>
+                     </div>
+                     <div class="contact-item">
+-                        <span class="contact-label">├░┼©ÔÇ£┬º Email:</span>
++                        <span class="contact-label"><i class="fas fa-envelope"></i> Email:</span>
+                         <p><a href="mailto:info@alzate.edu.co">info@alzate.edu.co</a></p>
+                     </div>
+                     <div class="contact-item">
+-                        <span class="contact-label">├░┼©ÔÇ£┬ì Ubicaci├│n:</span>
+-                        <p><a href="https://maps.google.com/?q=Cl.+92+%2351a100,+Aranjuez,+Medell├¡n,+Antioquia" rel="noopener noreferrer"
+-                                target="_blank" class="location-link"
+-                                style="color: inherit; text-decoration: none; cursor: pointer; transition: color 0.3s;">Medell├¡n,
+-                                Antioquia</a></p>
++                        <span class="contact-label"><i class="fas fa-map-marker-alt"></i> Ubicaci├│n:</span>
++                        <p><a href="https://maps.google.com/?q=Medell├¡n" rel="noopener noreferrer" target="_blank">Medell├¡n, Antioquia</a></p>
+                     </div>
+                 </div>
+             </div>
+@@ -388,16 +323,10 @@
+             <div class="footer-section">
+                 <h3 class="footer-title">S├¡guenos</h3>
+                 <div class="social-links">
+-                    <a href="https://www.facebook.com/gilbertoalzate.tarde" target="_blank" class="social-icon facebook" rel="noopener noreferrer"
+-                        aria-label="Facebook"><img src="../img/facebook.png" alt="Facebook"></a>
+-                    <a href="https://www.instagram.com/elalzateviveporvos/" target="_blank" rel="noopener noreferrer"
+-                        class="social-icon instagram" aria-label="Instagram"><img src="../img/ig.png"
+-                            alt="Instagram"></a>
+-                    <a href="https://www.youtube.com/@alzatevirtual8374" target="_blank" class="social-icon youtube" rel="noopener noreferrer"
+-                        aria-label="YouTube"><img src="../img/yt.png" alt="YouTube"></a>
+-                    <a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508" target="_blank" rel="noopener noreferrer"
+-                        class="social-icon whatsapp" aria-label="WhatsApp"><img src="../img/whatsap.png"
+-                            alt="WhatsApp"></a>
++                    <a href="https://www.facebook.com/gilbertoalzate.tarde" target="_blank" class="social-icon facebook" rel="noopener noreferrer" aria-label="Facebook"><img src="../img/facebook.png" alt="Facebook"></a>
++                    <a href="https://www.instagram.com/elalzateviveporvos/" target="_blank" rel="noopener noreferrer" class="social-icon instagram" aria-label="Instagram"><img src="../img/ig.png" alt="Instagram"></a>
++                    <a href="https://www.youtube.com/@alzatevirtual8374" target="_blank" class="social-icon youtube" rel="noopener noreferrer" aria-label="YouTube"><img src="../img/yt.png" alt="YouTube"></a>
++                    <a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508" target="_blank" rel="noopener noreferrer" class="social-icon whatsapp" aria-label="WhatsApp"><img src="../img/whatsap.png" alt="WhatsApp"></a>
+                 </div>
+             </div>
+         </div>
+@@ -407,10 +336,8 @@
+             <div class="footer-bottom-content">
+                 <p>&copy; 2026 I.E. Gilberto Alzate Avenda├▒o. Todos los derechos reservados.</p>
+                 <div class="footer-bottom-links">
+-                    <a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf"
+-                        target="_blank" rel="noopener noreferrer">Manual de Convivencia</a>
+-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform"
+-                        target="_blank" rel="noopener noreferrer">PQRSF</a>
++                    <a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf" target="_blank" rel="noopener noreferrer">Manual de Convivencia</a>
++                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform" target="_blank" rel="noopener noreferrer">PQRSF</a>
+                     <a href="https://luisarango64.wixsite.com/bibliositio" target="_blank" rel="noopener noreferrer">Biblioteca</a>
+                 </div>
+             </div>
+@@ -421,7 +348,7 @@
+     <script src="../js/script.js" defer></script>
+ 
+     <script>
+-        // Smooth scroll con offset del header para botones del hero
++        // Smooth scroll con offset del header
+         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+             anchor.addEventListener('click', function (e) {
+                 const href = this.getAttribute('href');
+@@ -439,27 +366,32 @@
+             });
+         });
+ 
+-        // IntersectionObserver para animaciones de entrada
++        // IntersectionObserver para animaciones
+         const animatedEls = document.querySelectorAll(
+-            '.benefit-card, .evento-card, .stat-item, #forwhoLeft, #forwhoRight'
++            '.icfes-card, .reason-card-v2, .uni-card, .process-step, .testimonial-card, .stat-item, .forwho-image-side, .forwho-content-side, .forwho-list li'
+         );
+ 
+         const academicObserver = new IntersectionObserver((entries) => {
+             entries.forEach((entry) => {
+                 if (entry.isIntersecting) {
+-                    const siblings = Array.from(entry.target.parentElement.children);
+-                    const index = siblings.indexOf(entry.target);
+-                    setTimeout(() => {
++                    const parent = entry.target.parentElement;
++                    if (parent) {
++                        const siblings = Array.from(parent.children);
++                        const index = siblings.indexOf(entry.target);
++                        setTimeout(() => {
++                            entry.target.classList.add('visible');
++                        }, Math.max(0, index * 80));
++                    } else {
+                         entry.target.classList.add('visible');
+-                    }, index * 120);
++                    }
+                     academicObserver.unobserve(entry.target);
+                 }
+             });
+-        }, { threshold: 0.15 });
++        }, { threshold: 0.1 });
+ 
+         animatedEls.forEach(el => academicObserver.observe(el));
+     </script>
+ 
+ </body>
+ 
+-</html>
+\ No newline at end of file
++</html>
