@@ -10,6 +10,31 @@
     background-color: var(--color-gray-50);
 }
 
+/* Force exact same colors as index.html — reset variables changed by modern-theme.css */
+:root {
+    --color-primary: #1e3c72;
+    --color-primary-light: #2a5298;
+    --color-primary-dark: #152a52;
+    --color-secondary: #dc143c;
+    --color-secondary-light: #ff4757;
+    --color-secondary-dark: #b01030;
+}
+
+.main-header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%) !important;
+}
+.main-header.scrolled {
+    background: rgba(30, 60, 114, 0.85) !important;
+    backdrop-filter: blur(12px) !important;
+}
+.header-top {
+    background: var(--color-primary) !important;
+}
+.main-nav {
+    background: var(--color-primary-dark) !important;
+}
+
+
 /* 2. Banner / Hero Section */
 .sede-banner {
     position: relative;

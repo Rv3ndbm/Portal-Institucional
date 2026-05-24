@@ -13,6 +13,23 @@ const navItems = document.querySelectorAll('.nav-item');
 const headerBackground = document.getElementById('headerBackground');
 const mainHeader = document.getElementById('mainHeader');
 
+const DESKTOP_BREAKPOINT = 1024;
+
+function syncDesktopHeaderOffset() {
+    if (!mainHeader) return;
+
+    if (window.innerWidth > DESKTOP_BREAKPOINT) {
+        const headerHeight = mainHeader.offsetHeight;
+        document.body.style.paddingTop = headerHeight ? `${headerHeight}px` : '';
+        return;
+    }
+
+    document.body.style.paddingTop = '';
+}
+
+window.requestAnimationFrame(syncDesktopHeaderOffset);
+window.addEventListener('resize', () => window.requestAnimationFrame(syncDesktopHeaderOffset));
+
 // Event listeners para mostrar fondos en el header
 navItems.forEach(item => {
     item.addEventListener('mouseenter', function () {

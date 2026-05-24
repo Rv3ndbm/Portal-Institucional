@@ -21,7 +21,28 @@ window.addEventListener('load', hideLoadingScreen);
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(hideLoadingScreen, 300);
     initLazyLoading();
+    updateManualConvivenciaLinks();
 });
+
+function updateManualConvivenciaLinks() {
+    const file = 'MANUAL%20DE%20CONVIVENCIA%202026_IEGAA.docx.pdf';
+    const path = (window.location?.pathname || '').replace(/\\/g, '/');
+
+    let href = `media/${file}`;
+    if (path.includes('/html/tecnicas/')) {
+        href = `../../media/${file}`;
+    } else if (path.includes('/html/')) {
+        href = `../media/${file}`;
+    }
+
+    document.querySelectorAll('a').forEach(a => {
+        const text = (a.textContent || '').trim();
+        if (!text) return;
+        if (/manual\s+de\s+convivencia/i.test(text)) {
+            a.setAttribute('href', href);
+        }
+    });
+}
 
 // === LAZY LOADING DE IMÁGENES ===
 function initLazyLoading() {
