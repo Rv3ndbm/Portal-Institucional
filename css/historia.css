@@ -281,9 +281,9 @@ body {
 
 /* Párrafo con indicador de timeline */
 .historia-paragraph {
-    opacity: 0;
-    transform: translateX(-24px);
-    transition: all 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: translateX(0);
+    transition: none;
     margin-bottom: 32px;
     position: relative;
     padding-left: 26px;
@@ -318,6 +318,53 @@ body {
 .historia-paragraph.visible {
     opacity: 1;
     transform: translateX(0);
+}
+
+/* Toggle button para accordion */
+.historia-toggle-btn {
+    background: linear-gradient(135deg, #1a365d, #2c5282);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    margin-bottom: 0;
+}
+
+.historia-toggle-btn:hover {
+    background: linear-gradient(135deg, #2c5282, #4299e1);
+    box-shadow: 0 6px 20px rgba(26, 54, 93, 0.25);
+}
+
+.historia-toggle-btn.active {
+    background: linear-gradient(135deg, #c53030, #e53e3e);
+}
+
+.toggle-icon {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.historia-toggle-btn.active .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.historia-content-accordion {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.historia-content-accordion.active {
+    max-height: 3000px;
 }
 
 .historia-paragraph p {
@@ -381,9 +428,9 @@ body {
     box-shadow: 0 6px 24px rgba(26, 54, 93, 0.10);
     overflow: visible;
     /* Permite que el icono sobresalga */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    opacity: 0;
-    transform: translateY(36px);
+    transition: all 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
     border: 1px solid rgba(26, 54, 93, 0.08);
     position: relative;
     padding-top: 52px;
@@ -501,9 +548,9 @@ body {
     border-radius: 16px;
     padding: 28px 24px;
     box-shadow: 0 5px 20px rgba(26, 54, 93, 0.09);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    opacity: 0;
-    transform: scale(0.93) translateY(16px);
+    transition: all 0.3s ease;
+    opacity: 1;
+    transform: scale(1) translateY(0);
     cursor: pointer;
     border: 1px solid rgba(26, 54, 93, 0.07);
     border-top: 4px solid #1a365d;
@@ -623,6 +670,76 @@ body {
     font-style: italic;
 }
 
+/* ============================================================
+   REPRODUCTOR DE HIMNO
+   ============================================================ */
+.himno-audio-wrapper {
+    max-width: 1100px;
+    margin: 28px auto 60px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 10px 40px rgba(26,54,93,0.08);
+    border: 1px solid rgba(26,54,93,0.06);
+}
+
+.himno-audio-art {
+    width: 120px;
+    flex: 0 0 120px;
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,#edf2f7 0%, #e2e8f0 100%);
+}
+
+.himno-audio-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.himno-audio-content {
+    flex: 1 1 auto;
+}
+
+.himno-audio-title {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    color: #1a365d;
+    font-weight: 800;
+}
+
+.himno-audio-instructions {
+    margin: 0 0 10px 0;
+    font-size: 13px;
+    color: #555;
+}
+
+.himno-audio-wrapper audio {
+    width: 100%;
+    height: 38px;
+}
+
+@media (max-width: 700px) {
+    .himno-audio-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 14px;
+    }
+
+    .himno-audio-art {
+        width: 100%;
+        height: 180px;
+        border-radius: 10px;
+    }
+}
+
 .himno-autores strong {
     color: #1a365d;
     font-style: normal;
@@ -665,16 +782,16 @@ body {
 
 .simbolo-box {
     display: grid;
-    grid-template-columns: 340px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 36px;
     background: #ffffff;
     border-radius: 18px;
     padding: 40px;
     margin-bottom: 24px;
     box-shadow: 0 5px 24px rgba(26, 54, 93, 0.09);
-    transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    opacity: 0;
-    transform: translateX(-36px);
+    transition: all 0.3s ease;
+    opacity: 1;
+    transform: translateX(0);
     border: 1px solid rgba(26, 54, 93, 0.07);
     position: relative;
     overflow: hidden;
@@ -692,8 +809,8 @@ body {
 }
 
 .simbolo-box:nth-child(even) {
-    grid-template-columns: 1fr 340px;
-    transform: translateX(36px);
+    grid-template-columns: 1fr 280px;
+    transform: translateX(0);
 }
 
 .simbolo-box:nth-child(even)::before {
@@ -725,10 +842,13 @@ body {
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
-    border-radius: 14px;
-    padding: 32px;
+    border-radius: 50%;
+    padding: 0;
+    width: 280px;
+    height: 280px;
     transition: transform 0.3s ease, background 0.3s ease;
     border: 1px solid rgba(26, 54, 93, 0.08);
+    overflow: hidden;
 }
 
 .simbolo-box:hover .simbolo-image {
@@ -737,10 +857,9 @@ body {
 }
 
 .simbolo-image img {
-    max-width: 100%;
-    height: auto;
-    max-height: 240px;
-    object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.16));
     transition: filter 0.3s ease;
 }
@@ -824,4 +943,15 @@ body {
         height: 400px;
         opacity: 0;
     }
+}
+
+class .simbolo-image::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: rgba(229, 62, 62, 0.35);
+    border-radius: 90%;
+    animation: rippleHistory 0.6s ease-out;
+    pointer-events: none;
 }

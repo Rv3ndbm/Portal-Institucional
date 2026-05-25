@@ -1,4 +1,27 @@
 (function(){
+
+// ============================================================
+// TOGGLE PARA ACCORDION DE HISTORIA
+// ============================================================
+const historiaToggle = document.getElementById('historiaToggle');
+const historiaAccordion = document.getElementById('historiaAccordion');
+
+if (historiaToggle && historiaAccordion) {
+    historiaToggle.addEventListener('click', function() {
+        const isActive = historiaAccordion.classList.contains('active');
+        
+        if (isActive) {
+            historiaAccordion.classList.remove('active');
+            historiaToggle.classList.remove('active');
+            historiaToggle.innerHTML = '<span>Mostrar Historia Completa</span><span class="toggle-icon">▼</span>';
+        } else {
+            historiaAccordion.classList.add('active');
+            historiaToggle.classList.add('active');
+            historiaToggle.innerHTML = '<span>Ocultar Historia</span><span class="toggle-icon">▼</span>';
+        }
+    });
+}
+
 // Imágenes de fondo para cada sección del menú
 const backgroundImages = {
     inicio: 'url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200")',
@@ -79,63 +102,63 @@ quickNavItems.forEach(item => {
 });
 
 
-// Animación de aparición progresiva de párrafos de historia
-const historiaParagraphs = document.querySelectorAll('.historia-paragraph');
+// ANIMACIÓN DESHABILITADA - Los párrafos ahora se muestran directamente sin animación
+// const historiaParagraphs = document.querySelectorAll('.historia-paragraph');
+// 
+// const historiaObserver = new IntersectionObserver((entries) => {
+//     entries.forEach((entry, index) => {
+//         if (entry.isIntersecting) {
+//             setTimeout(() => {
+//                 entry.target.classList.add('visible');
+//             }, index * 200); // Cada párrafo aparece con delay
+//         }
+//     });
+// }, {
+//     threshold: 0.2,
+//     rootMargin: '0px 0px -100px 0px'
+// });
+// 
+// historiaParagraphs.forEach(paragraph => {
+//     historiaObserver.observe(paragraph);
+// });
 
-const historiaObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            setTimeout(() => {
-                entry.target.classList.add('visible');
-            }, index * 200); // Cada párrafo aparece con delay
-        }
-    });
-}, {
-    threshold: 0.2,
-    rootMargin: '0px 0px -100px 0px'
-});
+// ANIMACIÓN DESHABILITADA - Misión y Visión ahora se muestran directamente
+// const mvBoxes = document.querySelectorAll('.mv-box');
+// 
+// const mvObserver = new IntersectionObserver((entries) => {
+//     entries.forEach((entry, index) => {
+//         if (entry.isIntersecting) {
+//             setTimeout(() => {
+//                 entry.target.classList.add('visible');
+//             }, index * 300);
+//         }
+//     });
+// }, {
+//     threshold: 0.3
+// });
+// 
+// mvBoxes.forEach(box => {
+//     mvObserver.observe(box);
+// });
 
-historiaParagraphs.forEach(paragraph => {
-    historiaObserver.observe(paragraph);
-});
-
-// Animación para Misión y Visión
-const mvBoxes = document.querySelectorAll('.mv-box');
-
-const mvObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            setTimeout(() => {
-                entry.target.classList.add('visible');
-            }, index * 300);
-        }
-    });
-}, {
-    threshold: 0.3
-});
-
-mvBoxes.forEach(box => {
-    mvObserver.observe(box);
-});
-
-// Animación para las estrofas del himno
-const himnoElements = document.querySelectorAll('.himno-estrofa, .himno-coro');
-
-const himnoObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            setTimeout(() => {
-                entry.target.classList.add('visible');
-            }, index * 150);
-        }
-    });
-}, {
-    threshold: 0.2
-});
-
-himnoElements.forEach(element => {
-    himnoObserver.observe(element);
-});
+// ANIMACIÓN DESHABILITADA - Himno ahora se muestra directamente
+// const himnoElements = document.querySelectorAll('.himno-estrofa, .himno-coro');
+// 
+// const himnoObserver = new IntersectionObserver((entries) => {
+//     entries.forEach((entry, index) => {
+//         if (entry.isIntersecting) {
+//             setTimeout(() => {
+//                 entry.target.classList.add('visible');
+//             }, index * 150);
+//         }
+//     });
+// }, {
+//     threshold: 0.2
+// });
+// 
+// himnoElements.forEach(element => {
+//     himnoObserver.observe(element);
+// });
 
 // Efecto de opacidad entre estrofas al hacer hover
 const estrofas = document.querySelectorAll('.himno-estrofa');
@@ -187,25 +210,25 @@ if (coro) {
     });
 }
 
-// Animación para los símbolos (escudo y bandera)
-const simboloBoxes = document.querySelectorAll('.simbolo-box');
-
-const simboloObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-            setTimeout(() => {
-                entry.target.classList.add('visible');
-            }, index * 400);
-        }
-    });
-}, {
-    threshold: 0.2,
-    rootMargin: '0px 0px -50px 0px'
-});
-
-simboloBoxes.forEach(box => {
-    simboloObserver.observe(box);
-});
+// ANIMACIÓN DESHABILITADA - Símbolos ahora se muestran directamente
+// const simboloBoxes = document.querySelectorAll('.simbolo-box');
+// 
+// const simboloObserver = new IntersectionObserver((entries) => {
+//     entries.forEach((entry, index) => {
+//         if (entry.isIntersecting) {
+//             setTimeout(() => {
+//                 entry.target.classList.add('visible');
+//             }, index * 400);
+//         }
+//     });
+// }, {
+//     threshold: 0.2,
+//     rootMargin: '0px 0px -50px 0px'
+// });
+// 
+// simboloBoxes.forEach(box => {
+//     simboloObserver.observe(box);
+// });
 
 // Efecto de hover en símbolos - opaca los demás
 simboloBoxes.forEach(box => {

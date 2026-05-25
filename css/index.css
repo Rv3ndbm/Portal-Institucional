@@ -135,8 +135,7 @@ main {
     top: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% -50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    background: none;
     pointer-events: none;
 }
 
@@ -186,9 +185,10 @@ main {
     right: -20%;
     width: 600px;
     height: 600px;
-    background: radial-gradient(circle, rgba(30, 60, 114, 0.08) 0%, transparent 70%);
+    background: none;
     border-radius: 50%;
     pointer-events: none;
+    display: none;
 }
 
 .coverflow-container {

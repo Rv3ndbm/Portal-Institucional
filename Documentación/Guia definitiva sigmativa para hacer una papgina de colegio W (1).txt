@@ -1,25 +1,22 @@
+cambiar la informacion del inicio por la real(ya solo faltaria cambiar las imagenes porque ya lo demas suena normal, es decir, no hay nada que cambiar a informacion real)
 
-Pagina Colegio:
+cambiar desarroollo integrar con deportes en general (solo la imagen)
 
--añadir apartados como lo son: 	
+mejorar lo que dice actualizar alzate( practicamente solo debemos de cambiar las imagenes porque eso es real)
 
-	-crear un apartado para noticias mas amplio 
+cambiar los trofeos por los reales
 
-	-incluir todo ese voleo de cartillas de apoyo psicopedagogico que esta ahorita en la pagina actual
+cambiar informacion de deportes y arreglar algunas cositas
 
-- arreglar bugs
+cambiar informacion de noticias 
 
-- cambiar la cuenta de google viculada al calendario
+cambiar informacion de loos departamentos
 
-- pedir imagenes a darío
+cambiar informacion	de media tecnicas
+
+verificar la informacion de la guia de la seleccion de colombia (tecnicas)
+
+cambiar informacion de la seccion academica
 
 
--acomadar header para que no se vea tan vacio 
 
--acomdar el hoover para que el texto se vea bien(en media tecnicas mayormente spñucionadas w)
-
--cambiar los iconos de las tecnicas por imagenes w ya
-
--pedirle el avatar a dario w ya
-
-- haciendo un commit de prueba
