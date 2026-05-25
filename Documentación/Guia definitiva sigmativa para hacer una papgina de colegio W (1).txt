@@ -18,5 +18,7 @@ verificar la informacion de la guia de la seleccion de colombia (tecnicas)
 
 cambiar informacion de la seccion academica
 
+quitar burbujas de imagenes con animacion 
 
+crear un nuevo .html de los espacios de la sede principal incluyendo sedes primaria... buscar imagenes
 
