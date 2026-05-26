@@ -197,7 +197,7 @@
 body.high-contrast,
 body.high-contrast main,
 body.high-contrast header,
-body.high-contrast section,
+body.high-contrast section:not(.photo-strip),
 body.high-contrast footer,
 body.high-contrast div:not(.accessibility-widget):not(.accessibility-widget *):not(.photo-strip *):not(.glass-orb),
 body.high-contrast nav,
@@ -206,6 +206,20 @@ body.high-contrast li,
 body.high-contrast article {
     background: #000000 !important;
     background-image: none !important;
+}
+
+body.high-contrast .photo-strip {
+    background: #000000 !important;
+}
+
+body.high-contrast .strip-panel {
+    filter: grayscale(100%) contrast(150%) brightness(0.8) !important;
+    border: 1px solid #ffff00 !important;
+}
+
+body.high-contrast .strip-label {
+    background: rgba(0, 0, 0, 0.9) !important;
+    color: #ffff00 !important;
 }
 
 body.high-contrast * {
@@ -238,6 +252,28 @@ body.high-contrast svg {
     filter: grayscale(100%) contrast(120%) !important;
 }
 
+/* Asegurar que los elementos animados por scroll sean visibles inmediatamente en modos de accesibilidad */
+body.high-contrast [data-scroll-animate],
+body.negative-contrast [data-scroll-animate],
+body.grayscale [data-scroll-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+}
+
+/* Fix para los textos de las "burbujas" (cylinder cards) */
+body.high-contrast .card-info,
+body.negative-contrast .card-info,
+body.grayscale .card-info {
+    opacity: 1 !important;
+    visibility: visible !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
+body.high-contrast .card-info * {
+    color: #ffff00 !important;
+}
+
 /* Truco con backdrop-filter para Contraste negativo y Escala de grises sin romper position: fixed */
 body.negative-contrast::before,
 body.grayscale::before {
@@ -247,7 +283,7 @@ body.grayscale::before {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 10000;
+    z-index: 2147483647; /* Máximo z-index posible para cubrir header y menú */
     pointer-events: none;
 }
 

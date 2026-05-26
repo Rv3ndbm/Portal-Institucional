@@ -442,7 +442,7 @@ main {
     transform: scale(1.15);
 }
 
-/* Contenido de la tarjeta - scoped to cylinder to beat index.css conflicts */
+/* Contenido de la tarjeta - Mejorado para visibilidad y persistencia */
 .cylinder-card .card-info {
     position: relative;
     bottom: auto;
@@ -458,12 +458,17 @@ main {
     flex-direction: column;
     justify-content: center;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
 }
 
-.cylinder-card.active .card-info {
+/* Mostrar texto si la tarjeta está activa O si se pasa el mouse/foco */
+.cylinder-card.active .card-info,
+.cylinder-card:hover .card-info,
+.cylinder-card:focus-within .card-info {
     opacity: 1;
     transform: none;
+    pointer-events: auto;
 }
 
 .cylinder-card .card-info h3 {
@@ -893,16 +898,18 @@ main {
     box-shadow: 0 20px 45px rgba(220, 20, 60, 0.3);
 }
 
-/* Esferas de Cristal (Orbs) flotantes */
+/* Esferas de Cristal (Orbs) flotantes - Animación mejorada */
 .glass-orb {
     position: absolute;
     border-radius: 50%;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 100%);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
     z-index: 3;
-    animation: floatOrb 6s ease-in-out infinite;
+    animation: floatOrb 8s ease-in-out infinite;
+    pointer-events: none; /* Evitar que interfieran con clics */
 }
 
 .orb-1 {
@@ -918,24 +925,21 @@ main {
     height: 130px;
     bottom: -25px;
     left: 25px;
-    animation-delay: 3s;
+    animation-delay: -4s;
 }
 
 @keyframes floatOrb {
-    0% {
-        transform: translateY(0) rotate(0deg) scale(1);
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
     }
-
-    33% {
-        transform: translateY(-15px) rotate(5deg) scale(1.05);
+    25% {
+        transform: translate(10px, -20px) scale(1.05);
     }
-
-    66% {
-        transform: translateY(-5px) rotate(-5deg) scale(0.95);
+    50% {
+        transform: translate(-5px, -10px) scale(0.95);
     }
-
-    100% {
-        transform: translateY(0) rotate(0deg) scale(1);
+    75% {
+        transform: translate(-15px, 5px) scale(1.02);
     }
 }
 
@@ -1279,12 +1283,13 @@ main {
         flex-direction: column;
     }
 
+    /* Siempre texto arriba, imagen abajo en responsive */
     .feature-grid .feature-text {
-        order: -1;
+        order: -1 !important;
     }
 
     .feature-grid .feature-image {
-        order: 1;
+        order: 1 !important;
     }
 
     .coverflow-card {
@@ -1966,14 +1971,22 @@ main {
         left: -130px;
     }
 
-    /* En móvil: columna (imagen arriba, texto abajo) */
+    /* En móvil: columna (texto arriba, imagen abajo) como pidió el usuario */
     .cylinder-card .card-inner.glassmorphism {
-        flex-direction: column;
+        flex-direction: column-reverse;
         align-items: center;
         text-align: center;
         padding: 16px 14px;
-        gap: 10px;
+        gap: 15px;
         justify-content: center;
+    }
+
+    .cylinder-card .card-info {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        pointer-events: auto !important;
+        width: 100%;
     }
 
     .image-wrapper-circle {
