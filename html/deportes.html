@@ -115,290 +115,291 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-deportes">
+    <!-- Hero Section MODERNO (Estilo Académico) -->
+    <section class="hero-academico hero-deportes">
+        <div class="hero-overlay"></div>
+        <div class="hero-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
         <div class="hero-content">
-            <h1 class="hero-title">Deportes</h1>
-            <div class="hero-line"></div>
-            <p class="hero-description">
+            <span class="hero-badge"><i class="fas fa-running"></i> Excelencia Deportiva</span>
+            <h1 class="hero-title">Pasión, Disciplina<br>y Deporte</h1>
+            <p class="hero-subtitle">
                 Descubre los deportes y equipos de la I.E. Gilberto Alzate Avendaño.
                 Donde la excelencia deportiva forma carácter y construye futuro.
             </p>
-            <button class="hero-cta-button"
-                onclick="document.querySelector('.sports-facilities').scrollIntoView({ behavior: 'smooth' })">
-                <i class="fas fa-arrow-down"></i>
-                Explorar Deportes
-            </button>
-        </div>
-    </section>
-
-    <!-- INTRODUCCIÓN -->
-    <section class="sports-intro">
-        <div class="container">
-            <div class="intro-content">
-                <h2 class="section-title">El Deporte nos Forma</h2>
-                <p class="intro-text">Trabajo en equipo • Disciplina • Respeto • Excelencia</p>
-                <p class="intro-description">
-                    En la Institución Educativa Gilberto Alzate Avendaño concebimos el deporte como una herramienta pedagógica clave para el desarrollo integral de nuestros estudiantes. Fomentamos no solo la actividad física y el cuidado de la salud, sino también la adquisición de valores esenciales como la perseverancia, el respeto mutuo, el autocontrol y el trabajo colaborativo, forjando el carácter de los líderes del mañana.
-                </p>
+            <div class="hero-stats-quick">
+                <div class="hero-stat">
+                    <span class="stat-icon"><i class="fas fa-users"></i></span>
+                    <span class="stat-text">Trabajo en Equipo</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="stat-icon"><i class="fas fa-medal"></i></span>
+                    <span class="stat-text">Excelencia Deportiva</span>
+                </div>
+            </div>
+            <div class="hero-cta-group">
+                <a href="#sports-facilities" class="btn-primary-hero"
+                    onclick="event.preventDefault(); document.querySelector('.sports-facilities').scrollIntoView({ behavior: 'smooth' })">Explorar Deportes</a>
+                <a href="calendario.html" class="btn-secondary-hero">Próximos Eventos</a>
             </div>
         </div>
     </section>
 
-    <!-- INSTALACIONES DEPORTIVAS -->
-    <section class="sports-facilities">
-        <div class="container">
-            <h2 class="section-title">Nuestras Instalaciones</h2>
-            <p class="section-subtitle">Espacios diseñados para el desarrollo deportivo</p>
-
-            <div class="facilities-grid">
-                <!-- CANCHA DE BALONCESTO -->
-                <div class="facility-card" data-sport="basketball">
-                    <div class="facility-icon-bg">
-                        <i class="fas fa-basketball-ball facility-icon"></i>
-                    </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Cancha de Baloncesto</h3>
-                        <p class="facility-description">
-                            Cancha reglamentaria con superficie de calidad, tableros profesionales y
-                            gradas para espectadores. Ideal para entrenamientos y competencias.
-                        </p>
-                        <ul class="facility-features">
-                            <li><i class="fas fa-check-circle"></i> Superficie antideslizante</li>
-                            <li><i class="fas fa-check-circle"></i> Tableros profesionales</li>
-                            <li><i class="fas fa-check-circle"></i> Iluminación LED</li>
-                            <li><i class="fas fa-check-circle"></i> Gradas para 150 personas</li>
-                        </ul>
-                    </div>
-                    <div class="facility-hover-overlay">
-                        <div class="hover-content">
-                            <i class="fas fa-basketball-ball"></i>
-                            <p>Hogar de nuestro equipo de baloncesto</p>
+    <!-- INTRODUCCIÓN MODERNA -->
+    <section class="sports-intro academic-complement-section">
+        <div class="complement-container">
+            <div class="complement-grid">
+                <div class="complement-image">
+                    <img loading="lazy" src="../img/deporte ce.webp" alt="Estudiantes haciendo deporte"
+                        class="complement-img-hover">
+                    <div class="image-overlay-glow"></div>
+                </div>
+                <div class="complement-content">
+                    <span class="complement-badge"><i class="fas fa-heart-pulse"></i> El Deporte nos Forma</span>
+                    <h2>Formación Integral a través del Movimiento</h2>
+                    <p class="complement-text-highlight">
+                        Trabajo en equipo • Disciplina • Respeto • Excelencia
+                    </p>
+                    <p class="complement-text-description">
+                        En la Institución Educativa Gilberto Alzate Avendaño concebimos el deporte como una herramienta pedagógica clave para el desarrollo integral de nuestros estudiantes. Fomentamos no solo la actividad física y el cuidado de la salud, sino también la adquisición de valores esenciales como la perseverancia, el respeto mutuo, el autocontrol y el trabajo colaborativo.
+                    </p>
+                    <div class="complement-features">
+                        <div class="comp-feature-item">
+                            <span class="comp-feature-icon"><i class="fas fa-trophy"></i></span>
+                            <div class="comp-feature-text">
+                                <strong>Liderazgo</strong>
+                                <span>Forjando el carácter de los líderes del mañana a través de la competencia sana.</span>
+                            </div>
+                        </div>
+                        <div class="comp-feature-item">
+                            <span class="comp-feature-icon"><i class="fas fa-handshake"></i></span>
+                            <div class="comp-feature-text">
+                                <strong>Valores</strong>
+                                <span>Respeto y perseverancia en cada disciplina deportiva.</span>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTALACIONES DEPORTIVAS (ESTILO ACADÉMICO) -->
+    <section class="sports-facilities icfes-focus-section" id="sports-facilities">
+        <div class="icfes-container">
+            <div class="icfes-header">
+                <span class="section-label"><i class="fas fa-dumbbell"></i> Espacios de Excelencia</span>
+                <h2>Nuestras Instalaciones</h2>
+                <p>Espacios diseñados para el desarrollo deportivo de alto nivel</p>
+            </div>
+
+            <div class="icfes-grid facilities-grid">
+                <!-- CANCHA DE BALONCESTO -->
+                <div class="icfes-card facility-card" data-sport="basketball">
+                    <div class="icfes-card-icon">
+                        <i class="fas fa-basketball-ball"></i>
+                    </div>
+                    <h3>Cancha de Baloncesto</h3>
+                    <p>Cancha reglamentaria con superficie de calidad, tableros profesionales y gradas para espectadores.
+                    </p>
+                    <ul class="facility-features">
+                        <li><i class="fas fa-check-circle"></i> Superficie antideslizante</li>
+                        <li><i class="fas fa-check-circle"></i> Tableros profesionales</li>
+                        <li><i class="fas fa-check-circle"></i> Iluminación LED</li>
+                    </ul>
                 </div>
 
                 <!-- CANCHA DE VOLEIBOL -->
-                <div class="facility-card" data-sport="volleyball">
-                    <div class="facility-icon-bg">
-                        <i class="fas fa-volleyball-ball facility-icon"></i>
+                <div class="icfes-card facility-card" data-sport="volleyball">
+                    <div class="icfes-card-icon">
+                        <i class="fas fa-volleyball-ball"></i>
                     </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Cancha de Voleibol</h3>
-                        <p class="facility-description">
-                            Espacio dedicado al voleibol con red profesional y demarcación oficial.
-                            Perfecta para desarrollar habilidades técnicas y tácticas del deporte.
-                        </p>
-                        <ul class="facility-features">
-                            <li><i class="fas fa-check-circle"></i> Red profesional ajustable</li>
-                            <li><i class="fas fa-check-circle"></i> Piso sintético especial</li>
-                            <li><i class="fas fa-check-circle"></i> Demarcación reglamentaria</li>
-                            <li><i class="fas fa-check-circle"></i> Zona de calentamiento</li>
-                        </ul>
-                    </div>
-                    <div class="facility-hover-overlay">
-                        <div class="hover-content">
-                            <i class="fas fa-volleyball-ball"></i>
-                            <p>Donde se forjan los mejores voleybolistas</p>
-                        </div>
-                    </div>
+                    <h3>Cancha de Voleibol</h3>
+                    <p>Espacio dedicado al voleibol con red profesional y demarcación oficial para entrenamientos.
+                    </p>
+                    <ul class="facility-features">
+                        <li><i class="fas fa-check-circle"></i> Red profesional ajustable</li>
+                        <li><i class="fas fa-check-circle"></i> Piso sintético especial</li>
+                        <li><i class="fas fa-check-circle"></i> Demarcación oficial</li>
+                    </ul>
                 </div>
 
-                <!-- CANCHA DE FÚTBOL -->
-                <div class="facility-card" data-sport="soccer">
-                    <div class="facility-icon-bg">
-                        <i class="fas fa-futbol facility-icon"></i>
+                <!-- CANCHA DE MICROFÚTBOL -->
+                <div class="icfes-card facility-card" data-sport="soccer">
+                    <div class="icfes-card-icon">
+                        <i class="fas fa-futbol"></i>
                     </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Cancha de Microfútbol</h3>
-                        <p class="facility-description">
-                            Cancha sintética tipo microfútbol con césped de última generación.
-                            Espacio versátil para entrenamientos intensivos y partidos competitivos.
-                        </p>
-                        <ul class="facility-features">
-                            <li><i class="fas fa-check-circle"></i> Césped sintético premium</li>
-                            <li><i class="fas fa-check-circle"></i> Porterías profesionales</li>
-                            <li><i class="fas fa-check-circle"></i> Sistema de drenaje</li>
-                            <li><i class="fas fa-check-circle"></i> Iluminación nocturna</li>
-                        </ul>
+                    <h3>Cancha de Microfútbol</h3>
+                    <p>Cancha sintética tipo microfútbol con césped de última generación y sistema de iluminación.
+                    </p>
+                    <ul class="facility-features">
+                        <li><i class="fas fa-check-circle"></i> Césped sintético premium</li>
+                        <li><i class="fas fa-check-circle"></i> Porterías profesionales</li>
+                        <li><i class="fas fa-check-circle"></i> Iluminación nocturna</li>
+                    </ul>
+                </div>
+                
+                <!-- GIMNASIO / OTROS -->
+                <div class="icfes-card facility-card">
+                    <div class="icfes-card-icon">
+                        <i class="fas fa-medal"></i>
                     </div>
-                    <div class="facility-hover-overlay">
-                        <div class="hover-content">
-                            <i class="fas fa-futbol"></i>
-                            <p>La pasión del fútbol vive aquí</p>
-                        </div>
-                    </div>
+                    <h3>Zonas Complementarias</h3>
+                    <p>Espacios adicionales para el acondicionamiento físico y la práctica de múltiples disciplinas.
+                    </p>
+                    <ul class="facility-features">
+                        <li><i class="fas fa-check-circle"></i> Zona de estiramiento</li>
+                        <li><i class="fas fa-check-circle"></i> Implementos deportivos</li>
+                        <li><i class="fas fa-check-circle"></i> Áreas polivalentes</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NUESTROS EQUIPOS -->
-    <section class="sports-teams">
-        <div class="container">
-            <h2 class="section-title">Nuestros Equipos</h2>
-            <p class="section-subtitle">Representando nuestra institución en cada competencia</p>
+    <!-- NUESTROS EQUIPOS (ESTILO ACADÉMICO) -->
+    <section class="sports-teams icfes-focus-section" style="background: #fff;">
+        <div class="icfes-container">
+            <div class="icfes-header">
+                <span class="section-label"><i class="fas fa-users-viewfinder"></i> Representación Institucional</span>
+                <h2>Nuestros Equipos</h2>
+                <p>Estudiantes que llevan con orgullo los colores del Gilberto Alzate Avendaño</p>
+            </div>
 
-            <div class="teams-container">
+            <div class="icfes-grid teams-container">
                 <!-- EQUIPO DE BALONCESTO -->
-                <div class="team-card">
-                    <div class="team-header" style="background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)">
-                        <div class="team-sport-icon">
-                            <i class="fas fa-basketball-ball"></i>
-                        </div>
-                        <h3 class="team-name">Equipo de Baloncesto</h3>
-                        <p class="team-motto">"Altura, velocidad y pasión"</p>
+                <div class="icfes-card team-card" data-sport="basketball">
+                    <div class="icfes-card-icon" style="background: rgba(255, 107, 53, 0.1); color: #ff6b35;">
+                        <i class="fas fa-basketball-ball"></i>
                     </div>
-                    <div class="team-body">
-                        <div class="team-info">
-                            <div class="info-item">
-                                <i class="fas fa-users"></i>
-                                <span>Categorías: Sub-14, Sub-17, Juvenil</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-calendar-alt"></i>
-                                <span>Entrenamientos: Lunes a Viernes 3:00 PM</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-trophy"></i>
-                                <span>Campeonatos: Intercolegiados, Copa Ciudad</span>
-                            </div>
-                        </div>
-                        <p class="team-description">
-                            Nuestro equipo de baloncesto se caracteriza por su juego dinámico y estratégico.
-                            Participamos activamente en torneos locales y regionales, donde hemos cosechado
-                            múltiples reconocimientos.
-                        </p>
-                        <div class="team-achievements">
-                            <span class="achievement-badge">🥇 Subcampeones 2024</span>
-                            <span class="achievement-badge">🏆 3er Lugar Copa Regional 2023</span>
-                        </div>
+                    <h3>Equipo de Baloncesto</h3>
+                    <p class="team-motto-styled">"Altura, velocidad y pasión"</p>
+                    <div class="team-info">
+                        <div class="info-item"><i class="fas fa-users"></i> Sub-14, Sub-17, Juvenil</div>
+                        <div class="info-item"><i class="fas fa-calendar-alt"></i> Lun-Vie 3:00 PM</div>
+                        <div class="info-item"><i class="fas fa-trophy"></i> Intercolegiados</div>
+                    </div>
+                    <p class="team-desc-styled">Juego dinámico y estratégico participando activamente en torneos locales y regionales.</p>
+                    <div class="team-achievements">
+                        <span class="achievement-badge">🥇 Subcampeones 2024</span>
                     </div>
                 </div>
 
                 <!-- EQUIPO DE VOLEIBOL -->
-                <div class="team-card">
-                    <div class="team-header" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)">
-                        <div class="team-sport-icon">
-                            <i class="fas fa-volleyball-ball"></i>
-                        </div>
-                        <h3 class="team-name">Equipo de Voleibol</h3>
-                        <p class="team-motto">"Saltamos juntos hacia la victoria"</p>
+                <div class="icfes-card team-card" data-sport="volleyball">
+                    <div class="icfes-card-icon" style="background: rgba(79, 172, 254, 0.1); color: #4facfe;">
+                        <i class="fas fa-volleyball-ball"></i>
                     </div>
-                    <div class="team-body">
-                        <div class="team-info">
-                            <div class="info-item">
-                                <i class="fas fa-users"></i>
-                                <span>Categorías: Sub-14, Sub-17, Juvenil</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-calendar-alt"></i>
-                                <span>Entrenamientos: Martes y Jueves 4:00 PM</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-trophy"></i>
-                                <span>Campeonatos: Liga Escolar, Juegos Zonales</span>
-                            </div>
-                        </div>
-                        <p class="team-description">
-                            Con técnica refinada y trabajo en equipo excepcional, nuestro equipo de voleibol
-                            representa los valores de nuestra institución en cada set. Constantemente trabajamos
-                            en mejorar nuestras habilidades individuales y colectivas.
-                        </p>
-                        <div class="team-achievements">
-                            <span class="achievement-badge">🥈 Finalistas Liga 2024</span>
-                            <span class="achievement-badge">🏐 MVP Torneo Zonal</span>
-                        </div>
+                    <h3>Equipo de Voleibol</h3>
+                    <p class="team-motto-styled">"Saltamos juntos hacia la victoria"</p>
+                    <div class="team-info">
+                        <div class="info-item"><i class="fas fa-users"></i> Sub-14, Sub-17, Juvenil</div>
+                        <div class="info-item"><i class="fas fa-calendar-alt"></i> Mar-Jue 4:00 PM</div>
+                        <div class="info-item"><i class="fas fa-trophy"></i> Liga Escolar</div>
+                    </div>
+                    <p class="team-desc-styled">Técnica refinada y trabajo en equipo excepcional representando nuestros valores en cada set.</p>
+                    <div class="team-achievements">
+                        <span class="achievement-badge">🥈 Finalistas Liga 2024</span>
                     </div>
                 </div>
 
                 <!-- EQUIPO DE FÚTBOL -->
-                <div class="team-card">
-                    <div class="team-header" style="background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%)">
-                        <div class="team-sport-icon">
-                            <i class="fas fa-futbol"></i>
-                        </div>
-                        <h3 class="team-name">Equipo de Microfútbol</h3>
-                        <p class="team-motto">"Unidos en la cancha, campeones en la vida"</p>
+                <div class="icfes-card team-card" data-sport="soccer">
+                    <div class="icfes-card-icon" style="background: rgba(86, 171, 47, 0.1); color: #56ab2f;">
+                        <i class="fas fa-futbol"></i>
                     </div>
-                    <div class="team-body">
-                        <div class="team-info">
-                            <div class="info-item">
-                                <i class="fas fa-users"></i>
-                                <span>Categorías: Sub-13, Sub-15, Sub-17</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-calendar-alt"></i>
-                                <span>Entrenamientos: Lunes, Miércoles y Viernes 3:30 PM</span>
-                            </div>
-                            <div class="info-item">
-                                <i class="fas fa-trophy"></i>
-                                <span>Campeonatos: Copa Institucional, Intercolegiados</span>
-                            </div>
-                        </div>
-                        <p class="team-description">
-                            La pasión por el fútbol se vive intensamente en nuestro equipo de microfútbol.
-                            Con estrategia, velocidad y técnica, competimos en diversos torneos desarrollando
-                            no solo habilidades deportivas sino también valores fundamentales.
-                        </p>
-                        <div class="team-achievements">
-                            <span class="achievement-badge">⚽ Goleador del Torneo 2024</span>
-                            <span class="achievement-badge">🏆 Campeones Copa Escolar 2023</span>
-                        </div>
+                    <h3>Equipo de Microfútbol</h3>
+                    <p class="team-motto-styled">"Unidos en la cancha, campeones"</p>
+                    <div class="team-info">
+                        <div class="info-item"><i class="fas fa-users"></i> Sub-13, Sub-15, Sub-17</div>
+                        <div class="info-item"><i class="fas fa-calendar-alt"></i> Lun-Mié-Vie 3:30 PM</div>
+                        <div class="info-item"><i class="fas fa-trophy"></i> Copa Institucional</div>
+                    </div>
+                    <p class="team-desc-styled">Estrategia, velocidad y técnica en diversos torneos desarrollando habilidades fundamentales.</p>
+                    <div class="team-achievements">
+                        <span class="achievement-badge">🏆 Campeones 2023</span>
+                    </div>
+                </div>
+
+                <!-- ENTRENAMIENTO FÍSICO -->
+                <div class="icfes-card team-card" data-sport="fitness">
+                    <div class="icfes-card-icon" style="background: rgba(220, 20, 60, 0.1); color: #dc143c;">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Acondicionamiento</h3>
+                    <p class="team-motto-styled">"Mente sana en cuerpo sano"</p>
+                    <div class="team-info">
+                        <div class="info-item"><i class="fas fa-users"></i> Todos los niveles</div>
+                        <div class="info-item"><i class="fas fa-calendar-alt"></i> Sesiones dirigidas</div>
+                        <div class="info-item"><i class="fas fa-dumbbell"></i> Salud y Bienestar</div>
+                    </div>
+                    <p class="team-desc-styled">Programas de ejercicio físico para mejorar la condición de todos nuestros estudiantes.</p>
+                    <div class="team-achievements">
+                        <span class="achievement-badge">🌱 Estilo de Vida Saludable</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- VALORES DEPORTIVOS -->
-    <section class="sports-values">
-        <div class="container">
-            <h2 class="section-title values-title">Valores que Cultivamos</h2>
-            <div class="values-grid">
-                <div class="value-card">
-                    <div class="value-icon-wrapper">
+    <!-- VALORES DEPORTIVOS (ESTILO ACADÉMICO) -->
+    <section class="sports-values icfes-focus-section" style="background: linear-gradient(180deg, #f8f9fb 0%, #fff 100%);">
+        <div class="icfes-container">
+            <div class="icfes-header">
+                <span class="section-label"><i class="fas fa-star"></i> Fundamentos</span>
+                <h2>Valores que Cultivamos</h2>
+                <p>El deporte es la base para formar ciudadanos ejemplares</p>
+            </div>
+            <div class="icfes-grid values-grid">
+                <div class="icfes-card value-card">
+                    <div class="icfes-card-icon">
                         <i class="fas fa-hands-helping"></i>
                     </div>
                     <h3>Trabajo en Equipo</h3>
-                    <p>La colaboración y el apoyo mutuo son fundamentales para alcanzar metas colectivas.</p>
+                    <p>La colaboración y el apoyo mutuo son fundamentales para alcanzar metas colectivas en la cancha y la vida.</p>
                 </div>
-                <div class="value-card">
-                    <div class="value-icon-wrapper">
+                <div class="icfes-card value-card">
+                    <div class="icfes-card-icon">
                         <i class="fas fa-medal"></i>
                     </div>
                     <h3>Disciplina</h3>
-                    <p>El compromiso constante y la práctica dedicada construyen el camino al éxito.</p>
+                    <p>El compromiso constante y la práctica dedicada construyen el camino sólido hacia el éxito personal.</p>
                 </div>
-                <div class="value-card">
-                    <div class="value-icon-wrapper">
+                <div class="icfes-card value-card">
+                    <div class="icfes-card-icon">
                         <i class="fas fa-handshake"></i>
                     </div>
                     <h3>Respeto</h3>
-                    <p>Valoramos a los compañeros, rivales y reglas del juego en cada competencia.</p>
+                    <p>Valoramos a los compañeros, rivales y reglas del juego en cada competencia y entrenamiento diario.</p>
                 </div>
-                <div class="value-card">
-                    <div class="value-icon-wrapper">
+                <div class="icfes-card value-card">
+                    <div class="icfes-card-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Superación</h3>
-                    <p>Cada entrenamiento es una oportunidad para superar nuestros límites personales.</p>
+                    <p>Cada entrenamiento es una oportunidad para superar nuestros propios límites y ser mejores cada día.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- GALERÍA DE ESPACIOS DEPORTIVOS - ESTILO CORTINA -->
-    <section class="sports-gallery-curtain">
-        <div class="section-header-gallery">
-            <h2 class="section-title">Nuestras Instalaciones</h2>
-            <p class="section-subtitle">Desliza para explorar</p>
+    <!-- GALERÍA DE ESPACIOS DEPORTIVOS (ESTILO ACADÉMICO) -->
+    <section class="sports-gallery-curtain icfes-focus-section" style="background: #fff;">
+        <div class="icfes-container">
+            <div class="icfes-header">
+                <span class="section-label"><i class="fas fa-camera"></i> Galería</span>
+                <h2>Nuestras Instalaciones</h2>
+                <p>Desliza para explorar nuestros espacios deportivos</p>
+            </div>
         </div>
 
         <div class="curtain-gallery-container">
             <!-- Baloncesto 1 -->
             <div class="curtain-item" data-category="baloncesto">
-                <div class="curtain-image" style="background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);">
+                <div class="curtain-image" style="background: linear-gradient(135deg, #1e3c72 0%, #ff6b35 100%);">
                     <i class="fas fa-basketball-ball"></i>
                 </div>
                 <div class="curtain-content">
@@ -409,7 +410,7 @@
 
             <!-- Baloncesto 2 -->
             <div class="curtain-item" data-category="baloncesto">
-                <div class="curtain-image" style="background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);">
+                <div class="curtain-image" style="background: linear-gradient(135deg, #1e3c72 0%, #ff8c42 100%);">
                     <i class="fas fa-basketball-ball"></i>
                 </div>
                 <div class="curtain-content">
@@ -420,7 +421,7 @@
 
             <!-- Voleibol 1 -->
             <div class="curtain-item" data-category="voleibol">
-                <div class="curtain-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <div class="curtain-image" style="background: linear-gradient(135deg, #1e3c72 0%, #4facfe 100%);">
                     <i class="fas fa-volleyball-ball"></i>
                 </div>
                 <div class="curtain-content">
@@ -431,7 +432,7 @@
 
             <!-- Voleibol 2 -->
             <div class="curtain-item" data-category="voleibol">
-                <div class="curtain-image" style="background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);">
+                <div class="curtain-image" style="background: linear-gradient(135deg, #1e3c72 0%, #00f2fe 100%);">
                     <i class="fas fa-volleyball-ball"></i>
                 </div>
                 <div class="curtain-content">
@@ -442,7 +443,7 @@
 
             <!-- Fútbol 1 -->
             <div class="curtain-item" data-category="futbol">
-                <div class="curtain-image" style="background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);">
+                <div class="curtain-image" style="background: linear-gradient(135deg, #1e3c72 0%, #56ab2f 100%);">
                     <i class="fas fa-futbol"></i>
                 </div>
                 <div class="curtain-content">
@@ -453,7 +454,7 @@
 
             <!-- Fútbol 2 -->
             <div class="curtain-item" data-category="futbol">
-                <div class="curtain-image" style="background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);">
+                <div class="curtain-image" style="background: linear-gradient(135deg, #1e3c72 0%, #a8e063 100%);">
                     <i class="fas fa-futbol"></i>
                 </div>
                 <div class="curtain-content">
@@ -464,17 +465,18 @@
         </div>
     </section>
 
-    <!-- LOGROS Y RECONOCIMIENTOS -->
-    <section class="sports-achievements">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Nuestros Logros</h2>
-                <p class="section-subtitle">Trayectoria ganadora 2023-2024</p>
+    <!-- LOGROS Y RECONOCIMIENTOS (ESTILO ACADÉMICO) -->
+    <section class="sports-achievements icfes-focus-section" style="background: linear-gradient(180deg, #fff 0%, #f8f9fb 100%);">
+        <div class="icfes-container">
+            <div class="icfes-header">
+                <span class="section-label"><i class="fas fa-award"></i> Trayectoria</span>
+                <h2>Nuestros Logros</h2>
+                <p>Resultados del esfuerzo y la dedicación constante durante 2023-2024</p>
             </div>
 
-            <div class="achievements-grid">
-                <div class="achievement-card">
-                    <div class="achievement-icon">
+            <div class="icfes-grid achievements-grid">
+                <div class="icfes-card achievement-card">
+                    <div class="icfes-card-icon" style="color: #ff6b35;">
                         <i class="fas fa-trophy"></i>
                     </div>
                     <h3>Baloncesto</h3>
@@ -485,8 +487,8 @@
                     </ul>
                 </div>
 
-                <div class="achievement-card">
-                    <div class="achievement-icon">
+                <div class="icfes-card achievement-card">
+                    <div class="icfes-card-icon" style="color: #4facfe;">
                         <i class="fas fa-volleyball-ball"></i>
                     </div>
                     <h3>Voleibol</h3>
@@ -497,8 +499,8 @@
                     </ul>
                 </div>
 
-                <div class="achievement-card">
-                    <div class="achievement-icon">
+                <div class="icfes-card achievement-card">
+                    <div class="icfes-card-icon" style="color: #56ab2f;">
                         <i class="fas fa-futbol"></i>
                     </div>
                     <h3>Microfútbol</h3>
@@ -506,6 +508,18 @@
                         <li><i class="fas fa-star"></i> Campeones Copa Escolar 2023</li>
                         <li><i class="fas fa-star"></i> Goleador del Torneo 2024</li>
                         <li><i class="fas fa-star"></i> Mejor Defensa Zonal</li>
+                    </ul>
+                </div>
+
+                <div class="icfes-card achievement-card">
+                    <div class="icfes-card-icon" style="color: #1e3c72;">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3>Institucional</h3>
+                    <ul class="achievement-list">
+                        <li><i class="fas fa-star"></i> Premio Excelencia Deportiva</li>
+                        <li><i class="fas fa-star"></i> Delegación más Disciplinada</li>
+                        <li><i class="fas fa-star"></i> 100% Participación en Intercolegiados</li>
                     </ul>
                 </div>
             </div>
