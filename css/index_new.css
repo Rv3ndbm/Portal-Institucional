@@ -421,9 +421,9 @@ main {
 .cylinder-card .card-inner.glassmorphism {
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(255, 255, 255, 0.88); /* Mas opaco para mayor nitidez */
+    backdrop-filter: none; /* Desactivar blur dinamico que causa bugs visuales en 3D */
+    -webkit-backdrop-filter: none;
     border: 1.5px solid rgba(255, 255, 255, 0.55);
     border-radius: 20px;
     padding: 20px 28px;
@@ -435,6 +435,10 @@ main {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
     transition: background 0.5s ease, box-shadow 0.5s ease;
     overflow: hidden;
+    /* Forzar aceleracion GPU para texto e imagenes completamente nítidos */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 /* Tarjeta activa (la que está al frente) */
@@ -2254,10 +2258,10 @@ main {
     .feature-image.circle-shape {
         flex: 1 !important;
         order: 2 !important;
-        width: 100px !important;
-        height: 100px !important;
-        min-width: 100px !important;
-        max-width: 100px !important;
+        width: 120px !important;
+        height: 120px !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
         border-radius: 50% !important;
         margin: 0 !important;
         border: 3px solid white !important;
@@ -2283,7 +2287,7 @@ main {
 
     /* Ajustar tipografía en móvil para encajar en fila */
     .feature-text h2 {
-        font-size: 1.2rem !important;
+        font-size: 1.35rem !important;
         margin-bottom: 6px !important;
         padding-left: 10px !important;
         line-height: 1.25 !important;
@@ -2295,7 +2299,7 @@ main {
     }
 
     .feature-text p {
-        font-size: 0.8rem !important;
+        font-size: 0.9rem !important;
         line-height: 1.4 !important;
         margin-bottom: 8px !important;
     }
@@ -2312,7 +2316,7 @@ main {
     }
 
     .feature-bullets li {
-        font-size: 0.75rem !important;
+        font-size: 0.85rem !important;
         gap: 6px !important;
         margin-bottom: 4px !important;
     }
@@ -2322,8 +2326,8 @@ main {
     }
 
     .btn-feature {
-        padding: 6px 14px !important;
-        font-size: 0.75rem !important;
+        padding: 8px 18px !important;
+        font-size: 0.8rem !important;
         margin-top: 6px !important;
         border-radius: 5px !important;
     }
