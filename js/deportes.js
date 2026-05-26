@@ -55,38 +55,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Observar elementos
     const elementsToAnimate = document.querySelectorAll(
-        '.facility-card, .team-card, .value-card, .curtain-item, .achievement-card'
+        '.facility-card, .team-card, .value-card, .curtain-item, .achievement-card, .complement-image, .complement-content, .comp-feature-item, .icfes-card'
     );
     elementsToAnimate.forEach(el => {
         scrollObserver.observe(el);
     });
 
     // ========================================
-    // GALERÍA CORTINA - MEJORADA (Sin bloqueos)
+    // GALERÍA CORTINA - LÓGICA ULTRA SIMPLE
     // ========================================
     const curtainItems = document.querySelectorAll('.curtain-item');
 
     curtainItems.forEach(item => {
-        item.addEventListener('mouseenter', function () {
-            // Remover clase activa de todos los otros
-            curtainItems.forEach(other => {
-                if (other !== item) other.classList.remove('active');
-            });
-            // Activar el actual inmediatamente
+        item.addEventListener('touchstart', function() {
+            curtainItems.forEach(el => el.classList.remove('active'));
             this.classList.add('active');
-        });
-
-        // No necesitamos mouseleave para desactivar todo, 
-        // dejar el último activo se ve mejor o reiniciar al salir del contenedor padre si se prefiere.
+        }, { passive: true });
     });
-
-    // Opcional: Resetear galería al salir del contenedor completo
-    const galleryContainer = document.querySelector('.sports-gallery-curtain');
-    if (galleryContainer) {
-        galleryContainer.addEventListener('mouseleave', () => {
-            curtainItems.forEach(item => item.classList.remove('active'));
-        });
-    }
 });
 
 
