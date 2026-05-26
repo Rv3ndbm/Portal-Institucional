@@ -22,8 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(hideLoadingScreen, 300);
     initLazyLoading();
     updateManualConvivenciaLinks();
-    updateWhatsAppChannelLinks();
-    updateContactEmailLink();
 });
 
 function updateManualConvivenciaLinks() {
