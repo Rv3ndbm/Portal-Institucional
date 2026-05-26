@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(hideLoadingScreen, 300);
     initLazyLoading();
     updateManualConvivenciaLinks();
+    initEmailContacts();
 });
 
 function updateManualConvivenciaLinks() {
@@ -41,6 +42,45 @@ function updateManualConvivenciaLinks() {
         if (/manual\s+de\s+convivencia/i.test(text)) {
             a.setAttribute('href', href);
         }
+    });
+}
+
+// === MANEJO DE CONTACTOS POR EMAIL ===
+/**
+ * Detecta si el dispositivo es móvil y redirecciona al email apropiadamente.
+ * - Desktop/Web: Abre Gmail web
+ * - Móvil: Abre la app de Gmail (mediante mailto)
+ */
+function initEmailContacts() {
+    // Función para detectar si es dispositivo móvil
+    const isMobileDevice = () => {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+               (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+    };
+
+    // Obtener todos los enlaces de email con la clase email-contact-link
+    const emailLinks = document.querySelectorAll('.email-contact-link');
+
+    emailLinks.forEach(link => {
+        const email = link.getAttribute('data-email');
+        if (!email) return;
+
+        // Manejar el click
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (isMobileDevice()) {
+                // En móvil: usar mailto para abrir la app de Gmail
+                window.location.href = `mailto:${email}`;
+            } else {
+                // En desktop: abrir Gmail web
+                window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
+            }
+        });
+
+        // Cambiar el href a # para que sea válido pero no navegue
+        link.href = '#';
+        link.style.cursor = 'pointer';
     });
 }
 

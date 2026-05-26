@@ -50,7 +50,7 @@ body {
             rgba(26, 54, 93, 0.93) 0%,
             rgba(44, 82, 152, 0.88) 55%,
             rgba(197, 48, 48, 0.82) 100%),
-        url('https://images.unsplash.com/photo-1577036421869-7c8d388d2123?w=1600') center / cover no-repeat;
+        url('../img/hovver\ historia.jpeg') center / cover no-repeat;
     border-radius: 22px;
     overflow: hidden;
     box-shadow: 0 16px 50px rgba(26, 54, 93, 0.30);
@@ -70,7 +70,7 @@ body {
 }
 
 .historia-hero::after {
-    content: '📜';
+    content: '';
     position: absolute;
     right: 60px;
     top: 50%;
