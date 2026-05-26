@@ -2206,3 +2206,212 @@ main {
         margin-bottom: 2px;
     }
 }
+
+/* ============================================================
+   OPTIMIZACIONES MÓVILES EXTRAS Y MODALIDAD ACADÉMICA
+   ============================================================ */
+
+/* Nueva sección de Modalidad Académica en Home */
+.academic-feature {
+    background: linear-gradient(135deg, var(--color-white) 0%, rgba(30, 60, 114, 0.05) 100%);
+}
+
+.academic-badge {
+    background: linear-gradient(135deg, var(--color-primary), #00c6ff) !important;
+}
+
+.btn-academic {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)) !important;
+    box-shadow: 0 4px 15px rgba(30, 60, 114, 0.2);
+}
+
+.btn-academic:hover {
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary)) !important;
+}
+
+/* Optimización móvil responsiva (768px y menor) */
+@media (max-width: 768px) {
+    /* Forzar diseño horizontal lado a lado para las 3 características principales en móvil */
+    .feature-grid, 
+    .feature-grid.reverse {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 15px !important;
+        text-align: left !important;
+        padding: 10px 0 !important;
+    }
+
+    /* El texto toma la mayor parte del espacio */
+    .feature-text {
+        flex: 1.5 !important;
+        order: 1 !important;
+        width: auto !important;
+    }
+
+    /* La imagen circular se posiciona a la derecha de forma compacta */
+    .feature-image.circle-shape {
+        flex: 1 !important;
+        order: 2 !important;
+        width: 100px !important;
+        height: 100px !important;
+        min-width: 100px !important;
+        max-width: 100px !important;
+        border-radius: 50% !important;
+        margin: 0 !important;
+        border: 3px solid white !important;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important;
+        background: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        aspect-ratio: 1 / 1 !important;
+    }
+
+    .feature-image.circle-shape img {
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
+        border-radius: 50% !important;
+        box-shadow: none !important;
+    }
+
+    /* Desactivar orbes de cristal flotantes en móvil para ahorrar espacio y evitar bugs de scroll */
+    .glass-orb {
+        display: none !important;
+    }
+
+    /* Ajustar tipografía en móvil para encajar en fila */
+    .feature-text h2 {
+        font-size: 1.2rem !important;
+        margin-bottom: 6px !important;
+        padding-left: 10px !important;
+        line-height: 1.25 !important;
+    }
+
+    .feature-text h2::before {
+        height: 18px !important;
+        width: 3px !important;
+    }
+
+    .feature-text p {
+        font-size: 0.8rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 8px !important;
+    }
+
+    .feature-badge {
+        font-size: 0.6rem !important;
+        padding: 3px 8px !important;
+        margin-bottom: 6px !important;
+    }
+
+    /* Ajustar lista de viñetas en móvil */
+    .feature-bullets {
+        margin: 6px 0 !important;
+    }
+
+    .feature-bullets li {
+        font-size: 0.75rem !important;
+        gap: 6px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .feature-bullets i {
+        font-size: 0.85rem !important;
+    }
+
+    .btn-feature {
+        padding: 6px 14px !important;
+        font-size: 0.75rem !important;
+        margin-top: 6px !important;
+        border-radius: 5px !important;
+    }
+
+    /* Reducción general de espacios vacíos en todas las secciones principales de la home en móvil */
+    .feature-section,
+    .bento-services-section,
+    .dark-cards-section,
+    .shortcuts-section,
+    .news-section {
+        padding: 25px 15px !important;
+    }
+
+    .bento-intro {
+        margin-bottom: 15px !important;
+    }
+
+    .bento-intro h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    .bento-intro p {
+        font-size: 0.85rem !important;
+        margin-bottom: 12px !important;
+    }
+
+    .btn-bento-contact {
+        padding: 8px 18px !important;
+        font-size: 0.8rem !important;
+    }
+
+    .section-title,
+    .section-title-dark {
+        font-size: 1.4rem !important;
+        margin-bottom: 20px !important;
+    }
+
+    .section-title::after,
+    .section-title-dark::after {
+        margin: 8px auto 0 !important;
+        height: 3px !important;
+        width: 40px !important;
+    }
+
+    .shortcuts-section {
+        padding: 30px 15px !important;
+    }
+
+    .shortcuts-grid {
+        margin-top: 15px !important;
+        gap: 10px !important;
+    }
+
+    .shortcut-item {
+        padding: 10px !important;
+        border-radius: 8px !important;
+    }
+
+    .shortcut-icon-wrapper {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1.1rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    .shortcut-label {
+        font-size: 0.75rem !important;
+    }
+
+    /* Reducir altura del hero home en móvil para mejor enfoque inicial */
+    .hero-home {
+        min-height: 70vh !important;
+        height: 70vh !important;
+    }
+
+    .hero-title {
+        font-size: 1.6rem !important;
+        margin-bottom: 10px !important;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem !important;
+        margin-bottom: 20px !important;
+    }
+
+    .scroll-label {
+        padding: 8px 20px !important;
+        font-size: 0.85rem !important;
+    }
+}

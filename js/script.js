@@ -1087,10 +1087,11 @@ class CylinderCarousel3D {
     }
 
     calculateRadius() {
-        // Tarjeta tiene ancho fijo de 520px (CSS)
-        const CARD_WIDTH = 520;
+        // Tarjeta tiene ancho móvil de 260px o desktop de 520px (CSS)
+        const isMobile = window.innerWidth <= 768;
+        const CARD_WIDTH = isMobile ? 260 : 520;
         // Radio correcto para que las tarjetas no se solapen ni queden muy separadas
-        this.radius = Math.round((CARD_WIDTH / 2) / Math.tan(Math.PI / this.numCards)) + 100;
+        this.radius = Math.round((CARD_WIDTH / 2) / Math.tan(Math.PI / this.numCards)) + (isMobile ? 50 : 100);
     }
 
     positionCards() {
