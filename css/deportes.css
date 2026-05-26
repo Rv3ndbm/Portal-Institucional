@@ -1,1328 +1,527 @@
-/* =========================================
-   DEPORTES.CSS - Sección de Deportes
-   ========================================= */
+/* ============================================
 
-/* --- VARIABLES ESPECÍFICAS DE DEPORTES --- */
-:root {
-    --sport-primary: #1e3c72;
-    --sport-secondary: #dc143c;
-    --sport-accent: #ffd700;
-    --sport-basketball: #ff6b35;
-    --sport-volleyball: #4facfe;
-    --sport-soccer: #56ab2f;
-}
+   DEPORTES.CSS - Remodelación Estilo Académico
+   I.E. Gilberto Alzate Avendaño
+   ============================================ */
 
-/* --- HERO SECTION DINÁMICO Y SUPER IMPACTANTE --- */
+@import url('variables.css');
+
+/* --- HERO SECTION MODERNO (Estilo Académico) --- */
 .hero-deportes {
     position: relative;
-    height: clamp(420px, 65vh, 550px);
+    height: 75vh;
+    min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: var(--header-height-desktop); /* Usar variable de header para evitar huecos excesivos */
-    background: linear-gradient(135deg, #0a1620 0%, #1a2633 25%, #203a43 50%, #2c5364 75%, #1a3a52 100%);
-    background-size: 400% 400%;
+    margin-top: var(--header-height-desktop);
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #162e47 100%);
     overflow: hidden;
     color: #fff;
     text-align: center;
-    animation: gradientShift 12s ease-in-out infinite;
 }
 
-/* Cuando el header se minimiza al hacer scroll, reducir la separación del hero */
-.main-header.scrolled + .hero-deportes {
+/* Ajuste cuando el header se contrae al hacer scroll */
+.main-header.scrolled + main .hero-deportes {
     margin-top: var(--header-height-scrolled);
 }
 
-/* Ajustes para pantallas pequeñas */
-@media (max-width: 1024px) {
-    .hero-deportes {
-        margin-top: var(--header-height-mobile);
-    }
-    .main-header.scrolled + .hero-deportes {
-        margin-top: var(--header-height-scrolled);
-    }
-}
-
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* Capas de fondo con animaciones mejoradas */
 .hero-deportes::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 200%;
-    height: 200%;
+    inset: 0;
     background:
-        radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.45) 0%, transparent 50%),
-        radial-gradient(circle at 80% 70%, rgba(79, 172, 254, 0.45) 0%, transparent 50%),
-        radial-gradient(circle at 50% 100%, rgba(86, 171, 47, 0.35) 0%, transparent 60%),
-        radial-gradient(circle at 10% 80%, rgba(220, 20, 60, 0.25) 0%, transparent 40%);
-    animation: float 20s ease-in-out infinite;
+        radial-gradient(circle at 20% 50%, rgba(56, 182, 255, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(42, 82, 152, 0.1) 0%, transparent 40%);
     z-index: 1;
-    will-change: transform;
 }
 
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-
-    25% {
-        transform: translate(-60px, -60px) rotate(8deg);
-    }
-
-    50% {
-        transform: translate(60px, 60px) rotate(-8deg);
-    }
-
-    75% {
-        transform: translate(-30px, 80px) rotate(5deg);
-    }
-}
-
-/* Capa de pulso mejorada */
 .hero-deportes::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background:
-        radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 30%, rgba(255, 107, 53, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse at 50% 70%, rgba(79, 172, 254, 0.08) 0%, transparent 60%);
-    animation: pulse 5s ease-in-out infinite;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.06);
+    bottom: -150px;
+    right: -100px;
+    animation: float 6s ease-in-out infinite;
     z-index: 1;
 }
 
-@keyframes pulse {
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-30px); }
+}
 
-    0%,
-    100% {
-        opacity: 0.2;
-    }
+.hero-shapes .shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    z-index: 1;
+}
 
-    50% {
-        opacity: 0.8;
-    }
+.shape-1 { width: 300px; height: 300px; top: -100px; left: -100px; }
+.shape-2 { width: 200px; height: 200px; bottom: 50px; left: 10%; animation: float 8s ease-in-out infinite; }
+.shape-3 { width: 150px; height: 150px; top: 10%; right: 10%; animation: float 7s ease-in-out infinite reverse; }
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 2;
 }
 
 .hero-content {
     position: relative;
-    z-index: 2;
-    padding: 60px 40px;
-    max-width: 1100px;
-    animation: slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s backwards;
+    z-index: 3;
+    padding: 40px 30px;
+    max-width: 850px;
+    animation: fadeInUp 1s ease-out;
 }
 
-@keyframes slideInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-100px);
-    }
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.hero-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .hero-title {
-    font-size: clamp(3.2rem, 12vw, 5.5rem);
-    font-weight: 900;
-    margin-bottom: 30px;
-    text-transform: uppercase;
-    letter-spacing: 8px;
-    text-shadow:
-        0 4px 30px rgba(0, 0, 0, 0.9),
-        0 0 60px rgba(255, 107, 53, 0.6),
-        0 0 100px rgba(255, 107, 53, 0.3);
-    color: #ffffff;
-    animation: glow 3.5s ease-in-out infinite, bounce 2s ease-in-out infinite;
-    will-change: text-shadow, transform;
-    line-height: 1.1;
-}
-
-@keyframes glow {
-
-    0%,
-    100% {
-        text-shadow:
-            0 4px 30px rgba(0, 0, 0, 0.9),
-            0 0 60px rgba(255, 107, 53, 0.6),
-            0 0 100px rgba(255, 107, 53, 0.3);
-    }
-
-    50% {
-        text-shadow:
-            0 4px 40px rgba(0, 0, 0, 0.9),
-            0 0 100px rgba(255, 107, 53, 0.9),
-            0 0 150px rgba(79, 172, 254, 0.6),
-            0 0 200px rgba(255, 107, 53, 0.4);
-    }
-}
-
-@keyframes bounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-}
-
-.hero-description {
-    font-size: clamp(1.1rem, 3vw, 1.8rem);
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.95);
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    margin-bottom: 40px;
-    animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s backwards;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Línea decorativa animada */
-.hero-line {
-    width: 100px;
-    height: 5px;
-    background: linear-gradient(90deg, transparent, var(--sport-accent), transparent);
-    margin: 20px auto 30px;
-    animation: expandLine 1.5s ease-out 0.6s forwards;
-    opacity: 0;
-}
-
-@keyframes expandLine {
-    from {
-        width: 0;
-        opacity: 0;
-    }
-
-    to {
-        width: 120px;
-        opacity: 1;
-    }
-}
-
-/* Botón CTA en el hero */
-.hero-cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 18px 45px;
-    background: linear-gradient(135deg, var(--sport-accent) 0%, #ffed4e 100%);
-    color: var(--sport-primary);
-    border: none;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    animation: slideInUp 1.2s ease-out 0.8s backwards;
-    position: relative;
-    overflow: hidden;
-    will-change: transform, box-shadow;
-}
-
-@keyframes slideInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.hero-cta-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s ease;
-}
-
-.hero-cta-button:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 15px 60px rgba(255, 215, 0, 0.6), 0 0 50px rgba(255, 215, 0, 0.3);
-}
-
-.hero-cta-button:hover::before {
-    left: 100%;
-}
-
-.hero-cta-button i {
-    font-size: 1.3rem;
-    transition: transform 0.3s ease;
-}
-
-.hero-cta-button:hover i {
-    transform: translateX(5px);
-}
-
-/* --- CONTAINER PRINCIPAL --- */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* === ANIMACIÓN FADEUP === */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ========================================
-   INTRODUCCIÓN
-   ======================================== */
-.sports-intro {
-    padding: 80px 20px;
-    background: white;
-    text-align: center;
-}
-
-.intro-content {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.intro-content .section-title {
-    margin-bottom: 20px;
-    font-size: clamp(2rem, 5vw, 3rem);
-}
-
-.intro-text {
-    font-size: 1.3rem;
-    font-weight: 500;
-    color: #666;
-    letter-spacing: 1px;
-}
-
-.intro-description {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #555;
-    max-width: 800px;
-    margin: 30px auto 0;
-    text-align: center;
-    font-weight: 400;
-}
-
-.section-title {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 800;
-    color: var(--sport-primary);
-    margin-bottom: 30px;
-    position: relative;
-    display: block;
-    text-align: center;
+    margin: 20px 0;
+    line-height: 1.15;
+    letter-spacing: -1px;
 }
 
-/* Método 4: Subrayado animado */
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--sport-secondary), var(--sport-accent));
-    animation: expandLine 1.5s ease-out forwards;
-}
-
-@keyframes expandLine {
-    to {
-        width: 120px;
-    }
-}
-
-.intro-text {
-    font-size: 1.15rem;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-/* ========================================
-   INSTALACIONES - Método 5: Cards con efecto parallax hover
-   ======================================== */
-.sports-facilities {
-    padding: 100px 20px;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dfe7eb 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.sports-facilities::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(220, 20, 60, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.sports-facilities::after {
-    content: '';
-    position: absolute;
-    bottom: -20%;
-    left: -10%;
-    width: 400px;
-    height: 400px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(30, 60, 114, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.section-subtitle {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 60px;
-    position: relative;
-    z-index: 1;
-}
-
-.facilities-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 40px;
-    margin-top: 60px;
-    position: relative;
-    z-index: 1;
-}
-
-.facility-card {
-    position: relative;
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    will-change: transform, box-shadow;
-}
-
-.facility-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, transparent, var(--sport-accent), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
-    z-index: 2;
-}
-
-.facility-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(220, 20, 60, 0.02) 0%, rgba(30, 60, 114, 0.02) 100%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.facility-card:hover::before {
-    transform: translateX(100%);
-}
-
-.facility-card:hover::after {
-    opacity: 1;
-}
-
-.facility-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-    background: #ffffff;
-}
-
-/* Colores específicos por deporte */
-.facility-card[data-sport="basketball"] .facility-icon {
-    color: var(--sport-basketball);
-}
-
-.facility-card[data-sport="volleyball"] .facility-icon {
-    color: var(--sport-volleyball);
-}
-
-.facility-card[data-sport="soccer"] .facility-icon {
-    color: var(--sport-soccer);
-}
-
-.facility-icon-bg {
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(135deg, rgba(30, 60, 114, 0.08) 0%, rgba(220, 20, 60, 0.05) 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 25px;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 10px 30px rgba(30, 60, 114, 0.1);
-    position: relative;
-}
-
-.facility-icon-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, var(--sport-secondary), var(--sport-accent), var(--sport-secondary));
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: -1;
-    filter: blur(20px);
-}
-
-.facility-card:hover .facility-icon-bg::before {
-    opacity: 0.3;
-}
-
-.facility-card:hover .facility-icon-bg {
-    transform: rotate(360deg) scale(1.15);
-    box-shadow: 0 20px 50px rgba(30, 60, 114, 0.2);
-}
-
-.facility-icon {
-    font-size: 3rem;
-    transition: all 0.3s ease;
-}
-
-.facility-title {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--sport-primary);
-    margin-bottom: 15px;
-}
-
-.facility-description {
-    color: #666;
-    margin-bottom: 20px;
+.hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 700px;
+    margin: 0 auto 36px;
     line-height: 1.7;
 }
 
-.facility-features {
-    list-style: none;
-    margin-top: 20px;
+.hero-stats-quick {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin: 36px 0;
 }
 
-.facility-features li {
-    padding: 10px 0;
-    color: #555;
+.hero-stat {
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.facility-features i {
-    color: var(--sport-accent);
-    font-size: 1.1rem;
-}
-
-/* Overlay hover con glassmorphism */
-.facility-hover-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(30, 60, 114, 0.95);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 12px 20px;
+    border-radius: 12px;
     backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.95rem;
+}
+
+.hero-cta-group {
     display: flex;
-    align-items: center;
+    gap: 16px;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    border-radius: 20px;
+    flex-wrap: wrap;
+    margin-top: 32px;
 }
 
-.facility-card:hover .facility-hover-overlay {
-    opacity: 1;
+.btn-primary-hero {
+    display: inline-block;
+    padding: 14px 40px;
+    background: #38b6ff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(56, 182, 255, 0.35);
 }
 
-.hover-content {
-    text-align: center;
-    color: white;
-    transform: translateY(20px);
-    transition: transform 0.4s ease;
-}
-
-.facility-card:hover .hover-content {
-    transform: translateY(0);
-}
-
-.hover-content i {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    color: var(--sport-accent);
-}
-
-.hover-content p {
-    font-size: 1.3rem;
+.btn-secondary-hero {
+    display: inline-block;
+    padding: 14px 40px;
+    background: transparent;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
     font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.4);
 }
 
-/* ========================================
-   EQUIPOS - Método 6: Cards con efecto flip 3D
-   ======================================== */
-.sports-teams {
-    padding: 80px 20px;
-    background: white;
-}
-
-.sports-teams .section-title {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-    margin-bottom: 15px;
-}
-
-.sports-teams .section-subtitle {
-    font-size: 1.1rem;
-    color: #888;
-    margin-bottom: 60px;
-}
-
-.teams-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-.team-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    position: relative;
-    will-change: transform, box-shadow;
-}
-
-.team-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(220, 20, 60, 0.02) 0%, rgba(30, 60, 114, 0.02) 100%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.team-card:hover::before {
-    opacity: 1;
-}
-
-.team-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
+/* --- SECCIONES DE CONTENIDO --- */
+.academic-complement-section {
+    padding: 90px 20px;
     background: #ffffff;
 }
 
-.team-header {
-    padding: 35px 30px 30px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, rgba(30, 60, 114, 0.9) 0%, rgba(44, 62, 80, 0.9) 100%);
+/* Animaciones de scroll */
+.facility-card, 
+.team-card, 
+.value-card, 
+.achievement-card, 
+.complement-image, 
+.complement-content, 
+.comp-feature-item, 
+.icfes-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.team-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
-    animation: shimmer 3s infinite;
+
+
+.facility-card.visible, 
+.team-card.visible, 
+.value-card.visible, 
+.achievement-card.visible, 
+.complement-image.visible, 
+.complement-content.visible, 
+.comp-feature-item.visible, 
+.icfes-card.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-@keyframes shimmer {
-    0% {
-        transform: translateX(-100%) translateY(-100%);
-    }
 
-    100% {
-        transform: translateX(100%) translateY(100%);
-    }
+
+.complement-container, .icfes-container {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-.team-sport-icon {
-    width: 70px;
-    height: 70px;
-    background: rgba(255, 215, 0, 0.15);
-    border-radius: 50%;
-    display: flex;
+.complement-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 60px;
     align-items: center;
-    justify-content: center;
-    margin: 0 auto 15px;
-    border: 2px solid rgba(255, 215, 0, 0.4);
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+}
+
+.complement-image {
     position: relative;
-    z-index: 2;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(30, 60, 114, 0.15);
 }
 
-.team-card:hover .team-sport-icon {
-    transform: scale(1.2) rotate(20deg);
-    box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+.complement-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
 }
 
-.team-sport-icon i {
-    font-size: 2.2rem;
-    color: white;
-}
+.complement-image:hover img { transform: scale(1.06); }
 
-.team-name {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: white;
-    margin-bottom: 5px;
-}
-
-.team-motto {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.9);
-    font-style: italic;
-}
-
-.team-body {
-    padding: 25px 30px;
-}
-
-.team-info {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.complement-content h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: #1e3c72;
+    font-weight: 800;
     margin-bottom: 20px;
 }
 
-.info-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 0.9rem;
+.complement-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(56, 182, 255, 0.08);
+    color: #38b6ff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 50px;
+    margin-bottom: 24px;
 }
 
-.info-item i {
-    color: var(--sport-primary);
+.complement-text-highlight {
+    font-size: 1.2rem;
+    color: #1e3c72;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.complement-text-description {
     font-size: 1rem;
-    margin-top: 2px;
+    color: #555;
+    line-height: 1.75;
+    margin-bottom: 30px;
+}
+
+.complement-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.comp-feature-item {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background: #f8f9fb;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.comp-feature-icon {
+    font-size: 1.5rem;
+    color: #38b6ff;
+    background: rgba(56, 182, 255, 0.08);
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
 }
 
-.info-item span {
-    color: #666;
+/* --- GRID Y CARDS --- */
+.icfes-focus-section {
+    padding: 80px 20px;
+    background: linear-gradient(180deg, #f8f9fb 0%, #fff 100%);
 }
 
-.team-description {
-    color: #777;
-    line-height: 1.6;
+.icfes-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #38b6ff;
+    margin-bottom: 14px;
+    display: block;
+}
+
+.icfes-header h2 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: #1e3c72;
+    font-weight: 700;
+}
+
+.icfes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 28px;
+}
+
+.icfes-card {
+    background: #fff;
+    padding: 36px;
+    border-radius: 16px;
+    border: 1px solid rgba(30, 60, 114, 0.08);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.icfes-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    border-color: #38b6ff;
+}
+
+.icfes-card-icon {
+    font-size: 2.5rem;
+    color: #38b6ff;
+    margin-bottom: 20px;
+}
+
+.icfes-card h3 {
+    font-size: 1.3rem;
+    color: #1e3c72;
+    margin-bottom: 12px;
+}
+
+/* --- ESTILOS ESPECÍFICOS DE EQUIPOS Y LOGROS --- */
+.team-info .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
     font-size: 0.9rem;
-    margin: 15px 0;
+    color: #555;
+}
+
+.team-info i {
+    color: #38b6ff;
+    width: 20px;
+    text-align: center;
+}
+
+.team-motto-styled {
+    font-style: italic;
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+}
+
+.team-card[data-sport="basketball"] .team-motto-styled { color: #ff6b35; }
+.team-card[data-sport="volleyball"] .team-motto-styled { color: #4facfe; }
+.team-card[data-sport="soccer"] .team-motto-styled { color: #56ab2f; }
+.team-card[data-sport="fitness"] .team-motto-styled { color: #dc143c; }
+
+.team-desc-styled {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
 }
 
 .team-achievements {
     display: flex;
-    flex-wrap: wrap;
     gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
     margin-top: 15px;
 }
 
 .achievement-badge {
-    background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(30, 60, 114, 0.08) 100%);
+    background: #f0f7ff;
+    color: #1e3c72;
     padding: 6px 12px;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    color: var(--sport-primary);
-    border: 1px solid rgba(30, 60, 114, 0.15);
-    font-weight: 600;
-}
-
-/* ========================================
-   VALORES - Método 7: Grid con efecto stagger
-   ======================================== */
-.sports-values {
-    padding: 100px 20px;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #0f2027 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Patrón de fondo animado */
-.sports-values::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image:
-        radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(79, 172, 254, 0.08) 0%, transparent 50%);
-    background-size: 50px 50px;
-    opacity: 0.8;
-    animation: drift 15s ease-in-out infinite;
-}
-
-@keyframes drift {
-
-    0%,
-    100% {
-        background-position: 0 0;
-    }
-
-    50% {
-        background-position: -20px -20px;
-    }
-}
-
-.sports-values::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 800px;
-    height: 800px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
-    animation: float 20s ease-in-out infinite;
-}
-
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translate(0, 0);
-    }
-
-    50% {
-        transform: translate(-50px, 50px);
-    }
-}
-
-.values-title {
-    color: white;
-    text-align: center;
-    margin-bottom: 60px;
-    position: relative;
-    z-index: 2;
-}
-
-.values-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    position: relative;
-    z-index: 1;
-}
-
-.value-card {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    border-radius: 20px;
-    padding: 40px 30px;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
-    will-change: transform, box-shadow;
-}
-
-.value-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.value-card:hover {
-    background: rgba(255, 255, 255, 0.18);
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-.value-card:hover::before {
-    opacity: 1;
-}
-
-.value-icon-wrapper {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--sport-accent) 0%, #ffa500 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 25px;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 0 30px rgba(255, 215, 0, 0.4), 0 10px 30px rgba(255, 215, 0, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-.value-icon-wrapper::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, var(--sport-accent), var(--sport-basketball), var(--sport-accent));
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    animation: rotate 3s linear infinite;
-    z-index: -1;
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.value-card:hover .value-icon-wrapper {
-    transform: rotate(360deg) scale(1.2);
-    box-shadow: 0 0 50px rgba(255, 215, 0, 0.6), 0 15px 40px rgba(255, 215, 0, 0.3);
-}
-
-.value-card:hover .value-icon-wrapper::before {
-    opacity: 0.5;
-}
-
-.value-icon-wrapper i {
-    font-size: 2.5rem;
-    color: var(--sport-primary);
-}
-
-.value-card h3 {
-    font-size: 1.5rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
     font-weight: 700;
-    color: white;
-    margin-bottom: 15px;
-}
-
-.value-card p {
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
-}
-
-/* ========================================
-   LOGROS Y RECONOCIMIENTOS
-   ======================================== */
-.sports-achievements {
-    padding: 80px 20px;
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dfe7eb 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.sports-achievements::before {
-    content: '';
-    position: absolute;
-    top: -30%;
-    left: -20%;
-    width: 600px;
-    height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(220, 20, 60, 0.08) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.sports-achievements::after {
-    content: '';
-    position: absolute;
-    bottom: -30%;
-    right: -20%;
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(79, 172, 254, 0.08) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.sports-achievements .section-header {
-    text-align: center;
-    margin-bottom: 70px;
-    position: relative;
-    z-index: 1;
-}
-
-.sports-achievements .section-title {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-    margin-bottom: 10px;
-}
-
-.sports-achievements .section-subtitle {
-    font-size: 1.1rem;
-    color: #888;
-    font-weight: 500;
-}
-
-.achievements-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-}
-
-.achievement-card {
-    background: linear-gradient(135deg, white 0%, #f8f9fa 100%);
-    border-radius: 18px;
-    padding: 40px 30px;
-    text-align: center;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    position: relative;
-    overflow: hidden;
-}
-
-.achievement-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(220, 20, 60, 0.02) 0%, rgba(30, 60, 114, 0.02) 100%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.achievement-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-    background: #ffffff;
-}
-
-.achievement-card:hover::before {
-    opacity: 1;
-}
-
-.achievement-icon {
-    width: 70px;
-    height: 70px;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 0 25px rgba(30, 60, 114, 0.3), 0 10px 25px rgba(30, 60, 114, 0.15);
-    position: relative;
-}
-
-.achievement-icon::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, #1e3c72, #2a5298, #dc143c, #1e3c72);
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    z-index: -1;
-    filter: blur(15px);
-}
-
-.achievement-card:hover .achievement-icon {
-    transform: scale(1.2) rotate(15deg);
-    box-shadow: 0 0 40px rgba(30, 60, 114, 0.5), 0 15px 40px rgba(30, 60, 114, 0.25);
-}
-
-.achievement-card:hover .achievement-icon::before {
-    opacity: 0.4;
-}
-
-.achievement-icon i {
-    font-size: 2rem;
-    color: var(--sport-accent);
-}
-
-.achievement-card h3 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--sport-primary);
-    margin-bottom: 20px;
+    border: 1px solid rgba(30, 60, 114, 0.1);
 }
 
 .achievement-list {
     list-style: none;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    text-align: left;
+    margin-top: 15px;
 }
 
 .achievement-list li {
-    font-size: 0.95rem;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+    color: #555;
+    display: flex;
+    align-items: flex-start;
+}
+
+.achievement-list li i {
+    color: #ffd700;
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.facility-features {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+    text-align: left;
+}
+
+.facility-features li {
+    font-size: 0.85rem;
     color: #666;
+    margin-bottom: 8px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    justify-content: center;
 }
 
-.achievement-list i {
-    color: var(--sport-accent);
-    font-size: 0.8rem;
+.facility-features li i {
+    color: #38b6ff;
+    margin-right: 8px;
 }
 
-/* ========================================
-   GALERÍA ESTILO CORTINA - RESPONSIVE
-   ======================================== */
-.sports-gallery-curtain {
-    padding: 100px 20px 80px;
-    background: linear-gradient(135deg, #f0f2f5 0%, #e9ecef 50%, #dfe7eb 100%);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.sports-gallery-curtain::before {
-    content: '';
-    position: absolute;
-    top: -40%;
-    right: -15%;
-    width: 700px;
-    height: 700px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 107, 53, 0.08) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.sports-gallery-curtain::after {
-    content: '';
-    position: absolute;
-    bottom: -30%;
-    left: -10%;
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(79, 172, 254, 0.08) 0%, transparent 70%);
-    pointer-events: none;
-}
-
-.section-header-gallery {
-    margin-bottom: 70px;
-    position: relative;
-    z-index: 1;
-}
-
-.section-header-gallery .section-title {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-    margin-bottom: 10px;
-}
-
-.section-header-gallery .section-subtitle {
-    font-size: 1.1rem;
-    color: #888;
-    font-weight: 500;
-}
-
-/* Animación keyframes para el ensanchamiento gradual */
-@keyframes expandWidth {
-    0% {
-        flex: 1;
-        filter: brightness(1) contrast(1);
-    }
-
-    50% {
-        flex: 2;
-        filter: brightness(1.05) contrast(1.1);
-    }
-
-    100% {
-        flex: 3.5;
-        filter: brightness(1.1) contrast(1.15);
-    }
-}
-
-@keyframes expandheight {
-    0% {
-        transform: translateY(0) scaleY(1);
-    }
-
-    50% {
-        transform: translateY(-4px) scaleY(1.02);
-    }
-
-    100% {
-        transform: translateY(-8px) scaleY(1.03);
-    }
-}
-
-@keyframes expandShadow {
-    0% {
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-    }
-
-    50% {
-        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
-    }
-
-    100% {
-        box-shadow: 0 40px 90px rgba(0, 0, 0, 0.35);
-    }
-}
-
-/* Contenedor principal de la galería cortina */
+/* --- GALERÍA CORTINA --- */
 .curtain-gallery-container {
     display: flex;
-    gap: 10px;
     height: 450px;
-    max-width: 1400px;
-    margin: 0 auto;
-    perspective: 1200px;
-    position: relative;
-    z-index: 2;
+    gap: 12px;
+    margin: 40px auto;
+    width: 100%;
+    max-width: 1200px;
 }
 
-/* Cada item de la cortina */
 .curtain-item {
     flex: 1;
     position: relative;
-    border-radius: 20px;
     overflow: hidden;
+    border-radius: 24px;
+    background: #1e3c72;
+    transition: flex 0.4s ease;
     cursor: pointer;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-    transform-origin: center;
-    min-width: 80px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    will-change: flex, box-shadow, transform, filter, border;
-    background: rgba(255, 255, 255, 0);
+    min-width: 0;
 }
 
-/* Hover y clase active - Se expande suavemente con animación visible */
+/* Forzamos visibilidad sin scroll observer para esta sección específica */
+.curtain-item {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
 .curtain-item:hover,
 .curtain-item.active {
-    flex: 3.5;
-    transform: translateY(-10px) scaleY(1.05);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
-    filter: brightness(1.15) contrast(1.2) saturate(1.1);
-    border: 2px solid rgba(255, 215, 0, 0.4);
-    background: rgba(255, 255, 255, 0.02);
+    flex: 4;
 }
 
-/* Imagen de fondo */
+.curtain-item.visible {
+    opacity: 1;
+    transform: none;
+}
+
 .curtain-image {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
-        filter 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    will-change: transform, filter;
-}
-
-.curtain-item:hover .curtain-image,
-.curtain-item.active .curtain-image {
-    transform: scale(1.15) rotate(3deg);
-    filter: brightness(0.5) contrast(1.3) saturate(1.2);
+    color: #fff;
+    font-size: 3.5rem;
+    transition: transform 0.5s ease;
 }
 
 .curtain-image i {
-    font-size: clamp(50px, 8vw, 100px);
-    color: white;
-    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    opacity: 1;
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 2;
-    will-change: transform, opacity;
+    transition: transform 0.5s ease;
 }
 
 .curtain-item:hover .curtain-image i,
 .curtain-item.active .curtain-image i {
-    transform: scale(0.3) translateX(-150px) rotate(-90deg);
-    opacity: 0;
-    pointer-events: none;
+    transform: scale(1.1);
 }
 
-/* Contenido de texto */
 .curtain-content {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.8) 70%, rgba(0, 0, 0, 0.95) 100%);
-    padding: 65px 45px 45px;
-    text-align: left;
-    transform: translateY(60px);
+    padding: 30px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    color: #fff;
     opacity: 0;
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 3;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
     pointer-events: none;
 }
 
@@ -1330,938 +529,22 @@
 .curtain-item.active .curtain-content {
     opacity: 1;
     transform: translateY(0);
-    pointer-events: auto;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
-.curtain-content h3 {
-    font-size: clamp(1.3rem, 4vw, 2.2rem);
-    color: #ffffff;
-    font-weight: 900;
-    margin-bottom: 10px;
-    letter-spacing: 1.5px;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    opacity: 0;
-    transform: translateY(20px);
-}
-
-.curtain-item:hover .curtain-content h3,
-.curtain-item.active .curtain-content h3 {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.curtain-content p {
-    font-size: clamp(0.85rem, 2vw, 1rem);
-    color: rgba(255, 255, 255, 0.95);
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    transition-delay: 0.3s;
-    opacity: 0;
-    transform: translateY(15px);
-}
-
-.curtain-item:hover .curtain-content p,
-.curtain-item.active .curtain-content p {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Efecto de overlay adicional al hover */
-.curtain-item::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    z-index: 1;
-    pointer-events: none;
-}
-
-.curtain-item:hover::after,
-.curtain-item.active::after {
-    opacity: 0.45;
-}
-
-/* Responsive - Para tablets (1024px) */
+/* --- RESPONSIVE --- */
 @media (max-width: 1024px) {
-    .hero-deportes {
-        margin-top: 140px;
-    }
-
-    .curtain-gallery-container {
-        height: 380px;
-        gap: 8px;
-    }
-
-    .curtain-item {
-        min-width: 60px;
-    }
-
-    .curtain-item:hover {
-        flex: 3;
-    }
-
-    .curtain-image i {
-        font-size: clamp(40px, 6vw, 80px);
-    }
-
-    .curtain-content {
-        padding: 40px 25px 25px;
-    }
-
-    .curtain-content h3 {
-        font-size: clamp(1.1rem, 3vw, 1.8rem);
-    }
-
-    .curtain-content p {
-        font-size: clamp(0.8rem, 1.8vw, 0.95rem);
-    }
+    .hero-deportes { margin-top: var(--header-height-mobile); height: 60vh; }
+    .complement-grid { grid-template-columns: 1fr; }
 }
 
-/* Responsive - Para móviles (768px) */
 @media (max-width: 768px) {
-    .hero-deportes {
-        margin-top: 90px;
-        height: clamp(400px, 90vh, 600px);
-    }
-
-    .curtain-gallery-container {
-        height: 320px;
-        gap: 6px;
-        flex-wrap: wrap;
-    }
-
-    .curtain-item {
-        min-width: 50px;
-        border-radius: 15px;
-    }
-
-    .curtain-item:hover {
-        flex: 2.5;
-    }
-
-    .curtain-image i {
-        font-size: clamp(35px, 5vw, 65px);
-    }
-
-    .curtain-content {
-        padding: 30px 20px 20px;
-    }
-
-    .curtain-content h3 {
-        font-size: clamp(1rem, 2.8vw, 1.5rem);
-    }
-
-    .curtain-content p {
-        font-size: clamp(0.75rem, 1.6vw, 0.9rem);
-    }
+    .curtain-gallery-container { flex-direction: column; height: auto; }
+    .curtain-item { height: 200px; flex: none; }
+    .curtain-item:hover { flex: none; height: 300px; }
+    .complement-features { grid-template-columns: 1fr; }
 }
 
-/* Responsive - Para móviles pequeños (480px) */
 @media (max-width: 480px) {
-    .hero-deportes {
-        height: clamp(350px, 80vh, 500px);
-        margin-top: 80px;
-    }
-
-    .hero-title {
-        font-size: clamp(2rem, 7vw, 3rem);
-        letter-spacing: 2px;
-    }
-
-    .hero-description {
-        font-size: clamp(0.9rem, 2vw, 1.1rem);
-        letter-spacing: 1px;
-    }
-
-    .curtain-gallery-container {
-        height: 280px;
-        gap: 4px;
-        padding: 0 10px;
-    }
-
-    .curtain-item {
-        min-width: 40px;
-        border-radius: 12px;
-    }
-
-    .curtain-item:hover {
-        flex: 2;
-    }
-
-    .curtain-image i {
-        font-size: clamp(30px, 4vw, 50px);
-    }
-
-    .curtain-content {
-        padding: 25px 15px 15px;
-    }
-
-    .curtain-content h3 {
-        font-size: clamp(0.95rem, 2.5vw, 1.3rem);
-    }
-
-    .curtain-content p {
-        font-size: clamp(0.7rem, 1.4vw, 0.85rem);
-    }
-}
-
-/* ========================================
-   LLAMADO A LA ACCIÓN - Premium
-   ======================================== */
-.sports-cta-premium {
-    padding: 100px 20px;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.sports-cta-premium::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 50%, rgba(79, 172, 254, 0.1) 0%, transparent 50%);
-    z-index: 1;
-}
-
-.cta-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="1200" height="400" fill="url(%23grid)" /></svg>');
-    opacity: 0.5;
-}
-
-.cta-decorative {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.cta-shape {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.08;
-}
-
-.cta-circle-1 {
-    width: 300px;
-    height: 300px;
-    background: white;
-    top: -100px;
-    right: -100px;
-}
-
-.cta-circle-2 {
-    width: 200px;
-    height: 200px;
-    background: var(--sport-accent);
-    bottom: -50px;
-    left: -50px;
-}
-
-.cta-content {
-    max-width: 1000px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
-}
-
-.cta-text-section h2 {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 800;
-    color: white;
-    margin-bottom: 20px;
-    line-height: 1.2;
-}
-
-.cta-title {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 800;
-    color: white;
-    margin-bottom: 20px;
-}
-
-.cta-subtitle {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
-.cta-description {
-    font-size: 1rem;
-    color: rgba(255, 255, 255, 0.85);
-    line-height: 1.7;
-    margin-bottom: 20px;
-}
-
-.cta-buttons-section {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.btn-cta-premium {
-    padding: 20px 35px;
-    border-radius: 50px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-weight: 700;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    position: relative;
-    overflow: hidden;
-    will-change: transform, box-shadow;
-}
-
-.btn-cta-premium::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
-}
-
-.btn-cta-premium.primary {
-    background: var(--sport-accent);
-    color: var(--sport-primary);
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
-}
-
-.btn-cta-premium.primary:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 20px 40px rgba(255, 215, 0, 0.5);
-}
-
-.btn-cta-premium.secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-}
-
-.btn-cta-premium.secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: white;
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-.btn-icon {
-    position: relative;
-    z-index: 2;
-    font-size: 1.3rem;
-}
-
-.btn-text {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-}
-
-.btn-label {
-    font-size: 1.1rem;
-    font-weight: 700;
-}
-
-.btn-sublabel {
-    font-size: 0.8rem;
-    opacity: 0.9;
-}
-
-/* ========================================
-   RESPONSIVE - Tablet (1024px)
-   ======================================== */
-@media (max-width: 1024px) {
-    .sports-facilities {
-        padding: 80px 20px;
-    }
-
-    .facilities-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 30px;
-    }
-
-    .sports-teams {
-        padding: 80px 20px;
-    }
-
-    .teams-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-    }
-
-    .achievements-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .values-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 25px;
-    }
-
-    .cta-content {
-        flex-direction: column;
-        gap: 30px;
-    }
-}
-
-/* ========================================
-   RESPONSIVE - Móviles (768px)
-   ======================================== */
-@media (max-width: 768px) {
-
-    /* Header y navegación */
-    .main-nav {
-        display: none;
-    }
-
-    .menu-toggle {
-        display: flex;
-    }
-
-    .hero-deportes {
-        margin-top: 90px;
-        height: clamp(400px, 85vh, 550px);
-        padding: 30px 0;
-    }
-
-    .hero-content {
-        padding: 30px 15px;
-    }
-
-    .hero-title {
-        font-size: clamp(2rem, 7vw, 3.5rem);
-        margin-bottom: 15px;
-    }
-
-    .hero-description {
-        font-size: clamp(0.9rem, 2vw, 1.1rem);
-    }
-
-    /* Introducción */
-    .sports-intro {
-        padding: 60px 20px;
-    }
-
-    .intro-text {
-        font-size: 1.1rem;
-    }
-
-    /* Instalaciones */
-    .sports-facilities {
-        padding: 60px 20px;
-    }
-
-    .facilities-grid {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        margin-top: 40px;
-    }
-
-    .facility-card {
-        padding: 30px 25px;
-    }
-
-    .facility-title {
-        font-size: 1.5rem;
-    }
-
-    .facility-features {
-        margin-top: 15px;
-    }
-
-    /* Equipos */
-    .sports-teams {
-        padding: 60px 20px;
-    }
-
-    .sports-teams .section-title {
-        font-size: clamp(2rem, 5vw, 2.8rem);
-    }
-
-    .teams-container {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .team-header {
-        padding: 30px 25px 25px;
-    }
-
-    .team-sport-icon {
-        width: 60px;
-        height: 60px;
-    }
-
-    .team-name {
-        font-size: 1.4rem;
-    }
-
-    .team-body {
-        padding: 20px 25px;
-    }
-
-    .info-item {
-        padding: 8px 0;
-        font-size: 0.85rem;
-    }
-
-    /* Valores */
-    .sports-values {
-        padding: 60px 20px;
-    }
-
-    .values-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .value-card {
-        padding: 30px 20px;
-    }
-
-    .value-icon-wrapper {
-        width: 65px;
-        height: 65px;
-    }
-
-    .value-card h3 {
-        font-size: 1.3rem;
-    }
-
-    /* Logros */
-    .sports-achievements {
-        padding: 60px 20px;
-    }
-
-    .achievements-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-
-    .achievement-icon {
-        width: 60px;
-        height: 60px;
-    }
-
-    .achievement-card h3 {
-        font-size: 1.3rem;
-    }
-
-    /* Galería */
-    .sports-gallery-curtain {
-        padding: 60px 20px 50px;
-    }
-
-    .section-header-gallery {
-        margin-bottom: 50px;
-    }
-
-    .section-header-gallery .section-title {
-        font-size: clamp(2rem, 5vw, 2.8rem);
-    }
-
-    /* CTA */
-    .sports-cta-premium {
-        padding: 60px 20px;
-    }
-
-    .cta-content {
-        gap: 25px;
-    }
-
-    .cta-title {
-        font-size: clamp(1.8rem, 5vw, 2.8rem);
-    }
-
-    .cta-description {
-        font-size: 0.95rem;
-    }
-
-    .cta-buttons-section {
-        width: 100%;
-    }
-
-    .btn-cta-premium {
-        justify-content: center;
-        padding: 15px 25px;
-        font-size: 0.95rem;
-    }
-
-    .btn-label {
-        font-size: 1rem;
-    }
-
-    .btn-sublabel {
-        font-size: 0.75rem;
-    }
-}
-
-/* ========================================
-   RESPONSIVE - Móviles Pequeños (480px)
-   ======================================== */
-@media (max-width: 480px) {
-
-    .hero-deportes {
-        margin-top: 80px;
-        height: clamp(350px, 75vh, 450px);
-    }
-
-    .hero-title {
-        font-size: clamp(1.8rem, 6vw, 2.8rem);
-        letter-spacing: 2px;
-        margin-bottom: 12px;
-    }
-
-    .hero-description {
-        font-size: clamp(0.85rem, 1.8vw, 1rem);
-        letter-spacing: 0.5px;
-    }
-
-    /* Sections */
-    .sports-intro {
-        padding: 50px 15px;
-    }
-
-    .intro-text {
-        font-size: 1rem;
-        letter-spacing: 0.5px;
-    }
-
-    .sports-facilities,
-    .sports-teams,
-    .sports-values,
-    .sports-achievements,
-    .sports-gallery-curtain,
-    .sports-cta-premium {
-        padding: 50px 15px;
-    }
-
-    /* Instalaciones */
-    .facility-card {
-        padding: 25px 20px;
-    }
-
-    .facility-icon-bg {
-        width: 80px;
-        height: 80px;
-    }
-
-    .facility-title {
-        font-size: 1.3rem;
-    }
-
-    .facility-description {
-        font-size: 0.9rem;
-    }
-
-    .facility-features {
-        font-size: 0.85rem;
-    }
-
-    /* Equipos */
-    .team-header {
-        padding: 25px 20px 22px;
-    }
-
-    .team-sport-icon {
-        width: 55px;
-        height: 55px;
-        margin: 0 auto 12px;
-    }
-
-    .team-name {
-        font-size: 1.3rem;
-    }
-
-    .team-motto {
-        font-size: 0.9rem;
-    }
-
-    .team-body {
-        padding: 18px 20px;
-    }
-
-    .team-description {
-        font-size: 0.85rem;
-    }
-
-    /* Valores */
-    .value-card {
-        padding: 25px 15px;
-    }
-
-    .value-icon-wrapper {
-        width: 60px;
-        height: 60px;
-        margin-bottom: 20px;
-    }
-
-    .value-card h3 {
-        font-size: 1.2rem;
-    }
-
-    .value-card p {
-        font-size: 0.9rem;
-    }
-
-    /* Logros */
-    .achievement-card {
-        padding: 25px 20px;
-    }
-
-    .achievement-icon {
-        width: 55px;
-        height: 55px;
-    }
-
-    .achievement-card h3 {
-        font-size: 1.2rem;
-    }
-
-    .achievement-list {
-        gap: 10px;
-    }
-
-    .achievement-list li {
-        font-size: 0.85rem;
-    }
-
-    /* Galería */
-    .section-header-gallery {
-        margin-bottom: 40px;
-    }
-
-    /* CTA */
-    .cta-title {
-        font-size: clamp(1.5rem, 5vw, 2.5rem);
-        margin-bottom: 15px;
-    }
-
-    .cta-description {
-        font-size: 0.9rem;
-    }
-
-    .btn-cta-premium {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-    }
-
-    .btn-icon {
-        font-size: 1.1rem;
-    }
-}
-
-/* ========================================
-   ANIMACIONES DE SCROLL - AVANZADAS
-   ======================================== */
-
-/* Animación base fade-in */
-.fade-in-on-scroll {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
-        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.fade-in-on-scroll.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Entrada desde la izquierda para facility cards */
-.facility-card {
-    opacity: 0;
-    transform: translateX(-60px) translateY(30px) rotateY(15deg);
-    transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
-        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    backface-visibility: hidden;
-}
-
-.facility-card.visible {
-    opacity: 1;
-    transform: translateX(0) translateY(0) rotateY(0deg);
-}
-
-/* Entrada desde la derecha para team cards */
-.team-card {
-    opacity: 0;
-    transform: translateX(60px) translateY(30px) rotateY(-15deg);
-    transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
-        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    backface-visibility: hidden;
-}
-
-.team-card.visible {
-    opacity: 1;
-    transform: translateX(0) translateY(0) rotateY(0deg);
-}
-
-/* Entrada con zoom y rotación para achievement cards */
-.achievement-card {
-    opacity: 0;
-    transform: scale(0.7) rotateZ(-10deg) translateY(40px);
-    transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
-        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.achievement-card.visible {
-    opacity: 1;
-    transform: scale(1) rotateZ(0deg) translateY(0);
-}
-
-/* Entrada con movimiento vertical para value cards */
-.value-card {
-    opacity: 0;
-    transform: translateY(60px) scale(0.95);
-    transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
-        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.value-card.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
-/* Entrada especial para curtain items */
-.curtain-item {
-    opacity: 0;
-    transform: translateY(50px) scaleY(0.8);
-    animation: none;
-    transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
-        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    transform-origin: bottom center;
-}
-
-.curtain-item.visible {
-    opacity: 1;
-    transform: translateY(0) scaleY(1);
-}
-
-/* Retrasos escalonados para efecto de cascada */
-.facility-card:nth-child(1) {
-    transition-delay: 0.1s;
-}
-
-.facility-card:nth-child(2) {
-    transition-delay: 0.2s;
-}
-
-.facility-card:nth-child(3) {
-    transition-delay: 0.3s;
-}
-
-.facility-card:nth-child(4) {
-    transition-delay: 0.4s;
-}
-
-.facility-card:nth-child(5) {
-    transition-delay: 0.5s;
-}
-
-.facility-card:nth-child(6) {
-    transition-delay: 0.6s;
-}
-
-.team-card:nth-child(1) {
-    transition-delay: 0.1s;
-}
-
-.team-card:nth-child(2) {
-    transition-delay: 0.2s;
-}
-
-.team-card:nth-child(3) {
-    transition-delay: 0.3s;
-}
-
-.team-card:nth-child(4) {
-    transition-delay: 0.4s;
-}
-
-.value-card:nth-child(1) {
-    transition-delay: 0.1s;
-}
-
-.value-card:nth-child(2) {
-    transition-delay: 0.2s;
-}
-
-.value-card:nth-child(3) {
-    transition-delay: 0.3s;
-}
-
-.value-card:nth-child(4) {
-    transition-delay: 0.4s;
-}
-
-.achievement-card:nth-child(1) {
-    transition-delay: 0.1s;
-}
-
-.achievement-card:nth-child(2) {
-    transition-delay: 0.2s;
-}
-
-.achievement-card:nth-child(3) {
-    transition-delay: 0.3s;
-}
-
-.achievement-card:nth-child(4) {
-    transition-delay: 0.4s;
-}
-
-.curtain-item:nth-child(1) {
-    transition-delay: 0.1s;
-}
-
-.curtain-item:nth-child(2) {
-    transition-delay: 0.2s;
-}
-
-.curtain-item:nth-child(3) {
-    transition-delay: 0.3s;
-}
-
-.curtain-item:nth-child(4) {
-    transition-delay: 0.4s;
-}
-
-.curtain-item:nth-child(5) {
-    transition-delay: 0.5s;
-}
-
-.curtain-item:nth-child(6) {
-    transition-delay: 0.6s;
+    .hero-deportes { margin-top: 0; padding-top: 120px; height: auto; min-height: 350px; }
+    .hero-stats-quick { gap: 15px; }
 }
