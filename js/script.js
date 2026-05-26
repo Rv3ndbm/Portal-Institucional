@@ -602,13 +602,44 @@ function normalizeText(str) {
  * @returns {Array} hasta 6 resultados
  */
 function runSearch(query) {
-    if (!query || !query.trim() || typeof SEARCH_INDEX === 'undefined') return [];
+    if (!query || !query.trim() || typeof SEARCH_INDEX === 'undefined') {
+        console.warn('Search Index no definido o query vacía');
+        return [];
+    }
     const q = normalizeText(query.trim());
     if (q.length < 2) return [];
 
-    return SEARCH_INDEX.filter(item => {
+    // Determinar la ruta base para ajustar las URLs de búsqueda
+    const path = (window.location?.pathname || '').replace(/\\/g, '/');
+    let prefix = '';
+    if (path.includes('/html/tecnicas/')) {
+        prefix = '../../html/';
+    } else if (path.includes('/html/')) {
+        prefix = ''; // Ya estamos en /html/
+    } else {
+        prefix = 'html/'; // Estamos en la raíz
+    }
+
+    return SEARCH_INDEX.map(item => {
+        // Clonar el item para no modificar el original en el índice
+        const newItem = { ...item };
+        
+        // Ajustar la URL solo si es relativa (no empieza con http)
+        if (!newItem.url.startsWith('http')) {
+            // Si el item ya tiene la carpeta html/ y estamos en la raíz, dejarlo.
+            // Pero nuestro índice tiene URLs relativas a la carpeta /html/
+            if (path.includes('/html/tecnicas/')) {
+                newItem.url = '../../html/' + newItem.url.replace('html/', '');
+            } else if (path.includes('/html/')) {
+                newItem.url = newItem.url.replace('html/', '');
+            } else {
+                newItem.url = 'html/' + newItem.url.replace('html/', '');
+            }
+        }
+        return newItem;
+    }).filter(item => {
         const titleMatch = normalizeText(item.titulo).includes(q);
-        const keywordMatch = item.keywords.some(kw => normalizeText(kw).includes(q));
+        const keywordMatch = Array.isArray(item.keywords) && item.keywords.some(kw => normalizeText(kw).includes(q));
         return titleMatch || keywordMatch;
     }).slice(0, 6);
 }
