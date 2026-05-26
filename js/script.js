@@ -22,12 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(hideLoadingScreen, 300);
     initLazyLoading();
     updateManualConvivenciaLinks();
-<<<<<<< HEAD
-    initEmailContacts();
-=======
     updateWhatsAppChannelLinks();
     updateContactEmailLink();
->>>>>>> 8497a74591184e5a11f831b5737dca6c18390480
 });
 
 function updateManualConvivenciaLinks() {
@@ -50,7 +46,6 @@ function updateManualConvivenciaLinks() {
     });
 }
 
-<<<<<<< HEAD
 // === MANEJO DE CONTACTOS POR EMAIL ===
 /**
  * Detecta si el dispositivo es móvil y redirecciona al email apropiadamente.
@@ -90,51 +85,6 @@ function initEmailContacts() {
     });
 }
 
-=======
-function updateWhatsAppChannelLinks() {
-    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-        || (navigator.maxTouchPoints > 0 && window.innerWidth <= 900);
-
-    document.querySelectorAll('a[href*="whatsapp.com/channel/"]').forEach(link => {
-        try {
-            const url = new URL(link.href, window.location.href);
-            const channelPart = url.pathname.split('/channel/')[1];
-            if (!channelPart) return;
-
-            if (isMobileDevice) {
-                url.hostname = 'www.whatsapp.com';
-            } else {
-                url.hostname = 'web.whatsapp.com';
-            }
-
-            link.href = url.toString();
-            link.setAttribute('target', '_blank');
-            link.setAttribute('rel', 'noopener noreferrer');
-        } catch (error) {
-            console.warn('No se pudo actualizar el enlace de WhatsApp:', link.href, error);
-        }
-    });
-}
-
-function updateContactEmailLink() {
-    const emailLink = document.querySelector('.contact-email-link');
-    if (!emailLink) return;
-
-    const emailAddress = 'ie.gilbertoalzate@medellin.gov.co';
-    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-    if (isMobileDevice) {
-        emailLink.href = `mailto:${emailAddress}`;
-        emailLink.removeAttribute('target');
-        emailLink.removeAttribute('rel');
-    } else {
-        emailLink.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(emailAddress)}`;
-        emailLink.setAttribute('target', '_blank');
-        emailLink.setAttribute('rel', 'noopener noreferrer');
-    }
-}
-
->>>>>>> 8497a74591184e5a11f831b5737dca6c18390480
 // === LAZY LOADING DE IMÁGENES ===
 function initLazyLoading() {
     // Si el navegador soporta Intersection Observer (más eficiente)
