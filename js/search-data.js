@@ -186,6 +186,16 @@ const SEARCH_INDEX = [
         ]
     },
     {
+        titulo: "Planes de Área",
+        url: "planes-area.html",
+        keywords: [
+            "planes de area", "mallas curriculares", "planificacion", "curriculo",
+            "materias", "asignaturas", "objetivos de aprendizaje", "recursos pedagogicos",
+            "matematicas", "ciencias", "sociales", "tecnologia", "artistica", "etica",
+            "religion", "educacion fisica", "humanidades", "filosofia", "brujula"
+        ]
+    },
+    {
         titulo: "Sistema Estudiante (Akros)",
         url: "https://estudiante.alzate.edu.co/",
         keywords: [
