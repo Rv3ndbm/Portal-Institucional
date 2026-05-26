@@ -5,9 +5,15 @@
 
 /* 1. Global Detail Layout */
 .sede-content {
-    padding-top: 180px;
+    padding-top: var(--header-height-desktop);
     /* Adjusted for modern sticky header */
     background-color: var(--color-gray-50);
+}
+
+/* Ajuste cuando el header se contrae al hacer scroll */
+.main-header.scrolled ~ .sede-content,
+.main-header.scrolled ~ main .sede-content {
+    padding-top: var(--header-height-scrolled);
 }
 
 /* Force exact same colors as index.html — reset variables changed by modern-theme.css */

@@ -18,8 +18,19 @@
     justify-content: center;
     text-align: center;
     color: var(--color-white);
-    margin-top: 200px; /* Separación de 20px respecto al navbar de 180px en desktop */
+    margin-top: var(--header-height-desktop); /* Ajustado para eliminar espacio en blanco */
     overflow: hidden;
+}
+
+/* Ajuste cuando el header se contrae al hacer scroll */
+.main-header.scrolled + main .news-hero {
+    margin-top: var(--header-height-scrolled);
+}
+
+@media (max-width: 1024px) {
+    .news-hero {
+        margin-top: var(--header-height-mobile);
+    }
 }
 
 /* Fallback background if image is missing */

@@ -8,18 +8,24 @@
    El header fijo mide ~150px (header-top ~90px + nav ~54px)
    ============================================================ */
 body {
-    padding-top: 250px; /* Separado del navbar (~180px) por aprox 70px */
+    padding-top: var(--header-height-desktop); /* Ajustado para eliminar espacio en blanco */
+}
+
+/* Ajuste cuando el header se contrae al hacer scroll */
+.main-header.scrolled + body,
+.main-header.scrolled ~ main {
+    padding-top: var(--header-height-scrolled);
 }
 
 @media (max-width: 1024px) {
     body {
-        padding-top: 140px; /* Separado del navbar (~120px) por aprox 20px */
+        padding-top: var(--header-height-mobile); /* Ajustado para el header móvil */
     }
 }
 
 @media (max-width: 768px) {
     body {
-        padding-top: 90px; /* Separado del navbar (~70px) por aprox 20px */
+        padding-top: var(--header-height-mobile);
     }
 }
 
