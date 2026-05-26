@@ -12,22 +12,40 @@ main {
     position: relative;
     z-index: 0;
     isolation: isolate;
+    margin-top: 0; /* Eliminar margen para que el hero empiece desde arriba */
 }
 
 /* === HERO SECTION === */
 .hero-home {
     position: relative;
     width: 100%;
-    height: 75vh;
+    height: 100vh; /* Volver a 100vh para efecto pantalla completa */
     min-height: 520px;
     background-image: url('../img/banner ce.JPG');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     overflow: hidden;
+    padding-top: var(--header-height-desktop); /* Compensar header en desktop */
+}
+
+@media (max-width: 1024px) {
+    .hero-home {
+        padding-top: 100px; /* Ajuste manual para móvil para evitar espacio en blanco excesivo */
+        height: 80vh; /* Un poco más bajo en móvil para ver contenido abajo */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-home {
+        padding-top: 80px;
+        height: 70vh;
+    }
 }
 
 .hero-overlay {
@@ -348,6 +366,22 @@ main {
     margin-bottom: 15px;
     overflow: visible;
     cursor: grab;
+    touch-action: pan-y;
+}
+
+.cylinder-card {
+    position: absolute;
+    width: 520px;
+    height: 260px;
+    top: -130px;
+    left: -260px;
+    cursor: pointer;
+    backface-visibility: visible;
+    transition: opacity 0.5s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /*
@@ -712,6 +746,89 @@ main {
     }
 }
 
+
+/* === SHORTCUTS SECTION (REDISEÑO) === */
+.shortcuts-section {
+    padding: 60px 0;
+    background: var(--color-primary);
+    color: white;
+}
+
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.shortcut-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.shortcut-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+.shortcut-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background: white;
+    color: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.shortcut-item:hover .shortcut-icon-wrapper {
+    background: var(--color-secondary);
+    color: white;
+    transform: rotate(10deg);
+}
+
+.shortcut-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 1024px) {
+    .shortcuts-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .shortcuts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .shortcut-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .shortcut-label {
+        font-size: 0.85rem;
+    }
+}
 
 /* === DIAGONAL SEPARATORS === */
 .diagonal-divider {
@@ -1994,6 +2111,10 @@ main {
         height: 100px;
     }
 
+    .glass-orb {
+        display: none;
+    }
+
     .cylinder-card .card-info {
         flex: none;
         width: 100%;
@@ -2007,6 +2128,14 @@ main {
     .cylinder-card .card-info p {
         font-size: 0.8rem;
         text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-home {
+        min-height: 100vh;
+        height: 100vh;
+        background-position: center top;
     }
 }
 

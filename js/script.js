@@ -1071,8 +1071,9 @@ class CylinderCarousel3D {
         this.hasDragged = false;
         this.startX = 0;
         this.currentX = 0;
-        this.dragSensitivity = 0.5;
+        this.dragSensitivity = 0.7; // Aumentado ligeramente para mejor respuesta
         this.startAngle = 0;
+        this.dragThreshold = 10; // Umbral para considerar que se ha arrastrado
 
         this.init();
     }
@@ -1160,6 +1161,15 @@ class CylinderCarousel3D {
                     this.rotateBy(diff);
                 }
             });
+
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'link');
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
         });
     }
 
@@ -1171,10 +1181,14 @@ class CylinderCarousel3D {
     }
 
     dragStart(e) {
-        e.preventDefault(); // Evitar selección de texto y arrastre nativo de imágenes
+        if (e.type.includes('mouse')) {
+            e.preventDefault();
+        }
+
         this.isDragging = true;
         this.hasDragged = false;
         this.startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        this.startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
         this.startAngle = this.currentAngle;
 
         this.track.style.transition = 'none';
@@ -1183,17 +1197,26 @@ class CylinderCarousel3D {
 
     dragMove(e) {
         if (!this.isDragging) return;
-        e.preventDefault(); // Evitar scroll de la página
 
-        this.currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-        const diffX = this.currentX - this.startX;
+        const currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        const currentY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+        const diffX = currentX - this.startX;
+        const diffY = currentY - this.startY;
 
-        // Marcar que hubo movimiento real (umbral de 5px)
-        if (Math.abs(diffX) > 5) {
+        if (e.type.includes('touch')) {
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                e.preventDefault();
+            } else {
+                return;
+            }
+        } else {
+            e.preventDefault();
+        }
+
+        if (Math.abs(diffX) > this.dragThreshold) {
             this.hasDragged = true;
         }
 
-        // Girar de forma dinámica y suave según cuánto arrastramos
         this.currentAngle = this.startAngle + (diffX * this.dragSensitivity);
         this.track.style.transform = `translateZ(${-this.radius}px) rotateY(${this.currentAngle}deg)`;
     }

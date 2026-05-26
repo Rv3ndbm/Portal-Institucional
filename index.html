@@ -130,6 +130,7 @@
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h1 class="hero-title">Bienvenidos al<br>Gilberto Alzate Avendaño</h1>
+                <p class="hero-subtitle">Explora sedes, servicios, medias técnicas y noticias en una sola vista diseñada para móviles.</p>
                 <a href="#" class="hero-scroll-indicator"
                     onclick="window.scrollBy({top: window.innerHeight, behavior:'smooth'}); return false;">
                     <span class="scroll-chevron"><i class="fas fa-chevron-down"></i></span>
@@ -256,41 +257,45 @@
             </div>
         </section>
 
-        <!-- TIRA HORIZONTAL DE FOTOS -->
-        <section class="photo-strip" data-scroll-animate>
-            <a href="https://estudiante.alzate.edu.co/" class="strip-panel" style="background-image: url('img/sistema-evaluativo.jpeg')">
-                <div class="strip-overlay"></div>
-                <div class="strip-label">
-                    <strong>SISTEMA</strong> INSTITUCIONAL <strong>DE EVALUACIÓN</strong>
+        <!-- SECCIÓN DE ACCESOS RÁPIDOS (Rediseñado para mejor UX móvil) -->
+        <section class="shortcuts-section" data-scroll-animate>
+            <div class="container">
+                <h2 class="section-title">Enlaces de Interés</h2>
+                <div class="shortcuts-grid">
+                    <a href="https://estudiante.alzate.edu.co/" class="shortcut-item" target="_blank" rel="noopener noreferrer">
+                        <div class="shortcut-icon-wrapper"><i class="fas fa-user-graduate"></i></div>
+                        <span class="shortcut-label">Acceso Estudiantes</span>
+                    </a>
+                    <a href="https://docente.alzate.edu.co/" class="shortcut-item" target="_blank" rel="noopener noreferrer">
+                        <div class="shortcut-icon-wrapper"><i class="fas fa-chalkboard-teacher"></i></div>
+                        <span class="shortcut-label">Acceso Docentes</span>
+                    </a>
+                    <a href="html/pre.html" class="shortcut-item">
+                        <div class="shortcut-icon-wrapper"><i class="fas fa-file-alt"></i></div>
+                        <span class="shortcut-label">Preinscripción</span>
+                    </a>
+                    <a href="html/noticias.html" class="shortcut-item">
+                        <div class="shortcut-icon-wrapper"><i class="fas fa-bullhorn"></i></div>
+                        <span class="shortcut-label">Noticias</span>
+                    </a>
+                    <a href="html/sedes.html" class="shortcut-item">
+                        <div class="shortcut-icon-wrapper"><i class="fas fa-map-marker-alt"></i></div>
+                        <span class="shortcut-label">Nuestras Sedes</span>
+                    </a>
+                    <a href="html/calendario.html" class="shortcut-item">
+                        <div class="shortcut-icon-wrapper"><i class="fas fa-calendar-check"></i></div>
+                        <span class="shortcut-label">Calendario</span>
+                    </a>
+                    <a href="html/historia.html" class="shortcut-item">
+                        <div class="shortcut-icon-wrapper"><i class="fas fa-landmark"></i></div>
+                        <span class="shortcut-label">Historia</span>
+                    </a>
+                    <a href="html/contacto.html" class="shortcut-item">
+                        <div class="shortcut-icon-wrapper"><i class="fas fa-envelope"></i></div>
+                        <span class="shortcut-label">Contacto</span>
+                    </a>
                 </div>
-            </a>
-            <a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf" target="_blank rel="noopener noreferrer"
-                class="strip-panel" style="background-image: url('img/eventos cultulares sb.jpg')">
-                <div class="strip-overlay"></div>
-                <div class="strip-label">
-                    MANUAL DE <strong>CONVIVENCIA</strong>
-                </div>
-            </a>
-            <a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508" target="_blank" class="strip-panel " rel="noopener noreferrer"
-                style="background-image: url('img/contacto.jpeg')">
-                <div class="strip-overlay"></div>
-                <div class="strip-label">
-                    <strong>CONTACTO</strong> ALZATE
-                </div>
-            </a>
-            <a href="html/calendario.html" class="strip-panel"
-                style="background-image: url('img/agendaww.png')">
-                <div class="strip-overlay"></div>
-                <div class="strip-label">
-                    ANUARIO<strong>INSTITUCIONAL</strong>
-                </div>
-            </a>
-            <a href="html/sedes.html" class="strip-panel" style="background-image: url('img/banner ce.JPG')">
-                <div class="strip-overlay"></div>
-                <div class="strip-label">
-                    AMBIENTES <strong>SANOS Y PROTEGIDOS</strong>
-                </div>
-            </a>
+            </div>
         </section>
         <!-- DIAGONAL SEPARATOR 2 -->
         <div class="diagonal-divider diagonal-blue"></div>
@@ -330,37 +335,34 @@
                 </div>
                 <div class="bento-grid" data-scroll-animate>
                     <div class="bento-cell bento-dark">
-                        <i class="fas fa-laptop-code"></i>
-                        <strong>Control Academico</strong>
-                        <p>Plataforma digital que facilita el acceso a contenidos educativos y recursos de aprendizaje
-                            en línea.</p>
-                        <a href="https://docente.alzate.edu.co/" target="_blank" class="bento-link" rel="noopener noreferrer">Ingresar →</a>
+                        <i class="fas fa-book"></i>
+                        <strong>Manual de convivencia</strong>
+                        <p>Consulta las normas y orientaciones para vivir de forma respetuosa en el colegio.</p>
+                        <a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf" target="_blank" class="bento-link" rel="noopener noreferrer">Abrir manual →</a>
                     </div>
                     <div class="bento-cell bento-light">
                         <i class="fas fa-calendar-alt"></i>
-                        <strong>Calendario Institucional</strong>
-                        <p>Eventos e información de interés</p>
+                        <strong>Calendario institucional</strong>
+                        <p>Revisa fechas de matrícula, jornadas escolares y eventos importantes.</p>
                         <a href="html/calendario.html" class="bento-link">Ver calendario →</a>
                     </div>
                     <div class="bento-cell bento-light">
-                        <i class="fas fa-envelope"></i>
-                        <strong>Correo institucional</strong>
-                        <p>Herramienta de comunicación oficial entre docentes, estudiantes y padres de familia.</p>
-                        <a href="mailto:ie.gilbertoalzate@medellin.gov.co" class="bento-link contact-email-link">Escribirnos →</a>
+                        <i class="fas fa-phone"></i>
+                        <strong>Contacto institucional</strong>
+                        <p>Comunícate con la institución para resolver dudas de matrícula y servicios.</p>
+                        <a href="html/contacto.html" class="bento-link">Escribir →</a>
                     </div>
                     <div class="bento-cell bento-dark">
-                        <i class="fas fa-info-circle"></i>
-                        <strong>Instructivos</strong>
-                        <p>Guías y manuales que orientan a la comunidad educativa en el uso de plataformas y servicios.
-                        </p>
-                        <a href="html/documentos.html" class="bento-link">Ver guías →</a>
+                        <i class="fas fa-newspaper"></i>
+                        <strong>Noticias y eventos</strong>
+                        <p>Mantente al día con las actividades, talleres y anuncios del colegio.</p>
+                        <a href="html/noticias.html" class="bento-link">Ver noticias →</a>
                     </div>
                     <div class="bento-cell bento-dark bento-wide">
-                        <i class="fas fa-search"></i>
-                        <strong>Escuela de padres</strong>
-                        <p>Ofrecemos conferencias y reuniones sobre temas relevantes para la crianza y el acompañamiento
-                            escolar.</p>
-                        <a href="html/calendario.html" class="bento-link">Conocer más →</a>
+                        <i class="fas fa-video"></i>
+                        <strong>Alzate Virtual</strong>
+                        <p>Accede a recursos digitales y clases virtuales desde cualquier dispositivo.</p>
+                        <a href="https://www.youtube.com/@alzatevirtual8374/videos" target="_blank" class="bento-link" rel="noopener noreferrer">Abrir Alzate Virtual →</a>
                     </div>
                 </div>
             </div>

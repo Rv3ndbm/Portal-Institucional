@@ -12,26 +12,21 @@ main {
     position: relative;
     z-index: 0;
     isolation: isolate;
-    margin-top: var(--header-height-desktop);
-    /* altura del header en PC */
+    margin-top: 0;
 }
 
-/* Ajuste cuando el header se contrae al hacer scroll */
-.main-header.scrolled + main {
-    margin-top: var(--header-height-scrolled);
-}
+/* Ajuste cuando el header se contrae al hacer scroll - Eliminado para evitar saltos */
+/* .main-header.scrolled + main { margin-top: ... } */
 
 @media (max-width: 1024px) {
     main {
-        margin-top: var(--header-height-mobile);
-        /* altura del header en tablet */
+        margin-top: 0;
     }
 }
 
 @media (max-width: 480px) {
     main {
-        margin-top: var(--header-height-mobile);
-        /* altura del header en móvil */
+        margin-top: 0;
     }
 }
 
