@@ -91,6 +91,27 @@ body {
     padding: 4px;
 }
 
+/* Pulso sutil en el logo mientras carga */
+.loading-logo {
+    animation: loadingPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes loadingPulse {
+    0% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.18); }
+    50% { transform: scale(1.06); box-shadow: 0 8px 22px rgba(0,0,0,0.25); }
+    100% { transform: scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.18); }
+}
+
+/* Animación suave al ocultar la pantalla de carga */
+.loading-screen {
+    transition: opacity 0.65s ease-out, visibility 0.65s ease-out;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
 /* === LAZY LOADING IMAGES === */
 img[data-src] {
     opacity: 0;
