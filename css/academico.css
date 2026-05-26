@@ -24,6 +24,28 @@
     margin-top: var(--header-height-scrolled);
 }
 
+@media (max-width: 1024px) {
+    .hero-academico {
+        margin-top: var(--header-height-mobile);
+        height: 55vh;
+        min-height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-academico {
+        height: 45vh;
+        min-height: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-academico {
+        height: 40vh;
+        min-height: 240px;
+    }
+}
+
 .hero-academico::before {
     content: '';
     position: absolute;
@@ -86,6 +108,18 @@
     }
 }
 
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 24px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 16px 16px;
+    }
+}
+
 .hero-badge {
     display: inline-block;
     background: rgba(255, 255, 255, 0.15);
@@ -120,6 +154,32 @@
     max-width: 700px;
     margin: 0 auto 36px;
     line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: clamp(1.8rem, 5vw, 2.8rem);
+        margin: 16px 0;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+        margin: 0 auto 24px;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.6rem;
+        margin: 12px 0;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem;
+        margin: 0 auto 16px;
+        line-height: 1.5;
+    }
 }
 
 .hero-stats-quick {

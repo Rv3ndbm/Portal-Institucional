@@ -308,10 +308,22 @@ main {
 
 .info-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+    .servicio-card {
+        padding: 24px 20px;
+    }
+    
+    .servicio-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2.2rem;
+    }
 }
 
 @media (max-width: 768px) {

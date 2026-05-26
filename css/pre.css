@@ -17,6 +17,12 @@
     margin-top: var(--header-height-scrolled);
 }
 
+@media (max-width: 1024px) {
+    .hero-inscripcion {
+        margin-top: var(--header-height-mobile);
+    }
+}
+
 /* Video de Fondo */
 .video-background {
     position: absolute;

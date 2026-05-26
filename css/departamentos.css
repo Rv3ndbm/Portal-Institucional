@@ -345,7 +345,7 @@
 
 .horarios-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: 30px;
     max-width: 1000px;
     margin: 40px auto 0; /* Reducido de 60px */
@@ -353,10 +353,17 @@
 
 .horario-card {
     background: rgba(255, 255, 255, 0.05);
-    padding: 40px;
+    padding: 30px 20px;
     border-radius: 30px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+}
+
+@media (max-width: 480px) {
+    .horario-card {
+        padding: 24px 16px;
+        border-radius: 20px;
+    }
 }
 
 .horario-card:hover {

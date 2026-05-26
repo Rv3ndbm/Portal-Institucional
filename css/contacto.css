@@ -49,13 +49,13 @@ main {
    ============================================ */
 .contact-hero {
     position: relative;
-    min-height: 550px;
+    min-height: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--contact-primary) 0%, var(--contact-primary-dark) 100%);
     overflow: visible;
-    padding: 240px 24px 100px;
+    padding: 180px 24px 80px;
     margin-top: 0;
 }
 
@@ -144,15 +144,15 @@ main {
 
 @media (max-width: 768px) {
     .contact-hero {
-        padding: 200px 24px 90px;
-        min-height: 480px;
+        padding: 130px 24px 60px;
+        min-height: 380px;
     }
 }
 
 @media (max-width: 480px) {
     .contact-hero {
-        padding: 160px 20px 70px;
-        min-height: 420px;
+        padding: 110px 20px 50px;
+        min-height: 320px;
     }
     
     .contact-hero-title {
@@ -290,6 +290,24 @@ main {
     font-weight: 700;
     color: var(--contact-dark);
     line-height: 1.6;
+    word-break: break-word;
+}
+
+@media (max-width: 480px) {
+    .contact-card {
+        padding: 16px;
+        gap: 12px;
+    }
+    
+    .contact-card-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2rem;
+    }
+    
+    .contact-card-value {
+        font-size: 0.95rem;
+    }
 }
 
 .contact-card-value a {
