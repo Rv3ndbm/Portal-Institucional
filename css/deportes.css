@@ -19,13 +19,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 230px; /* Ajuste para el header fijo en desktop con separación */
+    margin-top: var(--header-height-desktop); /* Usar variable de header para evitar huecos excesivos */
     background: linear-gradient(135deg, #0a1620 0%, #1a2633 25%, #203a43 50%, #2c5364 75%, #1a3a52 100%);
     background-size: 400% 400%;
     overflow: hidden;
     color: #fff;
     text-align: center;
     animation: gradientShift 12s ease-in-out infinite;
+}
+
+/* Cuando el header se minimiza al hacer scroll, reducir la separación del hero */
+.main-header.scrolled + .hero-deportes {
+    margin-top: var(--header-height-scrolled);
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 1024px) {
+    .hero-deportes {
+        margin-top: var(--header-height-mobile);
+    }
+    .main-header.scrolled + .hero-deportes {
+        margin-top: var(--header-height-scrolled);
+    }
 }
 
 @keyframes gradientShift {
