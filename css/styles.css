@@ -215,7 +215,7 @@ img:not([data-src]) {
 
 @media (max-width: 1024px) {
     .institution-name h1 {
-        font-size: clamp(14px, 3.5vw, 18px);
+        font-size: clamp(0.875rem, 3.5vw, 1.125rem);
         letter-spacing: 0.5px;
         text-align: center;
     }
@@ -294,7 +294,7 @@ img:not([data-src]) {
     border: 2px solid var(--color-white);
     border-radius: var(--border-radius-md);
     color: var(--color-white);
-    font-size: 24px;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: all var(--transition-base) var(--ease-smooth);
     display: flex;
@@ -347,7 +347,7 @@ img:not([data-src]) {
 
 @media (max-width: 1024px) {
     .main-header.scrolled .institution-name h1 {
-        font-size: clamp(12px, 3vw, 16px);
+        font-size: clamp(0.75rem, 3vw, 1rem);
     }
 }
 
@@ -572,7 +572,7 @@ img:not([data-src]) {
         transform: translateY(-50%) translateX(-10px);
         opacity: 0;
         transition: all var(--transition-base) var(--ease-out);
-        font-size: 20px;
+        font-size: 1.25rem;
     }
 }
 
@@ -664,7 +664,7 @@ img:not([data-src]) {
     .toggle-arrow {
         display: inline-block;
         color: var(--color-white);
-        font-size: 14px;
+        font-size: 0.875rem;
         transition: transform var(--transition-base) var(--ease-out);
     }
 
@@ -675,7 +675,7 @@ img:not([data-src]) {
     /* Icono para indicar submenú */
     .nav-item:has(.dropdown-menu)>.nav-link::after {
         content: '▼';
-        font-size: 12px;
+        font-size: 0.75rem;
         transition: transform var(--transition-base) var(--ease-out);
         display: none;
         /* Ocultar en móvil ya que usamos dropdown-toggle */
@@ -1182,8 +1182,8 @@ img:not([data-src]) {
 .footer-text {
     color: rgba(255, 255, 255, 0.7);
     line-height: 1.6;
-    margin-bottom: 20px;
-    font-size: 14px;
+    font-size: 0.875rem;
+    margin-bottom: var(--spacing-sm);
 }
 
 .footer-logo {

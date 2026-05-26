@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/documentos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/search.css">
+    <link rel="stylesheet" href="../css/accessibility.css">
 </head>
 
 <body data-documentos-page>
@@ -425,9 +426,83 @@
     </footer>
 
     <script src="../js/documentos.js" defer></script>
+    <!-- Widget de Accesibilidad -->
+    <div class="accessibility-widget">
+        <button class="accessibility-toggle" title="Opciones de accesibilidad" aria-label="Accesibilidad">
+            <i class="fas fa-universal-access"></i>
+        </button>
+        <div class="accessibility-panel">
+            <div class="accessibility-title">
+                <i class="fas fa-sliders-h"></i>
+                Herramientas
+            </div>
+
+            <div class="accessibility-option">
+                <button type="button" id="increaseTextBtn" class="accessibility-action-btn">
+                    <i class="fas fa-search-plus"></i>
+                    <span>Aumentar texto</span>
+                </button>
+            </div>
+
+            <div class="accessibility-option">
+                <button type="button" id="decreaseTextBtn" class="accessibility-action-btn">
+                    <i class="fas fa-search-minus"></i>
+                    <span>Disminuir texto</span>
+                </button>
+            </div>
+
+            <div class="accessibility-option">
+                <label>
+                    <input type="checkbox" id="highContrast">
+                    <i class="fas fa-adjust"></i>
+                    <span>Alto contraste</span>
+                </label>
+            </div>
+
+            <div class="accessibility-option">
+                <label>
+                    <input type="checkbox" id="negativeContrast">
+                    <i class="fas fa-eye"></i>
+                    <span>Contraste negativo</span>
+                </label>
+            </div>
+
+            <div class="accessibility-option">
+                <label>
+                    <input type="checkbox" id="grayscale">
+                    <i class="fas fa-palette"></i>
+                    <span>Escala de grises</span>
+                </label>
+            </div>
+
+            <div class="accessibility-option">
+                <label>
+                    <input type="checkbox" id="dyslexiaFriendly">
+                    <i class="fas fa-font"></i>
+                    <span>Fuente legible</span>
+                </label>
+            </div>
+
+            <div class="accessibility-option">
+                <label>
+                    <input type="checkbox" id="underlineLinks">
+                    <i class="fas fa-link"></i>
+                    <span>Subrayar enlaces</span>
+                </label>
+            </div>
+
+            <div class="accessibility-reset-wrapper">
+                <button type="button" class="accessibility-reset">
+                    <i class="fas fa-undo" style="margin-right: 6px;"></i>
+                    Restablecer
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/search-data.js" defer></script>
     <script src="../js/script.js" defer></script>
-
+    <script src="../js/accessibility.js" defer></script>
 </body>
 
 </html>

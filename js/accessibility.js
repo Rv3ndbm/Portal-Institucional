@@ -67,14 +67,25 @@
         }
 
         adjustFontSize(delta) {
-            this.currentFontSize = Math.max(80, Math.min(150, this.currentFontSize + delta));
+            // Rango de 80% a 200% con pasos de 10%
+            this.currentFontSize = Math.max(80, Math.min(200, this.currentFontSize + delta));
             this.setFontSize(this.currentFontSize);
         }
 
         setFontSize(value) {
-            const percentage = value / 100;
-            document.body.style.fontSize = `${16 * percentage}px`;
+            // Aplicar al elemento raíz (html) para que todas las unidades rem escalen proporcionalmente
+            // Esto es la mejor práctica para accesibilidad web moderna
+            document.documentElement.style.fontSize = `${value}%`;
+            
+            // Guardar en localStorage para persistencia entre páginas
             localStorage.setItem('a11y-font-size', value);
+            
+            // Opcional: Añadir una clase al body para indicar que el texto ha sido modificado
+            if (value !== 100) {
+                document.body.classList.add('text-scaled');
+            } else {
+                document.body.classList.remove('text-scaled');
+            }
         }
 
         toggleHighContrast(enabled) {
@@ -127,6 +138,7 @@
             document.body.classList.remove('high-contrast', 'negative-contrast', 'grayscale', 'dyslexia-friendly', 'underline-links');
             
             // Resetear estilos
+            document.documentElement.style.fontSize = '';
             document.body.style.fontSize = '';
 
             // Resetear checkboxes
