@@ -22,7 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(hideLoadingScreen, 300);
     initLazyLoading();
     updateManualConvivenciaLinks();
+<<<<<<< HEAD
     initEmailContacts();
+=======
+    updateWhatsAppChannelLinks();
+    updateContactEmailLink();
+>>>>>>> 8497a74591184e5a11f831b5737dca6c18390480
 });
 
 function updateManualConvivenciaLinks() {
@@ -45,6 +50,7 @@ function updateManualConvivenciaLinks() {
     });
 }
 
+<<<<<<< HEAD
 // === MANEJO DE CONTACTOS POR EMAIL ===
 /**
  * Detecta si el dispositivo es móvil y redirecciona al email apropiadamente.
@@ -84,6 +90,51 @@ function initEmailContacts() {
     });
 }
 
+=======
+function updateWhatsAppChannelLinks() {
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        || (navigator.maxTouchPoints > 0 && window.innerWidth <= 900);
+
+    document.querySelectorAll('a[href*="whatsapp.com/channel/"]').forEach(link => {
+        try {
+            const url = new URL(link.href, window.location.href);
+            const channelPart = url.pathname.split('/channel/')[1];
+            if (!channelPart) return;
+
+            if (isMobileDevice) {
+                url.hostname = 'www.whatsapp.com';
+            } else {
+                url.hostname = 'web.whatsapp.com';
+            }
+
+            link.href = url.toString();
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+        } catch (error) {
+            console.warn('No se pudo actualizar el enlace de WhatsApp:', link.href, error);
+        }
+    });
+}
+
+function updateContactEmailLink() {
+    const emailLink = document.querySelector('.contact-email-link');
+    if (!emailLink) return;
+
+    const emailAddress = 'ie.gilbertoalzate@medellin.gov.co';
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobileDevice) {
+        emailLink.href = `mailto:${emailAddress}`;
+        emailLink.removeAttribute('target');
+        emailLink.removeAttribute('rel');
+    } else {
+        emailLink.href = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(emailAddress)}`;
+        emailLink.setAttribute('target', '_blank');
+        emailLink.setAttribute('rel', 'noopener noreferrer');
+    }
+}
+
+>>>>>>> 8497a74591184e5a11f831b5737dca6c18390480
 // === LAZY LOADING DE IMÁGENES ===
 function initLazyLoading() {
     // Si el navegador soporta Intersection Observer (más eficiente)
@@ -597,13 +648,44 @@ function normalizeText(str) {
  * @returns {Array} hasta 6 resultados
  */
 function runSearch(query) {
-    if (!query || !query.trim() || typeof SEARCH_INDEX === 'undefined') return [];
+    if (!query || !query.trim() || typeof SEARCH_INDEX === 'undefined') {
+        console.warn('Search Index no definido o query vacía');
+        return [];
+    }
     const q = normalizeText(query.trim());
     if (q.length < 2) return [];
 
-    return SEARCH_INDEX.filter(item => {
+    // Determinar la ruta base para ajustar las URLs de búsqueda
+    const path = (window.location?.pathname || '').replace(/\\/g, '/');
+    let prefix = '';
+    if (path.includes('/html/tecnicas/')) {
+        prefix = '../../html/';
+    } else if (path.includes('/html/')) {
+        prefix = ''; // Ya estamos en /html/
+    } else {
+        prefix = 'html/'; // Estamos en la raíz
+    }
+
+    return SEARCH_INDEX.map(item => {
+        // Clonar el item para no modificar el original en el índice
+        const newItem = { ...item };
+        
+        // Ajustar la URL solo si es relativa (no empieza con http)
+        if (!newItem.url.startsWith('http')) {
+            // Si el item ya tiene la carpeta html/ y estamos en la raíz, dejarlo.
+            // Pero nuestro índice tiene URLs relativas a la carpeta /html/
+            if (path.includes('/html/tecnicas/')) {
+                newItem.url = '../../html/' + newItem.url.replace('html/', '');
+            } else if (path.includes('/html/')) {
+                newItem.url = newItem.url.replace('html/', '');
+            } else {
+                newItem.url = 'html/' + newItem.url.replace('html/', '');
+            }
+        }
+        return newItem;
+    }).filter(item => {
         const titleMatch = normalizeText(item.titulo).includes(q);
-        const keywordMatch = item.keywords.some(kw => normalizeText(kw).includes(q));
+        const keywordMatch = Array.isArray(item.keywords) && item.keywords.some(kw => normalizeText(kw).includes(q));
         return titleMatch || keywordMatch;
     }).slice(0, 6);
 }
