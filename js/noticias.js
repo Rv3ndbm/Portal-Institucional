@@ -81,8 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const fullContent = card.querySelector('.full-content').innerHTML;
 
         // Populate modal
-        modalImageDisplay.style.background = imagePlaceholder.style.background;
-        modalImageDisplay.innerHTML = imagePlaceholder.innerHTML;
+        modalImageDisplay.style.backgroundImage = imagePlaceholder.style.backgroundImage;
+        modalImageDisplay.style.backgroundSize = imagePlaceholder.style.backgroundSize;
+        modalImageDisplay.style.backgroundPosition = imagePlaceholder.style.backgroundPosition;
 
         modalCategoryBadge.className = categoryBadge.className;
         modalCategoryBadge.textContent = categoryBadge.textContent;

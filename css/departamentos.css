@@ -252,7 +252,7 @@
 }
 
 /* Cuadros de Gestión / Horarios */
-.cita-info, .horario-secretaria, .contacto-psico {
+.cita-info, .horario-secretaria {
     margin-top: 25px; /* Más compacto */
     padding: 15px 20px; /* Más compacto */
     background: #f8fafc;
@@ -260,7 +260,7 @@
     border: 2px dashed #cbd5e1;
 }
 
-.horario-secretaria h4, .contacto-psico h4 {
+.horario-secretaria h4 {
     margin: 0 0 20px;
     font-size: 1.1rem;
     color: #0f172a;
@@ -275,9 +275,6 @@
 
 .secretaria-section .departamento-title, .secretaria-section .stat-number { color: #0f766e; }
 .secretaria-section .funciones-list li { border-left: 5px solid #0d9488; }
-
-.psico-section .departamento-title, .psico-section .stat-number { color: #6b21a8; }
-.psico-section .funciones-list li { border-left: 5px solid #7e22ce; }
 
 /* --- Animaciones Scroll --- */
 .scroll-reveal {

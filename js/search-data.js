@@ -93,7 +93,7 @@ const SEARCH_INDEX = [
         url: "departamentos.html",
         keywords: [
             "departamentos", "areas", "equipo directivo", "administrativo",
-            "coordinacion", "rectoria", "psicologia", "personal", "docentes"
+            "coordinacion", "rectoria", "personal", "docentes"
         ]
     },
     {
@@ -110,14 +110,6 @@ const SEARCH_INDEX = [
         keywords: [
             "rectoria", "rector", "directivos", "direccion", "liderazgo",
             "administracion", "gestion directiva", "jefe"
-        ]
-    },
-    {
-        titulo: "Psicología",
-        url: "departamentos.html#psicologia",
-        keywords: [
-            "psicologia", "psicologo", "orientacion escolar", "bienestar",
-            "apoyo emocional", "salud mental", "consejeria", "orientador"
         ]
     },
 
