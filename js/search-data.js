@@ -57,7 +57,7 @@ const SEARCH_INDEX = [
     {
         titulo: "Sede Seguros Bolívar",
         url: "sede-seguros-bolivar.html",
-        keywords:
+        keywords: [
             "seguros bolivar", "sede seguros bolivar", "bolivar", "seguros",
             "primaria", "valores", "convivencia"
         ]
