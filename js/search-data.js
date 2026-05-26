@@ -57,7 +57,7 @@ const SEARCH_INDEX = [
     {
         titulo: "Sede Seguros Bolívar",
         url: "sede-seguros-bolivar.html",
-        keywords:
+        keywords: [
             "seguros bolivar", "sede seguros bolivar", "bolivar", "seguros",
             "primaria", "valores", "convivencia"
         ]
@@ -183,6 +183,16 @@ const SEARCH_INDEX = [
         keywords: [
             "academico", "sistema academico", "akros", "notas", "calificaciones",
             "boletin", "plataforma", "rendimiento", "evaluacion", "logros academicos"
+        ]
+    },
+    {
+        titulo: "Planes de Área",
+        url: "planes-area.html",
+        keywords: [
+            "planes de area", "mallas curriculares", "planificacion", "curriculo",
+            "materias", "asignaturas", "objetivos de aprendizaje", "recursos pedagogicos",
+            "matematicas", "ciencias", "sociales", "tecnologia", "artistica", "etica",
+            "religion", "educacion fisica", "humanidades", "filosofia", "brujula"
         ]
     },
     {

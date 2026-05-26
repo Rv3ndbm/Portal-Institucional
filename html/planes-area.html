@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Otros Servicios - I.E. Gilberto Alzate Avendaño</title>
+    <title>Planes de Área - I.E. Gilberto Alzate Avendaño</title>
     <link rel="icon" type="image/png" href="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png">
     <!-- CSS -->
     <link rel="stylesheet" href="../css/styles.css">
@@ -15,12 +15,279 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/search.css">
     <link rel="stylesheet" href="../css/accessibility.css">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --premium-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --accent-red: #c0392b;
+            --accent-red-light: #e74c3c;
+            --accent-gold: #ffd700;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            overflow-x: hidden;
+        }
+
+        /* --- Esferas Decorativas --- */
+        .decor-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: floatOrb 10s ease-in-out infinite;
+        }
+        .orb-1 { width: 300px; height: 300px; background: #1e3c72; top: -100px; left: -100px; }
+        .orb-2 { width: 400px; height: 400px; background: var(--accent-red); bottom: -150px; right: -150px; animation-delay: -5s; }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 20px); }
+        }
+
+        /* --- Hero Refinado --- */
+        .hero-servicios {
+            background: var(--premium-gradient);
+            background-image: url('../img/banner ce.JPG');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 50vh;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 0; 
+            overflow: hidden;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-servicios {
+                height: 35vh;
+                background-attachment: scroll; /* Mejor performance en móviles */
+            }
+        }
+
+        .hero-servicios::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(192, 57, 43, 0.4) 0%, rgba(30, 60, 114, 0.6) 100%);
+            z-index: 1;
+        }
+
+        main {
+            padding-top: 240px;
+        }
+
+        @media (max-width: 1024px) {
+            main {
+                padding-top: 120px;
+            }
+        }
+
+        .hero-servicios .hero-overlay {
+            background: linear-gradient(to bottom, rgba(30, 60, 114, 0.4), rgba(192, 57, 43, 0.3));
+        }
+
+        .hero-badge {
+            background: var(--accent-red);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 20px rgba(192, 57, 43, 0.3);
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        /* --- Intro Section --- */
+        .servicios-intro {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* --- Grid de Planes --- */
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 5% 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* --- Tarjetas Estilo Glass --- */
+        .servicio-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+        }
+
+        .servicio-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent-red);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(192, 57, 43, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(192, 57, 43, 0.2);
+        }
+
+        .servicio-card:hover::before { opacity: 1; }
+
+        .servicio-icon {
+            width: 55px;
+            height: 55px;
+            background: #fff;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .servicio-card:hover .servicio-icon {
+            transform: rotate(-5deg) scale(1.1);
+            background: var(--accent-red);
+        }
+        .servicio-card:hover .servicio-icon i { color: #fff; }
+
+        .servicio-icon i {
+            font-size: 1.5rem;
+            color: var(--accent-red);
+            transition: color 0.3s;
+        }
+
+        .servicio-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .servicio-desc {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .servicio-link {
+            margin-top: auto;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 2px solid #edf2f7;
+            color: var(--accent-red);
+            background: transparent;
+            text-decoration: none;
+        }
+
+        .servicio-card:hover .servicio-link {
+            background: var(--accent-red);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        /* --- Tarjeta DESTACADA (Media Técnica) --- */
+        .servicio-card.featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #1e3c72 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .featured .servicio-icon {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            width: 80px;
+            height: 80px;
+            margin-bottom: 0;
+            border: none;
+        }
+
+        .featured .servicio-icon i { color: #fff; font-size: 2.5rem; }
+
+        .featured .servicio-title {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .featured .servicio-desc {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+
+        .featured .servicio-link {
+            background: #fff;
+            color: #c0392b;
+            border: none;
+            font-size: 0.9rem;
+            padding: 15px;
+        }
+
+        .featured .servicio-link:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 1024px) {
+            .servicio-card.featured {
+                grid-column: span 1;
+                grid-template-columns: 1fr;
+                padding: 40px;
+            }
+            .featured .servicio-icon { margin-bottom: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .servicios-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 
 <body>
     <!-- Elementos Decorativos de Fondo -->
-    <div style="position: fixed; top: -100px; left: -100px; width: 300px; height: 300px; background: #1e3c72; border-radius: 50%; filter: blur(80px); opacity: 0.3; z-index: -1; animation: floatOrb 10s ease-in-out infinite;"></div>
-    <div style="position: fixed; bottom: -150px; right: -150px; width: 400px; height: 400px; background: #2a5298; border-radius: 50%; filter: blur(80px); opacity: 0.3; z-index: -1; animation: floatOrb 12s ease-in-out infinite reverse;"></div>
+    <div class="decor-orb orb-1"></div>
+    <div class="decor-orb orb-2"></div>
 
     <!-- Header Principal -->
     <header class="main-header" id="mainHeader">
@@ -127,105 +394,145 @@
         <section class="hero-servicios">
             <div class="hero-overlay"></div>
             <div class="hero-content">
-                <span class="hero-badge">Conecta con Nuestros Servicios</span>
-                <h1 class="hero-title">Otros<br>Servicios</h1>
-                <p class="hero-subtitle">Accede a todos los recursos y servicios complementarios que ofrecemos para
-                    enriquecer tu experiencia en nuestra institución.</p>
+                <span class="hero-badge">Recursos Pedagógicos 2026</span>
+                <h1 class="hero-title">Planes de<br>Área</h1>
+                <p class="hero-subtitle">Consulta la estructura curricular y los objetivos de aprendizaje de cada una de nuestras áreas académicas.</p>
             </div>
         </section>
 
         <!-- INTRO SECTION -->
         <section class="servicios-intro">
             <div class="intro-content">
-                <h2>Servicios Disponibles</h2>
-                <p>En la I.E. Gilberto Alzate Avendaño ponemos a tu disposición una amplia gama de servicios
-                    complementarios diseñados para apoyar tu desarrollo integral.</p>
+                <h2>Planificación Curricular</h2>
+                <p>Nuestros planes de área representan la ruta pedagógica que seguimos para garantizar una educación de calidad y pertinente para todos nuestros estudiantes.</p>
             </div>
         </section>
 
-        <!-- SERVICIOS GRID -->
-        <section class="servicios-grid" id="servicios">
-            <!-- Biblioteca -->
-            <div class="servicio-card">
+        <!-- SERVICIOS GRID (Planes de Area) -->
+        <section class="servicios-grid" id="planes">
+            
+            <!-- Media Técnica (Destacado) -->
+            <div class="servicio-card featured">
                 <div class="servicio-icon">
-                    <i class="fas fa-book"></i>
+                    <i class="fas fa-microchip"></i>
                 </div>
-                <h3 class="servicio-title">Biblioteca</h3>
-                <p class="servicio-desc">Acceso a una amplia colección de libros, recursos digitales y espacios de
-                    estudio para fortalecer tu formación académica.</p>
-                <a href="https://luisarango64.wixsite.com/bibliositio" target="_blank" class="servicio-link" rel="noopener noreferrer">Visitar
-                    Biblioteca <i class="fas fa-external-link-alt"></i></a>
+                <div class="featured-content">
+                    <h3 class="servicio-title">Media Técnica (Especialidades)</h3>
+                    <p class="servicio-desc">Mallas curriculares completas de Monitoreo Ambiental, Programación SENA, Contenidos Digitales, Desarrollo de Software y Música. Una formación integral para el futuro tecnológico.</p>
+                    <a href="../media/2026-planes de area/MEDIA TECNICA/PLAN DE AREA MEDIA TECNICA 2024.pdf" target="_blank" class="servicio-link" rel="noopener noreferrer">Ver Plan General</a>
+                </div>
             </div>
 
-            <!-- Manual de Convivencia -->
+            <!-- Matemáticas -->
             <div class="servicio-card">
                 <div class="servicio-icon">
-                    <i class="fas fa-handshake"></i>
+                    <i class="fas fa-infinity"></i>
                 </div>
-                <h3 class="servicio-title">Manual de Convivencia</h3>
-                <p class="servicio-desc">Documento que establece las normas, derechos y deberes que regulan la
-                    convivencia en nuestra institución.</p>
-                <a href="../media/MANUAL DE CONVIVENCIA 2026_IEGAA.docx.pdf" rel="noopener noreferrer"
-                    target="_blank" class="servicio-link">Descargar PDF <i class="fas fa-download"></i></a>
+                <h3 class="servicio-title">Pensamiento Matemático</h3>
+                <p class="servicio-desc">Estructura curricular enfocada en la resolución de problemas y el razonamiento cuantitativo avanzado.</p>
+                <a href="../media/2026-planes de area/MATEMATICAS/Plan de area matematicas en revision  2024_02_20.docx.pdf" target="_blank" class="servicio-link" rel="noopener noreferrer">Explorar Malla <i class="fas fa-arrow-right"></i></a>
             </div>
 
-            <!-- PEI -->
+            <!-- Humanidades -->
             <div class="servicio-card">
                 <div class="servicio-icon">
-                    <i class="fas fa-file-contract"></i>
+                    <i class="fas fa-book-open"></i>
                 </div>
-                <h3 class="servicio-title">PEI</h3>
-                <p class="servicio-desc">Proyecto Educativo Institucional que define nuestra misión, visión, objetivos y estrategias pedagógicas.</p>
-                <a href="../media/PEI  2026.pdf" rel="noopener noreferrer"
-                    target="_blank" class="servicio-link">Ver Documento <i class="fas fa-file-pdf"></i></a>
+                <h3 class="servicio-title">Lengua Castellana</h3>
+                <p class="servicio-desc">Desarrollo de competencias lecto-escritoras y análisis literario crítico para la expresión humana.</p>
+                <a href="../media/2026-planes de area/HUMANIDADES/PLAN DE AREA HUMANIDADES 2026.docx" target="_blank" class="servicio-link" rel="noopener noreferrer">Ver Documento <i class="fas fa-file-word"></i></a>
             </div>
 
-            <!-- Formulario PQRSF -->
+            <!-- Ciencias Naturales -->
             <div class="servicio-card">
                 <div class="servicio-icon">
-                    <i class="fas fa-envelope"></i>
+                    <i class="fas fa-microscope"></i>
                 </div>
-                <h3 class="servicio-title">Formulario PQRSF</h3>
-                <p class="servicio-desc">Presenta tus peticiones, quejas, reclamos, sugerencias o felicitaciones de
-                    manera formal y segura.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform" rel="noopener noreferrer"
-                    target="_blank" class="servicio-link">Acceder Formulario <i class="fas fa-arrow-right"></i></a>
+                <h3 class="servicio-title">Ciencias Naturales</h3>
+                <p class="servicio-desc">Investigación científica y comprensión del entorno biológico y físico bajo métodos experimentales.</p>
+                <a href="../media/2026-planes de area/CIENCIAS NATURALES/PLAN DE AREA CIENCIAS NATURALES 2026.docx.docx" target="_blank" class="servicio-link" rel="noopener noreferrer">Ver Plan <i class="fas fa-flask"></i></a>
             </div>
 
-            <!-- Alzate Virtual -->
+            <!-- Ciencias Sociales -->
             <div class="servicio-card">
                 <div class="servicio-icon">
-                    <i class="fas fa-video"></i>
+                    <i class="fas fa-globe-americas"></i>
                 </div>
-                <h3 class="servicio-title">Alzate Virtual</h3>
-                <p class="servicio-desc">Canal de YouTube oficial de la institución con contenido educativo, eventos y
-                    actividades destacadas.</p>
-                <a href="https://www.youtube.com/@alzatevirtual8374/videos" target="_blank" class="servicio-link" rel="noopener noreferrer">Ver
-                    Canal <i class="fas fa-play-circle"></i></a>
+                <h3 class="servicio-title">Ciencias Sociales</h3>
+                <p class="servicio-desc">Estudio integral de la sociedad, la historia y la geografía.</p>
+                <a href="../media/2026-planes de area/SOCIALES/PLAN DE AREA CIENCIAS SOCIALES 2024.docx.pdf" target="_blank" class="servicio-link" rel="noopener noreferrer">Descargar PDF <i class="fas fa-download"></i></a>
             </div>
 
-            <!-- Pre-Inscripción -->
+            <!-- Tecnología e Informática -->
             <div class="servicio-card">
                 <div class="servicio-icon">
-                    <i class="fas fa-clipboard-check"></i>
+                    <i class="fas fa-laptop-code"></i>
                 </div>
-                <h3 class="servicio-title">Pre-Inscripción</h3>
-                <p class="servicio-desc">Inicia tu proceso de inscripción como estudiante en la I.E. Gilberto Alzate
-                    Avendaño.</p>
-                <a href="pre.html" class="servicio-link">Pre-Inscribirse <i class="fas fa-arrow-right"></i></a>
+                <h3 class="servicio-title">Tecnología e Informática</h3>
+                <p class="servicio-desc">Desarrollo de competencias digitales y pensamiento computacional.</p>
+                <a href="../media/2026-planes de area/TECNOLOGIA/PLAN DE AREA TECNOLOGIA (2026).docx" target="_blank" class="servicio-link" rel="noopener noreferrer">Ver Documento <i class="fas fa-file-word"></i></a>
             </div>
 
-            <!-- Canal Institucional WhatsApp -->
+            <!-- Educación Física -->
             <div class="servicio-card">
                 <div class="servicio-icon">
-                    <i class="fab fa-whatsapp"></i>
+                    <i class="fas fa-running"></i>
                 </div>
-                <h3 class="servicio-title">Canal Institucional</h3>
-                <p class="servicio-desc">Únete a nuestro canal de WhatsApp para recibir información, aviso e
-                    instrucciones de la institución.</p>
-                <a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508" target="_blank" rel="noopener noreferrer"
-                    class="servicio-link">Unirse al Canal <i class="fas fa-comment"></i></a>
+                <h3 class="servicio-title">Educación Física</h3>
+                <p class="servicio-desc">Promoción de la salud, el deporte y el desarrollo motor.</p>
+                <a href="../media/2026-planes de area/EDUCACION FISICA/PLAN DE AREA EDUCACIÓN FISICA 2024.pdf" target="_blank" class="servicio-link" rel="noopener noreferrer">Descargar PDF <i class="fas fa-download"></i></a>
             </div>
+
+            <!-- Artística -->
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 class="servicio-title">Educación Artística</h3>
+                <p class="servicio-desc">Fomento de la creatividad y la expresión estética.</p>
+                <a href="../media/2026-planes de area/ARTISTICA/PLAN ÁREA DE ARTÍSTICA Y MALLAS 2026 - Enero 19.docx" target="_blank" class="servicio-link" rel="noopener noreferrer">Ver Documento <i class="fas fa-file-word"></i></a>
+            </div>
+
+            <!-- Ética y Valores -->
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h3 class="servicio-title">Ética y Valores</h3>
+                <p class="servicio-desc">Formación integral en valores humanos y ciudadanos.</p>
+                <a href="../media/2026-planes de area/ETICA Y VALORES/PLAN DE AREA ETICA Y VALORES 2024.pdf" target="_blank" class="servicio-link" rel="noopener noreferrer">Descargar PDF <i class="fas fa-download"></i></a>
+            </div>
+
+            <!-- Filosofía -->
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="servicio-title">Filosofía</h3>
+                <p class="servicio-desc">Desarrollo del pensamiento crítico y reflexivo.</p>
+                <a href="../media/2026-planes de area/FILOSOFIA/PLAN DE AREA FILOSOFIA 2024.pdf" target="_blank" class="servicio-link" rel="noopener noreferrer">Descargar PDF <i class="fas fa-download"></i></a>
+            </div>
+
+            <!-- Religión -->
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-church"></i>
+                </div>
+                <h3 class="servicio-title">Educación Religiosa</h3>
+                <p class="servicio-desc">Estudio de la dimensión espiritual y religiosa.</p>
+                <a href="../media/2026-planes de area/RELIGION/PLAN DE AREA EDUCACION RELIGIOSA 2024.pdf" target="_blank" class="servicio-link" rel="noopener noreferrer">Descargar PDF <i class="fas fa-download"></i></a>
+            </div>
+
+            <!-- Brújula -->
+            <div class="servicio-card">
+                <div class="servicio-icon">
+                    <i class="fas fa-compass"></i>
+                </div>
+                <h3 class="servicio-title">Brújula</h3>
+                <p class="servicio-desc">Planificación para el programa de aceleración del aprendizaje.</p>
+                <a href="../media/2026-planes de area/BRÚJULA/PLAN DE AREA BRÚJULA- En construcción.docx" target="_blank" class="servicio-link" rel="noopener noreferrer">Ver Documento <i class="fas fa-file-word"></i></a>
+            </div>
+
         </section>
 
         <!-- ADDITIONAL INFO SECTION -->
@@ -233,27 +540,24 @@
             <div class="info-container">
                 <div class="info-item">
                     <div class="info-icon">
-                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-sync"></i>
                     </div>
-                    <h3>Disponibilidad</h3>
-                    <p>Nuestros servicios están disponibles durante el horario escolar y algunos de ellos también en
-                        línea 24/7.</p>
+                    <h3>Actualización</h3>
+                    <p>Nuestros planes de área son revisados y actualizados anualmente para cumplir con los estándares nacionales.</p>
                 </div>
                 <div class="info-item">
                     <div class="info-icon">
-                        <i class="fas fa-headset"></i>
+                        <i class="fas fa-users"></i>
                     </div>
-                    <h3>Soporte</h3>
-                    <p>Cuéntanos si necesitas ayuda con alguno de nuestros servicios. El equipo administrativo está
-                        disponible para asistirte.</p>
+                    <h3>Construcción Colectiva</h3>
+                    <p>Diseñados por nuestro equipo docente altamente calificado en cada área del conocimiento.</p>
                 </div>
                 <div class="info-item">
                     <div class="info-icon">
-                        <i class="fas fa-shield-alt"></i>
+                        <i class="fas fa-check-double"></i>
                     </div>
-                    <h3>Seguridad</h3>
-                    <p>Todos nuestros servicios cumplen con los estándares de seguridad y privacidad para proteger tu
-                        información.</p>
+                    <h3>Calidad</h3>
+                    <p>Alineados con los lineamientos curriculares y estándares básicos de competencias del MEN.</p>
                 </div>
             </div>
         </section>

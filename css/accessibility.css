@@ -255,7 +255,10 @@ body.high-contrast svg {
 /* Asegurar que los elementos animados por scroll sean visibles inmediatamente en modos de accesibilidad */
 body.high-contrast [data-scroll-animate],
 body.negative-contrast [data-scroll-animate],
-body.grayscale [data-scroll-animate] {
+body.grayscale [data-scroll-animate],
+body.high-contrast .scroll-reveal,
+body.negative-contrast .scroll-reveal,
+body.grayscale .scroll-reveal {
     opacity: 1 !important;
     transform: none !important;
     visibility: visible !important;
