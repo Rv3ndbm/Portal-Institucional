@@ -7,7 +7,7 @@
     position: fixed;
     right: 20px;
     bottom: 20px;
-    z-index: 9999;
+    z-index: 10001;
 }
 
 /* Botón flotante principal */
@@ -199,7 +199,7 @@ body.high-contrast main,
 body.high-contrast header,
 body.high-contrast section,
 body.high-contrast footer,
-body.high-contrast div:not(.accessibility-widget):not(.accessibility-widget *),
+body.high-contrast div:not(.accessibility-widget):not(.accessibility-widget *):not(.photo-strip *):not(.glass-orb),
 body.high-contrast nav,
 body.high-contrast ul,
 body.high-contrast li,
@@ -247,8 +247,8 @@ body.grayscale::before {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 9998; /* Justo debajo del widget (9999) */
-    pointer-events: none; /* Deja pasar los clicks */
+    z-index: 10000;
+    pointer-events: none;
 }
 
 body.negative-contrast::before {

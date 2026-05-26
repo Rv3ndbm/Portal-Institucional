@@ -923,15 +923,19 @@ main {
 
 @keyframes floatOrb {
     0% {
-        transform: translateY(0) scale(1);
+        transform: translateY(0) rotate(0deg) scale(1);
     }
 
-    50% {
-        transform: translateY(-20px) scale(1.05);
+    33% {
+        transform: translateY(-15px) rotate(5deg) scale(1.05);
+    }
+
+    66% {
+        transform: translateY(-5px) rotate(-5deg) scale(0.95);
     }
 
     100% {
-        transform: translateY(0) scale(1);
+        transform: translateY(0) rotate(0deg) scale(1);
     }
 }
 
@@ -1271,10 +1275,16 @@ main {
     .feature-grid {
         grid-template-columns: 1fr;
         gap: 40px;
+        display: flex;
+        flex-direction: column;
     }
 
-    .feature-grid.reverse .feature-image {
-        order: 0;
+    .feature-grid .feature-text {
+        order: -1;
+    }
+
+    .feature-grid .feature-image {
+        order: 1;
     }
 
     .coverflow-card {
