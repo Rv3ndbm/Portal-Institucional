@@ -12,7 +12,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 0;
+    margin-top: var(--header-height-desktop); /* Ajustado para eliminar espacio en blanco */
     background: linear-gradient(135deg, #1e3c72 0%, #c0392b 100%);
     background-image: url('../img/bannerce2do.jpeg');
     background-size: cover;
@@ -23,8 +23,14 @@
     text-align: center;
 }
 
+/* Ajuste cuando el header se contrae al hacer scroll */
+.main-header.scrolled + main .hero-servicios {
+    margin-top: var(--header-height-scrolled);
+}
+
 @media (max-width: 1024px) {
     .hero-servicios {
+        margin-top: var(--header-height-mobile);
         height: 35vh;
         background-attachment: scroll;
     }
@@ -32,12 +38,12 @@
 
 /* Espaciado para el header fixed */
 main {
-    padding-top: 240px; /* Ajustado para dar espacio total al header + nav */
+    padding-top: 0; /* Eliminado padding-top fijo */
 }
 
 @media (max-width: 1024px) {
     main {
-        padding-top: 120px; /* Ajustado para el header móvil */
+        padding-top: 0;
     }
 }
 

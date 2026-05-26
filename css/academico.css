@@ -1,7 +1,7 @@
 /* ============================================
-   ACADEMICO.CSS - Nuevo Diseño Moderno
-   I.E. Gilberto Alzate Avendaño
-   Modalidad Académica
+    ACADEMICO.CSS - Nuevo Diseño Moderno
+    I.E. Gilberto Alzate Avendaño
+    Modalidad Académica
    ============================================ */
 
 /* --- HERO SECTION MODERNO --- */
@@ -12,11 +12,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 220px;
+    margin-top: var(--header-height-desktop); /* Ajustado para eliminar espacio en blanco */
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #162e47 100%);
     overflow: hidden;
     color: #fff;
     text-align: center;
+}
+
+/* Ajuste cuando el header se contrae al hacer scroll */
+.main-header.scrolled + main .hero-academico {
+    margin-top: var(--header-height-scrolled);
 }
 
 .hero-academico::before {
@@ -194,7 +199,7 @@
 
 @media (max-width: 1024px) {
     .hero-academico {
-        margin-top: 140px;
+        margin-top: var(--header-height-mobile);
         height: 60vh;
     }
 }

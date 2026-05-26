@@ -6,10 +6,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 0; /* Eliminado el margen superior manual */
+    margin-top: var(--header-height-desktop); /* Ajustado para eliminar espacio en blanco */
     padding-top: 0;
     overflow: hidden;
     background: #000;
+}
+
+/* Ajuste cuando el header se contrae al hacer scroll */
+.main-header.scrolled + main .hero-inscripcion {
+    margin-top: var(--header-height-scrolled);
 }
 
 /* Video de Fondo */
@@ -262,7 +267,7 @@
         height: auto;
         min-height: 240px; /* Aún más bajo */
         padding: 80px 20px 20px; /* Reducido drásticamente el espacio vertical */
-        margin-top: 0;
+        margin-top: var(--header-height-mobile);
         /* No usar padding-top de 280px, ya que es demasiado para un hero compacto */
     }
 
@@ -308,6 +313,6 @@
 
 @media (min-width: 1025px) {
     body {
-        padding-top: var(--header-height-desktop);
+        padding-top: 0; /* Eliminado padding-top en favor de margin-top en el hero */
     }
 }

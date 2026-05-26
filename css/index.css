@@ -12,20 +12,25 @@ main {
     position: relative;
     z-index: 0;
     isolation: isolate;
-    margin-top: 140px;
+    margin-top: var(--header-height-desktop);
     /* altura del header en PC */
+}
+
+/* Ajuste cuando el header se contrae al hacer scroll */
+.main-header.scrolled + main {
+    margin-top: var(--header-height-scrolled);
 }
 
 @media (max-width: 1024px) {
     main {
-        margin-top: 110px;
+        margin-top: var(--header-height-mobile);
         /* altura del header en tablet */
     }
 }
 
 @media (max-width: 480px) {
     main {
-        margin-top: 90px;
+        margin-top: var(--header-height-mobile);
         /* altura del header en móvil */
     }
 }
@@ -51,8 +56,8 @@ main {
     justify-content: center;
     text-align: center;
     overflow: hidden;
-    margin-top: 20px;
-    padding-top: 100px;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 .hero-overlay {

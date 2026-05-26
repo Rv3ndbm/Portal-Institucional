@@ -8,18 +8,23 @@ main {
     position: relative;
     z-index: 0;
     isolation: isolate;
-    margin-top: 200px; /* Separación de 20px respecto al navbar de 180px en desktop */
+    margin-top: var(--header-height-desktop); /* Ajustado para eliminar espacio en blanco */
+}
+
+/* Ajuste cuando el header se contrae al hacer scroll */
+.main-header.scrolled + main {
+    margin-top: var(--header-height-scrolled);
 }
 
 @media (max-width: 1024px) {
     main {
-        margin-top: 140px; /* Separación de 20px respecto al navbar de 120px en tablet */
+        margin-top: var(--header-height-mobile); /* Ajustado para el header móvil */
     }
 }
 
 @media (max-width: 768px) {
     main {
-        margin-top: 90px; /* Separación de 20px respecto al navbar de 70px en móvil */
+        margin-top: var(--header-height-mobile);
     }
 }
 
