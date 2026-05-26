@@ -10,7 +10,9 @@
         constructor() {
             this.toggle = document.querySelector('.accessibility-toggle');
             this.panel = document.querySelector('.accessibility-panel');
-            this.fontSizeSlider = document.getElementById('fontSizeSlider');
+            this.increaseTextBtn = document.getElementById('increaseTextBtn');
+            this.decreaseTextBtn = document.getElementById('decreaseTextBtn');
+            this.currentFontSize = 100;
             this.highContrastCheckbox = document.getElementById('highContrast');
             this.negativeContrastCheckbox = document.getElementById('negativeContrast');
             this.grayscaleCheckbox = document.getElementById('grayscale');
@@ -26,7 +28,8 @@
 
             // Event listeners
             this.toggle.addEventListener('click', () => this.togglePanel());
-            this.fontSizeSlider?.addEventListener('input', (e) => this.setFontSize(e.target.value));
+            this.increaseTextBtn?.addEventListener('click', () => this.adjustFontSize(10));
+            this.decreaseTextBtn?.addEventListener('click', () => this.adjustFontSize(-10));
             this.highContrastCheckbox?.addEventListener('change', (e) => this.toggleHighContrast(e.target.checked));
             this.negativeContrastCheckbox?.addEventListener('change', (e) => this.toggleNegativeContrast(e.target.checked));
             this.grayscaleCheckbox?.addEventListener('change', (e) => this.toggleGrayscale(e.target.checked));
@@ -61,6 +64,11 @@
         closePanel() {
             this.panel.classList.remove('active');
             this.toggle.classList.remove('active');
+        }
+
+        adjustFontSize(delta) {
+            this.currentFontSize = Math.max(80, Math.min(150, this.currentFontSize + delta));
+            this.setFontSize(this.currentFontSize);
         }
 
         setFontSize(value) {
@@ -128,8 +136,8 @@
             if (this.dyslexiaFriendlyCheckbox) this.dyslexiaFriendlyCheckbox.checked = false;
             if (this.underlineLinksCheckbox) this.underlineLinksCheckbox.checked = false;
 
-            // Resetear slider
-            if (this.fontSizeSlider) this.fontSizeSlider.value = 100;
+            // Resetear tamaño de fuente
+            this.currentFontSize = 100;
 
             // Limpiar localStorage
             localStorage.removeItem('a11y-font-size');
@@ -143,9 +151,9 @@
         loadSettings() {
             // Cargar tamaño de fuente
             const savedFontSize = localStorage.getItem('a11y-font-size');
-            if (savedFontSize && this.fontSizeSlider) {
-                this.fontSizeSlider.value = savedFontSize;
-                this.setFontSize(savedFontSize);
+            if (savedFontSize) {
+                this.currentFontSize = parseInt(savedFontSize, 10);
+                this.setFontSize(this.currentFontSize);
             }
 
             // Cargar alto contraste

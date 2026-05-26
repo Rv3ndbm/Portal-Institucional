@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -558,10 +558,17 @@
             </div>
 
             <div class="accessibility-option">
-                <label>
+                <button type="button" id="increaseTextBtn" class="accessibility-action-btn">
                     <i class="fas fa-search-plus"></i>
-                    <input type="range" id="fontSizeSlider" min="80" max="150" value="100">
-                </label>
+                    <span>Aumentar texto</span>
+                </button>
+            </div>
+
+            <div class="accessibility-option">
+                <button type="button" id="decreaseTextBtn" class="accessibility-action-btn">
+                    <i class="fas fa-search-minus"></i>
+                    <span>Disminuir texto</span>
+                </button>
             </div>
 
             <div class="accessibility-option">
@@ -605,7 +612,7 @@
             </div>
 
             <div class="accessibility-reset-wrapper">
-                <button class="accessibility-reset">
+                <button type="button" class="accessibility-reset">
                     <i class="fas fa-undo" style="margin-right: 6px;"></i>
                     Restablecer
                 </button>

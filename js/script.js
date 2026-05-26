@@ -508,13 +508,18 @@ function allowScroll() {
 }
 
 // Observar cambios en la clase menu-open
+let wasMenuOpen = false;
 const bodyObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (mutation.attributeName === 'class') {
-            if (document.body.classList.contains('menu-open')) {
-                preventScroll();
-            } else {
-                allowScroll();
+            const isMenuOpenNow = document.body.classList.contains('menu-open');
+            if (isMenuOpenNow !== wasMenuOpen) {
+                if (isMenuOpenNow) {
+                    preventScroll();
+                } else {
+                    allowScroll();
+                }
+                wasMenuOpen = isMenuOpenNow;
             }
         }
     });

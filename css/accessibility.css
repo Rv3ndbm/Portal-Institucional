@@ -12,8 +12,8 @@
 
 /* Botón flotante principal */
 .accessibility-toggle {
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: linear-gradient(135deg, #1a365d, #2c5282);
     border: none;
@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 18px;
     box-shadow: 0 4px 20px rgba(26, 54, 93, 0.35);
     transition: all 0.3s ease;
 }
@@ -39,13 +39,13 @@
 /* Panel de opciones */
 .accessibility-panel {
     position: absolute;
-    bottom: 70px;
+    bottom: 55px;
     right: 0;
     background: white;
     border-radius: 12px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    width: 280px;
+    padding: 15px;
+    width: 240px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
@@ -55,29 +55,30 @@
 }
 
 .accessibility-panel.active {
-    max-height: 600px;
+    max-height: calc(100vh - 140px);
     opacity: 1;
     pointer-events: auto;
+    overflow-y: auto;
 }
 
 .accessibility-title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: #1a365d;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
     border-bottom: 2px solid #e53e3e;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 /* Opciones de accesibilidad */
 .accessibility-option {
-    margin-bottom: 12px;
-    padding: 10px 0;
+    margin-bottom: 8px;
+    padding: 6px 0;
     border-bottom: 1px solid #e2e8f0;
 }
 
@@ -88,19 +89,38 @@
 .accessibility-option label {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     color: #333;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
-.accessibility-option label:hover {
+.accessibility-option label:hover,
+.accessibility-action-btn:hover {
     color: #1a365d;
 }
 
-.accessibility-option label i {
+.accessibility-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    padding: 0;
+    text-align: left;
+    font-family: inherit;
+}
+
+.accessibility-option label i,
+.accessibility-action-btn i {
     width: 18px;
     text-align: center;
 }
@@ -173,23 +193,85 @@
     box-shadow: 0 4px 12px rgba(26, 54, 93, 0.25);
 }
 
-/* Estilos aplicados dinámicamente */
-body.high-contrast {
-    filter: contrast(1.8);
+/* Alto contraste verdadero (Fondo negro, texto amarillo/blanco) */
+body.high-contrast,
+body.high-contrast main,
+body.high-contrast header,
+body.high-contrast section,
+body.high-contrast footer,
+body.high-contrast div:not(.accessibility-widget):not(.accessibility-widget *),
+body.high-contrast nav,
+body.high-contrast ul,
+body.high-contrast li,
+body.high-contrast article {
+    background: #000000 !important;
+    background-image: none !important;
 }
 
-body.negative-contrast {
-    filter: invert(1);
+body.high-contrast * {
+    text-shadow: none !important;
+    box-shadow: none !important;
 }
 
-body.grayscale {
-    filter: grayscale(1);
+body.high-contrast h1,
+body.high-contrast h2,
+body.high-contrast h3,
+body.high-contrast h4,
+body.high-contrast h5,
+body.high-contrast h6,
+body.high-contrast p,
+body.high-contrast span:not(.accessibility-widget *),
+body.high-contrast strong,
+body.high-contrast i:not(.accessibility-widget *),
+body.high-contrast a,
+body.high-contrast label:not(.accessibility-widget *) {
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
 }
 
-body.dyslexia-friendly {
-    font-family: 'Comic Sans MS', 'Arial', sans-serif;
-    letter-spacing: 0.1em;
-    line-height: 1.8;
+body.high-contrast a {
+    text-decoration: underline !important;
+}
+
+body.high-contrast img,
+body.high-contrast svg {
+    filter: grayscale(100%) contrast(120%) !important;
+}
+
+/* Truco con backdrop-filter para Contraste negativo y Escala de grises sin romper position: fixed */
+body.negative-contrast::before,
+body.grayscale::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998; /* Justo debajo del widget (9999) */
+    pointer-events: none; /* Deja pasar los clicks */
+}
+
+body.negative-contrast::before {
+    backdrop-filter: invert(100%);
+    -webkit-backdrop-filter: invert(100%);
+}
+
+body.grayscale::before {
+    backdrop-filter: grayscale(100%);
+    -webkit-backdrop-filter: grayscale(100%);
+}
+
+/* Si ambos están activos a la vez */
+body.negative-contrast.grayscale::before {
+    backdrop-filter: invert(100%) grayscale(100%);
+    -webkit-backdrop-filter: invert(100%) grayscale(100%);
+}
+
+body.dyslexia-friendly,
+body.dyslexia-friendly * {
+    font-family: 'Comic Sans MS', 'Arial', sans-serif !important;
+    letter-spacing: 0.1em !important;
+    line-height: 1.8 !important;
 }
 
 body.underline-links a {
@@ -206,20 +288,21 @@ body.font-size-xlarge {
 
 @media (max-width: 480px) {
     .accessibility-widget {
-        right: 15px;
-        bottom: 15px;
+        right: 10px;
+        bottom: 10px;
     }
 
     .accessibility-toggle {
-        width: 45px;
-        height: 45px;
-        font-size: 20px;
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
     }
 
     .accessibility-panel {
-        width: 260px;
-        padding: 16px;
-        bottom: 60px;
-        right: -5px;
+        width: calc(100vw - 20px);
+        max-width: 260px;
+        padding: 15px;
+        bottom: 50px;
+        right: 0;
     }
 }

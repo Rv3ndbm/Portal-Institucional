@@ -486,9 +486,90 @@
         </div>
     </footer>
 
+    <!-- Widget de Accesibilidad NUEVO -->
+    <div id="a11yWidget" class="a11y-widget">
+        <button id="a11yToggle" class="a11y-toggle" title="Abrir opciones de accesibilidad" aria-label="Herramientas de accesibilidad">
+            <i class="fas fa-universal-access"></i>
+        </button>
+        
+        <div id="a11yPanel" class="a11y-panel">
+            <div class="a11y-header">
+                <h2 class="a11y-title">Accesibilidad</h2>
+                <button id="a11yClose" class="a11y-close" title="Cerrar panel" aria-label="Cerrar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="a11y-content">
+                <!-- Aumentar Tamaño -->
+                <div class="a11y-section">
+                    <label for="fontSizeControl" class="a11y-label">
+                        <i class="fas fa-text-height"></i>
+                        Tamaño de Texto
+                    </label>
+                    <div class="a11y-control">
+                        <button id="fontSmall" class="size-btn" title="Disminuir tamaño">A</button>
+                        <input type="range" id="fontSizeControl" min="80" max="150" value="100" class="font-slider" aria-label="Ajustar tamaño de texto">
+                        <button id="fontLarge" class="size-btn large" title="Aumentar tamaño">A</button>
+                    </div>
+                </div>
+
+                <!-- Alto Contraste -->
+                <div class="a11y-section">
+                    <label class="a11y-checkbox-label">
+                        <input type="checkbox" id="highContrastToggle" class="a11y-checkbox">
+                        <span class="a11y-checkbox-text">
+                            <i class="fas fa-circle-half-stroke"></i>
+                            Alto Contraste
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Escala de Grises -->
+                <div class="a11y-section">
+                    <label class="a11y-checkbox-label">
+                        <input type="checkbox" id="grayscaleToggle" class="a11y-checkbox">
+                        <span class="a11y-checkbox-text">
+                            <i class="fas fa-image"></i>
+                            Escala de Grises
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Fuente Legible (Dyslexia) -->
+                <div class="a11y-section">
+                    <label class="a11y-checkbox-label">
+                        <input type="checkbox" id="dyslexiaToggle" class="a11y-checkbox">
+                        <span class="a11y-checkbox-text">
+                            <i class="fas fa-font"></i>
+                            Fuente Legible
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Subrayar Enlaces -->
+                <div class="a11y-section">
+                    <label class="a11y-checkbox-label">
+                        <input type="checkbox" id="underlineToggle" class="a11y-checkbox">
+                        <span class="a11y-checkbox-text">
+                            <i class="fas fa-link"></i>
+                            Subrayar Enlaces
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Reset -->
+                <button id="a11yReset" class="a11y-reset-btn">
+                    <i class="fas fa-redo"></i>
+                    Restablecer
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/search-data.js" defer></script>
     <script src="../js/script.js" defer></script>
-    <script src="../js/departamentos.js" defer></script>
+    <script src="../js/a11y-new.js" defer></script>
 </body>
 
 </html>
