@@ -133,25 +133,26 @@
             <div class="title-underline"></div>
         </div>
 
-        <article class="featured-card">
+        <article class="featured-card" id="featuredNews">
             <div class="featured-image-container">
-                <!-- Placeholder image using a gradient since I don't have a specific file, or reuse a generic one -->
-                <div class="featured-image-placeholder">
-                    <i class="fas fa-newspaper"></i>
+                <div class="featured-image-placeholder card-image-placeholder" style="background-image: url('../img/clases interactivas ce.jpg'); background-size: cover; background-position: center;">
                 </div>
             </div>
             <div class="featured-content">
                 <div class="meta-tags">
-                    <span class="tag tag-sedes">Sedes</span>
-                    <span class="date"><i class="far fa-calendar-alt"></i> 10 Feb, 2026</span>
+                    <span class="category category-sedes">Sedes</span>
+                    <span class="card-date"><i class="far fa-calendar-alt"></i> 25 Ene, 2026</span>
                 </div>
-                <h3 class="featured-title">Inicio del Año Escolar 2026: Nuevos Retos y Oportunidades</h3>
+                <h3 class="featured-title card-title">La Comunidad Alzatista regresa a las aulas para iniciar el Año Escolar 2026</h3>
                 <p class="featured-excerpt">
-                    Damos la bienvenida a todos nuestros estudiantes a un nuevo ciclo de aprendizaje.
-                    Este año implementamos nuevas metodologías y espacios para fortalecer la excelencia académica y la
-                    convivencia.
+                    Las puertas de la Institución se abrieron nuevamente para dar una calurosa bienvenida a los estudiantes de todas sus sedes en este inicio del año lectivo 2026.
                 </p>
-                <a href="#" class="btn-read-more">Leer Noticia Completa <i class="fas fa-arrow-right"></i></a>
+                <button class="btn-read-more btn-open-modal-featured" style="background: none; border: none; cursor: pointer; padding: 0;">Leer Noticia Completa <i class="fas fa-arrow-right"></i></button>
+                <div class="full-content" style="display: none;">
+                    <p><strong>Medellín –</strong> Las puertas de la Institución Educativa Gilberto Alzate Avendaño se abrieron nuevamente para dar una calurosa bienvenida a los estudiantes de todas sus sedes en este inicio del año lectivo 2026.</p>
+                    <p>Desde tempranas horas, los pasillos de la Sede Bachillerato, Carlos Villa, San Isidro y Seguros Bolívar se llenaron de alegría, reencuentros y altas expectativas académicas. El Rector y el cuerpo docente lideraron las jornadas de inducción, motivando a los jóvenes a cuidar los espacios renovados del colegio y a participar activamente en los proyectos ambientales de la huerta, la Media Técnica en Música y las escuelas de liderazgo.</p>
+                    <p>Asimismo, se recordó a los padres de familia que el Restaurante Escolar y las inscripciones para las diferentes modalidades del PAE ya se encuentran listos para garantizar el bienestar de toda la comunidad desde esta primera semana de clases. ¡Éxitos en este nuevo año, Alzatistas!</p>
+                </div>
             </div>
         </article>
     </section>
@@ -168,6 +169,28 @@
     <!-- News Grid -->
     <section class="news-list container">
         <div class="news-grid" id="newsGrid">
+            <!-- Noticia 25: Regreso a las aulas 2026 -->
+            <article class="news-card" data-category="sedes" id="noticia-regreso-2026">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/clases interactivas ce.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">25 Ene, 2026</span>
+                    </div>
+                    <h3 class="card-title">Regreso a las Aulas 2026</h3>
+                    <p class="card-excerpt">Calurosa bienvenida a los estudiantes alzatistas para iniciar el nuevo año lectivo con alegría y compromiso.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p><strong>Medellín –</strong> Las puertas de la Institución Educativa Gilberto Alzate Avendaño se abrieron nuevamente para dar una calurosa bienvenida a los estudiantes de todas sus sedes en este inicio del año lectivo 2026.</p>
+                        <p>Desde tempranas horas, los pasillos de la Sede Bachillerato, Carlos Villa, San Isidro y Seguros Bolívar se llenaron de alegría, reencuentros y altas expectativas académicas. El Rector y el cuerpo docente lideraron las jornadas de inducción, motivando a los jóvenes a cuidar los espacios renovados del colegio y a participar activamente en los proyectos ambientales de la huerta, la Media Técnica en Música y las escuelas de liderazgo.</p>
+                        <p>Asimismo, se recordó a los padres de familia que el Restaurante Escolar y las inscripciones para las diferentes modalidades del PAE ya se encuentran listos para garantizar el bienestar de toda la comunidad desde esta primera semana de clases. ¡Éxitos en este nuevo año, Alzatistas!</p>
+                    </div>
+                </div>
+            </article>
+
             <!-- 0. Feria de Emprendimientos 2025 (Evento) -->
             <article class="news-card" data-category="culturales" id="noticia-emprendimiento">
                 <div class="card-image">
@@ -231,350 +254,510 @@
                 </div>
             </article>
 
-            <!-- 1. Encuentro artístico cultural (Culturales) -->
+            <!-- --- INICIO DE NOTICIAS HISTÓRICAS --- -->
+
+            <!-- Noticia 1: Inscripciones abiertas para el Programa de Alimentación Escolar (PAE) -->
+            <article class="news-card" data-category="sedes">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/patio ce.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">03 Jul, 2025</span>
+                    </div>
+                    <h3 class="card-title">Inscripciones Abiertas PAE</h3>
+                    <p class="card-excerpt">Inicia el Programa de Alimentación Escolar para garantizar la nutrición de nuestros estudiantes.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>La Institución Educativa Gilberto Alzate Avendaño anunció el inicio del Programa de Alimentación Escolar (PAE) para este periodo. Los estudiantes podrán beneficiarse bajo dos modalidades: "Vaso de Leche" o "Almuerzo Preparado en Sitio".</p>
+                        <p>Las directivas recordaron que cada alumno solo podrá ser beneficiario de uno de los dos programas. En los próximos días, cada Director de Grupo estará informando formalmente a los padres y estudiantes la modalidad asignada. Agradecemos a la Secretaría de Educación Distrital por su apoyo continuo.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 2: Institución da la bienvenida al segundo semestre escolar 2025 -->
+            <article class="news-card" data-category="sedes">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/clases interactivas ce.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">07 Jul, 2025</span>
+                    </div>
+                    <h3 class="card-title">Bienvenida al Segundo Semestre</h3>
+                    <p class="card-excerpt">La Comunidad Alzatista regresa a clases con entusiasmo para encarar la segunda mitad del año.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Con un mensaje lleno de entusiasmo, la I.E. Gilberto Alzate Avendaño dio la bienvenida oficial a toda la "Comunidad Alzatista" para el inicio del Segundo Semestre Escolar 2025.</p>
+                        <p>Tras el receso estudiantil, las directivas expresaron su alegría por recibir nuevamente a los jóvenes, motivándolos a encarar esta segunda mitad del año académico con compromiso y dedicación para alcanzar todas sus metas escolares.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 3: Sede Bachillerato se renueva con la exposición "Aranjuez y su Historia" -->
             <article class="news-card" data-category="culturales">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #1e3c72, #2a5298);">
-                        <i class="fas fa-theater-masks"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/hovver historia.jpeg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
                         <span class="category category-culturales">Culturales</span>
-                        <span class="card-date">05 Feb, 2026</span>
+                        <span class="card-date">07 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Encuentro Artístico y Cultural</h3>
-                    <p class="card-excerpt">Gran participación de nuestros estudiantes en el festival municipal de arte
-                        y música.</p>
+                    <h3 class="card-title">Exposición: Aranjuez y su Historia</h3>
+                    <p class="card-excerpt">Los corredores de la Sede Bachillerato se transforman en escenarios de memoria y cultura.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>Nuestros estudiantes brillaron en el festival municipal demostrando sus talentos artísticos.
-                            Hubo presentaciones de teatro, música y danza folclórica.</p>
-                        <p>La institución continúa apoyando la expresión artística como pilar fundamental en la
-                            educación integral de nuestra comunidad estudiantil.</p>
+                        <p>Durante el reciente periodo vacacional, las instalaciones de la Sede Bachillerato fueron intervenidas para ofrecer un espacio renovado. Como gran novedad, los corredores albergan ahora la muestra "Aranjuez y su Historia".</p>
+                        <p>Esta iniciativa busca conectar a los jóvenes con las raíces, la evolución y la memoria de su comuna, transformando los pasillos en verdaderos escenarios de aprendizaje y apropiación cultural para todos los estudiantes.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 2. Campeonato intercolegial de fútbol (Deportivas) -->
+            <!-- Noticia 4: Avances en infraestructura y nuevos proyectos de remodelación -->
+            <article class="news-card" data-category="sedes">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/obras tc.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">07 Jul, 2025</span>
+                    </div>
+                    <h3 class="card-title">Avances en Infraestructura</h3>
+                    <p class="card-excerpt">Planeación de nuevos proyectos y remodelación de la Etapa 2 en la Sede Bachillerato.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>En el marco del mejoramiento continuo, la institución recibió la visita de delegados de la Secretaría de Educación Distrital para consolidar la planeación de nuevos proyectos para el colegio.</p>
+                        <p>Se confirmó que próximamente iniciarán las obras de la Etapa 2 de la Remodelación de la Sede Bachillerato, que incluirá la construcción de un moderno auditorio para eventos académicos y culturales.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 5: Orgullo alzatista: Selección Femenina de Fútbol destaca en el Mundialito COMFAMA -->
             <article class="news-card" data-category="deportivas">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #dc143c, #ff4757);">
-                        <i class="fas fa-futbol"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/deportes si.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
                         <span class="category category-deportivas">Deportivas</span>
-                        <span class="card-date">01 Feb, 2026</span>
+                        <span class="card-date">07 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Campeonato Intercolegiado de Fútbol</h3>
-                    <p class="card-excerpt">Nuestra institución se consagra campeona en la categoría juvenil.</p>
+                    <h3 class="card-title">Éxito en Mundialito COMFAMA</h3>
+                    <p class="card-excerpt">Nuestra Selección Femenina de Fútbol alcanzó las semifinales con un desempeño destacado.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>Con un marcador final de 3 a 1, nuestro equipo de fútbol masculino se coronó campeón en el
-                            torneo intercolegiado de la ciudad.</p>
-                        <p>Felicitamos a todos los jugadores y al cuerpo técnico por su disciplina, trabajo en equipo y
-                            dedicación a lo largo de este exigente campeonato.</p>
+                        <p>El deporte alzatista sigue cosechando éxitos. Durante las vacaciones, el Grupo Femenino de Fútbol tuvo una destacada participación en el torneo "Mundialito COMFAMA", demostrando gran nivel técnico y disciplina.</p>
+                        <p>Las jugadoras lograron avanzar firmemente hasta alcanzar las semifinales. La comunidad educativa felicita al equipo por dejar el nombre de la institución en lo más alto del deporte local.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 3. Jornada de solidaridad comunitaria (Parroquiales) -->
-            <article class="news-card" data-category="parroquiales">
-                <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #f39c12, #e67e22);">
-                        <i class="fas fa-church"></i>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <div class="card-meta">
-                        <span class="category category-parroquiales">Parroquiales</span>
-                        <span class="card-date">28 Ene, 2026</span>
-                    </div>
-                    <h3 class="card-title">Jornada de Solidaridad Comunitaria</h3>
-                    <p class="card-excerpt">Apoyo conjunto entre la parroquia y los estudiantes para ayudar a familias
-                        vulnerables.</p>
-                    <button class="card-link btn-read-more-card">Leer más</button>
-                    <div class="full-content" style="display: none;">
-                        <p>Una exitosa jornada de recolección de víveres y ropa se llevó a cabo en conjunto con la
-                            parroquia local, logrando beneficiar a más de 50 familias de la comunidad.</p>
-                        <p>Nuestros estudiantes demostraron un profundo sentido de solidaridad y empatía, reafirmando
-                            los valores que promovemos en nuestra institución.</p>
-                    </div>
-                </div>
-            </article>
-
-            <!-- 4. Mejoras en la infraestructura (Sedes) -->
+            <!-- Noticia 6: Todo listo en el Restaurante Escolar para atender a 400 estudiantes -->
             <article class="news-card" data-category="sedes">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #e74c3c, #c0392b);">
-                        <i class="fas fa-school"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/interior sb.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
                         <span class="category category-sedes">Sedes</span>
-                        <span class="card-date">20 Ene, 2026</span>
+                        <span class="card-date">07 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Mejoras en la Infraestructura de la Sede San Isidro</h3>
-                    <p class="card-excerpt">Inauguración de nuevas aulas y dotación tecnológica para mejorar la calidad
-                        educativa.</p>
+                    <h3 class="card-title">Restaurante Escolar a Punto</h3>
+                    <p class="card-excerpt">Instalaciones preparadas para brindar alimentación a 400 estudiantes de la Sede Bachillerato.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>La sede San Isidro ahora cuenta con tres nuevas aulas interactivas completamente equipadas
-                            con pantallas inteligentes y conexión a internet de alta velocidad.</p>
-                        <p>Estas mejoras de infraestructura apuntan a brindar espacios más cómodos y modernos para
-                            optimizar el aprendizaje de nuestros alumnos.</p>
+                        <p>Las directivas confirmaron que el Restaurante Escolar en la Sede Bachillerato se encuentra completamente preparado bajo todas las normas logísticas y de salubridad para iniciar el servicio.</p>
+                        <p>Se garantizará el suministro de alimentación preparada en sitio para un total de 400 estudiantes beneficiarios, asegurando las condiciones óptimas para su jornada escolar desde el primer día.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 5. Noticia destacada: Inicia el año escolar 2026 (Sedes) -->
+            <!-- Noticia 7: Concientización y cuidado de las mascotas institucionales -->
             <article class="news-card" data-category="sedes">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #3498db, #2980b9);">
-                        <i class="fas fa-calendar-check"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/trabajo-equipo-ce.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
                         <span class="category category-sedes">Sedes</span>
-                        <span class="card-date">10 Ene, 2026</span>
+                        <span class="card-date">08 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Inicia el Año Escolar 2026</h3>
-                    <p class="card-excerpt">Damos la bienvenida a todos nuestros estudiantes en todas las sedes a un
-                        nuevo ciclo escolar.</p>
+                    <h3 class="card-title">Cuidado de Mascotas</h3>
+                    <p class="card-excerpt">Llamado a la comunidad para proteger a los animales que habitan y brindan compañía en el colegio.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>Con gran entusiasmo iniciamos este nuevo año escolar 2026 en todas nuestras sedes.
-                            Directivos, docentes y personal administrativo hemos preparado todo para recibir a nuestros
-                            alumnos.</p>
-                        <p>Nos esperan nuevos retos académicos y proyectos que fortalecerán nuestra gran comunidad
-                            educativa. ¡Bienvenidos!</p>
+                        <p>Con un emotivo mensaje, la institución hizo un llamado a toda la comunidad estudiantil para cuidar y proteger a los animales que habitan en el colegio y que brindan afecto a los estudiantes.</p>
+                        <p>Las mascotas permanecen en la sede para fomentar desde las aulas el respeto y la empatía hacia los animales, creando un ambiente más amigable para todos los miembros de la familia alzatista.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 6. Red comunitaria (Parroquiales) -->
-            <article class="news-card" data-category="parroquiales">
+            <!-- Noticia 8: Invitación a los Semilleros Deportivos del INDER (Modalidad Porrismo) -->
+            <article class="news-card" data-category="deportivas">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #9b59b6, #8e44ad);">
-                        <i class="fas fa-hands-helping"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/deporte tc.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
-                        <span class="category category-parroquiales">Parroquiales</span>
-                        <span class="card-date">08 Ene, 2026</span>
+                        <span class="category category-deportivas">Deportivas</span>
+                        <span class="card-date">08 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Proyecto Red Comunitaria</h3>
-                    <p class="card-excerpt">Creación de redes de apoyo emocional y espiritual para jóvenes en nuestro
-                        sector.</p>
+                    <h3 class="card-title">Semilleros INDER: Porrismo</h3>
+                    <p class="card-excerpt">Invitación a sumarse a las escuelas formativas en la modalidad de Porrismo para aprovechar el tiempo libre.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>Se ha lanzado oficialmente la iniciativa de "Red Comunitaria", un espacio diseñado por grupos
-                            parroquiales y directivos para ofrecer atención y acompañamiento a los jóvenes.</p>
-                        <p>Este proyecto incluye charlas, actividades recreativas y consejería personalizada orientada
-                            al bienestar integral.</p>
+                        <p>La institución extiende una cordial invitación a sumarse a las escuelas formativas del INDER. En esta oportunidad, se promueven los Semilleros Deportivos en la modalidad de Porrismo.</p>
+                        <p>Este espacio busca que los alumnos aprovechen su tiempo libre, desarrollen habilidades físicas y representen con orgullo a su comunidad a través del deporte y la disciplina.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 7. Feria de ciencia y creatividad estudiantil (Culturales) -->
+            <!-- Noticia 9: Jornada de vacunación contra el VPH para estudiantes de bachillerato -->
+            <article class="news-card" data-category="sedes">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/psicologa.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">08 Jul, 2025</span>
+                    </div>
+                    <h3 class="card-title">Vacunación VPH en Bachillerato</h3>
+                    <p class="card-excerpt">Jornada de salud para niños y niñas de 9 a 17 años en alianza con la Alcaldía de Medellín.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>En alianza con el programa "Medellín te Quiere Saludable", se anunció una jornada de vacunación contra el Virus del Papiloma Humano (VPH) para estudiantes entre los 9 y 17 años.</p>
+                        <p>Las jornadas se programaron para el miércoles 9 y jueves 10 de julio. Se solicitó a los acudientes presentar los consentimientos informados junto al carnet de vacunación correspondiente.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 10: Sede Carlos Villa estrena espacios recreativos gracias al Politécnico -->
+            <article class="news-card" data-category="sedes">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/patio cv.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">09 Jul, 2025</span>
+                    </div>
+                    <h3 class="card-title">Nuevos Espacios Recreativos CV</h3>
+                    <p class="card-excerpt">Patios y canchas renovados con juegos tradicionales gracias al apoyo de voluntarios del Politécnico.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Los niños de la Sede Carlos Villa recibieron una gran sorpresa. Estudiantes voluntarios del Politécnico intervinieron los patios y las canchas de la sede, pintando juegos tradicionales y dinámicas recreativas.</p>
+                        <p>La institución agradeció este valioso aporte que llenará de color y diversión los descansos de los más pequeños, promoviendo el juego sano y la convivencia escolar.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 11: Tienda Escolar Corazón celebra los cumpleaños de docentes y empleados -->
             <article class="news-card" data-category="culturales">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #1abc9c, #16a085);">
-                        <i class="fas fa-flask"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/interior v2 sb.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
                         <span class="category category-culturales">Culturales</span>
-                        <span class="card-date">02 Mar, 2026</span>
+                        <span class="card-date">11 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Feria de Ciencia y Creatividad Estudiantil</h3>
-                    <p class="card-excerpt">Exposición de proyectos científicos innovadores fabricados con materiales
-                        reciclables.</p>
+                    <h3 class="card-title">Celebración de Cumpleaños</h3>
+                    <p class="card-excerpt">Espacio de integración para celebrar al personal docente y administrativo en la Sede Principal.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>La imaginación no tiene límites, y así lo demostraron los alumnos durante la Feria de Ciencia
-                            Anual. Se presentaron más de 40 proyectos enfocados en energías renovables y reciclaje.</p>
-                        <p>Invitamos a la comunidad a seguir fomentando la investigación y la conciencia ambiental desde
-                            las aulas.</p>
+                        <p>En la Sede Principal se llevó a cabo un espacio de integración para celebrar los cumpleaños del personal docente y administrativo del segundo trimestre del año.</p>
+                        <p>La actividad contó con una atención especial de la Tienda Escolar Corazón. Los homenajeados agradecieron el detalle y el reconocimiento a su labor diaria en favor de la educación.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 8. Festival de danza y música escolar (Culturales) -->
+            <!-- Noticia 12: Creatividad e ingenio en la celebración del "Día del Lego" -->
             <article class="news-card" data-category="culturales">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #f1c40f, #f39c12);">
-                        <i class="fas fa-music"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/aula ce.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
                         <span class="category category-culturales">Culturales</span>
-                        <span class="card-date">25 Feb, 2026</span>
+                        <span class="card-date">17 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Festival de Danza y Música Escolar</h3>
-                    <p class="card-excerpt">Color, ritmo y tradición se vivieron en la presentación anual de ritmos
-                        colombianos.</p>
+                    <h3 class="card-title">Día del Lego en el Alzate</h3>
+                    <p class="card-excerpt">Jornada lúdica donde los estudiantes exploraron su creatividad construyendo con bloques.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>El coliseo principal fue el escenario de una hermosa muestra de danzas folclóricas y
-                            ensambles musicales preparados por los estudiantes bajo la guía de sus maestros de arte.</p>
-                        <p>El público asistente disfrutó de cumbias, pasillos y bambucos, celebrando nuestra rica
-                            herencia cultural y musical.</p>
+                        <p>La comunidad alzatista disfrutó de una jornada lúdica diferente con la celebración del "Día del Lego". Los estudiantes exploraron su creatividad y habilidades de diseño construyendo diversas estructuras.</p>
+                        <p>La actividad fue destacada por los docentes como una excelente herramienta de aprendizaje didáctico que fomenta la concentración y el pensamiento lógico-espacial en los alumnos.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 9. Torneo interno de baloncesto (Deportivas) -->
-            <article class="news-card" data-category="deportivas">
+            <!-- Noticia 13: Estudiantes de grado segundo de San Isidro exponen "Un recorrido por Colombia" -->
+            <article class="news-card" data-category="culturales">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #e67e22, #d35400);">
-                        <i class="fas fa-basketball-ball"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/info si.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
-                        <span class="category category-deportivas">Deportivas</span>
-                        <span class="card-date">18 Feb, 2026</span>
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">18 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Torneo Interno de Baloncesto</h3>
-                    <p class="card-excerpt">Emocionantes encuentros deportivos entre los grados décimo y once.</p>
+                    <h3 class="card-title">Exposición: Recorrido por Colombia</h3>
+                    <p class="card-excerpt">Muestra cultural de grado segundo en la Sede San Isidro resaltando las riquezas de nuestro país.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>Se dio inicio al torneo de baloncesto interno que busca promover la actividad física y el
-                            sano esparcimiento en nuestras horas extracurriculares.</p>
-                        <p>Los equipos han mostrado un gran nivel de juego limpio y camaradería, valores fundamentales
-                            de nuestro programa deportivo.</p>
+                        <p>Los niños de grado segundo de la Sede San Isidro presentaron "Un recorrido por Colombia". La actividad fue el resultado de su proyecto de aula sobre tradiciones y regiones del país.</p>
+                        <p>Las directivas felicitaron a los estudiantes, docentes y familiares por el éxito del evento, que permitió a los niños apropiarse de su identidad nacional de forma creativa.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 10. Jornada deportiva intersedes (Deportivas) -->
-            <article class="news-card" data-category="deportivas">
+            <!-- Noticia 14: Sede Carlos Villa conmemora el 20 de julio con Acto Cívico -->
+            <article class="news-card" data-category="culturales">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #2ecc71, #27ae60);">
-                        <i class="fas fa-running"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/eventos cultulares cv.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
-                        <span class="category category-deportivas">Deportivas</span>
-                        <span class="card-date">12 Feb, 2026</span>
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">18 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Jornada Deportiva Intersedes</h3>
-                    <p class="card-excerpt">Integración deportiva y recreativa entre los estudiantes de todas nuestras
-                        sedes escolares.</p>
+                    <h3 class="card-title">Acto Cívico 20 de Julio CV</h3>
+                    <p class="card-excerpt">Conmemoración del Día de la Independencia para mantener vivo el sentimiento patriótico en la Sede Carlos Villa.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>Las diferentes sedes se unieron en un festival de atletismo y deportes de conjunto,
-                            estrechando lazos de amistad entre los alumnos.</p>
-                        <p>Este tipo de jornadas continuarán realizándose bimensualmente para mantener la unidad
-                            institucional y la salud física de nuestros jóvenes.</p>
+                        <p>La Sede Carlos Villa llevó a cabo con éxito su tradicional acto cívico en conmemoración del Día de la Independencia de Colombia, resaltando el respeto por los símbolos patrios.</p>
+                        <p>Este encuentro sumó un esfuerzo más por parte de la comunidad educativa para incentivar la historia nacional entre los estudiantes, con una organización impecable por parte de los docentes.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 11. Jornada de reflexión y convivencia escolar (Parroquiales) -->
-            <article class="news-card" data-category="parroquiales">
+            <!-- Noticia 15: Estudiantes de primaria visitan Sede Central y conocen la Media Técnica de Música -->
+            <article class="news-card" data-category="culturales">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #95a5a6, #7f8c8d);">
-                        <i class="fas fa-people-arrows"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/musica.jpg'); background-size: cover; background-position: center; background-color: #1e3c72;">
+                        <!-- Si musica.jpg no existe, el color de fondo actuará como fallback -->
+                        <i class="fas fa-music" style="color: white; font-size: 3rem;"></i>
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
-                        <span class="category category-parroquiales">Parroquiales</span>
-                        <span class="card-date">22 Feb, 2026</span>
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">18 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Jornada de Reflexión y Convivencia Escolar</h3>
-                    <p class="card-excerpt">Actividades guiadas para fortalecer los lazos afectivos y el respeto mutuo.
-                    </p>
+                    <h3 class="card-title">Articulación: Primaria y Música</h3>
+                    <p class="card-excerpt">Alumnos de grado quinto visitan la Sede Central para conocer la Media Técnica de Música.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>Guiados por el equipo de pastoral, docentes y alumnos de básica secundaria participaron de un
-                            retiro espiritual de media jornada.</p>
-                        <p>Se abordaron temas como la tolerancia, la prevención del acoso escolar y la importancia de la
-                            paz interior y social.</p>
+                        <p>Alumnos de grado quinto de la Sede Carlos Villa realizaron una visita a la Sede Central para participar en una clase didáctica junto a los estudiantes de la Media Técnica de Música.</p>
+                        <p>El propósito fue articular los niveles educativos y mostrar las oportunidades futuras. La institución agradeció el cálido recibimiento brindado por los coordinadores y docentes de música.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 12. Actividad solidaria con la comunidad (Parroquiales) -->
-            <article class="news-card" data-category="parroquiales">
-                <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #e84393, #d63031);">
-                        <i class="fas fa-box-open"></i>
-                    </div>
-                </div>
-                <div class="card-content">
-                    <div class="card-meta">
-                        <span class="category category-parroquiales">Parroquiales</span>
-                        <span class="card-date">15 Feb, 2026</span>
-                    </div>
-                    <h3 class="card-title">Actividad Solidaria con la Comunidad</h3>
-                    <p class="card-excerpt">Entrega de kits escolares y alimentos a zonas vulnerables del municipio.</p>
-                    <button class="card-link btn-read-more-card">Leer más</button>
-                    <div class="full-content" style="display: none;">
-                        <p>Gracias al aporte voluntario de padres y estudiantes, logramos donar más de 100 kits
-                            escolares a niños de bajos recursos.</p>
-                        <p>La generosidad de la familia Alzatista sigue marcando la diferencia en nuestro entorno
-                            aportando esperanza a quienes más lo necesitan.</p>
-                    </div>
-                </div>
-            </article>
-
-            <!-- 13. Mejoras en la biblioteca de la sede primaria (Sedes) -->
+            <!-- Noticia 16: Sede Seguros Bolívar destaca por el cuidado de su huerta escolar -->
             <article class="news-card" data-category="sedes">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #0984e3, #74b9ff);">
-                        <i class="fas fa-book-reader"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/aula 1 sb.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
                         <span class="category category-sedes">Sedes</span>
-                        <span class="card-date">28 Feb, 2026</span>
+                        <span class="card-date">19 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Mejoras en la Biblioteca de la Sede Primaria</h3>
-                    <p class="card-excerpt">Nuevos rincones de lectura y ampliación del catálogo infantil para los más
-                        pequeños.</p>
+                    <h3 class="card-title">Orgullo en Huerta Seguros Bolívar</h3>
+                    <p class="card-excerpt">Progreso destacado en el cultivo de hortalizas y educación ecológica en la sede.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>Hemos remodelado la biblioteca de nuestra sede infantil, añadiendo cojines, estantes
-                            accesibles y una nueva dotación de cuentos ilustrados.</p>
-                        <p>El objetivo es despertar el amor por la lectura en las primeras etapas escolares, ofreciendo
-                            un ambiente mágico e invitante.</p>
+                        <p>La Sede Seguros Bolívar destaca por el excelente estado de su huerta escolar, un espacio donde estudiantes y docentes trabajan en equipo cultivando hortalizas y plantas.</p>
+                        <p>Este proyecto promueve el cuidado de la naturaleza y la cultura del autoabastecimiento, consolidándose como un aula ambiental viva para toda la comunidad educativa de la sede.</p>
                     </div>
                 </div>
             </article>
 
-            <!-- 14. Actividades ambientales en la sede rural (Sedes) -->
+            <!-- Noticia 17: Adopción responsable: La Perla entrega tres perritos a la Sede Central -->
             <article class="news-card" data-category="sedes">
                 <div class="card-image">
-                    <div class="card-image-placeholder" style="background: linear-gradient(45deg, #00b894, #55efc4);">
-                        <i class="fas fa-seedling"></i>
+                    <div class="card-image-placeholder" style="background-image: url('../img/trabajo en equipo sb.jpg'); background-size: cover; background-position: center;">
                     </div>
                 </div>
                 <div class="card-content">
                     <div class="card-meta">
                         <span class="category category-sedes">Sedes</span>
-                        <span class="card-date">20 Feb, 2026</span>
+                        <span class="card-date">20 Jul, 2025</span>
                     </div>
-                    <h3 class="card-title">Actividades Ambientales en la Sede Rural</h3>
-                    <p class="card-excerpt">Jornada de reforestación y creación de huertas orgánicas institucionales.
-                    </p>
+                    <h3 class="card-title">Nuevos Integrantes de Cuatro Patas</h3>
+                    <p class="card-excerpt">La Sede Central adopta a Ruby y Molly, quienes se unen a Zeus para alegrar a la familia alzatista.</p>
                     <button class="card-link btn-read-more-card">Leer más</button>
                     <div class="full-content" style="display: none;">
-                        <p>Los alumnos de la sede rural participaron de una valiosa jornada de siembra de árboles
-                            nativos en los alrededores del colegio.</p>
-                        <p>Además, se establecieron las bases para la nueva huerta comunitaria, que servirá de
-                            laboratorio vivo para sus clases de ciencias naturales.</p>
+                        <p>Con apoyo de La Perla, la Sede Central dio la bienvenida a dos nuevas perritas, Ruby y Molly, quienes se unen al ya conocido Zeus para brindar compañía a los estudiantes.</p>
+                        <p>Estos tres caninos recibieron una segunda oportunidad tras ser adoptados formalmente, y ahora llenarán de alegría los días de toda la comunidad educativa con su afecto incondicional.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 18: Conmemoración de los 215 años de la Independencia en Sede Seguros Bolívar -->
+            <article class="news-card" data-category="culturales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/eventos cultulares sb.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">21 Jul, 2025</span>
+                    </div>
+                    <h3 class="card-title">215 Años de Independencia SB</h3>
+                    <p class="card-excerpt">Sentido homenaje a la memoria histórica de Colombia con actos culturales y representaciones.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>El orgullo patrio se tomó la Sede Seguros Bolívar durante la conmemoración de los 215 años de la Independencia de Colombia con diversas muestras culturales preparadas por estudiantes.</p>
+                        <p>A través de representaciones históricas, la sede rindió homenaje a la libertad y la identidad nacional, fortaleciendo los valores cívicos en toda la comunidad educativa.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 19: Exitosa jornada de vacunación contra el VPH en Bachillerato -->
+            <article class="news-card" data-category="sedes">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/si interior22 .jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-sedes">Sedes</span>
+                        <span class="card-date">23 Jul, 2025</span>
+                    </div>
+                    <h3 class="card-title">Balance Positivo Vacunación VPH</h3>
+                    <p class="card-excerpt">Excelente respuesta de las familias alzatistas en la jornada de salud preventiva.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Finalizó con balance positivo la jornada de vacunación contra el VPH en la Sede Bachillerato, con una gran respuesta por parte de los estudiantes y sus familias.</p>
+                        <p>Las directivas agradecieron al personal de salud y a los acudientes por su compromiso con la salud preventiva de los jóvenes, garantizando el éxito de esta estrategia de salud pública.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 20: Sede Carlos Villa rinde homenaje a los 215 años de la Independencia nacional -->
+            <article class="news-card" data-category="culturales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/clases i cv.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">23 Jul, 2025</span>
+                    </div>
+                    <h3 class="card-title">Espíritu Patriótico en Carlos Villa</h3>
+                    <p class="card-excerpt">Puestas en escena y actos culturales para recordar la historia de libertad de nuestro país.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Los pasillos de la Sede Carlos Villa se llenaron de espíritu patriótico para conmemorar los 215 años de la Independencia de Colombia con diversas puestas en escena.</p>
+                        <p>La institución felicitó a la comunidad por su esfuerzo conjunto, demostrando un profundo compromiso por mantener vivas las tradiciones e incentivar los valores cívicos desde la infancia.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 21: Todo un éxito el festival de cometas en la Sede Seguros Bolívar -->
+            <article class="news-card" data-category="deportivas">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/deportes si.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-deportivas">Deportivas</span>
+                        <span class="card-date">01 Ago, 2025</span>
+                    </div>
+                    <h3 class="card-title">Festival de Cometas SB</h3>
+                    <p class="card-excerpt">Los vientos de agosto trajeron alegría y colorido a los niños de la Sede Seguros Bolívar.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>Con la llegada de agosto, los niños de la Sede Seguros Bolívar inauguraron el mes con un festival de cometas lleno de risas y sano esparcimiento al aire libre.</p>
+                        <p>Los docentes destacaron la importancia de estos espacios recreativos tradicionales para fortalecer el compañerismo y la integración escolar de los estudiantes.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 22: Convocatoria abierta para la Escuela de Liderazgo Estudiantil -->
+            <article class="news-card" data-category="culturales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/trabajo equipo si.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">01 Ago, 2025</span>
+                    </div>
+                    <h3 class="card-title">Escuela de Liderazgo Estudiantil</h3>
+                    <p class="card-excerpt">Inscripciones abiertas para potenciar habilidades de gestión y convivencia en jóvenes líderes.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>La institución anunció la apertura de inscripciones para la Escuela de Liderazgo Estudiantil, diseñada para potenciar habilidades en los futuros líderes de la comunidad.</p>
+                        <p>Se invita a los jóvenes interesados en proyectos de convivencia y mediación escolar a participar en estas sesiones de formación que iniciarán en las próximas semanas.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 23: Sede Principal conmemora la Batalla de Boyacá y el Día de la Antioqueñidad -->
+            <article class="news-card" data-category="culturales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/bannerce2do.jpeg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">08 Ago, 2025</span>
+                    </div>
+                    <h3 class="card-title">Antioqueñidad y Batalla de Boyacá</h3>
+                    <p class="card-excerpt">Muestras gastronómicas, trovas y vestuarios típicos para celebrar nuestra identidad regional.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>La Sede Principal se vistió de gala para celebrar el aniversario de la Batalla de Boyacá y el Día de la Antioqueñidad con derroche de creatividad y talento.</p>
+                        <p>El evento incluyó muestras gastronómicas y bailes típicos organizados por los diferentes grupos. Las directivas expresaron su orgullo por el compromiso de estudiantes y educadores.</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Noticia 24: Sede San Isidro celebra con orgullo la identidad regional -->
+            <article class="news-card" data-category="culturales">
+                <div class="card-image">
+                    <div class="card-image-placeholder" style="background-image: url('../img/eventos cultulares si.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="category category-culturales">Culturales</span>
+                        <span class="card-date">08 Ago, 2025</span>
+                    </div>
+                    <h3 class="card-title">Identidad Regional en San Isidro</h3>
+                    <p class="card-excerpt">Los más pequeños celebraron las costumbres antioqueñas con decoraciones y muestras culturales.</p>
+                    <button class="card-link btn-read-more-card">Leer más</button>
+                    <div class="full-content" style="display: none;">
+                        <p>En la Sede San Isidro se llevó a cabo una jornada cultural dedicada a resaltar las raíces y costumbres de la región antioqueña con la participación de padres de familia.</p>
+                        <p>La actividad se consolidó como un espacio perfecto para sembrar en los niños el amor por su cultura local a través de decoraciones alusivas a los pueblos tradicionales.</p>
                     </div>
                 </div>
             </article>
