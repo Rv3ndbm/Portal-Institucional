@@ -113,6 +113,16 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // === Featured News Modal Trigger ===
+    const featuredCard = document.getElementById('featuredNews');
+    const featuredBtn = document.querySelector('.btn-open-modal-featured');
+    if (featuredCard && featuredBtn) {
+        featuredBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            openModal(featuredCard);
+        });
+    }
+
     if (modalClose && modalOverlay) {
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', closeModal);

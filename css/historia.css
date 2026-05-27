@@ -848,13 +848,23 @@ body {
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
-    border-radius: 50%;
+    border-radius: 50%; /* Volvemos al valor por defecto circular */
     padding: 0;
     width: 280px;
     height: 280px;
     transition: transform 0.3s ease, background 0.3s ease;
     border: 1px solid rgba(26, 54, 93, 0.08);
     overflow: hidden;
+}
+
+/* La bandera (segundo hijo de la sección) debe ser cuadrada */
+.simbolo-box:nth-child(2) .simbolo-image {
+    border-radius: 12px; /* Cuadrada con bordes ligeramente suavizados para elegancia */
+}
+
+/* El escudo (tercer hijo de la sección) se mantiene circular */
+.simbolo-box:nth-child(3) .simbolo-image {
+    border-radius: 50%;
 }
 
 .simbolo-box:hover .simbolo-image {
@@ -960,4 +970,88 @@ class .simbolo-image::after {
     border-radius: 90%;
     animation: rippleHistory 0.6s ease-out;
     pointer-events: none;
+}
+
+/* ============================================================
+   NUEVO HERO "EL ALZATE"
+   ============================================================ */
+.el-alzate-hero {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    margin: 60px 0;
+    border-radius: 24px;
+    overflow: hidden;
+    background: url('../img/eventos\ ce.webp') center/cover no-repeat; /* Imagen de fondo */
+    background-color: #1a365d; /* Fallback */
+    display: flex;
+    align-items: center; /* Centrado vertical por defecto */
+    justify-content: flex-start;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.el-alzate-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 100%);
+    z-index: 1;
+}
+
+.el-alzate-content {
+    position: relative;
+    z-index: 2;
+    padding: 60px;
+    max-width: 800px;
+    text-align: left;
+}
+
+.el-alzate-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUpHero 0.8s ease-out forwards;
+}
+
+.el-alzate-motto {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: #ffffff;
+    margin: 10px 0 0 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUpHero 0.8s ease-out 0.3s forwards;
+}
+
+@keyframes fadeInUpHero {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .el-alzate-hero {
+        height: 350px;
+        border-radius: 16px;
+        margin: 40px 0;
+    }
+
+    .el-alzate-content {
+        padding: 30px;
+    }
+
+    .el-alzate-title {
+        font-size: 3.5rem;
+    }
+
+    .el-alzate-motto {
+        font-size: 2.2rem;
+    }
 }
