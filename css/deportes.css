@@ -396,35 +396,19 @@
     flex: 0 0 42%;
     min-height: 280px;
     overflow: hidden;
-    cursor: pointer;
+    background: #e8ecf1;
 }
 
 .sport-team-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .sport-team-row:hover .sport-team-image img {
     transform: scale(1.05);
-}
-
-.sport-team-image-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(30, 60, 114, 0.45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    color: #fff;
-    font-size: 2rem;
-}
-
-.sport-team-image:hover .sport-team-image-overlay {
-    opacity: 1;
 }
 
 .sport-team-content {
@@ -571,114 +555,9 @@
     margin-right: 8px;
 }
 
-/* --- LIGHTBOX STYLES --- */
-.lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 9999;
-    display: none; /* JS controla visibilidad */
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.4s ease-in-out;
-}
-
-.lightbox.active {
-    display: flex;
-    opacity: 1;
-}
-
-.lightbox-content {
-    position: relative;
-    max-width: 90%;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.lightbox-content img {
-    max-width: 100%;
-    max-height: 80vh;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    transform: scale(0.9);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
-}
-
-.lightbox.active .lightbox-content img {
-    transform: scale(1);
-}
-
-.lightbox-caption {
-    color: #fff;
-    margin-top: 20px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    text-align: center;
-}
-
-.lightbox-close {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 2.5rem;
-    cursor: pointer;
-    transition: color 0.3s ease, transform 0.3s ease;
-    z-index: 10001;
-}
-
-.lightbox-close:hover {
-    color: #38b6ff;
-    transform: rotate(90deg);
-}
-
-.lightbox-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: #fff;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.3s ease;
-    z-index: 10000;
-}
-
-.lightbox-nav:hover {
-    background: #38b6ff;
-}
-
-.lightbox-nav.prev { left: 30px; }
-.lightbox-nav.next { right: 30px; }
-
-.lightbox-nav:active { transform: translateY(-50%) scale(0.9); }
-
-/* Animación de navegación entre imágenes */
-.lightbox-content img.switching {
-    opacity: 0;
-    transform: translateX(50px); /* Entra desde la derecha por defecto */
-}
-
-.lightbox-content img.switching-prev {
-    transform: translateX(-50px); /* Entra desde la izquierda */
-}
-
 /* Accesibilidad: Reducción de movimiento */
 @media (prefers-reduced-motion: reduce) {
-    .gallery-item, .gallery-item img, .lightbox, .lightbox-content img, .lightbox-nav {
+    .sport-team-image img {
         transition: none !important;
         animation: none !important;
         transform: none !important;
@@ -701,18 +580,21 @@
 
     .sport-team-image {
         flex: none;
-        min-height: 220px;
         width: 100%;
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+    }
+
+    .sport-team-image img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .sport-team-content {
         padding: 28px 24px;
-    }
-
-    .sport-team-image-overlay {
-        opacity: 1;
-        background: rgba(30, 60, 114, 0.25);
-        font-size: 1.5rem;
     }
 }
 

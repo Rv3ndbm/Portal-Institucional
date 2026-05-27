@@ -36,25 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ========================================
-    // GALERÍA DE IMÁGENES Y LIGHTBOX
+    // CARGA DIFERIDA DE FOTOS DE EQUIPOS
     // ========================================
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    const lightbox = document.getElementById('galleryLightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const lightboxCaption = document.getElementById('lightboxCaption');
-    const closeBtn = document.getElementById('closeLightbox');
-    const prevBtn = document.getElementById('prevImage');
-    const nextBtn = document.getElementById('nextImage');
-
-    let currentIndex = 0;
-    const images = Array.from(document.querySelectorAll('.lazy-gallery-img')).map(img => ({
-        src: img.getAttribute('data-src'),
-        alt: img.alt
-    }));
-
-
-
-    // 1. Lazy Loading de imágenes de la galería (adaptado a scroll horizontal)
     const galleryImgObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -68,68 +51,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.querySelectorAll('.lazy-gallery-img').forEach(img => {
         galleryImgObserver.observe(img);
-    });
-
-    // 2. Funciones del Lightbox
-    function openLightbox(index) {
-        currentIndex = index;
-        updateLightboxImage();
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Bloquear scroll
-    }
-
-    function closeLightbox() {
-        lightbox.classList.remove('active');
-        document.body.style.overflow = ''; // Restaurar scroll
-    }
-
-    function updateLightboxImage(direction = 'next') {
-        const { src, alt } = images[currentIndex];
-
-        // Animación de salida/entrada suave
-        lightboxImg.classList.add('switching');
-        if (direction === 'prev') lightboxImg.classList.add('switching-prev');
-
-        setTimeout(() => {
-            lightboxImg.src = src;
-            lightboxImg.alt = alt;
-            lightboxCaption.textContent = alt;
-            lightboxImg.classList.remove('switching', 'switching-prev');
-        }, 200);
-    }
-
-    function showNext() {
-        currentIndex = (currentIndex + 1) % images.length;
-        updateLightboxImage('next');
-    }
-
-    function showPrev() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        updateLightboxImage('prev');
-    }
-
-    // 3. Event Listeners
-    galleryItems.forEach((item, index) => {
-        item.addEventListener('click', () => openLightbox(index));
-    });
-
-    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-    if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); showNext(); });
-    if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); showPrev(); });
-
-    if (lightbox) {
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-    }
-
-    // Soporte para teclado
-    document.addEventListener('keydown', (e) => {
-        if (!lightbox || !lightbox.classList.contains('active')) return;
-
-        if (e.key === 'Escape') closeLightbox();
-        if (e.key === 'ArrowRight') showNext();
-        if (e.key === 'ArrowLeft') showPrev();
     });
 
     // ========================================
@@ -159,5 +80,4 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
-
 
