@@ -120,9 +120,9 @@ h4,
 /* --- HERO SECTION --- */
 .hero-tecnica {
     position: relative;
-    height: 48vh;
-    /* Reducido un poco para evitar scroll excesivo */
-    min-height: 300px;
+    height: 55vh;
+    /* Más amplio y espectacular */
+    min-height: 380px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -130,14 +130,15 @@ h4,
     margin-top: 180px;
 }
 
-.hero-video {
+.hero-video,
+.hero-image {
     position: absolute;
     top: 50%;
     left: 50%;
     min-width: 100%;
     min-height: 100%;
-    width: auto;
-    height: auto;
+    width: 100%;
+    height: 100%;
     transform: translate(-50%, -50%);
     object-fit: cover;
     z-index: 1;
