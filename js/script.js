@@ -590,10 +590,10 @@ function normalizeText(str) {
 }
 
 /**
- * Filtra SEARCH_INDEX con la query del usuario.
- * Busca en título y keywords (case-insensitive, sin tildes).
+ * Filtra SEARCH_INDEX con la query del usuario usando un algoritmo de relevancia multi-palabra (Google-like).
+ * Busca en título, descripción y palabras clave, asignando puntuaciones para ordenar los mejores resultados primero.
  * @param {string} query
- * @returns {Array} hasta 6 resultados
+ * @returns {Array} hasta 6 resultados ordenados por relevancia
  */
 function runSearch(query) {
     if (!query || !query.trim() || typeof SEARCH_INDEX === 'undefined') {
@@ -603,25 +603,19 @@ function runSearch(query) {
     const q = normalizeText(query.trim());
     if (q.length < 2) return [];
 
+    // Dividimos la búsqueda en palabras individuales para permitir búsquedas cruzadas (ej: "sede central")
+    const queryWords = q.split(/\s+/).filter(word => word.length > 0);
+    if (queryWords.length === 0) return [];
+
     // Determinar la ruta base para ajustar las URLs de búsqueda
     const path = (window.location?.pathname || '').replace(/\\/g, '/');
-    let prefix = '';
-    if (path.includes('/html/tecnicas/')) {
-        prefix = '../../html/';
-    } else if (path.includes('/html/')) {
-        prefix = ''; // Ya estamos en /html/
-    } else {
-        prefix = 'html/'; // Estamos en la raíz
-    }
 
-    return SEARCH_INDEX.map(item => {
-        // Clonar el item para no modificar el original en el índice
+    const scoredResults = SEARCH_INDEX.map(item => {
+        // Clonar el item para no modificar el original
         const newItem = { ...item };
         
         // Ajustar la URL solo si es relativa (no empieza con http)
         if (!newItem.url.startsWith('http')) {
-            // Si el item ya tiene la carpeta html/ y estamos en la raíz, dejarlo.
-            // Pero nuestro índice tiene URLs relativas a la carpeta /html/
             if (path.includes('/html/tecnicas/')) {
                 newItem.url = '../../html/' + newItem.url.replace('html/', '');
             } else if (path.includes('/html/')) {
@@ -630,20 +624,80 @@ function runSearch(query) {
                 newItem.url = 'html/' + newItem.url.replace('html/', '');
             }
         }
+
+        // Sistema inteligente de Scoring por relevancia
+        let score = 0;
+        const normTitle = normalizeText(newItem.titulo || '');
+        const normDesc = normalizeText(newItem.descripcion || '');
+        const normKeywords = Array.isArray(newItem.keywords) ? newItem.keywords.map(kw => normalizeText(kw)) : [];
+
+        // 1. Coincidencia exacta de toda la query en el título (Prioridad máxima)
+        if (normTitle === q) {
+            score += 150;
+        } else if (normTitle.includes(q)) {
+            score += 80;
+        }
+
+        // 2. Coincidencia exacta de toda la query en palabras clave
+        if (normKeywords.includes(q)) {
+            score += 60;
+        }
+
+        // 3. Coincidencia palabra por palabra (Búsqueda flexible / multi-término)
+        let matchedWordsCount = 0;
+        queryWords.forEach(word => {
+            let wordMatched = false;
+
+            // Buscar en el título
+            if (normTitle.includes(word)) {
+                score += 25;
+                wordMatched = true;
+            }
+
+            // Buscar en la descripción
+            if (normDesc.includes(word)) {
+                score += 10;
+                wordMatched = true;
+            }
+
+            // Buscar en keywords
+            normKeywords.forEach(kw => {
+                if (kw === word) {
+                    score += 20;
+                    wordMatched = true;
+                } else if (kw.includes(word)) {
+                    score += 8;
+                    wordMatched = true;
+                }
+            });
+
+            if (wordMatched) {
+                matchedWordsCount++;
+            }
+        });
+
+        // 4. Bonus si el item contiene TODAS las palabras que el usuario buscó
+        if (matchedWordsCount === queryWords.length) {
+            score += 50;
+        }
+
+        newItem.score = score;
         return newItem;
-    }).filter(item => {
-        const titleMatch = normalizeText(item.titulo).includes(q);
-        const keywordMatch = Array.isArray(item.keywords) && item.keywords.some(kw => normalizeText(kw).includes(q));
-        return titleMatch || keywordMatch;
-    }).slice(0, 6);
+    });
+
+    // Filtrar resultados con coincidencia real (score > 0) y ordenar descendente
+    return scoredResults
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 6);
 }
 
 /**
  * Crea o actualiza el dropdown flotante de resultados bajo el input dado.
- * Usa position:fixed para flotar sobre cualquier elemento.
+ * Muestra títulos y una descripción enriquecida con copywriting.
  * @param {Array}       results  — array de resultados de runSearch()
  * @param {HTMLElement} anchor   — el <input> bajo el cual se posiciona el dropdown
- * @param {Function}    onClose  — callback para cerrar el dropdown
+ * @param {Function}    onClose  — callback opcional para cerrar el buscador principal
  */
 function renderDropdown(results, anchor, onClose) {
     // Reutilizar o crear el contenedor del dropdown
@@ -665,17 +719,25 @@ function renderDropdown(results, anchor, onClose) {
         empty.textContent = 'No se encontraron resultados';
         dropdown.appendChild(empty);
     } else {
-        results.forEach((item, idx) => {
+        results.forEach((item) => {
             const el = document.createElement('a');
             el.className = 'search-dropdown-item';
             el.setAttribute('role', 'option');
             el.setAttribute('href', item.url);
+            
             // Si es URL externa, abrir en nueva pestaña
             if (item.url.startsWith('http')) {
                 el.setAttribute('target', '_blank');
                 el.setAttribute('rel', 'noopener noreferrer');
             }
-            el.textContent = item.titulo;
+
+            // Estructura HTML enriquecida para mostrar título y descripción descriptiva
+            el.innerHTML = `
+                <div class="search-item-header">
+                    <span class="search-item-title">${item.titulo}</span>
+                </div>
+                <div class="search-item-desc">${item.descripcion || ''}</div>
+            `;
 
             el.addEventListener('click', () => {
                 closeDropdown();
@@ -1071,8 +1133,9 @@ class CylinderCarousel3D {
         this.hasDragged = false;
         this.startX = 0;
         this.currentX = 0;
-        this.dragSensitivity = 0.5;
+        this.dragSensitivity = 0.7; // Aumentado ligeramente para mejor respuesta
         this.startAngle = 0;
+        this.dragThreshold = 10; // Umbral para considerar que se ha arrastrado
 
         this.init();
     }
@@ -1086,10 +1149,11 @@ class CylinderCarousel3D {
     }
 
     calculateRadius() {
-        // Tarjeta tiene ancho fijo de 520px (CSS)
-        const CARD_WIDTH = 520;
+        // Tarjeta tiene ancho móvil de 260px o desktop de 520px (CSS)
+        const isMobile = window.innerWidth <= 768;
+        const CARD_WIDTH = isMobile ? 260 : 520;
         // Radio correcto para que las tarjetas no se solapen ni queden muy separadas
-        this.radius = Math.round((CARD_WIDTH / 2) / Math.tan(Math.PI / this.numCards)) + 100;
+        this.radius = Math.round((CARD_WIDTH / 2) / Math.tan(Math.PI / this.numCards)) + (isMobile ? 50 : 100);
     }
 
     positionCards() {
@@ -1160,6 +1224,15 @@ class CylinderCarousel3D {
                     this.rotateBy(diff);
                 }
             });
+
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'link');
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    card.click();
+                }
+            });
         });
     }
 
@@ -1171,10 +1244,14 @@ class CylinderCarousel3D {
     }
 
     dragStart(e) {
-        e.preventDefault(); // Evitar selección de texto y arrastre nativo de imágenes
+        if (e.type.includes('mouse')) {
+            e.preventDefault();
+        }
+
         this.isDragging = true;
         this.hasDragged = false;
         this.startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        this.startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
         this.startAngle = this.currentAngle;
 
         this.track.style.transition = 'none';
@@ -1183,17 +1260,26 @@ class CylinderCarousel3D {
 
     dragMove(e) {
         if (!this.isDragging) return;
-        e.preventDefault(); // Evitar scroll de la página
 
-        this.currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-        const diffX = this.currentX - this.startX;
+        const currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+        const currentY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+        const diffX = currentX - this.startX;
+        const diffY = currentY - this.startY;
 
-        // Marcar que hubo movimiento real (umbral de 5px)
-        if (Math.abs(diffX) > 5) {
+        if (e.type.includes('touch')) {
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                e.preventDefault();
+            } else {
+                return;
+            }
+        } else {
+            e.preventDefault();
+        }
+
+        if (Math.abs(diffX) > this.dragThreshold) {
             this.hasDragged = true;
         }
 
-        // Girar de forma dinámica y suave según cuánto arrastramos
         this.currentAngle = this.startAngle + (diffX * this.dragSensitivity);
         this.track.style.transform = `translateZ(${-this.radius}px) rotateY(${this.currentAngle}deg)`;
     }

@@ -12,22 +12,40 @@ main {
     position: relative;
     z-index: 0;
     isolation: isolate;
+    margin-top: 0; /* Eliminar margen para que el hero empiece desde arriba */
 }
 
 /* === HERO SECTION === */
 .hero-home {
     position: relative;
     width: 100%;
-    height: 75vh;
+    height: 100vh; /* Volver a 100vh para efecto pantalla completa */
     min-height: 520px;
     background-image: url('../img/banner ce.JPG');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     overflow: hidden;
+    padding-top: var(--header-height-desktop); /* Compensar header en desktop */
+}
+
+@media (max-width: 1024px) {
+    .hero-home {
+        padding-top: 100px; /* Ajuste manual para móvil para evitar espacio en blanco excesivo */
+        height: 80vh; /* Un poco más bajo en móvil para ver contenido abajo */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-home {
+        padding-top: 80px;
+        height: 70vh;
+    }
 }
 
 .hero-overlay {
@@ -348,6 +366,22 @@ main {
     margin-bottom: 15px;
     overflow: visible;
     cursor: grab;
+    touch-action: pan-y;
+}
+
+.cylinder-card {
+    position: absolute;
+    width: 520px;
+    height: 260px;
+    top: -130px;
+    left: -260px;
+    cursor: pointer;
+    backface-visibility: visible;
+    transition: opacity 0.5s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 /*
@@ -387,9 +421,9 @@ main {
 .cylinder-card .card-inner.glassmorphism {
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.22);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(255, 255, 255, 0.88); /* Mas opaco para mayor nitidez */
+    backdrop-filter: none; /* Desactivar blur dinamico que causa bugs visuales en 3D */
+    -webkit-backdrop-filter: none;
     border: 1.5px solid rgba(255, 255, 255, 0.55);
     border-radius: 20px;
     padding: 20px 28px;
@@ -401,6 +435,10 @@ main {
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
     transition: background 0.5s ease, box-shadow 0.5s ease;
     overflow: hidden;
+    /* Forzar aceleracion GPU para texto e imagenes completamente nítidos */
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 /* Tarjeta activa (la que está al frente) */
@@ -712,6 +750,89 @@ main {
     }
 }
 
+
+/* === SHORTCUTS SECTION (REDISEÑO) === */
+.shortcuts-section {
+    padding: 60px 0;
+    background: var(--color-primary);
+    color: white;
+}
+
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.shortcut-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.shortcut-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-5px);
+}
+
+.shortcut-icon-wrapper {
+    width: 70px;
+    height: 70px;
+    background: white;
+    color: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.shortcut-item:hover .shortcut-icon-wrapper {
+    background: var(--color-secondary);
+    color: white;
+    transform: rotate(10deg);
+}
+
+.shortcut-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 1024px) {
+    .shortcuts-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .shortcuts-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    
+    .shortcut-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .shortcut-label {
+        font-size: 0.85rem;
+    }
+}
 
 /* === DIAGONAL SEPARATORS === */
 .diagonal-divider {
@@ -1994,6 +2115,10 @@ main {
         height: 100px;
     }
 
+    .glass-orb {
+        display: none;
+    }
+
     .cylinder-card .card-info {
         flex: none;
         width: 100%;
@@ -2007,6 +2132,14 @@ main {
     .cylinder-card .card-info p {
         font-size: 0.8rem;
         text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-home {
+        min-height: 100vh;
+        height: 100vh;
+        background-position: center top;
     }
 }
 
@@ -2075,5 +2208,214 @@ main {
     .strip-label strong {
         font-size: 0.85rem;
         margin-bottom: 2px;
+    }
+}
+
+/* ============================================================
+   OPTIMIZACIONES MÓVILES EXTRAS Y MODALIDAD ACADÉMICA
+   ============================================================ */
+
+/* Nueva sección de Modalidad Académica en Home */
+.academic-feature {
+    background: linear-gradient(135deg, var(--color-white) 0%, rgba(30, 60, 114, 0.05) 100%);
+}
+
+.academic-badge {
+    background: linear-gradient(135deg, var(--color-primary), #00c6ff) !important;
+}
+
+.btn-academic {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light)) !important;
+    box-shadow: 0 4px 15px rgba(30, 60, 114, 0.2);
+}
+
+.btn-academic:hover {
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary)) !important;
+}
+
+/* Optimización móvil responsiva (768px y menor) */
+@media (max-width: 768px) {
+    /* Forzar diseño horizontal lado a lado para las 3 características principales en móvil */
+    .feature-grid, 
+    .feature-grid.reverse {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 15px !important;
+        text-align: left !important;
+        padding: 10px 0 !important;
+    }
+
+    /* El texto toma la mayor parte del espacio */
+    .feature-text {
+        flex: 1.5 !important;
+        order: 1 !important;
+        width: auto !important;
+    }
+
+    /* La imagen circular se posiciona a la derecha de forma compacta */
+    .feature-image.circle-shape {
+        flex: 1 !important;
+        order: 2 !important;
+        width: 120px !important;
+        height: 120px !important;
+        min-width: 120px !important;
+        max-width: 120px !important;
+        border-radius: 50% !important;
+        margin: 0 !important;
+        border: 3px solid white !important;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15) !important;
+        background: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        aspect-ratio: 1 / 1 !important;
+    }
+
+    .feature-image.circle-shape img {
+        width: 100% !important;
+        height: 100% !important;
+        border: none !important;
+        border-radius: 50% !important;
+        box-shadow: none !important;
+    }
+
+    /* Desactivar orbes de cristal flotantes en móvil para ahorrar espacio y evitar bugs de scroll */
+    .glass-orb {
+        display: none !important;
+    }
+
+    /* Ajustar tipografía en móvil para encajar en fila */
+    .feature-text h2 {
+        font-size: 1.35rem !important;
+        margin-bottom: 6px !important;
+        padding-left: 10px !important;
+        line-height: 1.25 !important;
+    }
+
+    .feature-text h2::before {
+        height: 18px !important;
+        width: 3px !important;
+    }
+
+    .feature-text p {
+        font-size: 0.9rem !important;
+        line-height: 1.4 !important;
+        margin-bottom: 8px !important;
+    }
+
+    .feature-badge {
+        font-size: 0.6rem !important;
+        padding: 3px 8px !important;
+        margin-bottom: 6px !important;
+    }
+
+    /* Ajustar lista de viñetas en móvil */
+    .feature-bullets {
+        margin: 6px 0 !important;
+    }
+
+    .feature-bullets li {
+        font-size: 0.85rem !important;
+        gap: 6px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .feature-bullets i {
+        font-size: 0.85rem !important;
+    }
+
+    .btn-feature {
+        padding: 8px 18px !important;
+        font-size: 0.8rem !important;
+        margin-top: 6px !important;
+        border-radius: 5px !important;
+    }
+
+    /* Reducción general de espacios vacíos en todas las secciones principales de la home en móvil */
+    .feature-section,
+    .bento-services-section,
+    .dark-cards-section,
+    .shortcuts-section,
+    .news-section {
+        padding: 25px 15px !important;
+    }
+
+    .bento-intro {
+        margin-bottom: 15px !important;
+    }
+
+    .bento-intro h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    .bento-intro p {
+        font-size: 0.85rem !important;
+        margin-bottom: 12px !important;
+    }
+
+    .btn-bento-contact {
+        padding: 8px 18px !important;
+        font-size: 0.8rem !important;
+    }
+
+    .section-title,
+    .section-title-dark {
+        font-size: 1.4rem !important;
+        margin-bottom: 20px !important;
+    }
+
+    .section-title::after,
+    .section-title-dark::after {
+        margin: 8px auto 0 !important;
+        height: 3px !important;
+        width: 40px !important;
+    }
+
+    .shortcuts-section {
+        padding: 30px 15px !important;
+    }
+
+    .shortcuts-grid {
+        margin-top: 15px !important;
+        gap: 10px !important;
+    }
+
+    .shortcut-item {
+        padding: 10px !important;
+        border-radius: 8px !important;
+    }
+
+    .shortcut-icon-wrapper {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1.1rem !important;
+        margin-bottom: 8px !important;
+    }
+
+    .shortcut-label {
+        font-size: 0.75rem !important;
+    }
+
+    /* Reducir altura del hero home en móvil para mejor enfoque inicial */
+    .hero-home {
+        min-height: 70vh !important;
+        height: 70vh !important;
+    }
+
+    .hero-title {
+        font-size: 1.6rem !important;
+        margin-bottom: 10px !important;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem !important;
+        margin-bottom: 20px !important;
+    }
+
+    .scroll-label {
+        padding: 8px 20px !important;
+        font-size: 0.85rem !important;
     }
 }

@@ -269,12 +269,20 @@
 /* Branding por sección */
 .rect-section .departamento-title, .rect-section .stat-number { color: #b45309; }
 .rect-section .funciones-list li { border-left: 5px solid #d97706; }
+.rect-section .visual-card img {
+    object-position: center 15%; /* Baja la imagen para encuadrar y alejar el zoom del rostro del rector */
+}
 
 .coord-section .departamento-title, .coord-section .stat-number { color: #1e40af; }
 .coord-section .funciones-list li { border-left: 5px solid #2563eb; }
 
 .secretaria-section .departamento-title, .secretaria-section .stat-number { color: #0f766e; }
 .secretaria-section .funciones-list li { border-left: 5px solid #0d9488; }
+.secretaria-section .visual-card img {
+    transform: scale(1.35);
+    transform-origin: 28% 55%; /* Hace zoom en la PC/escritorio y recorta al chico que pasa por la derecha */
+    object-fit: cover;
+}
 
 /* --- Animaciones Scroll --- */
 .scroll-reveal {
