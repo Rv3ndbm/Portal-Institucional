@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Usuario - I.E. Gilberto Alzate Avendaño</title>
+    <link rel="icon" type="image/png" href="img/logo_del_colegio-removebg-preview__1_-removebg-preview.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 5px solid #dc143c;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.15em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .logo-header {
+            width: 100px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            background: linear-gradient(90deg, #1e3c72 0%, #2a5298 100%);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        nav a:hover {
+            background: #dc143c;
+            transform: translateY(-2px);
+            border-color: #dc143c;
+        }
+
+        .content {
+            padding: 40px 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-title {
+            font-size: 2.2em;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            border-bottom: 4px solid #dc143c;
+            padding-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .section-icon {
+            font-size: 2em;
+        }
+
+        .section-description {
+            font-size: 1.05em;
+            color: #495057;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 18px;
+            border-left: 5px solid #dc143c;
+            border-radius: 6px;
+            line-height: 1.7;
+        }
+
+        .step-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+            align-items: start;
+        }
+
+        .step {
+            background: #f8f9fa;
+            padding: 22px;
+            border-radius: 8px;
+            border-left: 5px solid #1e3c72;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            box-shadow: 0 4px 12px rgba(30, 60, 114, 0.1);
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #dc143c 0%, #b01030 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            box-shadow: 0 2px 8px rgba(220, 20, 60, 0.2);
+        }
+
+        .step-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 10px;
+        }
+
+        .step-description {
+            color: #495057;
+            line-height: 1.7;
+        }
+
+        .screenshot {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .screenshot-container {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .screenshot-label {
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .step-container {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            nav a {
+                display: block;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(42, 82, 152, 0.05) 100%);
+            border-left: 5px solid #1e3c72;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .tip-box strong {
+            color: #1e3c72;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border-left: 5px solid #ffd700;
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+
+        .warning-box strong {
+            color: #1e3c72;
+        }
+
+        .accessibility-section {
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.05) 0%, rgba(42, 82, 152, 0.05) 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 2px solid #1e3c72;
+            box-shadow: 0 2px 8px rgba(30, 60, 114, 0.1);
+        }
+
+        .faq-item {
+            background: white;
+            padding: 18px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 5px solid #dc143c;
+            box-shadow: 0 2px 6px rgba(30, 60, 114, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 12px rgba(30, 60, 114, 0.1);
+            transform: translateX(5px);
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .faq-answer {
+            color: #495057;
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 24px;
+            border-radius: 10px;
+            text-align: center;
+            border-top: 5px solid #dc143c;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(30, 60, 114, 0.08);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(30, 60, 114, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-weight: 700;
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .feature-description {
+            color: #6c757d;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #1e3c72 0%, #152a52 100%);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+            border-top: 5px solid #dc143c;
+        }
+
+        .toc {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+            border-left: 5px solid #dc143c;
+            box-shadow: 0 2px 8px rgba(30, 60, 114, 0.08);
+        }
+
+        .toc h2 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin: 10px 0;
+        }
+
+        .toc a {
+            color: #2a5298;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding-left: 10px;
+            border-left: 2px solid transparent;
+        }
+
+        .toc a:hover {
+            color: #dc143c;
+            border-left-color: #dc143c;
+            padding-left: 15px;
+        }
+
+        .breadcrumb {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #dc143c 0%, #b01030 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 99;
+            text-decoration: none;
+            font-size: 1.5em;
+            box-shadow: 0 4px 12px rgba(220, 20, 60, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 18px rgba(220, 20, 60, 0.4);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd700 0%, rgba(255, 215, 0, 0.5) 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div style="margin-bottom: 20px;">
+                <svg width="80" height="80" viewBox="0 0 100 100" style="fill: white;">
+                    <circle cx="50" cy="50" r="45" stroke="white" stroke-width="2" fill="none"/>
+                    <path d="M 30 35 L 50 50 L 70 35 M 30 55 L 50 70 L 70 55" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1>📚 Manual de Usuario</h1>
+            <p>I.E. Gilberto Alzate Avendaño</p>
+            <p style="font-size: 0.9em; margin-top: 15px;">Guía paso a paso para navegar por nuestro portal institucional</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#portal">Acerca del Portal</a></li>
+                <li><a href="#navegacion">Navegación</a></li>
+                <li><a href="#sedes">Sedes</a></li>
+                <li><a href="#academico">Académico</a></li>
+                <li><a href="#tecnicas">Medias Técnicas</a></li>
+                <li><a href="#historia">Historia</a></li>
+                <li><a href="#faq">Preguntas Frecuentes</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Tabla de Contenidos -->
+            <div class="toc">
+                <h2>📋 Tabla de Contenidos</h2>
+                <ul>
+                    <li><a href="#inicio">1. Bienvenida</a></li>
+                    <li><a href="#portal">2. Acerca del Portal</a></li>
+                    <li><a href="#navegacion">3. Navegación Básica</a></li>
+                    <li><a href="#sedes">4. Sección de Sedes</a></li>
+                    <li><a href="#academico">5. Sección Académica</a></li>
+                    <li><a href="#tecnicas">6. Medias Técnicas</a></li>
+                    <li><a href="#historia">7. Historia e Identidad</a></li>
+                    <li><a href="#accesibilidad">8. Funciones de Accesibilidad</a></li>
+                    <li><a href="#faq">9. Preguntas Frecuentes</a></li>
+                </ul>
+            </div>
+
+            <!-- Section 1: Inicio -->
+            <section id="inicio" class="section">
+                <div class="section-title">
+                    <span class="section-icon">🏠</span>
+                    Bienvenida al Portal
+                </div>
+                
+                <div class="section-description">
+                    Este manual te ayudará a navegar por el portal institucional de manera sencilla y eficiente. 
+                    Aquí encontrarás toda la información que necesitas sobre nuestras sedes, programas académicos y actividades.
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Consejo:</strong> Este manual está diseñado para ser leído en cualquier dispositivo. 
+                    Si accedes desde tu celular, todas las opciones se adaptarán a tu pantalla.
+                </div>
+            </section>
+
+            <!-- Section 2: Acerca del Portal -->
+            <section id="portal" class="section">
+                <div class="section-title">
+                    <span class="section-icon">🌐</span>
+                    Acerca del Portal Institucional
+                </div>
+
+                <div class="section-description">
+                    El portal web de la I.E. Gilberto Alzate Avendaño es tu ventana de acceso a toda la información 
+                    sobre nuestra institución, desde nuestra historia hasta nuestras más recientes actividades.
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📍</div>
+                        <div class="feature-title">5 Sedes Educativas</div>
+                        <div class="feature-description">Conoce todas nuestras ubicaciones estratégicas en la ciudad</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎓</div>
+                        <div class="feature-title">Programas Académicos</div>
+                        <div class="feature-description">Acceso a planes de área y recursos educativos</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <div class="feature-title">Medias Técnicas</div>
+                        <div class="feature-description">5 modalidades técnicas para tu futuro profesional</div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📰</div>
+                        <div class="feature-title">Noticias y Eventos</div>
+                        <div class="feature-description">Mantente informado sobre actividades institucionales</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Navegación Básica -->
+            <section id="navegacion" class="section">
+                <div class="section-title">
+                    <span class="section-icon">🧭</span>
+                    Navegación Básica del Portal
+                </div>
+
+                <div class="section-description">
+                    El portal está diseñado para ser intuitivo y fácil de usar. Aquí te mostraremos cómo navegar por las diferentes secciones.
+                </div>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Accede a la Página Principal</div>
+                    <div class="step-description">
+                        La página principal te presenta una vista general del portal con un menú de navegación en la parte superior. 
+                        Desde aquí puedes acceder a todas las secciones principales.
+                    </div>
+                </div>
+
+                <div class="screenshot-container">
+                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwwDAwwGBAMDMgMDAwwHBgcFBgcGBgcICAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/2wBDAQICAgIDAggDAwgKCAcIDAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/wAARCAAJA7oDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABCQARITFBUWEgcYGRscH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABYRAQEBAAAAAAAAAAAAAAAAAAAEAf/aAAwDAQACEQMRAD8Ai2a3H8OMFoCFsI2MkGS0UkRaSvqAkbSRx5B8C0bpTaXS02VkDhSHqLZCEZQr3eQkEVcGqvMN7Z0ZJEiajI3sJHAIHEIGQSiohByxlJHAkKFNxgAkT7HU39I4bTCJfFSb9TI0w4XchbzjzIBwyv/Z" alt="Página principal del portal" class="screenshot">
+                    <div class="screenshot-label">Pantalla principal con menú de navegación</div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Utiliza el Menú Principal</div>
+                    <div class="step-description">
+                        En la parte superior encontrarás el menú principal con las siguientes opciones:
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li><strong>INICIO:</strong> Noticias, eventos, deportes e historia</li>
+                            <li><strong>SEDES:</strong> Información de nuestras 5 sedes educativas</li>
+                            <li><strong>DEPARTAMENTOS:</strong> Coordinación y rectoría</li>
+                            <li><strong>MEDIAS TÉCNICAS:</strong> Programas técnicos disponibles</li>
+                            <li><strong>ACADÉMICO:</strong> Sistemas educativos y planes de área</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Botón de Accesibilidad</div>
+                    <div class="step-description">
+                        En la esquina inferior derecha encontrarás un botón azul circular (♿). 
+                        Este botón te permite acceder a funciones de accesibilidad como tamaño de letra, 
+                        contraste y otras opciones de visualización.
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Consejo de Navegación:</strong> Puedes hacer clic en el logo o en "INICIO" para volver 
+                    a la página principal desde cualquier sección.
+                </div>
+            </section>
+
+            <!-- Section 4: Sedes -->
+            <section id="sedes" class="section">
+                <div class="section-title">
+                    <span class="section-icon">🏢</span>
+                    Cómo Conocer Nuestras Sedes
+                </div>
+
+                <div class="section-description">
+                    El Colegio Gilberto Alzate cuenta con 5 sedes estratégicamente ubicadas en la ciudad. 
+                    Cada una ofrece excelencia académica y formación integral a sus estudiantes.
+                </div>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Accede a la Sección Sedes</div>
+                    <div class="step-description">
+                        Haz clic en <span class="highlight">SEDES</span> en el menú principal. 
+                        Serás llevado a una página que muestra todas nuestras sedes educativas.
+                    </div>
+                </div>
+
+                <div class="screenshot-container">
+                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwwDAwwGBAMDMgMDAwwHBgcFBgcGBgcICAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/2wBDAQICAgIDAggDAwgKCAcIDAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/wAARCAAJA7oDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABCQARITFBUWEgcYGRscH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABYRAQEBAAAAAAAAAAAAAAAAAAAEAf/aAAwDAQACEQMRAD8Ci2a3H8OMFoCFsI2MkGS0UkRaSvqAkbSRx5B8C0bpTaXS02VkDhSHqLZCEZQr3eQkEVcGqvMN7Z0ZJEiajI3sJHAIHEIGQSiohByxlJHAkKFNxgAkT7HU39I4bTCJfFSb9TI0w4XchbzjzIBwyv/Z" alt="Página de Sedes" class="screenshot">
+                    <div class="screenshot-label">Página principal de Sedes con todas las ubicaciones</div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Selecciona una Sede</div>
+                    <div class="step-description">
+                        Verás tarjetas con información de cada sede:
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li><strong>Sede San Isidro:</strong> Formación inicial y primaria</li>
+                            <li><strong>Sede Seguros Bolívar:</strong> Primaria y orientación técnica</li>
+                            <li><strong>Sede Tomás Carrasquilla:</strong> Bachillerato y técnicas</li>
+                            <li><strong>Sede Carlos Villa:</strong> Formación técnica especializada</li>
+                            <li><strong>Sede Central:</strong> Sede administrativa principal</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Haz Clic en "Ver Sede"</div>
+                    <div class="step-description">
+                        En cada tarjeta encontrarás un botón "Ver Sede" que te llevará a información detallada 
+                        sobre esa ubicación específica, incluyendo horarios, dirección y características.
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Importante:</strong> Ten a mano la dirección de la sede que necesites. 
+                    Puedes capturar la pantalla o tomar nota de los datos de contacto.
+                </div>
+            </section>
+
+            <!-- Section 5: Académico -->
+            <section id="academico" class="section">
+                <div class="section-title">
+                    <span class="section-icon">🎓</span>
+                    Sección Académica
+                </div>
+
+                <div class="section-description">
+                    Accede a los sistemas de información académica y consulta los planes de estudio de diferentes áreas.
+                </div>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Navega a Académico</div>
+                    <div class="step-description">
+                        Haz clic en <span class="highlight">ACADÉMICO</span> en el menú principal. 
+                        Aquí encontrarás toda la información relacionada con procesos académicos.
+                    </div>
+                </div>
+
+                <div class="screenshot-container">
+                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwwDAwwGBAMDMgMDAwwHBgcFBgcGBgcICAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/2wBDAQICAgIDAggDAwgKCAcIDAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/wAARCAAJA7oDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABCQARITFBUWEgcYGRscH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABYRAQEBAAAAAAAAAAAAAAAAAAAEAf/aAAwDAQACEQMRAD8Ci2a3H8OMFoCFsI2MkGS0UkRaSvqAkbSRx5B8C0bpTaXS02VkDhSHqLZCEZQr3eQkEVcGqvMN7Z0ZJEiajI3sJHAIHEIGQSiohByxlJHAkKFNxgAkT7HU39I4bTCJfFSb9TI0w4XchbzjzIBwyv/Z" alt="Página Académica" class="screenshot">
+                    <div class="screenshot-label">Sección Académica con opciones de acceso</div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Acceso a Sistemas</div>
+                    <div class="step-description">
+                        Encontrarás dos sistemas principales:
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li><strong>Sistema Docente:</strong> Para que los profesores registren información</li>
+                            <li><strong>Sistema Estudiante:</strong> Para que los estudiantes consulten calificaciones y horarios</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Consulta Planes de Área</div>
+                    <div class="step-description">
+                        Accede a los planes de estudio de todas las áreas curriculares disponibles en la institución. 
+                        Estos documentos contienen información sobre contenidos, objetivos y metodología de cada materia.
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Consejo:</strong> Si necesitas acceder a los sistemas docente o estudiante, 
+                    solicita tus credenciales en la coordinación académica de tu sede.
+                </div>
+            </section>
+
+            <!-- Section 6: Medias Técnicas -->
+            <section id="tecnicas" class="section">
+                <div class="section-title">
+                    <span class="section-icon">⚙️</span>
+                    Medias Técnicas
+                </div>
+
+                <div class="section-description">
+                    Descubre las oportunidades de formación técnica que ofrece la institución. 
+                    Contamos con 5 programas especializados que preparan a nuestros estudiantes para el futuro laboral.
+                </div>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Accede a Medias Técnicas</div>
+                    <div class="step-description">
+                        Haz clic en <span class="highlight">MEDIAS TÉCNICAS</span> en el menú principal. 
+                        Serás llevado a una página que muestra todos los programas técnicos disponibles.
+                    </div>
+                </div>
+
+                <div class="screenshot-container">
+                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwwDAwwGBAMDMgMDAwwHBgcFBgcGBgcICAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/2wBDAQICAgIDAggDAwgKCAcIDAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/wAARCAAJA7oDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABCQARITFBUWEgcYGRscH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABYRAQEBAAAAAAAAAAAAAAAAAAAEAf/aAAwDAQACEQMRAD8Ci2a3H8OMFoCFsI2MkGS0UkRaSvqAkbSRx5B8C0bpTaXS02VkDhSHqLZCEZQr3eQkEVcGqvMN7Z0ZJEiajI3sJHAIHEIGQSiohByxlJHAkKFNxgAkT7HU39I4bTCJfFSb9TI0w4XchbzjzIBwyv/Z" alt="Página de Medias Técnicas" class="screenshot">
+                    <div class="screenshot-label">Programas de Medias Técnicas disponibles</div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Conoce los Programas Disponibles</div>
+                    <div class="step-description">
+                        Los 5 programas técnicos disponibles son:
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li><strong>Programación de Software (Pascual Bravo):</strong> Desarrollo de aplicaciones</li>
+                            <li><strong>Música:</strong> Formación artística especializada</li>
+                            <li><strong>Gestión Ambiental:</strong> Desarrollo sostenible</li>
+                            <li><strong>Contenidos Digitales:</strong> Producción multimedia</li>
+                            <li><strong>Programación de Software (SENA):</strong> Certificación técnica</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Obtén Más Información</div>
+                    <div class="step-description">
+                        Haz clic en "Ver Programa" en la tarjeta de tu interés para obtener información detallada 
+                        sobre el contenido curricular, horarios y requisitos de cada programa técnico.
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Consejo:</strong> Estos programas pueden abrirte muchas puertas laborales. 
+                    Consulta con la coordinación académica sobre los requisitos de ingreso y horarios disponibles.
+                </div>
+            </section>
+
+            <!-- Section 7: Historia -->
+            <section id="historia" class="section">
+                <div class="section-title">
+                    <span class="section-icon">📖</span>
+                    Historia e Identidad Institucional
+                </div>
+
+                <div class="section-description">
+                    Conoce la historia, misión, visión y símbolos que representan a la institución.
+                </div>
+
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Accede a la Sección Historia</div>
+                    <div class="step-description">
+                        Desde la página principal, ve a <span class="highlight">INICIO</span> y luego selecciona <span class="highlight">Historia</span>. 
+                        Aquí encontrarás toda la información sobre la trayectoria de la institución.
+                    </div>
+                </div>
+
+                <div class="screenshot-container">
+                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBAQICAgICAgICAwUDAwwDAwwGBAMDMgMDAwwHBgcFBgcGBgcICAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/2wBDAQICAgIDAggDAwgKCAcIDAgICAgJCAgKCAcICAoJCQcKCAoKCQoICQj/wAARCAAJA7oDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABCQARITFBUWEgcYGRscH/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABYRAQEBAAAAAAAAAAAAAAAAAAAEAf/aAAwDAQACEQMRAD8Ci2a3H8OMFoCFsI2MkGS0UkRaSvqAkbSRx5B8C0bpTaXS02VkDhSHqLZCEZQr3eQkEVcGqvMN7Z0ZJEiajI3sJHAIHEIGQSiohByxlJHAkKFNxgAkT7HU39I4bTCJfFSb9TI0w4XchbzjzIBwyv/Z" alt="Página de Historia" class="screenshot">
+                    <div class="screenshot-label">Página de Historia e Identidad Institucional</div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Explora los Apartados</div>
+                    <div class="step-description">
+                        En esta sección encontrarás botones para:
+                        <ul style="margin-top: 10px; margin-left: 20px;">
+                            <li><strong>Historia:</strong> Trayectoria de la institución desde 1958</li>
+                            <li><strong>Misión y Visión:</strong> Los principios y objetivos institucionales</li>
+                            <li><strong>Himno:</strong> El himno oficial de la institución</li>
+                            <li><strong>Nuestros Símbolos:</strong> Significado del escudo y otros símbolos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step" style="margin-top: 20px;">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Aprende más Sobre la Institución</div>
+                    <div class="step-description">
+                        Lee la historia de más de 67 años formando ciudadanos competentes. 
+                        Comprenderás mejor los valores que nos identifican y el compromiso con la excelencia académica.
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Consejo:</strong> Conocer la historia de tu institución te ayuda a fortalecer 
+                    tu sentido de pertenencia y orgullo por estar formando parte de esta comunidad.
+                </div>
+            </section>
+
+            <!-- Section 8: Accesibilidad -->
+            <section id="accesibilidad" class="section">
+                <div class="section-title">
+                    <span class="section-icon">♿</span>
+                    Funciones de Accesibilidad
+                </div>
+
+                <div class="accessibility-section">
+                    <h3 style="color: #2980b9; margin-bottom: 15px;">Herramientas Disponibles para Todos</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">🔍 Aumentar/Disminuir Tamaño de Letra</div>
+                        <div class="faq-answer">
+                            Haz clic en el botón azul de accesibilidad (♿) en la esquina inferior derecha. 
+                            Encontrarás opciones para ajustar el tamaño del texto según tus necesidades de visión.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">🌗 Modo de Alto Contraste</div>
+                        <div class="faq-answer">
+                            Si experimentas dificultades para ver los colores, active el modo de alto contraste. 
+                            Esto mejora significativamente la legibilidad del contenido.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">⌨️ Navegación por Teclado</div>
+                        <div class="faq-answer">
+                            Puedes navegar completamente usando la tecla Tab para moverte entre elementos 
+                            y Enter para hacer clic. Esto es especialmente útil si tienes dificultades con el mouse.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">🔊 Lector de Pantalla Compatible</div>
+                        <div class="faq-answer">
+                            El portal está diseñado para ser compatible con lectores de pantalla estándar. 
+                            Si usas un lector de pantalla, el contenido será leído en orden lógico.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Importante:</strong> Si tienes necesidades especiales de accesibilidad que no están 
+                    siendo cubiertas, por favor contacta a la coordinación académica para solicitar asistencia adicional.
+                </div>
+            </section>
+
+            <!-- Section 9: FAQ -->
+            <section id="faq" class="section">
+                <div class="section-title">
+                    <span class="section-icon">❓</span>
+                    Preguntas Frecuentes
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">¿Cómo accedo al sistema de calificaciones?</div>
+                    <div class="faq-answer">
+                        Ve a la sección ACADÉMICO y haz clic en "Sistema estudiante". 
+                        Necesitarás tus credenciales de acceso que obtuviste en tu sede.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">¿Dónde encuentro información sobre una sede específica?</div>
+                    <div class="faq-answer">
+                        Haz clic en la opción SEDES en el menú principal. Allí verás todas nuestras sedes 
+                        con información detallada sobre cada una.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">¿Cuáles son los programas técnicos disponibles?</div>
+                    <div class="faq-answer">
+                        Contamos con 5 programas: Programación de Software (Pascual Bravo), Música, 
+                        Gestión Ambiental, Contenidos Digitales y Programación de Software (SENA). 
+                        Ve a MEDIAS TÉCNICAS para más información.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">¿Cómo contacto a la institución?</div>
+                    <div class="faq-answer">
+                        Puedes encontrar información de contacto en la sección CONTACTO del portal, 
+                        o visitar directamente tu sede más cercana.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">¿El portal funciona en celular?</div>
+                    <div class="faq-answer">
+                        Sí, el portal está completamente optimizado para dispositivos móviles. 
+                        Todos los contenidos se adaptan automáticamente al tamaño de tu pantalla.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">¿Hay información sobre eventos y actividades?</div>
+                    <div class="faq-answer">
+                        Sí, en la sección INICIO encontrarás un menú desplegable con opciones de 
+                        EVENTOS, NOTICIAS y DEPORTES. Ahí están todas las actividades institucionales.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">¿Qué debo hacer si encuentro un error en el portal?</div>
+                    <div class="faq-answer">
+                        Si encuentras algún problema o error, puedes reportarlo contactando a la coordinación técnica 
+                        o visitando la sección de contacto del portal.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">¿Cómo cambio el tamaño de la letra?</div>
+                    <div class="faq-answer">
+                        Haz clic en el botón azul circular (♿) en la esquina inferior derecha de la página. 
+                        Allí encontrarás opciones para aumentar o disminuir el tamaño del texto.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conclusión -->
+            <section class="section">
+                <div class="section-title">
+                    <span class="section-icon">✅</span>
+                    ¡Ya Estás Listo!
+                </div>
+
+                <div class="section-description">
+                    Ahora que conoces cómo navegar por nuestro portal, podrás acceder fácilmente a toda 
+                    la información que necesitas sobre la I.E. Gilberto Alzate Avendaño.
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Últimos Consejos:</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li>Marca esta página en tus favoritos para consultarla cuando sea necesario</li>
+                        <li>Comparte este manual con otros usuarios que lo necesiten</li>
+                        <li>No dudes en consultar este manual cada vez que tengas dudas</li>
+                        <li>Recuerda que estamos aquí para ayudarte siempre</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 I.E. Gilberto Alzate Avendaño - Manual de Usuario</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Documento de ayuda para navegar nuestro portal institucional</p>
+        </footer>
+    </div>
+
+    <!-- Back to Top Button -->
+    <a href="#inicio" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+        // Back to Top Button Functionality
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add active state to nav links based on scroll position
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = 'rgba(255,255,255,0.2)';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.background = '#e74c3c';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
