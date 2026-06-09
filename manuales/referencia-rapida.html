@@ -1,129 +1,211 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referencia Rápida - Portal</title>
+    <title>Referencia Rápida - I.E. Gilberto Alzate Avendaño</title>
+    <link rel="icon" type="image/png" href="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/accessibility.css">
+    <link rel="stylesheet" href="../css/manuales.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/search.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 15px; }
-        .container { max-width: 900px; margin: 0 auto; }
-        .header { background: #1a3a52; color: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 4px solid #667eea; }
-        .card h3 { color: #1a3a52; margin-bottom: 10px; font-size: 1.1em; }
-        .card p { font-size: 0.9em; line-height: 1.5; color: #555; }
-        .shortcut { background: #f9f9f9; padding: 8px 12px; border-radius: 4px; font-family: monospace; margin-top: 8px; font-size: 0.85em; }
-        footer { background: #1a3a52; color: white; padding: 15px; text-align: center; border-radius: 8px; margin-top: 20px; font-size: 0.9em; }
+        .ref-table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+        .ref-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            text-align: left;
+        }
+
+        .ref-table th {
+            background: var(--color-primary);
+            color: white;
+            padding: 18px;
+            font-weight: 700;
+        }
+
+        .ref-table td {
+            padding: 18px;
+            border-bottom: 1px solid #f0f0f0;
+            color: var(--color-gray-700);
+        }
+
+        .ref-table tr:hover {
+            background: #f9f9f9;
+        }
+
+        .badge-type {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-sys { background: #e3f2fd; color: #1976d2; }
+        .badge-web { background: #f1f8e9; color: #388e3c; }
+        .badge-pdf { background: #fff3e0; color: #f57c00; }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>⚡ REFERENCIA RÁPIDA</h1>
-            <p>Atajos y respuestas rápidas - Portal Institucional</p>
+
+<body class="manual-page">
+    <!-- Header Principal -->
+    <header class="main-header" id="mainHeader">
+        <div class="header-background" id="headerBackground"></div>
+        <div class="header-content">
+            <div class="header-top" id="headerTop">
+                <div class="logo-title-container">
+                    <div class="logo-container">
+                        <a href="../index.html"><img loading="lazy"
+                                src="../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png"
+                                alt="Logo Institución" class="logo"></a>
+                    </div>
+                    <div class="institution-name">
+                        <h1>I.E. GILBERTO ALZATE AVENDAÑO</h1>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="main-nav" id="mainNav">
+                <div class="nav-container">
+                    <ul class="nav-menu nav-menu-left">
+                        <li class="nav-item" data-bg="inicio">
+                            <a href="../index.html" class="nav-link">INICIO</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="../html/historia.html">Historia</a></li>
+                                <li><a href="../html/calendario.html">Eventos</a></li>
+                                <li><a href="../html/deportes.html">Deportes</a></li>
+                                <li><a href="../html/noticias.html">Noticias</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="sedes">
+                            <a href="../html/sedes.html" class="nav-link">SEDES</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="../html/sede-san-isidro.html">Sede san isidro</a></li>
+                                <li><a href="../html/sede-seguros-bolivar.html">Sede seguros bolívar</a></li>
+                                <li><a href="../html/sede-tomas-carrasquilla.html">Sede tomás carrasquilla</a></li>
+                                <li><a href="../html/sede-carlos-villa.html">Sede carlos villa</a></li>
+                                <li><a href="../html/sede-central.html">Sede central</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="nav-menu nav-menu-right">
+                        <li class="nav-item" data-bg="departamentos">
+                            <a href="../html/departamentos.html" class="nav-link">DEPARTAMENTOS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="../html/departamentos.html#coordinacion">Coordinación</a></li>
+                                <li><a href="../html/departamentos.html#rectoria">Rectoría</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="medias">
+                            <a href="../html/tecnicas.html" class="nav-link">MEDIAS TÉCNICAS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="../html/tecnicas/pascual.html">Desarrollo de software - Pascual Bravo</a></li>
+                                <li><a href="../html/tecnicas/musica.html">Música</a></li>
+                                <li><a href="../html/tecnicas/ambiental.html">Gestión ambiental</a></li>
+                                <li><a href="../html/tecnicas/contenidos.html">Contenidos digitales</a></li>
+                                <li><a href="../html/tecnicas/sena.html">Programación de software - SENA</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item" data-bg="academico">
+                            <a href="../html/academico.html" class="nav-link">ACADÉMICO</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://docente.alzate.edu.co/">Sistema docente</a></li>
+                                <li><a href="https://estudiante.alzate.edu.co/">Sistema estudiante</a></li>
+                                <li><a href="../html/planes-area.html">Planes de Área</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item" data-bg="servicios">
+                            <a href="../html/otros-servicios.html" class="nav-link">OTROS SERVICIOS</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="https://luisarango64.wixsite.com/bibliositio">Biblioteca</a></li>
+                                <li><a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf">Manual de convivencia</a></li>
+                                <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform">Formulario PQRSF</a></li>
+                                <li><a href="https://www.youtube.com/@alzatevirtual8374/videos">Alzate virtual</a></li>
+                                <li><a href="../html/pre.html">Preinscripción</a></li>
+                                <li><a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508">Canal institucional</a></li>
+                                <li><a href="MANUALES.html">Manuales de Usuario</a></li>
+                                <li><a href="../html/contacto.html">Contáctanos</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="manuals-container">
+        <a href="MANUALES.html" class="btn-back-modern">
+            <i class="fas fa-arrow-left"></i> Volver a Manuales
+        </a>
+
+        <div class="manual-page-title">
+            <h1>📌 Referencia Rápida</h1>
+            <p>Atajos y enlaces directos para las tareas más frecuentes en el portal.</p>
         </div>
 
-        <div class="grid">
-            <div class="card">
-                <h3>🏠 ACCEDER A INICIO</h3>
-                <p>Para ver noticias, eventos, historia y deportes.</p>
-                <p><strong>Paso:</strong> Haz clic en INICIO en el menú superior</p>
-            </div>
-
-            <div class="card">
-                <h3>📍 VER SEDES</h3>
-                <p>Para conocer nuestras 5 ubicaciones educativas.</p>
-                <p><strong>Paso:</strong> Menú → SEDES → Selecciona una → Ver Sede</p>
-            </div>
-
-            <div class="card">
-                <h3>📊 MIS CALIFICACIONES</h3>
-                <p>Para ver notas y desempeño académico.</p>
-                <p><strong>Paso:</strong> ACADÉMICO → Sistema estudiante → Usuario/Contraseña</p>
-            </div>
-
-            <div class="card">
-                <h3>⚙️ PROGRAMAS TÉCNICOS</h3>
-                <p>Para explorar las 5 opciones técnicas disponibles.</p>
-                <p><strong>Paso:</strong> MEDIAS TÉCNICAS → Selecciona programa → Ver Programa</p>
-            </div>
-
-            <div class="card">
-                <h3>📖 HISTORIA DE LA INSTITUCIÓN</h3>
-                <p>Para conocer 67+ años de trayectoria.</p>
-                <p><strong>Paso:</strong> INICIO → Historia → Lee historia institucional</p>
-            </div>
-
-            <div class="card">
-                <h3>☎️ CONTACTO</h3>
-                <p>Para comunicarte con la institución.</p>
-                <p><strong>Paso:</strong> DEPARTAMENTOS → Teléfono o email de contacto</p>
-            </div>
-
-            <div class="card">
-                <h3>🔍 AUMENTAR LETRA</h3>
-                <p>Para mejorar legibilidad del contenido.</p>
-                <p><strong>Paso:</strong> Botón azul (♿) abajo derecha → Aumentar tamaño</p>
-            </div>
-
-            <div class="card">
-                <h3>🖨️ IMPRIMIR PÁGINA</h3>
-                <p>Para guardar o imprimir información.</p>
-                <div class="shortcut">Ctrl+P (o Cmd+P en Mac)</div>
-            </div>
-
-            <div class="card">
-                <h3>🔍 BUSCAR EN PÁGINA</h3>
-                <p>Para encontrar palabras en la página actual.</p>
-                <div class="shortcut">Ctrl+F (o Cmd+F en Mac)</div>
-            </div>
-
-            <div class="card">
-                <h3>🔄 ACTUALIZAR PÁGINA</h3>
-                <p>Si algo no carga correctamente.</p>
-                <div class="shortcut">F5 o Ctrl+R</div>
-            </div>
-
-            <div class="card">
-                <h3>❌ CREDENCIALES OLVIDADAS</h3>
-                <p>Si olvidaste usuario o contraseña.</p>
-                <p><strong>Paso:</strong> Contacta coordinación académica de tu sede</p>
-            </div>
-
-            <div class="card">
-                <h3>📱 EN CELULAR</h3>
-                <p>El portal funciona perfectamente en móvil.</p>
-                <p><strong>Nota:</strong> La interfaz se adapta automáticamente</p>
-            </div>
-
-            <div class="card">
-                <h3>ℹ️ MÁS INFORMACIÓN</h3>
-                <p>Para aprender más sobre el portal.</p>
-                <p><strong>Abre:</strong> MANUALES.html (guías completas)</p>
-            </div>
-
-            <div class="card">
-                <h3>🆘 NO FUNCIONA ALGO</h3>
-                <p>Si encuentras un error o problema.</p>
-                <p><strong>Paso:</strong> Actualiza (F5) o intenta otro navegador</p>
-            </div>
-
-            <div class="card">
-                <h3>🏫 SEDES DISPONIBLES</h3>
-                <p>1. San Isidro 2. Seguros Bolívar 3. Tomás Carrasquilla 4. Carlos Villa 5. Central</p>
-            </div>
-
-            <div class="card">
-                <h3>⚡ TÉCNICAS DISPONIBLES</h3>
-                <p>1. Programación Software 2. Música 3. Gestión Ambiental 4. Contenidos Digitales 5. SENA</p>
+        <div class="manual-card" style="padding: 0;">
+            <div class="ref-table-container">
+                <table class="ref-table">
+                    <thead>
+                        <tr>
+                            <th>¿Qué quieres hacer?</th>
+                            <th>Ubicación en el Portal</th>
+                            <th>Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ver mis calificaciones</td>
+                            <td><strong>Académico → Sistema Estudiante</strong></td>
+                            <td><span class="badge-type badge-sys">Sistema</span></td>
+                        </tr>
+                        <tr>
+                            <td>Consultar noticias actuales</td>
+                            <td><strong>Inicio → Noticias</strong></td>
+                            <td><span class="badge-type badge-web">Web</span></td>
+                        </tr>
+                        <tr>
+                            <td>Manual de Convivencia</td>
+                            <td><strong>Otros Servicios → Manual de Convivencia</strong></td>
+                            <td><span class="badge-type badge-pdf">Documento</span></td>
+                        </tr>
+                        <tr>
+                            <td>Hacer una preinscripción</td>
+                            <td><strong>Otros Servicios → Preinscripción</strong></td>
+                            <td><span class="badge-type badge-web">Formulario</span></td>
+                        </tr>
+                        <tr>
+                            <td>Ubicación de sedes</td>
+                            <td><strong>Sedes → (Elegir Sede)</strong></td>
+                            <td><span class="badge-type badge-web">Mapa</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+    </main>
 
-        <footer>
-            <p><strong>Referencia Rápida - I.E. Gilberto Alzate Avendaño</strong></p>
-            <p>Marca esta página para acceso instantáneo a información común</p>
-        </footer>
-    </div>
+    <footer class="main-footer">
+        <div class="footer-bottom">
+            <p>&copy; 2026 I.E. Gilberto Alzate Avendaño.</p>
+        </div>
+    </footer>
+
+    <script src="../js/script.js" defer></script>
 </body>
+
 </html>

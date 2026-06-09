@@ -31,7 +31,7 @@ function updateManualConvivenciaLinks() {
     let href = `media/${file}`;
     if (path.includes('/html/tecnicas/')) {
         href = `../../media/${file}`;
-    } else if (path.includes('/html/')) {
+    } else if (path.includes('/html/') || path.includes('/manuales/')) {
         href = `../media/${file}`;
     }
 
