@@ -134,6 +134,40 @@
             margin: 15px 0;
             border-radius: 0 10px 10px 0;
         }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .info-card {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .info-card i {
+            font-size: 2rem;
+            color: var(--color-secondary);
+            margin-bottom: 10px;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .faq-question {
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+        }
     </style>
 </head>
 
@@ -234,7 +268,7 @@
 
         <div class="manual-page-title">
             <h1>📖 Manual de Usuario Completo</h1>
-            <p>Guía detallada paso a paso para navegar y utilizar todas las funciones del portal de la I.E. Gilberto Alzate Avendaño.</p>
+            <p>Guía definitiva para dominar el portal de la I.E. Gilberto Alzate Avendaño. Todo lo que necesitas saber en un solo lugar.</p>
         </div>
 
         <div class="manual-grid">
@@ -243,100 +277,199 @@
                     <h3 style="color: var(--color-primary); font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">Contenidos</h3>
                     <ul class="toc-list">
                         <li><a href="#bienvenida"><i class="fas fa-home"></i> Bienvenida</a></li>
-                        <li><a href="#navegacion"><i class="fas fa-compass"></i> Navegación</a></li>
-                        <li><a href="#seccion-inicio"><i class="fas fa-star"></i> Sección Inicio</a></li>
-                        <li><a href="#seccion-sedes"><i class="fas fa-building"></i> Sección Sedes</a></li>
-                        <li><a href="#seccion-departamentos"><i class="fas fa-sitemap"></i> Departamentos</a></li>
-                        <li><a href="#seccion-tecnicas"><i class="fas fa-tools"></i> Medias Técnicas</a></li>
-                        <li><a href="#seccion-academico"><i class="fas fa-graduation-cap"></i> Académico (Akros)</a></li>
-                        <li><a href="#seccion-servicios"><i class="fas fa-concierge-bell"></i> Otros Servicios</a></li>
+                        <li><a href="#navegacion"><i class="fas fa-compass"></i> Navegación y Buscador</a></li>
+                        <li><a href="#seccion-inicio"><i class="fas fa-star"></i> Inicio e Interacción</a></li>
+                        <li><a href="#seccion-sedes"><i class="fas fa-building"></i> Nuestras 5 Sedes</a></li>
+                        <li><a href="#seccion-departamentos"><i class="fas fa-sitemap"></i> Gestión Administrativa</a></li>
+                        <li><a href="#seccion-tecnicas"><i class="fas fa-tools"></i> Especialidades Técnicas</a></li>
+                        <li><a href="#seccion-academico"><i class="fas fa-graduation-cap"></i> Académico y Akros</a></li>
+                        <li><a href="#seccion-servicios"><i class="fas fa-concierge-bell"></i> Trámites y Servicios</a></li>
+                        <li><a href="#admisiones"><i class="fas fa-user-plus"></i> Proceso de Admisión</a></li>
+                        <li><a href="#identidad"><i class="fas fa-flag"></i> Símbolos e Identidad</a></li>
                         <li><a href="#accesibilidad"><i class="fas fa-universal-access"></i> Accesibilidad</a></li>
+                        <li><a href="#seguridad"><i class="fas fa-shield-alt"></i> Seguridad Digital</a></li>
+                        <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ y Soporte</a></li>
                     </ul>
                 </div>
             </aside>
 
             <div class="sections">
                 <section id="bienvenida" class="manual-section">
-                    <h2><i class="fas fa-hand-sparkles"></i> Bienvenida</h2>
-                    <p>Bienvenido al nuevo portal institucional. Este sitio ha sido rediseñado pensando en la facilidad de acceso desde cualquier dispositivo, especialmente celulares. Aquí centralizamos toda la vida académica, administrativa y comunitaria de nuestra institución.</p>
+                    <h2><i class="fas fa-hand-sparkles"></i> Bienvenida al Portal</h2>
+                    <p>Este portal es la ventana digital de la I.E. Gilberto Alzate Avendaño. Ha sido optimizado para ser rápido, seguro y accesible. Está diseñado bajo estándares modernos de UX (Experiencia de Usuario) para que encontrar información sea una tarea sencilla tanto para jóvenes como para adultos.</p>
                     <div class="feature-box">
-                        <strong>Nota importante:</strong> El portal utiliza tecnología de carga progresiva para que las imágenes no consuman tus datos innecesariamente.
+                        <strong>Consejo Pro:</strong> Si estás en un celular, usa el menú lateral izquierdo para saltar rápidamente entre secciones de este manual.
                     </div>
                 </section>
 
                 <section id="navegacion" class="manual-section">
-                    <h2><i class="fas fa-compass"></i> Navegación y Estructura</h2>
-                    <p>El portal se divide en secciones claras accesibles desde el menú superior:</p>
+                    <h2><i class="fas fa-compass"></i> Navegación y Buscador Inteligente</h2>
+                    <p>La estructura del sitio está organizada de forma jerárquica para evitar confusiones:</p>
                     <div class="manual-step">
                         <div class="step-circle">1</div>
                         <div class="step-content">
-                            <h3>Menú Superior Fijo</h3>
-                            <p>En computadoras verás un menú con subcategorías (dropdowns). En celulares, el menú se oculta en un botón de tres líneas (hamburguesa) en la esquina superior.</p>
+                            <h3>Menú Responsivo</h3>
+                            <p>En escritorio, el menú se despliega suavemente. En móviles, se transforma en un panel lateral limpio que ahorra espacio en pantalla.</p>
                         </div>
                     </div>
                     <div class="manual-step">
                         <div class="step-circle">2</div>
                         <div class="step-content">
-                            <h3>Buscador</h3>
-                            <p>El icono de lupa te permite buscar rápidamente cualquier palabra clave (ej: "SENA", "Matrículas", "San Isidro") para ir directo a la información.</p>
+                            <h3>Buscador Global con Filtros</h3>
+                            <p>Usa la lupa para buscar. El sistema no solo busca palabras exactas, sino que sugiere páginas relacionadas con tu intención de búsqueda.</p>
                         </div>
                     </div>
                 </section>
 
                 <section id="seccion-inicio" class="manual-section">
-                    <h2><i class="fas fa-star"></i> Sección Inicio</h2>
-                    <p>Es la portada del colegio. Aquí encontrarás:</p>
-                    <ul>
-                        <li><strong>Galería 3D:</strong> Una forma interactiva de explorar secciones destacadas como Historia y Deportes.</li>
-                        <li><strong>Noticias Recientes:</strong> Mantente al día con lo que sucede en la institución.</li>
-                        <li><strong>Calendario de Eventos:</strong> Fechas importantes de reuniones, actos cívicos y vacaciones.</li>
-                    </ul>
+                    <h2><i class="fas fa-star"></i> Sección Inicio e Interacción 3D</h2>
+                    <p>La página principal es el núcleo de la información dinámica:</p>
+                    <div class="manual-step">
+                        <div class="step-content">
+                            <h3>Navegación en la Galería Cilíndrica</h3>
+                            <p>La galería central rota 360 grados. Puedes interactuar con ella usando gestos táctiles. Cada imagen es un acceso directo a la historia, los deportes y la identidad de nuestra institución.</p>
+                        </div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-content">
+                            <h3>Noticias y Actualidad</h3>
+                            <p>Las noticias se actualizan periódicamente. Asegúrate de revisar esta sección para conocer cierres de matrículas, días de la familia o logros deportivos.</p>
+                        </div>
+                    </div>
                 </section>
 
                 <section id="seccion-sedes" class="manual-section">
-                    <h2><i class="fas fa-building"></i> Sección Sedes</h2>
-                    <p>Contamos con 5 sedes. Cada una tiene su propia página con:</p>
-                    <ul>
-                        <li>Ubicación exacta en Google Maps.</li>
-                        <li>Fotos de las instalaciones.</li>
-                        <li>Información sobre niveles educativos que atiende.</li>
-                        <li>Horarios de atención.</li>
-                    </ul>
-                </section>
-
-                <section id="seccion-departamentos" class="manual-section">
-                    <h2><i class="fas fa-sitemap"></i> Departamentos</h2>
-                    <p>Información administrativa sobre Rectoría, Coordinación y Orientación Escolar. Aquí puedes conocer quiénes lideran cada proceso institucional.</p>
+                    <h2><i class="fas fa-building"></i> Nuestras 5 Sedes</h2>
+                    <p>Brindamos educación en diferentes puntos clave para la comunidad:</p>
+                    <div class="info-grid">
+                        <div class="info-card"><strong>Sede Central</strong><p>Bachillerato completo y administración.</p></div>
+                        <div class="info-card"><strong>San Isidro</strong><p>Educación primaria y preescolar.</p></div>
+                        <div class="info-card"><strong>Seguros Bolívar</strong><p>Ambientes de aprendizaje modernos.</p></div>
+                        <div class="info-card"><strong>Tomás Carrasquilla</strong><p>Tradición y excelencia educativa.</p></div>
+                        <div class="info-card"><strong>Carlos Villa</strong><p>Enfoque comunitario y deportivo.</p></div>
+                    </div>
                 </section>
 
                 <section id="seccion-tecnicas" class="manual-section">
-                    <h2><i class="fas fa-tools"></i> Medias Técnicas</h2>
-                    <p>Detalles sobre los convenios con el SENA y el Pascual Bravo. Puedes ver los perfiles de egreso de programas como Programación de Software, Música, Gestión Ambiental y más.</p>
+                    <h2><i class="fas fa-tools"></i> Especialidades Técnicas</h2>
+                    <p>Preparamos a los estudiantes de 10° y 11° para el mundo laboral y la educación superior:</p>
+                    <div class="manual-step">
+                        <div class="step-content">
+                            <h3>Convenios Vigentes</h3>
+                            <p>Trabajamos de la mano con el <strong>SENA</strong> y el <strong>Pascual Bravo</strong> para certificar a nuestros estudiantes en áreas de alta demanda como Programación de Software, Gestión Ambiental y Diseño de Contenidos Digitales.</p>
+                        </div>
+                    </div>
                 </section>
 
                 <section id="seccion-academico" class="manual-section">
-                    <h2><i class="fas fa-graduation-cap"></i> Académico (Sistema Akros)</h2>
-                    <p>Esta es la sección más importante para el estudiante:</p>
-                    <ul>
-                        <li><strong>Sistema Estudiante:</strong> Enlace directo a Akros para ver tus notas en tiempo real.</li>
-                        <li><strong>Planes de Área:</strong> Documentos descargables con lo que aprenderás en cada materia durante el año.</li>
-                    </ul>
+                    <h2><i class="fas fa-graduation-cap"></i> Gestión Académica (Sistema Akros)</h2>
+                    <p>El seguimiento académico es digital y transparente:</p>
+                    <div class="manual-step">
+                        <div class="step-circle">1</div>
+                        <div class="step-content">
+                            <h3>Consulta de Notas (Akros)</h3>
+                            <p>Ingresa tus credenciales en el sistema. Allí verás el detalle de cada materia, fallas de asistencia y observaciones de los docentes.</p>
+                        </div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-circle">2</div>
+                        <div class="step-content">
+                            <h3>Planes de Área y Mallas Curriculares</h3>
+                            <p>En la sección <strong>Planes de Área</strong>, puedes descargar PDFs detallados con las competencias y logros esperados para cada grado y asignatura.</p>
+                        </div>
+                    </div>
                 </section>
 
                 <section id="seccion-servicios" class="manual-section">
-                    <h2><i class="fas fa-concierge-bell"></i> Otros Servicios</h2>
-                    <p>Herramientas adicionales para la comunidad:</p>
+                    <h2><i class="fas fa-concierge-bell"></i> Trámites y Servicios Digitales</h2>
+                    <p>Ahorra tiempo realizando tus trámites en línea:</p>
                     <ul>
-                        <li><strong>Biblioteca:</strong> Recursos digitales externos.</li>
-                        <li><strong>PQRSF:</strong> Formulario oficial para Peticiones, Quejas, Reclamos, Sugerencias y Felicitaciones.</li>
-                        <li><strong>Preinscripción:</strong> Formulario para nuevos estudiantes.</li>
-                        <li><strong>Canal de WhatsApp:</strong> Recibe notificaciones directas en tu celular.</li>
+                        <li><strong>PQRSF:</strong> Sistema oficial para radicar peticiones de forma legal y segura.</li>
+                        <li><strong>Biblioteca Wix:</strong> Acceso a un repositorio externo de guías y libros digitales.</li>
+                        <li><strong>Preinscripción:</strong> Formulario simplificado para iniciar el proceso de vinculación de nuevos estudiantes.</li>
+                        <li><strong>Canal Institucional:</strong> Únete al canal de WhatsApp desde el menú para recibir alertas en tiempo real.</li>
                     </ul>
                 </section>
 
+                <section id="admisiones" class="manual-section">
+                    <h2><i class="fas fa-user-plus"></i> Proceso de Admisión</h2>
+                    <p>Para ingresar a nuestra institución, sigue estos pasos:</p>
+                    <div class="manual-step">
+                        <div class="step-circle">1</div>
+                        <div class="step-content">
+                            <h3>Preinscripción Web</h3>
+                            <p>Diligencia el formulario en la sección de Otros Servicios con los datos básicos del aspirante.</p>
+                        </div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-circle">2</div>
+                        <div class="step-content">
+                            <h3>Verificación de Cupo</h3>
+                            <p>La secretaría se comunicará contigo para confirmar la disponibilidad según el grado solicitado.</p>
+                        </div>
+                    </div>
+                    <div class="manual-step">
+                        <div class="step-circle">3</div>
+                        <div class="step-content">
+                            <h3>Matrícula Presencial</h3>
+                            <p>Deberás traer los documentos físicos (fotos, registros civiles, certificados de años anteriores) a la sede central.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="identidad" class="manual-section">
+                    <h2><i class="fas fa-flag"></i> Símbolos e Identidad</h2>
+                    <p>Nuestra institución se enorgullece de su historia y valores:</p>
+                    <div class="info-grid">
+                        <div class="info-card"><i class="fas fa-shield-alt"></i><p>Escudo Institucional</p></div>
+                        <div class="info-card"><i class="fas fa-music"></i><p>Himno Alzateño</p></div>
+                        <div class="info-card"><i class="fas fa-star"></i><p>Valores: Respeto y Excelencia</p></div>
+                    </div>
+                    <p style="margin-top: 20px;">Puedes conocer más detalles en la sección de <strong>Historia</strong> accesible desde el menú Inicio.</p>
+                </section>
+
                 <section id="accesibilidad" class="manual-section">
-                    <h2><i class="fas fa-universal-access"></i> Accesibilidad</h2>
-                    <p>El icono azul de la esquina inferior derecha abre herramientas para personas con dificultades visuales, permitiendo cambiar el tamaño del texto, los colores y el tipo de fuente.</p>
+                    <h2><i class="fas fa-universal-access"></i> Accesibilidad e Inclusión</h2>
+                    <p>Nuestra web cumple con estándares de accesibilidad para que nadie se quede atrás:</p>
+                    <div class="info-grid">
+                        <div class="info-card"><i class="fas fa-font"></i><p>Fuente para Dislexia</p></div>
+                        <div class="info-card"><i class="fas fa-adjust"></i><p>Contraste Negativo</p></div>
+                        <div class="info-card"><i class="fas fa-palette"></i><p>Escala de Grises</p></div>
+                        <div class="info-card"><i class="fas fa-text-height"></i><p>Texto Variable</p></div>
+                    </div>
+                </section>
+
+                <section id="seguridad" class="manual-section">
+                    <h2><i class="fas fa-shield-alt"></i> Seguridad Digital</h2>
+                    <div class="feature-box">
+                        <strong>¡Protege tus datos!</strong> Sigue estas recomendaciones:
+                    </div>
+                    <ul>
+                        <li>No compartas tu contraseña de Akros con nadie.</li>
+                        <li>Cierra sesión siempre que uses un computador público.</li>
+                        <li>Verifica que la URL sea siempre la oficial del colegio.</li>
+                        <li>No descargues archivos de fuentes no oficiales.</li>
+                    </ul>
+                </section>
+
+                <section id="faq" class="manual-section">
+                    <h2><i class="fas fa-question-circle"></i> Preguntas Frecuentes y Soporte</h2>
+                    <div class="faq-item">
+                        <span class="faq-question">¿El portal tiene costo de uso?</span>
+                        <p>No, el acceso al portal institucional es totalmente gratuito para toda la comunidad educativa.</p>
+                    </div>
+                    <div class="faq-item">
+                        <span class="faq-question">¿Cómo sé si hay clases mañana?</span>
+                        <p>Revisa siempre la sección de <strong>Noticias</strong> en la página de Inicio o el <strong>Calendario de Eventos</strong>. También enviamos notificaciones por el canal de WhatsApp.</p>
+                    </div>
+                    <div class="faq-item">
+                        <span class="faq-question">¿Puedo ver las notas desde el celular?</span>
+                        <p>Sí, el sistema Akros es compatible con navegadores móviles, aunque se recomienda usar una tablet o PC para descargar boletines pesados.</p>
+                    </div>
+                    <div class="faq-item">
+                        <span class="faq-question">¿A quién contacto si la página no carga?</span>
+                        <p>Primero verifica tu conexión. Si el error persiste, puedes reportarlo a través del formulario de <strong>Contacto</strong> institucional.</p>
+                    </div>
                 </section>
             </div>
         </div>
@@ -344,7 +477,7 @@
 
     <footer class="main-footer">
         <div class="footer-bottom">
-            <p>&copy; 2026 I.E. Gilberto Alzate Avendaño.</p>
+            <p>&copy; 2026 I.E. Gilberto Alzate Avendaño. Comprometidos con la tecnología y la educación de calidad.</p>
         </div>
     </footer>
 
