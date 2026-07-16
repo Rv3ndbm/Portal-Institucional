@@ -122,9 +122,9 @@
     --container-2xl: 1400px;
 
     /* === HEADER === */
-    --header-height-desktop: 170px;
+    --header-height-desktop: 140px;
     --header-height-mobile: 100px;
-    --header-height-scrolled: 80px;
+    --header-height-scrolled: 70px;
 
     /* === COMPONENTES === */
     --logo-size-desktop: 80px;

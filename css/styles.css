@@ -166,7 +166,7 @@ img:not([data-src]) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: 1rem var(--spacing-md);
     background: var(--color-primary);
     /* Solid color instead of rgba */
     transition: all var(--transition-slow) var(--ease-smooth);
