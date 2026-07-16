@@ -166,7 +166,7 @@ img:not([data-src]) {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: var(--spacing-lg) var(--spacing-md);
+    padding: 1rem var(--spacing-md);
     background: var(--color-primary);
     /* Solid color instead of rgba */
     transition: all var(--transition-slow) var(--ease-smooth);
@@ -341,6 +341,15 @@ img:not([data-src]) {
 
 .main-header.scrolled .header-top {
     padding: var(--spacing-md) var(--spacing-lg);
+}
+
+.main-header.scrolled .nav-container {
+    padding: 0 var(--spacing-md);
+}
+
+.main-header.scrolled .nav-link {
+    padding: calc(var(--spacing-sm) * 0.75) var(--spacing-lg);
+    font-size: clamp(0.9rem, 0.85rem + 0.2vw, 1rem);
 }
 
 @media (max-width: 1024px) {
