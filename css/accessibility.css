@@ -308,7 +308,7 @@ body.high-contrast .card-info * {
     color: #ffff00 !important;
 }
 
-/* Truco con backdrop-filter para Contraste negativo y Escala de grises sin romper position: fixed */
+/* Alternativa compatible para contraste negativo y escala de grises sin depender de backdrop-filter */
 body.negative-contrast::before,
 body.grayscale::before {
     content: "";
@@ -322,19 +322,19 @@ body.grayscale::before {
 }
 
 body.negative-contrast::before {
-    backdrop-filter: invert(100%);
-    -webkit-backdrop-filter: invert(100%);
+    background: rgba(0, 0, 0, 0.95);
+    mix-blend-mode: difference;
 }
 
 body.grayscale::before {
-    backdrop-filter: grayscale(100%);
-    -webkit-backdrop-filter: grayscale(100%);
+    background: rgba(255, 255, 255, 0.95);
+    filter: grayscale(100%);
 }
 
 /* Si ambos están activos a la vez */
 body.negative-contrast.grayscale::before {
-    backdrop-filter: invert(100%) grayscale(100%);
-    -webkit-backdrop-filter: invert(100%) grayscale(100%);
+    background: rgba(0, 0, 0, 0.95);
+    filter: grayscale(100%) contrast(1.2);
 }
 
 body.dyslexia-friendly,
