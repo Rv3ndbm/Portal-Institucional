@@ -1,0 +1,264 @@
+:root {
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --premium-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --accent-red: #c0392b;
+            --accent-red-light: #e74c3c;
+            --accent-gold: #ffd700;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            overflow-x: hidden;
+        }
+
+        /* --- Esferas Decorativas --- */
+        .decor-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: -1;
+            opacity: 0.4;
+            animation: floatOrb 10s ease-in-out infinite;
+        }
+        .orb-1 { width: 300px; height: 300px; background: #1e3c72; top: -100px; left: -100px; }
+        .orb-2 { width: 400px; height: 400px; background: var(--accent-red); bottom: -150px; right: -150px; animation-delay: -5s; }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, 20px); }
+        }
+
+        /* --- Hero Refinado --- */
+        .hero-servicios {
+            background: var(--premium-gradient);
+            background-image: url('../img/banner ce.JPG');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 50vh;
+            min-height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin-top: 0; 
+            overflow: hidden;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-servicios {
+                height: 35vh;
+                background-attachment: scroll; /* Mejor performance en móviles */
+            }
+        }
+
+        .hero-servicios::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(192, 57, 43, 0.4) 0%, rgba(30, 60, 114, 0.6) 100%);
+            z-index: 1;
+        }
+
+        main {
+            padding-top: 240px;
+        }
+
+        @media (max-width: 1024px) {
+            main {
+                padding-top: 120px;
+            }
+        }
+
+        .hero-servicios .hero-overlay {
+            background: linear-gradient(to bottom, rgba(30, 60, 114, 0.4), rgba(192, 57, 43, 0.3));
+        }
+
+        .hero-badge {
+            background: var(--accent-red);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 20px rgba(192, 57, 43, 0.3);
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        /* --- Intro Section --- */
+        .servicios-intro {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* --- Grid de Planes --- */
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 5% 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* --- Tarjetas Estilo Glass --- */
+        .servicio-card {
+            background: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+        }
+
+        .servicio-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 4px;
+            background: var(--accent-red);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .servicio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(192, 57, 43, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(192, 57, 43, 0.2);
+        }
+
+        .servicio-card:hover::before { opacity: 1; }
+
+        .servicio-icon {
+            width: 55px;
+            height: 55px;
+            background: #fff;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .servicio-card:hover .servicio-icon {
+            transform: rotate(-5deg) scale(1.1);
+            background: var(--accent-red);
+        }
+        .servicio-card:hover .servicio-icon i { color: #fff; }
+
+        .servicio-icon i {
+            font-size: 1.5rem;
+            color: var(--accent-red);
+            transition: color 0.3s;
+        }
+
+        .servicio-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #1a202c;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .servicio-desc {
+            font-size: 0.9rem;
+            color: #4a5568;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .servicio-link {
+            margin-top: auto;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            border-radius: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            border: 2px solid #edf2f7;
+            color: var(--accent-red);
+            background: transparent;
+            text-decoration: none;
+        }
+
+        .servicio-card:hover .servicio-link {
+            background: var(--accent-red);
+            color: #fff;
+            border-color: transparent;
+        }
+
+        /* --- Tarjeta DESTACADA (Media Técnica) --- */
+        .servicio-card.featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #1e3c72 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .featured .servicio-icon {
+            background: rgba(255, 255, 255, 0.22);
+            width: 80px;
+            height: 80px;
+            margin-bottom: 0;
+            border: none;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .featured .servicio-icon i { color: #fff; font-size: 2.5rem; }
+
+        .featured .servicio-title {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .featured .servicio-desc {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+
+        .featured .servicio-link {
+            background: #fff;
+            color: #c0392b;
+            border: none;
+            font-size: 0.9rem;
+            padding: 15px;
+        }
+
+        .featured .servicio-link:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 1024px) {
+            .servicio-card.featured {
+                grid-column: span 1;
+                grid-template-columns: 1fr;
+                padding: 40px;
+            }
+            .featured .servicio-icon { margin-bottom: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            .servicios-grid { grid-template-columns: 1fr; }
+        }

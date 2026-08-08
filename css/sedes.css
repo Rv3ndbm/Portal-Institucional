@@ -31,7 +31,6 @@
 }
 .main-header.scrolled {
     background: rgba(30, 60, 114, 0.85) !important;
-    backdrop-filter: blur(12px) !important;
 }
 .header-top {
     background: var(--color-primary) !important;
@@ -86,8 +85,6 @@
     text-align: center;
     padding: var(--spacing-lg) var(--spacing-xl);
     background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: var(--border-radius-2xl);
     box-shadow: var(--shadow-2xl);
@@ -331,7 +328,6 @@
 
 .programa-box {
     background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(5px);
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-xl);
     text-align: center;

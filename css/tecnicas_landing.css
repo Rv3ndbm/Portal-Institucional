@@ -81,7 +81,6 @@
 /* --- Tarjetas (Cards) --- */
 .tecnica-card {
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 40px 30px;
     text-align: center;

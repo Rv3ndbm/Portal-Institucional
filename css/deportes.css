@@ -97,7 +97,6 @@
     border-radius: 50px;
     margin-bottom: 24px;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
 }
 
 .hero-title {
@@ -132,7 +131,6 @@
     background: rgba(255, 255, 255, 0.08);
     padding: 12px 20px;
     border-radius: 12px;
-    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     font-size: 0.95rem;
 }
