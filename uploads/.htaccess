@@ -1,0 +1,18 @@
+# Prohibir ejecución de scripts PHP y ejecutables en la carpeta de subidas
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|php8|phps|pht|phar|inc|pl|py|cgi|sh|bash|exe|asp|aspx|jsp)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Deshabilitar motor PHP si está activo en Apache
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+Options -Indexes -ExecCGI

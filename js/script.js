@@ -616,7 +616,13 @@ function runSearch(query) {
         
         // Ajustar la URL solo si es relativa (no empieza con http)
         if (!newItem.url.startsWith('http')) {
-            if (path.includes('/html/tecnicas/')) {
+            if (path.includes('/php/')) {
+                if (newItem.url === 'index.html') {
+                    newItem.url = '../../index.html';
+                } else {
+                    newItem.url = '../../html/' + newItem.url.replace('html/', '');
+                }
+            } else if (path.includes('/html/tecnicas/')) {
                 newItem.url = '../../html/' + newItem.url.replace('html/', '');
             } else if (path.includes('/html/')) {
                 newItem.url = newItem.url.replace('html/', '');
