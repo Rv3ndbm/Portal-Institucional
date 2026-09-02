@@ -1,1127 +1,534 @@
-# MANUAL DEL PROGRAMADOR - PORTAL INSTITUCIONAL
-## I.E. Gilberto Alzate Avendaño
+# MANUAL DEL PROGRAMADOR Y ARQUITECTURA TÉCNICA
+## Portal Web Institucional - I.E. Gilberto Alzate Avendaño
 
-**Versión:** 1.0  
-**Fecha:** Junio 2026  
-**Autor:** Equipo de Desarrollo  
-**Última Actualización:** 2026-06-16
+---
+
+**Versión del Sistema:** 2.0 (Full-Stack Dinámico & Autogestionable)  
+**Fecha de Edición:** Septiembre 2026  
+**Entorno de Desarrollo:** XAMPP (Apache 2.4+ / PHP 8.2+ / MySQL 8.0+ / MariaDB)  
+**Repositorio:** `Rv3ndbm/Portal-Institucional`  
+**Licencia y Titularidad:** I.E. Gilberto Alzate Avendaño (Medellín, Colombia)
 
 ---
 
 ## TABLA DE CONTENIDOS
 
-1. [Información General y Arquitectura](#1-información-general-y-arquitectura)
-2. [Configuración del Entorno de Desarrollo](#2-configuración-del-entorno-de-desarrollo)
-3. [Estructura del Proyecto](#3-estructura-del-proyecto)
-4. [Componentes y Funcionalidades](#4-componentes-y-funcionalidades)
-5. [Guías de Estilo y Estándares](#5-guías-de-estilo-y-estándares)
-6. [APIs y Endpoints](#6-apis-y-endpoints)
-7. [Despliegue](#7-despliegue)
-8. [Mantenimiento y Solución de Problemas](#8-mantenimiento-y-solución-de-problemas)
-9. [Contacto y Soporte](#9-contacto-y-soporte)
+1. [Información General y Arquitectura del Sistema](#1-información-general-y-arquitectura-del-sistema)
+2. [Pila Tecnológica Completa](#2-pila-tecnológica-completa)
+3. [Estructura del Proyecto y Directorios](#3-estructura-del-proyecto-y-directorios)
+4. [Instalación y Puesta en Marcha (XAMPP / Producción)](#4-instalación-y-puesta-en-marcha-xampp--producción)
+5. [Modelo de Datos y Base de Datos MySQL](#5-modelo-de-datos-y-base-de-datos-mysql)
+6. [Módulo CRUD y Panel de Gestión Administrativo](#6-módulo-crud-y-panel-de-gestión-administrativo)
+7. [Capa de Ciberseguridad y Protección OWASP](#7-capa-de-ciberseguridad-y-protección-owasp)
+8. [Componentes del Frontend, UI/UX y Accesibilidad](#8-componentes-del-frontend-uiux-y-accesibilidad)
+9. [Buscador Inteligente con Algoritmo de Scoring](#9-buscador-inteligente-con-algoritmo-de-scoring)
+10. [Guía de Estilos y Estándares de Programación](#10-guía-de-estilos-y-estándares-de-programación)
+11. [Mantenimiento, Respaldos y Solución de Problemas](#11-mantenimiento-respaldos-y-solución-de-problemas)
+12. [Guía de Despliegue en Producción (cPanel / VPS)](#12-guía-de-despliegue-en-producción-cpanel--vps)
 
 ---
 
-## 1. INFORMACIÓN GENERAL Y ARQUITECTURA
+## 1. INFORMACIÓN GENERAL Y ARQUITECTURA DEL SISTEMA
 
-### 1.1 Introducción
+### 1.1 Introducción y Propósito
 
-El Portal Institucional del I.E. Gilberto Alzate Avendaño es una aplicación web responsiva diseñada para proporcionar información sobre la institución educativa a estudiantes, padres de familia y personal administrativo. La aplicación incluye:
+El **Portal Web Institucional de la I.E. Gilberto Alzate Avendaño** es una plataforma web moderna, accesible, responsiva y dinámica diseñada para centralizar toda la comunicación, historia, oferta académica, sedes, trámites y actualidad de la institución educativa.
 
-- Información sobre sedes, departamentos y servicios
-- Sistema de navegación intuitivo
-- Información de medias técnicas (SENA, Pascual Bravo, Música, etc.)
-- Secciones de deportes, noticias y eventos
-- Widget de accesibilidad para usuarios con discapacidades
-- Sistema de pre-inscripción
-- Formulario de contacto y PQRSF
-- Integración con sistemas externos (Akros, YouTube, etc.)
+A partir de la versión 2.0, el portal cuenta con un **backend dinámico en PHP y base de datos MySQL**, permitiendo a los directivos y administradores autogestionar noticias, comunicados oficiales, fotos de portada y documentos institucionales en tiempo real sin tocar código fuente.
 
-**Propósito:** Crear una presencia web moderna, accesible e informativa para la comunidad educativa.
-
-**Alcance:** Aplicación web pública enfocada en dispositivos móviles con soporte responsivo para desktop.
-
-### 1.2 Tecnologías Utilizadas
-
-#### Frontend
-- **HTML5** - Estructura semántica
-- **CSS3** - Estilos con Variables CSS, Flexbox y Grid
-- **JavaScript (ES6+)** - Funcionalidad dinámica
-- **Font Awesome 6.4.0** - Librería de iconos (CDN)
-
-#### Backend
-- **Python** (1.4% del código) - Funcionalidades específicas (Flask/Django si se requiere)
-
-#### Herramientas y Servicios Externos
-- **Git/GitHub** - Control de versiones
-- **GitHub Pages** - Hosting estático
-- **Google Forms** - Formulario PQRSF
-- **YouTube** - Canal institucional (Alzate Virtual)
-- **Akros** - Sistema académico de estudiantes y docentes
-- **Wix** - Plataforma de biblioteca
-
-#### Dependencias CDN
-- Font Awesome Icons (https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css)
-
-### 1.3 Arquitectura del Sistema
+### 1.2 Diagrama de Arquitectura Global
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    USUARIO / NAVEGADOR                       │
-└────────────────────────────┬────────────────────────────────┘
-                             │
-                ┌────────────┴────────────┐
-                │   HTML5 + CSS3 + JS    │
-                │   (Frontend Estático)   │
-                └────────────┬────────────┘
-                             │
-        ┌────────────────────┼────────────────────┐
-        │                    │                    │
-   ┌────▼────┐          ┌────▼────┐        ┌────▼────┐
-   │ Páginas │          │ Estilos │        │ Scripts │
-   │  HTML   │          │   CSS   │        │   JS    │
-   └─────────┘          └─────────┘        └─────────┘
-        │                    │                    │
-        └────────────────────┼────────────────────┘
-                             │
-        ┌────────────────────┼────────────────────┐
-        │                    │                    │
-   ┌────▼──────┐      ┌──────▼─────┐     ┌──────▼──────┐
-   │  Akros    │      │  Google    │     │   Servicios │
-   │  (Sistema │      │   Forms    │     │   Externos  │
-   │ Académico)│      │  (PQRSF)   │     │ (YouTube...)│
-   └───────────┘      └────────────┘     └─────────────┘
-```
-
-**Descripción de Componentes:**
-
-1. **Frontend (HTML/CSS/JavaScript)**
-   - Interfaz responsiva para móviles y desktop
-   - Sistema de componentes reutilizables
-   - Animaciones y efectos visuales
-   - Widget de accesibilidad
-
-2. **Backend (Python - Opcional)**
-   - Posible servidor para procesar formularios
-   - Envío de emails (PQRSF)
-   - Manejo de pre-inscripciones
-
-3. **Servicios Externos**
-   - **Akros**: Sistema de calificaciones y académico
-   - **Google Forms**: Recopilación de PQRSF
-   - **YouTube**: Canal Alzate Virtual
-   - **Wix**: Biblioteca institucional
-
----
-
-## 2. CONFIGURACIÓN DEL ENTORNO DE DESARROLLO
-
-### 2.1 Requisitos Previos
-
-Instala las siguientes herramientas globalmente:
-
-#### Windows/macOS/Linux
-
-```bash
-# 1. Git - Control de versiones
-# Descarga desde: https://git-scm.com/download
-
-# 2. Node.js (opcional, si se usa npm para herramientas)
-# Descarga desde: https://nodejs.org/ (LTS)
-
-# 3. Visual Studio Code (recomendado)
-# Descarga desde: https://code.visualstudio.com/
-
-# 4. Python 3.8+ (si se desarrolla backend)
-# Descarga desde: https://www.python.org/downloads/
-```
-
-### 2.2 Pasos de Instalación
-
-#### Paso 1: Clonar el Repositorio
-
-```bash
-git clone https://github.com/Rv3ndbm/Portal-Institucional.git
-cd Portal-Institucional
-```
-
-#### Paso 2: Estructura Base
-
-Verifica que el repositorio contenga las siguientes carpetas:
-
-```
-Portal-Institucional/
-├── index.html           # Página principal
-├── html/                # Páginas secundarias
-├── css/                 # Archivos de estilo
-├── js/                  # Scripts JavaScript
-├── img/                 # Imágenes y multimedia
-├── media/               # Archivos multimedia
-├── templates/           # Plantillas (si se usa backend)
-├── Documentación/       # Documentación adicional
-└── .vscode/             # Configuración del editor
-```
-
-#### Paso 3: Configurar Variables de Entorno (Opcional para Backend)
-
-Si se implementa un servidor backend en Python:
-
-```bash
-# En Linux/macOS
-echo "SECRET_KEY=tu_clave_secreta" > .env
-echo "DEBUG=True" >> .env
-echo "ALLOWED_HOSTS=localhost,127.0.0.1" >> .env
-
-# En Windows
-# Crear archivo .env y añadir lo anterior
-```
-
-#### Paso 4: Instalar Dependencias (Backend - Python)
-
-```bash
-# Crear entorno virtual
-python -m venv venv
-
-# Activar entorno virtual
-# En Windows:
-venv\Scripts\activate
-# En Linux/macOS:
-source venv/bin/activate
-
-# Instalar dependencias
-pip install -r requirements.txt
-```
-
-### 2.3 Ejecución Local
-
-#### Opción A: Solo Frontend (Recomendado para desarrollo inicial)
-
-```bash
-# Usa un servidor local simple
-# Con Python 3:
-python -m http.server 8000
-
-# Luego abre en el navegador:
-# http://localhost:8000
-```
-
-#### Opción B: Con Live Server (Visual Studio Code)
-
-1. Instala la extensión "Live Server" en VSCode
-2. Click derecho en `index.html`
-3. Selecciona "Open with Live Server"
-
-#### Opción C: Backend con Django (Si está configurado)
-
-```bash
-python manage.py runserver
-# Accede a: http://localhost:8000
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           CLIENTE (NAVEGADOR)                           │
+│        Desktop (1024px+)  |  Tablets (768px-992px)  |  Móviles (320px+) │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │ Peticiones HTTP / HTTPS
+                                     ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      SERVIDOR WEB (APACHE / NGINX)                      │
+│   • Redirecciones Relativas               • Control de Acceso .htaccess │
+│   • Servidor de Assets (CSS/JS/IMG)       • Bloqueo de RCE en /uploads/ │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+           ┌─────────────────────────┴─────────────────────────┐
+           ▼                                                   ▼
+┌──────────────────────────────────────┐    ┌──────────────────────────────────────┐
+│        VISTAS PÚBLICAS DINÁMICAS     │    │      PANEL ADMINISTRATIVO (CRUD)     │
+│  • /php/public/noticias.php          │    │  • /php/admin/login.php (Auth)       │
+│  • /index.html & /html/*.html        │    │  • /php/admin/index.php (Dashboard)  │
+│  • Buscador Predictivo (search.js)   │    │  • /php/admin/logout.php             │
+│  • Widget Accesibilidad (WCAG 2.1)   │    │  • Subida de Archivos Segura         │
+└──────────────────┬───────────────────┘    └──────────────────┬───────────────────┘
+                   │                                           │
+                   └─────────────────────┬─────────────────────┘
+                                         ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                   NÚCLEO BACKEND Y SEGURIDAD (PHP 8.2+)                 │
+│  • /php/config/database.php: Conexión PDO, Auto-aprovisionamiento de BD │
+│  • Tokens CSRF (random_bytes)        • Rate Limiting (Anti-Fuerza Bruta)│
+│  • Sanitización XSS (htmlspecialchars) • Verificación MIME con finfo    │
+│  • Sesiones Seguras (HttpOnly, SameSite, Inactividad 30 min)            │
+└────────────────────────────────────┬────────────────────────────────────┘
+                                     │
+           ┌─────────────────────────┴─────────────────────────┐
+           ▼                                                   ▼
+┌──────────────────────────────────────┐    ┌──────────────────────────────────────┐
+│      MOTOR DE BASE DE DATOS          │    │       SISTEMA DE ARCHIVOS            │
+│          MySQL / MariaDB             │    │        /uploads/                     │
+│  • Base de Datos: gaa_colegio        │    │  • /noticias/ (JPG, PNG, WebP)       │
+│  • Tablas: admins, noticias,         │    │  • /documentos/ (PDF, DOC, DOCX)     │
+│    documentos                        │    │  • Hash UUID de 32 caracteres        │
+└──────────────────────────────────────┘    └──────────────────────────────────────┘
 ```
 
 ---
 
-## 3. ESTRUCTURA DEL PROYECTO
+## 2. PILA TECNOLÓGICA COMPLETA
 
-### 3.1 Árbol de Carpetas
+### 2.1 Frontend
+- **HTML5 Semántico:** Estructura limpia (`<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<footer>`, `<dialog>`).
+- **CSS3 Puro (Vanilla):**
+  - Sistema de diseño con **Variables CSS** centralizadas en `variables.css`.
+  - Diseños fluidos con **CSS Grid** y **Flexbox**.
+  - Tipografías fluidas con funciones modernas `clamp(min, val, max)`.
+  - Micro-animaciones, efectos Glassmorphism y temas modernos.
+- **JavaScript (Vanilla ES6+):**
+  - Sin dependencias de frameworks pesados (carga instantánea).
+  - Galería 3D y carruseles táctiles con interactividad por inercia.
+  - Buscador predictivo en tiempo real con sistema de scoring por relevancia.
+  - Motor de accesibilidad conforme a la norma **WCAG 2.1 Nivel AA**.
+- **Tipografía y Fuentes:** Google Fonts (*Poppins*, *Roboto*, *Segoe UI*).
+- **Librería de Iconos:** Font Awesome 6.4.0 (CDN).
 
-```
-Portal-Institucional/
-│
-├── index.html                      # Página principal del portal
-├── manual-usuario.html             # Manual para usuarios
-├── MANUALES.html                   # Página de manuales
-├── guia-rapida.html                # Guía rápida
-├── inicio-rapido.html              # Inicio rápido
-├── referencia-rapida.html          # Referencia rápida
-│
-├── html/                           # Páginas secundarias
-│   ├── historia.html               # Historia de la institución
-│   ├── calendario.html             # Calendario de eventos
-│   ├── deportes.html               # Información de deportes
-│   ├── noticias.html               # Noticias institucionales
-│   ├── sedes.html                  # Información de sedes
-│   ├── sede-san-isidro.html
-│   ├── sede-seguros-bolivar.html
-│   ├── sede-tomas-carrasquilla.html
-│   ├── sede-carlos-villa.html
-│   ├── sede-central.html
-│   │
-│   ├── departamentos.html          # Departamentos administrativos
-│   ├── tecnicas.html               # Medias técnicas
-│   ├── tecnicas/                   # Submódulo de técnicas
-│   │   ├── pascual.html            # Programa Pascual Bravo
-│   │   ├── musica.html             # Programa de Música
-│   │   ├── ambiental.html          # Gestión Ambiental
-│   │   ├── contenidos.html         # Contenidos Digitales
-│   │   └── sena.html               # Programa SENA
-│   │
-│   ├── academico.html              # Modalidad académica
-│   ├── planes-area.html            # Planes de área académicos
-│   ├── otros-servicios.html        # Servicios adicionales
-│   ├── pre.html                    # Pre-inscripción
-│   └── contacto.html               # Formulario de contacto
-│
-├── css/                            # Estilos CSS
-│   ├── styles.css                  # Estilos generales
-│   ├── variables.css               # Variables CSS (colores, fuentes)
-│   ├── index.css                   # Estilos página principal
-│   ├── index_new.css               # Estilos nuevos página principal
-│   ├── accessibility.css           # Estilos accesibilidad
-│   └── search.css                  # Estilos búsqueda
-│
-├── js/                             # Scripts JavaScript
-│   ├── script.js                   # Script principal
-│   ├── accessibility.js            # Funcionalidad accesibilidad
-│   └── search-data.js              # Datos y lógica búsqueda
-│
-├── img/                            # Imágenes
-│   ├── logo_del_colegio-removebg-preview__1_-removebg-preview.png
-│   ├── hovver historia.jpeg
-│   ├── eventos cultulares sb.jpg
-│   ├── clases interactivas ce.jpg
-│   ├── deporte ce.webp
-│   ├── admiinistrativo.jpeg
-│   ├── facebook.png
-│   ├── ig.png
-│   ├── yt.png
-│   ├── whatsap.png
-│   ├── men.jpg
-│   ├── simat.jpg
-│   ├── icfes.jpg
-│   ├── akros.jpg
-│   └── Gobierno-en-linea.jpg
-│
-├── media/                          # Multimedia
-│   └── (videos, audios, documentos)
-│
-├── templates/                      # Plantillas (backend)
-│   └── (si se usa framework como Django)
-│
-├── scratch/                        # Archivos temporales/prueba
-│
-├── Documentación/                  # Documentación adicional
-│   └── (manuales, guías)
-│
-├── .vscode/                        # Configuración Visual Studio Code
-│   └── settings.json
-│
-└── README.md                       # Documentación del proyecto
-```
+### 2.2 Backend
+- **PHP 8.2+ (Compatible con PHP 8.0 - 8.3):**
+  - Conexión mediante **PDO (PHP Data Objects)** con emulación de sentencias desactivada para máxima seguridad.
+  - Cifrado de contraseñas mediante **Bcrypt (`PASSWORD_BCRYPT`)**.
+  - Validador criptográfico de tokens CSRF con `hash_equals()`.
+  - Validador de archivos mediante extensión `fileinfo` (`finfo_open(FILEINFO_MIME_TYPE)`).
+  - Manejo de sesiones seguras (`HttpOnly`, `use_only_cookies`, `SameSite=Lax`).
 
-### 3.2 Modelos de Datos
+### 2.3 Base de Datos
+- **MySQL 8.0+ / MariaDB 10.4+:**
+  - Codificación predeterminada: `utf8mb4_unicode_ci` (soporte completo para tildes, caracteres especiales y emojis).
+  - Índices optimizados para ordenamiento por fecha y filtrado por categoría.
 
-Este es un portal web sin base de datos centralizada. Los datos se manejan así:
+---
 
-**1. Datos Estáticos (HTML)**
-- Información de sedes, departamentos, medias técnicas
-- Información de historia, deportes, eventos
+## 3. ESTRUCTURA DEL PROYECTO Y DIRECTORIOS
 
-**2. Datos Dinámicos (JavaScript)**
-- Búsqueda de contenidos (search-data.js)
-- Estado de accesibilidad del usuario
-- Preferencias del navegador (localStorage)
-
-**3. Datos Externos**
-- **Akros**: Sistema académico (estudiante.alzate.edu.co, docente.alzate.edu.co)
-- **Google Forms**: Formulario PQRSF
-- **YouTube**: Canal Alzate Virtual
-
-**Diagrama Conceptual:**
+A continuación se detalla la estructura física del repositorio:
 
 ```
-┌─────────────────┐
-│   Usuario Web   │
-└────────┬────────┘
-         │
-    ┌────┴─────────────────────────┐
-    │                              │
-┌───▼────────┐          ┌──────────▼──────┐
-│   HTML     │          │ JavaScript      │
-│  Estático  │◄────────►│ (Dinámico)      │
-│            │          │ localStorage    │
-└────────────┘          └──────────┬──────┘
-                                  │
-                    ┌─────────────┼─────────────┐
-                    │             │             │
-            ┌───────▼──┐   ┌──────▼────┐  ┌────▼──────┐
-            │   Akros  │   │ Google    │  │ YouTube   │
-            │  System  │   │ Forms     │  │  Channel  │
-            └──────────┘   └───────────┘  └───────────┘
+c:\xampp\htdocs\portalweb/
+│
+├── index.html                   # Página principal institucional (Landing page)
+├── favicon.ico                  # Icono del sitio
+│
+├── css/                         # Hojas de estilo en cascada
+│   ├── styles.css               # Estilos globales, header, navegación, footer
+│   ├── variables.css            # Tokens de diseño (colores, sombras, espaciados)
+│   ├── modern-theme.css         # Mejoras visuales modernas y glassmorphism
+│   ├── admin.css                # Estilos del Dashboard CRUD y Login (Super Responsive)
+│   ├── noticias.css             # Estilos de la sección y modal de noticias públicas
+│   ├── search.css               # Interfaz del buscador flotante y resultados
+│   ├── accessibility.css        # Estilos del panel y modos de accesibilidad
+│   ├── calendar.css             # Estilos del calendario institucional
+│   ├── sedes_landing.css        # Estilos específicos de la sección de sedes
+│   └── responsive.css           # Reglas de adaptación para móviles y tablets
+│
+├── js/                          # Scripts del lado del cliente
+│   ├── script.js                # Lógica principal, carrusel 3D, navegación móvil
+│   ├── noticias.js              # Apertura de modales y filtros de categorías
+│   ├── search-data.js           # Índice de búsqueda con pesos, títulos y URLs
+│   ├── accessibility.js         # Lógica de contrastes, tamaños de fuente y dislexia
+│   └── admin.js                 # Scripts complementarios de administración
+│
+├── html/                        # Vistas estáticas e informativas
+│   ├── noticias.html            # Redirección relativa a ../php/public/noticias.php
+│   ├── admin.html               # Redirección relativa a ../php/admin/login.php
+│   ├── historia.html            # Historia y símbolos de la institución
+│   ├── calendario.html          # Calendario escolar institucional
+│   ├── deportes.html            # Área deportiva, torneos y reconocimientos
+│   ├── sedes.html               # Resumen de todas las sedes institucionales
+│   ├── sede-central.html        # Detalle de la Sede Central
+│   ├── sede-san-isidro.html     # Detalle Sede San Isidro
+│   ├── sede-seguros-bolivar.html# Detalle Sede Seguros Bolívar
+│   ├── sede-tomas-carrasquilla.html # Detalle Sede Tomás Carrasquilla
+│   ├── sede-carlos-villa.html   # Detalle Sede Carlos Villa
+│   ├── dependencias.html        # Rectoría, Coordinación, Secretaría y Gestión
+│   ├── departamentos.html       # Redirección de compatibilidad hacia dependencias.html
+│   ├── tecnicas.html            # Resumen de Medias Técnicas
+│   ├── academico.html           # Sistema docente, estudiantes y planes
+│   ├── planes-area.html         # Documentos curriculares y planes de área
+│   ├── otros-servicios.html     # Biblioteca, PAE, manuales y preinscripción
+│   ├── pre.html                 # Formulario de preinscripción de cupos
+│   ├── contacto.html            # Canales de atención y formulario PQRSF
+│   └── tecnicas/                # Páginas individuales de medias técnicas
+│       ├── pascual.html         # Desarrollo de Software (Pascual Bravo)
+│       ├── sena.html            # Programación de Software (SENA)
+│       ├── musica.html          # Media Técnica en Música
+│       ├── ambiental.html       # Gestión Ambiental
+│       └── contenidos.html      # Contenidos Digitales
+│
+├── php/                         # Lógica dinámica del backend
+│   ├── config/
+│   │   └── database.php         # Conexión PDO, auto-aprovisionamiento, CSRF, auth y uploads
+│   ├── admin/
+│   │   ├── login.php            # Inicio de sesión con rate-limiting y Bcrypt
+│   │   ├── index.php            # Dashboard multisección (Noticias, Documentos, Perfil)
+│   │   └── logout.php           # Cierre de sesión seguro y destrucción de cookies
+│   └── public/
+│       └── noticias.php         # Vista pública de noticias renderizada desde MySQL
+│
+├── uploads/                     # Directorio de almacenamiento de archivos subidos
+│   ├── .htaccess                # Protección: Bloquea ejecución de scripts PHP/binarios
+│   ├── noticias/                # Fotos de portada subidas para noticias
+│   └── documentos/              # Archivos PDF, DOC y DOCX institucionales
+│
+├── img/                         # Recursos gráficos, logos, escudos y banners
+├── manuales/                    # Manuales de usuario en HTML para la comunidad
+└── Documentación/               # Manuales técnicos y documentación para desarrolladores
+    ├── MANUAL_DEL_PROGRAMADOR.md# Este documento
+    └── MANUAL_TECNICO.md        # Especificaciones complementarias
 ```
 
 ---
 
-## 4. COMPONENTES Y FUNCIONALIDADES
+## 4. INSTALACIÓN Y PUESTA EN MARCHA (XAMPP / PRODUCCIÓN)
 
-### 4.1 Módulos Principales
+### 4.1 Requisitos del Sistema
+- **Servidor Web:** Apache 2.4 o superior (con `mod_rewrite` habilitado).
+- **PHP:** Versión 8.1 o superior (Extensiones requeridas: `pdo_mysql`, `fileinfo`, `session`, `mbstring`).
+- **MySQL:** Versión 8.0+ o MariaDB 10.4+.
 
-#### 4.1.1 Módulo: Navegación Principal
-**Archivo:** `index.html`, `html/index.html`  
-**Archivo de Estilos:** `css/index.css`, `css/index_new.css`
+### 4.2 Instalación Paso a Paso en XAMPP
 
-**Funcionalidades:**
-- Menú responsive con navegación lateral
-- Dropdown menus para categorías
-- Logo y título de institución
-- Animaciones de transición
+1. **Ubicación del Proyecto:**
+   Coloca la carpeta del proyecto en el directorio `htdocs` de tu instalación de XAMPP:
+   `C:\xampp\htdocs\portalweb\`
 
-**Estructura HTML:**
-```html
-<header class="main-header" id="mainHeader">
-  <nav class="main-nav" id="mainNav">
-    <ul class="nav-menu nav-menu-left">
-      <li class="nav-item">INICIO
-        <ul class="dropdown-menu">
-          <li><a href="#">Historia</a></li>
-          <li><a href="#">Eventos</a></li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-</header>
+2. **Iniciar Servicios:**
+   Abre el **XAMPP Control Panel** y haz clic en **Start** para **Apache** y **MySQL**.
+
+3. **Auto-Aprovisionamiento Automático:**
+   **No necesitas crear manualmente la base de datos ni importar archivos `.sql`**.  
+   Al abrir cualquier página PHP (como `http://localhost/portalweb/php/admin/login.php`), el script `php/config/database.php` detectará si la base de datos `gaa_colegio` existe. Si no existe, la creará automáticamente junto con todas las tablas necesarias y registrará al usuario administrador principal.
+
+4. **Credenciales Iniciales de Acceso:**
+   - **URL de Acceso:** `http://localhost/portalweb/php/admin/login.php`
+   - **Usuario:** `admin`
+   - **Contraseña:** `alzate2026`
+   *(Una vez dentro, ve a la pestaña "Seguridad y Contraseña" para cambiarla).*
+
+---
+
+## 5. MODELO DE DATOS Y BASE DE DATOS MYSQL
+
+### 5.1 Diagrama Entidad-Relación
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                         admins                          │
+├──────────────────┬──────────────────┬───────────────────┤
+│ id               │ INT(11)          │ PK, AUTO_INCREMENT│
+│ username         │ VARCHAR(50)      │ NOT NULL, UNIQUE  │
+│ password_hash    │ VARCHAR(255)     │ NOT NULL (Bcrypt) │
+│ full_name        │ VARCHAR(100)     │ NOT NULL          │
+│ created_at       │ DATETIME         │ DEFAULT CURRENT_TS│
+└──────────────────┴──────────────────┴───────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│                        noticias                         │
+├──────────────────┬──────────────────┬───────────────────┤
+│ id               │ INT(11)          │ PK, AUTO_INCREMENT│
+│ title            │ VARCHAR(255)     │ NOT NULL          │
+│ category         │ VARCHAR(50)      │ NOT NULL, INDEX   │
+│ date_label       │ VARCHAR(50)      │ NOT NULL          │
+│ image_url        │ VARCHAR(500)     │ DEFAULT NULL      │
+│ excerpt          │ TEXT             │ NOT NULL          │
+│ content          │ LONGTEXT         │ NOT NULL          │
+│ created_at       │ DATETIME         │ DEFAULT CURRENT_TS│
+└──────────────────┴──────────────────┴───────────────────┘
+
+┌─────────────────────────────────────────────────────────┐
+│                       documentos                        │
+├──────────────────┬──────────────────┬───────────────────┤
+│ id               │ INT(11)          │ PK, AUTO_INCREMENT│
+│ title            │ VARCHAR(255)     │ NOT NULL          │
+│ category         │ VARCHAR(50)      │ NOT NULL, INDEX   │
+│ file_path        │ VARCHAR(500)     │ NOT NULL          │
+│ file_size        │ VARCHAR(50)      │ DEFAULT 'PDF'     │
+│ description      │ TEXT             │ DEFAULT NULL      │
+│ created_at       │ DATETIME         │ DEFAULT CURRENT_TS│
+└──────────────────┴──────────────────┴───────────────────┘
 ```
 
-#### 4.1.2 Módulo: Galería 3D Cilíndrica
-**Archivo:** `js/script.js`  
-**Características:**
-- Carrusel 3D con efecto cilindro
-- Navegación con botones y arrastre
-- Animaciones suave
-- Links clickeables a secciones
+### 5.2 Script SQL de Respaldo y Estructura
 
-**Selectores CSS Clave:**
-```css
-.cylinder-gallery-wrapper
-.cylinder-container
-.cylinder-card
-.scene-3d
-```
+En caso de requerir una restauración manual mediante phpMyAdmin o consola MySQL:
 
-#### 4.1.3 Módulo: Accesibilidad
-**Archivo:** `js/accessibility.js`  
-**Archivo de Estilos:** `css/accessibility.css`
+```sql
+-- 1. Crear Base de Datos
+CREATE DATABASE IF NOT EXISTS `gaa_colegio` 
+CHARACTER SET utf8mb4 
+COLLATE utf8mb4_unicode_ci;
 
-**Funcionalidades:**
-- Aumentar/Disminuir tamaño de texto
-- Alto contraste
-- Contraste negativo
-- Escala de grises
-- Fuente legible (dyslexia-friendly)
-- Subrayar enlaces
-- Botón flotante de accesibilidad
+USE `gaa_colegio`;
 
-**Variables de Control (localStorage):**
-```javascript
-localStorage.setItem('textSize', 'large');
-localStorage.setItem('highContrast', 'true');
-localStorage.setItem('dyslexiaFriendly', 'true');
-```
+-- 2. Tabla de Administradores
+CREATE TABLE IF NOT EXISTS `admins` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(50) NOT NULL UNIQUE,
+    `password_hash` VARCHAR(255) NOT NULL,
+    `full_name` VARCHAR(100) NOT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-#### 4.1.4 Módulo: Búsqueda
-**Archivo:** `js/search-data.js`
+-- 3. Tabla de Noticias Institucionales
+CREATE TABLE IF NOT EXISTS `noticias` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255) NOT NULL,
+    `category` VARCHAR(50) NOT NULL DEFAULT 'sedes',
+    `date_label` VARCHAR(50) NOT NULL,
+    `image_url` VARCHAR(500) DEFAULT NULL,
+    `excerpt` TEXT NOT NULL,
+    `content` LONGTEXT NOT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    INDEX `idx_noticias_cat` (`category`),
+    INDEX `idx_noticias_date` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-**Funcionalidades:**
-- Búsqueda en tiempo real
-- Indexación de contenido
-- Resultados dinámicos
-
-#### 4.1.5 Módulo: Secciones de Contenido
-**Archivos:** `html/*.html`
-
-**Secciones Principales:**
-1. **Historia** (`html/historia.html`) - Información histórica de la institución
-2. **Sedes** (`html/sedes.html`, `html/sede-*.html`) - Información de 5 sedes
-3. **Medias Técnicas** (`html/tecnicas.html`, `html/tecnicas/*.html`)
-   - Desarrollo de Software (Pascual Bravo)
-   - Música
-   - Gestión Ambiental
-   - Contenidos Digitales
-   - Programación (SENA)
-4. **Académico** (`html/academico.html`) - Modalidad académica, ICFES
-5. **Deportes** (`html/deportes.html`) - Programas deportivos
-6. **Noticias** (`html/noticias.html`) - Blog de noticias
-7. **Calendario** (`html/calendario.html`) - Eventos y fechas
-8. **Pre-inscripción** (`html/pre.html`) - Formulario de admisión
-9. **Contacto** (`html/contacto.html`) - Información de contacto
-
-#### 4.1.6 Módulo: Footer
-**Estructura:**
-- Links a redes sociales (Facebook, Instagram, YouTube, WhatsApp)
-- Enlaces rápidos por categoría
-- Información de contacto
-- Links institucionales (Ministerio, SIMAT, ICFES, Akros)
-
-### 4.2 Componentes Reutilizables
-
-#### Bento Grid (Servicios)
-```html
-<div class="bento-services-section">
-  <div class="bento-cell bento-dark">
-    <i class="fas fa-icon"></i>
-    <strong>Título</strong>
-    <p>Descripción</p>
-    <a href="#" class="bento-link">Ver →</a>
-  </div>
-</div>
-```
-
-#### Feature Section (Con imagen y texto)
-```html
-<section class="feature-section">
-  <div class="feature-grid">
-    <div class="feature-text">
-      <span class="feature-badge">Badge</span>
-      <h2>Título</h2>
-      <p>Descripción</p>
-    </div>
-    <div class="feature-image circle-shape">
-      <img src="#" alt="">
-    </div>
-  </div>
-</section>
-```
-
-#### Card Oscura
-```html
-<div class="dark-card dark-card-blue">
-  <i class="fas fa-icon dark-card-icon"></i>
-  <h3>Título</h3>
-  <a href="#" class="dark-card-btn">Botón</a>
-</div>
+-- 4. Tabla de Documentos y Circulares
+CREATE TABLE IF NOT EXISTS `documentos` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(255) NOT NULL,
+    `category` VARCHAR(50) NOT NULL DEFAULT 'circulares',
+    `file_path` VARCHAR(500) NOT NULL,
+    `file_size` VARCHAR(50) DEFAULT 'PDF',
+    `description` TEXT DEFAULT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    INDEX `idx_doc_cat` (`category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
 
 ---
 
-## 5. GUÍAS DE ESTILO Y ESTÁNDARES
+## 6. MÓDULO CRUD Y PANEL DE GESTIÓN ADMINISTRATIVO
 
-### 5.1 Convenciones de Nombres
+El panel de administración (`php/admin/index.php`) es un entorno unificado y multisección con soporte para:
 
-#### HTML
-```html
-<!-- Clases con hyphen (kebab-case) -->
-<div class="main-header">
-<div class="nav-item">
-<div class="dropdown-menu">
+### 6.1 Módulo de Noticias y Novedades
+- **Creación:** Formulario para registrar título, categoría (*Sedes, Culturales, Deportivas, Parroquiales*), fecha, resumen corto y cuerpo completo de la noticia.
+- **Subida de Portada Física:** Carga directa de imágenes (JPG, PNG, WebP de hasta 5 MB) con vista previa instantánea mediante JavaScript (`FileReader API`).
+- **Edición en Vivo:** Carga los datos existentes en el formulario manteniendo la imagen previa si no se selecciona un nuevo archivo.
+- **Eliminación Segura:** Al eliminar una noticia, el backend elimina el registro en MySQL y ejecuta `@unlink()` para borrar físicamente el archivo de la carpeta `uploads/noticias/`, evitando acumulación de archivos huérfanos en el disco.
 
-<!-- IDs con hyphen cuando es necesario -->
-<div id="mainHeader">
-<div id="loadingScreen">
-```
+### 6.2 Módulo de Documentos y Circulares
+- **Subida de Archivos:** Soporte para documentos PDF, DOC y DOCX de hasta 10 MB.
+- **Cálculo Automático de Tamaño:** La función `handleSecureUpload()` calcula el tamaño exacto del archivo y lo almacena formateado (ej. `345 KB` o `2.4 MB`).
+- **Clasificación:** Circulares Informativas, PAE / Alimentación, Manual de Convivencia, Planes Académicos y Resoluciones de Rectoría.
 
-#### CSS
-```css
-/* BEM (Block Element Modifier) */
-.block {}
-.block__element {}
-.block--modifier {}
+### 6.3 Módulo de Seguridad y Perfil
+- Permite al usuario en sesión actualizar su nombre visible y su nombre de usuario.
+- Cambio de contraseña con verificación obligatoria de la contraseña actual antes de aplicar el nuevo hash Bcrypt.
 
-/* Ejemplo: -->
-.nav-menu {}
-.nav-menu__item {}
-.nav-menu--horizontal {}
+---
 
-/* CamelCase para variables CSS */
---primary-color
---secondary-color
---spacing-unit
---font-size-base
-```
+## 7. CAPA DE CIBERSEGURIDAD Y PROTECCIÓN OWASP
 
-#### JavaScript
-```javascript
-// camelCase para funciones y variables
-function handleAccesibilityChange() {}
-const toggleAccessibilityPanel = () => {}
-let currentUserPreferences = {}
+El sistema implementa controles rigurosos para mitigar las principales vulnerabilidades del **OWASP Top 10**:
 
-// PascalCase para clases
-class AccessibilityManager {}
+### 7.1 Autenticación y Cifrado de Contraseñas
+- Las contraseñas se almacenan mediante el algoritmo **Bcrypt** con costo adaptativo (`PASSWORD_BCRYPT`). Nunca se almacenan ni transmiten en texto plano.
+- La validación se realiza exclusivamente en el backend con `password_verify()`.
 
-// UPPER_CASE para constantes
-const API_ENDPOINT = 'https://api.example.com';
-```
+### 7.2 Protección Anti-Fuerza Bruta (Rate Limiting)
+- En `php/admin/login.php`, se controla el número de intentos fallidos en la sesión.
+- Si un atacante falla 5 veces consecutivas, el sistema bloquea los intentos de inicio de sesión durante **15 minutos**.
 
-### 5.2 Estructura de Archivos CSS
+### 7.3 Protección contra Cross-Site Request Forgery (CSRF)
+- En cada sesión se genera un token pseudoaleatorio criptográfico de 64 caracteres:
+  ```php
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+  ```
+- Todos los formularios envían este token en un campo oculto `<input type="hidden" name="csrf_token">` y el servidor lo valida de forma segura contra ataques de temporización mediante `hash_equals()`.
+
+### 7.4 Prevención de Inyección SQL (SQLi)
+- El 100% de las consultas que reciben parámetros del usuario utilizan **sentencias preparadas de PDO**:
+  ```php
+  $stmt = $pdo->prepare('SELECT * FROM noticias WHERE id = :id');
+  $stmt->execute([':id' => $id]);
+  ```
+- Está prohibida la concatenación directa de variables dentro de cadenas SQL.
+
+### 7.5 Subida Segura de Archivos y Prevención de Ejecución Remota (RCE)
+La función `handleSecureUpload()` ejecuta 4 filtros consecutivos:
+1. **Validación de Extensión:** Whitelist estricta (`jpg`, `jpeg`, `png`, `webp`, `pdf`, `doc`, `docx`).
+2. **Validación de Tipo MIME Real:** Inspección binaria del encabezado del archivo con `finfo` (impide camuflar archivos `.php` como `.jpg`).
+3. **Renombrado Criptográfico:** Cada archivo se renombra a un UUID aleatorio de 32 caracteres hexadecimales (`bin2hex(random_bytes(16)) . '.' . $ext`). Esto previene ataques de *Path Traversal* y sobreescritura.
+4. **Protección Apache (.htaccess):** En `uploads/.htaccess` se desactiva la ejecución de cualquier script ejecutable:
+   ```apache
+   # uploads/.htaccess
+   <FilesMatch "\.(php|php3|php4|php5|phtml|pl|py|jsp|asp|sh|cgi|exe)$">
+       Order Allow,Deny
+       Deny from all
+   </FilesMatch>
+   php_flag engine off
+   ```
+
+### 7.6 Seguridad de Sesiones y Protección contra XSS
+- **Cookies de Sesión:** Configuradas con `HttpOnly=true` (inaccesibles para JavaScript), `SameSite=Lax` y `use_only_cookies=1`.
+- **Regeneración de ID:** Tras un login exitoso se ejecuta `session_regenerate_id(true)` para destruir la sesión previa y prevenir *Session Fixation*.
+- **Expiración:** Cierre automático tras 30 minutos de inactividad.
+- **Sanitización XSS:** Toda salida enviada al navegador pasa por `htmlspecialchars($str, ENT_QUOTES, 'UTF-8')`.
+
+---
+
+## 8. COMPONENTES DEL FRONTEND, UI/UX Y ACCESIBILIDAD
+
+### 8.1 Sistema de Variables y Tokens CSS (`css/variables.css`)
 
 ```css
-/* 1. Variables */
 :root {
-  --primary-color: #...;
-  --text-color: #...;
-}
+    /* Paleta Institucional */
+    --color-primary: #183c74;
+    --color-primary-dark: #102952;
+    --color-primary-light: #2558a3;
+    --color-secondary: #dc2626;
+    --color-accent: #ffd700;
+    
+    /* Neutros y Superficies */
+    --color-white: #ffffff;
+    --color-gray-100: #f8fafc;
+    --color-gray-200: #e2e8f0;
+    --color-gray-600: #475569;
+    --color-gray-850: #1e293b;
 
-/* 2. Reset y Base */
-* { margin: 0; padding: 0; }
-body { font-family: ...; }
+    /* Sombras y Elevaciones */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 6px 18px rgba(15, 34, 64, 0.08);
+    --shadow-xl: 0 20px 40px -10px rgba(15, 34, 64, 0.18);
 
-/* 3. Layouts */
-.container {}
-.header {}
-.main {}
-.footer {}
-
-/* 4. Componentes */
-.button {}
-.card {}
-.modal {}
-
-/* 5. Utilidades */
-.text-center {}
-.margin-top {}
-```
-
-### 5.3 Estructura de Archivos JavaScript
-
-```javascript
-// 1. Declaración de variables y constantes
-const API_KEY = '...';
-let currentState = {};
-
-// 2. Funciones auxiliares
-function debounce(func, delay) {}
-
-// 3. Inicialización de elementos del DOM
-const header = document.getElementById('mainHeader');
-const nav = document.querySelector('.main-nav');
-
-// 4. Event listeners
-document.addEventListener('DOMContentLoaded', () => {
-  init();
-});
-
-// 5. Función principal de inicialización
-function init() {
-  setupAccessibility();
-  setupNavigation();
-  setupSearch();
+    /* Transiciones */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.25s ease;
+    --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 ```
 
-### 5.4 Estándares de Código
+### 8.2 Menú Institucional Multinivel
+- Soporta menú desplegable (`.dropdown-menu`) en escritorio con activación por hover suave.
+- En dispositivos móviles (`<= 1024px`), se convierte en un menú lateral tipo *Drawer* con animación de hamburguesa a cruz (X) y overlay oscuro de desenfoque.
 
-#### HTML
-- Usar HTML semántico (`<header>`, `<nav>`, `<main>`, `<footer>`)
-- Atributos `alt` en todas las imágenes
-- Usar `lazy loading` en imágenes
-- Atributos `aria-label` en elementos interactivos
+### 8.3 Galería 3D Interactiva (`js/script.js`)
+- Implementada con transformaciones CSS 3D (`perspective`, `rotateY`, `translateZ`).
+- Soporta navegación mediante botones anterior/siguiente, teclado (flechas) y gestos táctiles *swipe* en dispositivos móviles.
 
-#### CSS
-- Mobile-first approach
-- Media queries para responsive
-- Variables CSS para colores y tamaños
-- Evitar `!important`
-
-#### JavaScript
-- Usar `const` por defecto, `let` si es necesario
-- Evitar variables globales
-- Comentar código complejo
-- Usar async/await en lugar de callbacks
-- Validar entrada de usuarios
-
-### 5.5 Linters Utilizados
-
-**Recomendado:**
-```json
-{
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es2021": true
-    },
-    "extends": "eslint:recommended",
-    "rules": {
-      "indent": ["error", 2],
-      "quotes": ["error", "single"],
-      "semi": ["error", "always"]
-    }
-  }
-}
-```
+### 8.4 Motor de Accesibilidad Universal (`js/accessibility.js`)
+El widget flotante de accesibilidad cumple con las pautas **WCAG 2.1**:
+- **Tamaño de Texto:** Incremento y reducción dinámico del `font-size` base.
+- **Alto Contraste:** Invierte paletas a fondos negros puros con texto amarillo/blanco de alto contraste.
+- **Contraste Negativo:** Modo oscuro alternativo.
+- **Escala de Grises:** Filtro CSS `grayscale(100%)` para usuarios con daltonismo.
+- **Fuente para Dislexia:** Aplica la tipografía `OpenDyslexic` o fuentes de alta legibilidad con espaciado entre caracteres (`letter-spacing`).
+- **Subrayado de Enlaces:** Resalta todos los hipervínculos navegables con línea continua.
 
 ---
 
-## 6. APIs Y ENDPOINTS
+## 9. BUSCADOR INTELIGENTE CON ALGORITMO DE SCORING
 
-### 6.1 APIs Externas Utilizadas
+El buscador integrado (`js/search-data.js` y `js/script.js`) implementa un motor de búsqueda del lado del cliente optimizado:
 
-#### 6.1.1 Akros (Sistema Académico)
-
-**Endpoints:**
-- Estudiante: `https://estudiante.alzate.edu.co/`
-- Docente: `https://docente.alzate.edu.co/`
-
-**Uso en Portal:**
-```html
-<a href="https://estudiante.alzate.edu.co/" target="_blank">
-  Sistema Estudiante
-</a>
-<a href="https://docente.alzate.edu.co/" target="_blank">
-  Sistema Docente
-</a>
-```
-
-#### 6.1.2 Google Forms (PQRSF)
-
-**Endpoint:**
-```
-https://docs.google.com/forms/d/e/1FAIpQLSc77n4ssSfexwvQLwVhmn6KC9BJXzeCzlwcXKdimw7SXpgTBQ/viewform
-```
-
-**Método:** GET (formulario embebido)
-
-#### 6.1.3 YouTube API (Alzate Virtual)
-
-**Endpoint:**
-```
-https://www.youtube.com/@alzatevirtual8374/videos
-```
-
-**Uso:**
-- Canal de videos institucional
-- Clases virtuales
-- Eventos grabados
-
-#### 6.1.4 APIs de Instituciones del Gobierno (Referencias)
-
-- **Ministerio de Educación:** `https://www.mineducacion.gov.co/portal/`
-- **SIMAT:** `https://www.sistemamatriculas.gov.co/simat/app`
-- **ICFES:** `https://www.icfes.gov.co/`
-- **Gobierno en Línea:** `https://estrategia.gobiernoenlinea.gov.co/623/w3-channel.html`
-
-### 6.2 Rutas Locales de Contenido
-
-**Estructura de Navegación (GET requests):**
-
-```
-/                              # Página principal
-/html/historia.html            # Historia
-/html/sedes.html               # Sedes general
-/html/sede-san-isidro.html     # Sede específica
-/html/tecnicas.html            # Medias técnicas
-/html/tecnicas/pascual.html    # Técnica específica
-/html/academico.html           # Modalidad académica
-/html/deportes.html            # Deportes
-/html/noticias.html            # Noticias
-/html/calendario.html          # Calendario
-/html/departamentos.html       # Departamentos
-/html/planes-area.html         # Planes de área
-/html/otros-servicios.html     # Servicios
-/html/pre.html                 # Pre-inscripción
-/html/contacto.html            # Contacto
-```
-
-### 6.3 Manejo de Formularios (POST)
-
-**Pre-inscripción (`html/pre.html`):**
-```javascript
-// Formulario HTML
-<form id="preInscripcionForm" method="POST" action="/api/preinscription">
-  <input type="text" name="nombre" required>
-  <input type="email" name="email" required>
-  <select name="sede" required>
-    <option>San Isidro</option>
-    <option>Seguros Bolívar</option>
-  </select>
-  <button type="submit">Enviar</button>
-</form>
-
-// JavaScript para captura y validación
-const form = document.getElementById('preInscripcionForm');
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  // Validar datos
-  // Enviar a servidor
-});
-```
-
-**Formulario de Contacto (`html/contacto.html`):**
-```javascript
-<form id="contactoForm" method="POST" action="/api/contact">
-  <input type="text" name="nombre" required>
-  <input type="email" name="email" required>
-  <textarea name="mensaje" required></textarea>
-  <button type="submit">Enviar</button>
-</form>
-```
+1. **Índice Centralizado (`SEARCH_INDEX`):** Contiene título, descripción, categoría, palabras clave (*keywords*) y URL relativa.
+2. **Normalización de Texto:** Remueve tildes, signos de puntuación y convierte a minúsculas para comparaciones insensibles.
+3. **Algoritmo de Ponderación:**
+   - **Coincidencia Exacta en Título:** +100 puntos.
+   - **Título Inicia con el Término:** +60 puntos.
+   - **Palabra Clave Exacta:** +40 puntos.
+   - **Coincidencia en Descripción:** +20 puntos.
+4. **Adaptación de Rutas:** Detecta automáticamente si el usuario navega desde la raíz, `/html/`, `/html/tecnicas/` o `/php/public/`, generando URLs relativas precisas.
 
 ---
 
-## 7. DESPLIEGUE
+## 10. GUÍA DE ESTILOS Y ESTÁNDARES DE PROGRAMACIÓN
 
-### 7.1 Despliegue en GitHub Pages
+Para mantener la coherencia del proyecto:
 
-**Pasos:**
+### 10.1 Estándares PHP (PSR-12)
+- Usar declaración estricta de tipos donde sea posible (`declare(strict_types=1);`).
+- Nombres de funciones y métodos en `camelCase()`.
+- Nombres de variables en `$camelCase`.
+- Tablas y columnas de base de datos en `snake_case`.
+- Indentación estándar de 4 espacios (no tabulaciones).
 
-1. **Asegurar que el repositorio sea público**
-   ```bash
-   # En la página del repositorio, ir a Settings
-   # Verificar que sea público
-   ```
+### 10.2 Estándares JavaScript
+- Usar sintaxis moderna ES6+ (`const`, `let`, *Arrow Functions*, *Template Literals*).
+- Manejo seguro de eventos con `addEventListener`.
+- No usar variables globales en el objeto `window` salvo constantes explícitas (`SEARCH_INDEX`).
 
-2. **Configurar GitHub Pages**
-   ```bash
-   # Settings > Pages
-   # Source: Deploy from a branch
-   # Branch: main
-   # Folder: / (root)
-   # Save
-   ```
+### 10.3 Estándares HTML / CSS
+- Nomenclatura de clases basada en metodología inspirada en BEM (`.block-name__element--modifier`).
+- Prohibido el uso de estilos en línea (`style="..."`) para maquetación estructural.
+- Todo elemento interactivo (`<button>`, `<a>`, `<input>`) debe contar con atributos `aria-label` o etiquetas `<label>` para lectores de pantalla.
 
-3. **Publicar cambios**
-   ```bash
-   git add .
-   git commit -m "Deploy: update portal"
-   git push origin main
-   ```
+---
 
-4. **Acceder al sitio**
-   ```
-   https://rv3ndbm.github.io/Portal-Institucional/
-   ```
+## 11. MANTENIMIENTO, RESPALDOS Y SOLUCIÓN DE PROBLEMAS
 
-### 7.2 Despliegue en Servidor Personalizado
-
-Si se desea usar un servidor propio (Apache, Nginx, etc.):
+### 11.1 Respaldo de la Base de Datos
+Para generar una copia de seguridad rápida de la base de datos desde la terminal de XAMPP:
 
 ```bash
-# 1. Copiar archivos al servidor
-scp -r . usuario@servidor:/var/www/portal/
+# Exportar respaldo SQL
+c:\xampp\mysql\bin\mysqldump.exe -u root gaa_colegio > C:\respaldo_gaa_colegio.sql
 
-# 2. Configurar Apache (httpd.conf o .htaccess)
-<Directory /var/www/portal>
-  Options Indexes FollowSymLinks
-  AllowOverride All
-  Require all granted
-</Directory>
-
-# 3. Reiniciar servicio
-sudo systemctl restart apache2
+# Importar respaldo
+c:\xampp\mysql\bin\mysql.exe -u root gaa_colegio < C:\respaldo_gaa_colegio.sql
 ```
 
-### 7.3 CI/CD con GitHub Actions (Opcional)
+### 11.2 Respaldo de Archivos Multimedia
+Copia periódicamente el contenido de la carpeta:
+`c:\xampp\htdocs\portalweb\uploads\`
 
-**Archivo: `.github/workflows/deploy.yml`**
+### 11.3 Solución de Problemas Comunes
 
-```yaml
-name: Deploy Portal
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      
-      - name: Validate HTML
-        run: |
-          for file in $(find . -name "*.html"); do
-            echo "Validating $file"
-          done
-      
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-```
+| Problema / Error | Causa Probable | Solución |
+| :--- | :--- | :--- |
+| **Error 404 Not Found** | Se omitió la subcarpeta `/portalweb/` en la URL. | Usar `http://localhost/portalweb/...` o configurar un VirtualHost en Apache. |
+| **Credenciales Incorrectas** | Se olvidó la contraseña de administrador. | Ejecutar script en PHP con `password_hash('nueva_clave', PASSWORD_BCRYPT)` o actualizar el campo `password_hash` en la tabla `admins`. |
+| **Error al Subir Fotos/PDF** | Permisos insuficientes en la carpeta `uploads/`. | Verificar que Apache tenga permisos de escritura (`chmod 755` o `775` en Linux). |
+| **Error "Call to undefined function finfo_open"** | La extensión `fileinfo` de PHP está deshabilitada. | Abrir `php.ini`, descomentar la línea `extension=fileinfo` y reiniciar Apache. |
 
 ---
 
-## 8. MANTENIMIENTO Y SOLUCIÓN DE PROBLEMAS
+## 12. GUÍA DE DESPLIEGUE EN PRODUCCIÓN (cPanel / VPS)
 
-### 8.1 Problemas Comunes
+Al migrar este proyecto de XAMPP local a un hosting o servidor en producción:
 
-#### **Problema 1: Las imágenes no cargan**
-
-**Síntomas:**
-- Imágenes con cruz roja
-- Console muestra 404
-
-**Soluciones:**
-```javascript
-// Verificar rutas relativas
-// Incorrecto:
-<img src="img/logo.png"> <!-- desde html/page.html -->
-
-// Correcto:
-<img src="../img/logo.png"> <!-- desde html/page.html -->
-
-// O usar rutas absolutas desde el dominio
-<img src="/img/logo.png">
-```
-
-#### **Problema 2: Estilos CSS no aplican**
-
-**Síntomas:**
-- Página sin estilos
-- Layout roto
-
-**Soluciones:**
-```html
-<!-- Verificar que los links de CSS estén correctos -->
-<link rel="stylesheet" href="../css/styles.css">
-
-<!-- Verificar orden de carga (especificidad) -->
-<!-- 1. Variables CSS -->
-<link rel="stylesheet" href="css/variables.css">
-<!-- 2. Estilos generales -->
-<link rel="stylesheet" href="css/styles.css">
-<!-- 3. Estilos específicos -->
-<link rel="stylesheet" href="css/index.css">
-<!-- 4. Overrides -->
-<link rel="stylesheet" href="css/custom.css">
-```
-
-#### **Problema 3: JavaScript no funciona**
-
-**Síntomas:**
-- Eventos no responden
-- Errores en consola
-
-**Soluciones:**
-```javascript
-// Verificar que el DOM está cargado
-document.addEventListener('DOMContentLoaded', () => {
-  // Código aquí
-});
-
-// Verificar selectores CSS
-const element = document.getElementById('mainHeader');
-if (!element) {
-  console.error('Elemento no encontrado');
-}
-
-// Ver consola del navegador (F12)
-console.log('Debug:', elemento);
-```
-
-#### **Problema 4: Accesibilidad no funciona**
-
-**Síntomas:**
-- Widget no aparece
-- Botones no responden
-
-**Soluciones:**
-```bash
-# Verificar que accessibility.js está cargado
-# En DevTools, ir a Sources y buscar accessibility.js
-
-# Limpiar localStorage
-localStorage.clear();
-
-# Recargar página
-location.reload();
-```
-
-#### **Problema 5: Formulario no envía datos**
-
-**Síntomas:**
-- Datos no se guardan
-- Mensaje de error confuso
-
-**Soluciones:**
-```javascript
-// Validar formulario antes de enviar
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  // Validar campos
-  const inputs = form.querySelectorAll('input[required]');
-  let valid = true;
-  
-  inputs.forEach(input => {
-    if (!input.value) {
-      input.classList.add('error');
-      valid = false;
-    }
-  });
-  
-  if (valid) {
-    // Enviar datos
-    sendFormData(new FormData(form));
-  }
-});
-```
-
-#### **Problema 6: Sitio no responsive en móvil**
-
-**Síntomas:**
-- Layout roto en teléfono
-- Elementos superpuestos
-
-**Soluciones:**
-```html
-<!-- Verificar viewport meta tag -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- CSS mobile-first -->
-/* Por defecto para móvil */
-.element { width: 100%; }
-
-/* Media queries para pantallas grandes */
-@media (min-width: 768px) {
-  .element { width: 50%; }
-}
-```
-
-#### **Problema 7: El sitio carga lento**
-
-**Síntomas:**
-- Tarda mucho en cargar
-- Animaciones lentas
-
-**Soluciones:**
-```html
-<!-- Optimizar imágenes -->
-<img src="image.webp" loading="lazy" alt="...">
-
-<!-- Minificar CSS y JavaScript -->
-<!-- Usar CDN para librerías externas -->
-<link rel="stylesheet" 
-  href="https://cdnjs.cloudflare.com/ajax/libs/...">
-
-<!-- Aplazar carga de scripts no críticos -->
-<script src="script.js" defer></script>
-```
-
-### 8.2 Auditoría de Rendimiento
-
-```bash
-# Usar Chrome DevTools (F12)
-# 1. Lighthouse - Genera reporte de rendimiento
-# 2. Network - Analiza tiempo de carga
-# 3. Performance - Identifica cuellos de botella
-
-# Herramientas online
-# - https://pagespeed.web.dev/
-# - https://gtmetrix.com/
-# - https://www.webpagetest.org/
-```
-
-### 8.3 Monitoreo
-
-**Logs a revisar:**
-- Browser Console (F12 > Console)
-- Network tab (peticiones HTTP)
-- Storage > localStorage (datos de usuario)
+1. **Subida de Archivos:**
+   Sube todo el contenido a la carpeta `public_html/` (o la raíz del dominio).
+2. **Creación de Base de Datos en cPanel / Servidor:**
+   - Crea una base de datos MySQL y un usuario con contraseña segura.
+   - Otorga privilegios totales al usuario sobre la base de datos.
+3. **Actualización de Credenciales en `php/config/database.php`:**
+   Configura las credenciales de conexión en la constante o array de configuración:
+   ```php
+   $host = 'localhost';
+   $db   = 'nombre_bd_cpanel';
+   $user = 'usuario_cpanel';
+   $pass = 'contraseña_segura';
+   ```
+4. **Instalación de Certificado SSL (HTTPS):**
+   Activa Let's Encrypt o el certificado SSL provisto por el hosting para cifrar todo el tráfico web y proteger las credenciales administrativas.
+5. **Verificación de Permisos:**
+   Asegúrate de que la carpeta `uploads/` tenga permisos `0755` y que el archivo `uploads/.htaccess` esté activo.
 
 ---
 
-## 9. CONTACTO Y SOPORTE
-
-### 9.1 Información de Contacto
-
-**Institución:** I.E. Gilberto Alzate Avendaño
-
-**Teléfono:** +57 1 (555) 1234
-
-**Email:** ie.gilbertoalzate@medellin.gov.co
-
-**Ubicación:** Medellín, Colombia
-
-### 9.2 Redes Sociales
-
-- **Facebook:** https://www.facebook.com/gilbertoalzate.tarde
-- **Instagram:** https://www.instagram.com/elalzateviveporvos/
-- **YouTube:** https://www.youtube.com/@alzatevirtual8374
-- **WhatsApp:** https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508
-
-### 9.3 Equipo de Desarrollo
-
-**Repositorio:** https://github.com/Rv3ndbm/Portal-Institucional
-
-**Reportar Problemas:**
-1. Crear un issue en GitHub
-2. Incluir descripción del problema
-3. Pasos para reproducir
-4. Capturas de pantalla si es necesario
-
-### 9.4 Documentación Adicional
-
-- **Manual de Usuario:** `manual-usuario.html`
-- **Guía Rápida:** `guia-rapida.html`
-- **Referencia Rápida:** `referencia-rapida.html`
-- **Manuales:** `MANUALES.html`
-
-### 9.5 Próximos Pasos y Mejoras
-
-**Funcionalidades Futuras:**
-- [ ] Backend con base de datos (Django/Flask)
-- [ ] Sistema de autenticación
-- [ ] Panel administrativo
-- [ ] Blog dinámico
-- [ ] Chat en vivo
-- [ ] App móvil (React Native)
-- [ ] Integración con Akros API
-- [ ] Sistema de notificaciones
-
----
-
-## APÉNDICES
-
-### Apéndice A: Comandos Útiles de Git
-
-```bash
-# Clonar repositorio
-git clone https://github.com/Rv3ndbm/Portal-Institucional.git
-
-# Ver estado actual
-git status
-
-# Agregar cambios
-git add .
-git add archivo.html
-
-# Hacer commit
-git commit -m "Descripción del cambio"
-
-# Enviar a GitHub
-git push origin main
-
-# Traer cambios
-git pull origin main
-
-# Ver historial
-git log
-
-# Ver diferencias
-git diff
-
-# Crear rama nueva
-git branch nombre-rama
-git checkout nombre-rama
-
-# Fusionar ramas
-git checkout main
-git merge nombre-rama
-```
-
-### Apéndice B: Recursos de Aprendizaje
-
-- **MDN Web Docs:** https://developer.mozilla.org/
-- **W3Schools:** https://www.w3schools.com/
-- **CSS Tricks:** https://css-tricks.com/
-- **JavaScript.info:** https://javascript.info/
-- **WCAG Accessibility:** https://www.w3.org/WAI/WCAG21/quickref/
-
-### Apéndice C: Herramientas Recomendadas
-
-| Herramienta | Propósito | Enlace |
-|---|---|---|
-| Visual Studio Code | Editor | https://code.visualstudio.com/ |
-| Git | Control versión | https://git-scm.com/ |
-| Chrome DevTools | Debug | F12 en Chrome |
-| Lighthouse | Auditoría | Integrado en Chrome |
-| Figma | Diseño | https://figma.com/ |
-| Color Picker | Colores | https://htmlcolorcodes.com/ |
-| Font Awesome | Iconos | https://fontawesome.com/ |
-
----
-
-**Fin del Manual del Programador**
-
-*Documento versión 1.0 - Junio 2026*
-*Última revisión: 2026-06-16*
+**I.E. Gilberto Alzate Avendaño** — *Medellín, Colombia*  
+*Documento mantenido y actualizado por el Equipo de Desarrollo de Software.*

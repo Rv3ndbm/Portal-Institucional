@@ -1303,46 +1303,45 @@ img:not([data-src]) {
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .social-icon {
     width: 42px;
     height: 42px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    background: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all 0.25s ease;
+    text-decoration: none;
 }
 
 .social-icon img {
-    width: 22px;
-    height: 22px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-    /* Iconos blancos para elegancia */
-    transition: filter 0.3s ease;
+    width: 24px !important;
+    height: 24px !important;
+    object-fit: contain !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    display: block !important;
+    transition: transform 0.25s ease;
 }
 
 .social-icon:hover {
-    background: var(--color-white);
-    transform: translateY(-3px);
-    border-color: var(--color-white);
+    background: #ffffff !important;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
 .social-icon:hover img {
-    filter: none;
-    /* Recuperar color original al hover */
+    transform: scale(1.15);
+    filter: none !important;
+    -webkit-filter: none !important;
 }
-
-/* Colores específicos hover si se desea, o genérico */
-.social-icon.facebook:hover img {
-    filter: none;
-}
-
-/* Asume que la imagen original tiene color */
 
 /* Footer Bottom */
 .footer-bottom {
@@ -1490,10 +1489,8 @@ img:not([data-src]) {
     }
 
     .social-icon {
-        width: 50px;
-        height: 50px;
-        background: rgba(255, 255, 255, 0.15);
-        /* Más contraste */
+        width: 46px;
+        height: 46px;
     }
 
     .footer-bottom {

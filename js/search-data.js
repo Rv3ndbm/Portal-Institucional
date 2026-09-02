@@ -105,13 +105,13 @@ const SEARCH_INDEX = [
         ]
     },
 
-    // ── DEPARTAMENTOS ────────────────────────────────────────
+    // ── DEPENDENCIAS ────────────────────────────────────────
     {
-        titulo: "Departamentos y Gestión Directiva",
-        descripcion: "Organigrama de la institución. Conoce el equipo administrativo, directivos docentes, rectoría y los coordinadores de convivencia y académicos.",
-        url: "departamentos.html",
+        titulo: "Dependencias y Gestión Directiva",
+        descripcion: "Organigrama de la institución. Conoce el equipo administrativo, directivos docentes, rectoría, secretaría y los coordinadores de convivencia y académicos.",
+        url: "dependencias.html",
         keywords: [
-            "departamentos", "areas", "equipo directivo", "administrativo", "organigrama",
+            "dependencias", "departamentos", "areas", "equipo directivo", "administrativo", "organigrama",
             "coordinacion", "rectoria", "personal", "docentes", "secretaria", "tesoreria",
             "auxiliares", "atencion al publico", "directivos", "gobierno escolar"
         ]
@@ -119,7 +119,7 @@ const SEARCH_INDEX = [
     {
         titulo: "Coordinación Convivencial y Académica",
         descripcion: "Normas de convivencia escolar, acompañamiento pedagógico, reglamento interno (Manual) y procesos de mediación de conflictos.",
-        url: "departamentos.html#coordinacion",
+        url: "dependencias.html#coordinacion",
         keywords: [
             "coordinacion", "coordinador", "disciplina", "convivencia escolar", "normas",
             "reglamento interno", "faltas", "comportamiento", "sanciones", "conducto regular",
@@ -129,7 +129,7 @@ const SEARCH_INDEX = [
     {
         titulo: "Rectoría y Liderazgo Institucional",
         descripcion: "Gestión directiva, presupuestal e institucional liderada por la rectoría. Proyectos de desarrollo y alianzas de la I.E. Gilberto Alzate Avendaño.",
-        url: "departamentos.html#rectoria",
+        url: "dependencias.html#rectoria",
         keywords: [
             "rectoria", "rector", "directivos", "direccion", "liderazgo", "administracion",
             "gestion directiva", "jefe", "presupuestos", "resoluciones", "decretos",

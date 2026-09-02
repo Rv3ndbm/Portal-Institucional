@@ -33,7 +33,7 @@ function getCardBackgroundStyle(?string $imageUrl): string {
     <link rel="icon" type="image/png" href="../../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png">
     
     <!-- CSS Institucional -->
-    <link rel="stylesheet" href="../../css/styles.css">
+    <link rel="stylesheet" href="../../css/styles.css?v=2.5">
     <link rel="stylesheet" href="../../css/variables.css">
     <link rel="stylesheet" href="../../css/modern-theme.css">
     <link rel="stylesheet" href="../../css/noticias.css">
@@ -91,11 +91,11 @@ function getCardBackgroundStyle(?string $imageUrl): string {
                     </ul>
 
                     <ul class="nav-menu nav-menu-right">
-                        <li class="nav-item" data-bg="departamentos">
-                            <a href="../../html/departamentos.html" class="nav-link">DEPARTAMENTOS</a>
+                                                <li class="nav-item" data-bg="dependencias">
+                            <a href="../../html/dependencias.html" class="nav-link">DEPENDENCIAS</a>
                             <ul class="dropdown-menu">
-                                <li><a href="../../html/departamentos.html#coordinacion">Coordinación</a></li>
-                                <li><a href="../../html/departamentos.html#rectoria">Rectoría</a></li>
+                                <li><a href="../../html/dependencias.html#coordinacion">Coordinación</a></li>
+                                <li><a href="../../html/dependencias.html#rectoria">Rectoría</a></li>
                             </ul>
                         </li>
 
@@ -271,7 +271,7 @@ function getCardBackgroundStyle(?string $imageUrl): string {
                 <ul class="footer-links">
                     <li><a href="../../index.html">Inicio</a></li>
                     <li><a href="../../html/historia.html">Nuestra Historia</a></li>
-                    <li><a href="../../html/departamentos.html">Departamentos</a></li>
+                    <li><a href="../../html/dependencias.html">Dependencias</a></li>
                     <li><a href="../../html/tecnicas.html">Medias Técnicas</a></li>
                     <li><a href="../../html/sedes.html">Nuestras Sedes</a></li>
                     <li><a href="../../html/deportes.html">Deportes</a></li>
@@ -296,11 +296,11 @@ function getCardBackgroundStyle(?string $imageUrl): string {
 
             <div class="footer-section">
                 <h3 class="footer-title">Síguenos</h3>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/gilbertoalzate.tarde" target="_blank" class="social-icon" rel="noopener noreferrer"><img src="../../img/facebook.png" alt="Facebook"></a>
-                    <a href="https://www.instagram.com/elalzateviveporvos/" target="_blank" class="social-icon" rel="noopener noreferrer"><img src="../../img/ig.png" alt="Instagram"></a>
-                    <a href="https://www.youtube.com/@alzatevirtual8374" target="_blank" class="social-icon" rel="noopener noreferrer"><img src="../../img/yt.png" alt="YouTube"></a>
-                    <a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508" target="_blank" rel="noopener noreferrer" class="social-icon"><img src="../../img/whatsap.png" alt="WhatsApp"></a>
+                                                                <div class="social-links">
+                    <a href="https://www.facebook.com/gilbertoalzate.tarde" target="_blank" class="social-icon facebook" rel="noopener noreferrer" aria-label="Facebook"><img src="../../img/facebook.png" alt="Facebook"></a>
+                    <a href="https://www.instagram.com/elalzateviveporvos/" target="_blank" class="social-icon instagram" rel="noopener noreferrer" aria-label="Instagram"><img src="../../img/ig.png" alt="Instagram"></a>
+                    <a href="https://www.youtube.com/@alzatevirtual8374" target="_blank" class="social-icon youtube" rel="noopener noreferrer" aria-label="YouTube"><img src="../../img/yt.png" alt="YouTube"></a>
+                    <a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508" target="_blank" class="social-icon whatsapp" rel="noopener noreferrer" aria-label="WhatsApp"><img src="../../img/whatsap.png" alt="WhatsApp"></a>
                 </div>
             </div>
         </div>

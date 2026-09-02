@@ -1287,34 +1287,44 @@ body[data-sport-page] {
 
 .social-links {
     display: flex;
-    gap: 15px;
+    gap: 12px;
     margin-top: 15px;
+    align-items: center;
 }
 
 .social-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transition: all var(--transition);
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 42px;
+    height: 42px;
+    background: #ffffff !important;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all var(--transition, 0.25s ease);
 }
 
 .social-icon:hover {
-    background: var(--sport-accent);
-    transform: translateY(-3px);
+    background: #ffffff !important;
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
 .social-icon img {
-    width: 20px;
-    height: 20px;
-    filter: brightness(1) invert(0);
+    width: 24px !important;
+    height: 24px !important;
+    object-fit: contain !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    opacity: 1 !important;
+    transition: transform 0.25s ease;
+    display: block !important;
 }
 
 .social-icon:hover img {
-    filter: brightness(0);
+    transform: scale(1.15);
+    filter: none !important;
+    -webkit-filter: none !important;
 }
 
 .footer-bottom {

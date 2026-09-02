@@ -26,6 +26,7 @@ if (historiaToggle && historiaAccordion) {
 const backgroundImages = {
     inicio: 'url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200")',
     sedes: 'url("https://images.unsplash.com/photo-1562774053-701939374585?w=1200")',
+    dependencias: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200")',
     departamentos: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200")',
     medias: 'url("https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200")',
     academico: 'url("https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1200")'
