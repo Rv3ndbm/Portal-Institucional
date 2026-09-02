@@ -95,6 +95,37 @@ function ensureDatabaseStructure(PDO $pdo): void
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ");
 
+    // Tabla 4: Avisos Urgentes y Comunicados de Última Hora
+    $pdo->exec("
+        CREATE TABLE IF NOT EXISTS avisos (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            titulo VARCHAR(255) NOT NULL,
+            mensaje TEXT NOT NULL,
+            tipo VARCHAR(50) NOT NULL DEFAULT 'warning',
+            enlace VARCHAR(500) DEFAULT NULL,
+            texto_enlace VARCHAR(100) DEFAULT NULL,
+            duracion_dias INT DEFAULT 1,
+            activo TINYINT(1) DEFAULT 0,
+            expires_at DATETIME DEFAULT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ");
+
+    // Crear registro inicial de aviso si no existe
+    $avisoCount = (int) $pdo->query("SELECT COUNT(*) FROM avisos")->fetchColumn();
+    if ($avisoCount === 0) {
+        $stmtAviso = $pdo->prepare("INSERT INTO avisos (titulo, mensaje, tipo, enlace, texto_enlace, duracion_dias, activo, expires_at) VALUES (:titulo, :mensaje, :tipo, :enlace, :texto_enlace, :duracion_dias, 0, NULL)");
+        $stmtAviso->execute([
+            ':titulo'        => 'Aviso Importante a la Comunidad',
+            ':mensaje'       => 'Bienvenidos al nuevo ciclo escolar institucional.',
+            ':tipo'          => 'warning',
+            ':enlace'        => '',
+            ':texto_enlace'  => 'Ver más información',
+            ':duracion_dias' => 1
+        ]);
+    }
+
     // Crear admin por defecto si no existe ningún registro (admin / alzate2026)
     $adminCount = (int) $pdo->query("SELECT COUNT(*) FROM admins")->fetchColumn();
     if ($adminCount === 0) {
@@ -121,6 +152,27 @@ function ensureDatabaseStructure(PDO $pdo): void
 }
 
 ensureDatabaseStructure($pdo);
+
+/**
+ * Obtiene el aviso urgente activo y no expirado (si existe).
+ */
+function getActiveAviso(PDO $pdo): ?array
+{
+    try {
+        $stmt = $pdo->prepare('
+            SELECT * FROM avisos 
+            WHERE activo = 1 
+              AND (expires_at IS NULL OR expires_at > NOW())
+            ORDER BY id DESC 
+            LIMIT 1
+        ');
+        $stmt->execute();
+        $aviso = $stmt->fetch();
+        return $aviso ?: null;
+    } catch (Exception $e) {
+        return null;
+    }
+}
 
 // ============================================================
 // FUNCIONES DE SEGURIDAD Y AUXILIARES

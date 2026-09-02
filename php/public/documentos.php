@@ -1,27 +1,21 @@
 <?php
 // ============================================================
-// VISTA PÚBLICA DE NOTICIAS DINÁMICA
+// VISTA PÚBLICA DE DOCUMENTOS Y CIRCULARES DINÁMICA
 // I.E. Gilberto Alzate Avendaño
 // ============================================================
 
 require_once __DIR__ . '/../config/database.php';
 
-$stmt = $pdo->query('SELECT * FROM noticias ORDER BY created_at DESC');
-$news = $stmt->fetchAll();
+$stmt = $pdo->query('SELECT * FROM documentos ORDER BY created_at DESC');
+$docs = $stmt->fetchAll();
 
-function getCardBackgroundStyle(?string $imageUrl): string {
-    $img = trim((string) $imageUrl);
-    if ($img === '') {
-        return 'background-image: linear-gradient(135deg, #1e3c72, #2e7ce3); background-size: cover; background-position: center;';
+function resolveDocAsset(?string $path): string {
+    $p = trim((string) $path);
+    if ($p === '') return '#';
+    if (str_starts_with($p, 'http://') || str_starts_with($p, 'https://')) {
+        return $p;
     }
-    if (str_starts_with($img, 'linear-gradient') || str_starts_with($img, 'url(')) {
-        return "background-image: {$img}; background-size: cover; background-position: center;";
-    }
-    if (str_starts_with($img, 'http://') || str_starts_with($img, 'https://')) {
-        return "background-image: url('{$img}'); background-size: cover; background-position: center;";
-    }
-    $clean = ltrim($img, '/');
-    return "background-image: url('../../{$clean}'); background-size: cover; background-position: center;";
+    return '../../' . ltrim($p, '/');
 }
 ?>
 <!DOCTYPE html>
@@ -29,7 +23,7 @@ function getCardBackgroundStyle(?string $imageUrl): string {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noticias - I.E. Gilberto Alzate Avendaño</title>
+    <title>Circulares y Documentos - I.E. Gilberto Alzate Avendaño</title>
     <link rel="icon" type="image/png" href="../../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png">
     
     <!-- PWA Manifest & Theme -->
@@ -41,8 +35,8 @@ function getCardBackgroundStyle(?string $imageUrl): string {
 
     <!-- Open Graph / Redes Sociales & WhatsApp -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Noticias y Novedades - I.E. Gilberto Alzate Avendaño">
-    <meta property="og:description" content="Mantente informado con los últimos acontecimientos, logros y comunicados oficiales de nuestra comunidad educativa.">
+    <meta property="og:title" content="Circulares y Documentos Oficiales - I.E. Gilberto Alzate Avendaño">
+    <meta property="og:description" content="Consulta y descarga circulares de rectoría, formatos de matrícula, guías curriculares y comunicados oficiales.">
     <meta property="og:image" content="../../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png">
     <meta name="twitter:card" content="summary_large_image">
     
@@ -50,15 +44,15 @@ function getCardBackgroundStyle(?string $imageUrl): string {
     <link rel="stylesheet" href="../../css/styles.css?v=2.5">
     <link rel="stylesheet" href="../../css/variables.css">
     <link rel="stylesheet" href="../../css/modern-theme.css">
-    <link rel="stylesheet" href="../../css/noticias.css">
+    <link rel="stylesheet" href="../../css/documentos.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link rel="stylesheet" href="../../css/search.css">
     
     <!-- Fuentes y Librerías -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body data-news-page>
+<body data-doc-page>
 
     <!-- Header Principal Institucional -->
     <header class="main-header" id="mainHeader">
@@ -89,7 +83,7 @@ function getCardBackgroundStyle(?string $imageUrl): string {
                                 <li><a href="../../html/calendario.html">Eventos</a></li>
                                 <li><a href="../../html/deportes.html">Deportes</a></li>
                                 <li><a href="noticias.php">Noticias</a></li>
-                                <li><a href="documentos.php">Documentos</a></li>
+                                <li><a href="documentos.php" class="active-page" aria-current="page">Documentos</a></li>
                             </ul>
                         </li>
 
@@ -106,7 +100,7 @@ function getCardBackgroundStyle(?string $imageUrl): string {
                     </ul>
 
                     <ul class="nav-menu nav-menu-right">
-                                                <li class="nav-item" data-bg="dependencias">
+                        <li class="nav-item" data-bg="dependencias">
                             <a href="../../html/dependencias.html" class="nav-link">DEPENDENCIAS</a>
                             <ul class="dropdown-menu">
                                 <li><a href="../../html/dependencias.html#coordinacion">Coordinación</a></li>
@@ -153,118 +147,121 @@ function getCardBackgroundStyle(?string $imageUrl): string {
         </div>
     </header>
 
-    <!-- HERO NOTICIAS -->
-    <section class="news-hero">
-        <div class="news-hero-content">
-            <span class="hero-badge">Actualidad Institucional</span>
-            <h1 class="news-hero-title">Noticias y Novedades</h1>
-            <p class="news-hero-description">Mantente informado con los últimos acontecimientos, logros y comunicados oficiales de nuestra comunidad educativa.</p>
+    <!-- HERO DOCUMENTOS -->
+    <section class="doc-hero">
+        <div class="doc-hero-content">
+            <span class="hero-badge"><i class="fas fa-folder-open"></i> Repositorio Oficial</span>
+            <h1 class="doc-hero-title">Documentos y Circulares</h1>
+            <p class="doc-hero-description">Accede, consulta y descarga fácilmente las circulares de rectoría, formatos de matrícula, resoluciones y documentos curriculares de la institución.</p>
         </div>
-        <div class="news-hero-overlay"></div>
+        <div class="doc-hero-overlay"></div>
     </section>
 
-    <!-- NOTICIA DESTACADA -->
-    <?php if (!empty($news)): ?>
-        <?php $featured = $news[0]; ?>
-        <section class="featured-news container">
-            <div class="section-header">
-                <h2 class="section-title">Noticia Destacada</h2>
-                <div class="title-underline"></div>
+    <!-- SECCIÓN PRINCIPAL DE DOCUMENTOS -->
+    <main class="doc-main-container">
+        <!-- BARRA DE HERRAMIENTAS: BÚSQUEDA Y FILTROS -->
+        <div class="doc-toolbar">
+            <!-- Buscador en tiempo real -->
+            <div class="doc-search-box">
+                <i class="fas fa-search doc-search-icon"></i>
+                <input type="text" id="docSearchInput" placeholder="Buscar documento por título o palabra clave..." autocomplete="off">
+                <button type="button" id="docSearchClear" class="doc-search-clear" title="Limpiar búsqueda" style="display:none;">&times;</button>
             </div>
 
-            <article class="featured-card" id="featuredNews">
-                <div class="featured-image-container">
-                    <div class="featured-image-placeholder card-image-placeholder" style="<?= getCardBackgroundStyle($featured['image_url']) ?>"></div>
-                </div>
-                <div class="featured-content">
-                    <div class="meta-tags">
-                        <span class="category category-<?= htmlspecialchars((string) $featured['category'], ENT_QUOTES, 'UTF-8') ?>">
-                            <?= htmlspecialchars(ucfirst((string) $featured['category']), ENT_QUOTES, 'UTF-8') ?>
-                        </span>
-                        <span class="card-date"><i class="far fa-calendar-alt"></i> <?= htmlspecialchars((string) $featured['date_label'], ENT_QUOTES, 'UTF-8') ?></span>
-                    </div>
-                    <h3 class="featured-title card-title"><?= htmlspecialchars((string) $featured['title'], ENT_QUOTES, 'UTF-8') ?></h3>
-                    <p class="featured-excerpt"><?= htmlspecialchars((string) $featured['excerpt'], ENT_QUOTES, 'UTF-8') ?></p>
-                    <button class="btn-read-more btn-open-modal-featured" style="background: none; border: none; cursor: pointer; padding: 0;">
-                        Leer Noticia Completa <i class="fas fa-arrow-right"></i>
-                    </button>
-                    <div class="full-content" style="display: none;">
-                        <?= nl2br(htmlspecialchars((string) $featured['content'], ENT_QUOTES, 'UTF-8')) ?>
-                    </div>
-                </div>
-            </article>
-        </section>
-    <?php endif; ?>
+            <!-- Filtros por Categoría -->
+            <div class="doc-categories-wrapper" role="tablist">
+                <button type="button" class="doc-filter-btn active" data-category="todas">
+                    <i class="fas fa-layer-group"></i> Todas (<?= count($docs) ?>)
+                </button>
+                <button type="button" class="doc-filter-btn" data-category="circulares">
+                    <i class="fas fa-bullhorn"></i> Circulares
+                </button>
+                <button type="button" class="doc-filter-btn" data-category="matriculas">
+                    <i class="fas fa-user-plus"></i> Matrículas
+                </button>
+                <button type="button" class="doc-filter-btn" data-category="formatos">
+                    <i class="fas fa-file-signature"></i> Formatos
+                </button>
+                <button type="button" class="doc-filter-btn" data-category="academico">
+                    <i class="fas fa-graduation-cap"></i> Académico
+                </button>
+                <button type="button" class="doc-filter-btn" data-category="resoluciones">
+                    <i class="fas fa-stamp"></i> Resoluciones
+                </button>
+            </div>
+        </div>
 
-    <!-- FILTROS DE CATEGORÍA -->
-    <div class="news-filters container">
-        <button class="filter-btn active">Todas</button>
-        <button class="filter-btn">Culturales</button>
-        <button class="filter-btn">Deportivas</button>
-        <button class="filter-btn">Parroquiales</button>
-        <button class="filter-btn">Sedes</button>
-    </div>
-
-    <!-- LISTADO DE NOTICIAS -->
-    <section class="news-list container">
-        <?php if (empty($news)): ?>
-            <div style="text-align:center; padding: 60px 20px; color: #64748b;">
-                <i class="far fa-newspaper" style="font-size: 3rem; margin-bottom: 16px; opacity: 0.5;"></i>
-                <h2>No hay noticias publicadas aún</h2>
-                <p>Las novedades y comunicados del colegio aparecerán aquí una vez sean publicadas.</p>
+        <!-- CUADRÍCULA DE DOCUMENTOS -->
+        <?php if (empty($docs)): ?>
+            <div class="doc-empty-state">
+                <div class="empty-icon-circle">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+                <h2>Aún no hay documentos publicados</h2>
+                <p>Próximamente la administración institucional compartirá las circulares y formatos en esta sección.</p>
             </div>
         <?php else: ?>
-            <div class="news-grid" id="newsGrid">
-                <?php foreach ($news as $item): ?>
-                    <article class="news-card" data-category="<?= htmlspecialchars((string) $item['category'], ENT_QUOTES, 'UTF-8') ?>" id="noticia-<?= (int) $item['id'] ?>">
-                        <div class="card-image">
-                            <div class="card-image-placeholder" style="<?= getCardBackgroundStyle($item['image_url']) ?>"></div>
+            <div class="doc-grid" id="docGrid">
+                <?php foreach ($docs as $doc): 
+                    $cat = strtolower((string) $doc['category']);
+                    $filePath = resolveDocAsset($doc['file_path']);
+                    $ext = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+                    $isPdf = ($ext === 'pdf');
+                    $dateFormatted = date('d/m/Y', strtotime((string)$doc['created_at']));
+                ?>
+                    <article class="doc-card" data-category="<?= htmlspecialchars($cat, ENT_QUOTES, 'UTF-8') ?>" data-title="<?= htmlspecialchars(strtolower((string) $doc['title']), ENT_QUOTES, 'UTF-8') ?>" data-desc="<?= htmlspecialchars(strtolower((string) ($doc['description'] ?? '')), ENT_QUOTES, 'UTF-8') ?>">
+                        <div class="doc-card-badge-row">
+                            <span class="doc-badge doc-badge-<?= htmlspecialchars($cat, ENT_QUOTES, 'UTF-8') ?>">
+                                <?= htmlspecialchars(ucfirst($cat), ENT_QUOTES, 'UTF-8') ?>
+                            </span>
+                            <span class="doc-size-badge">
+                                <i class="fas fa-file-alt"></i> <?= htmlspecialchars((string) ($doc['file_size'] ?? strtoupper($ext)), ENT_QUOTES, 'UTF-8') ?>
+                            </span>
                         </div>
-                        <div class="card-content">
-                            <div class="card-meta">
-                                <span class="category category-<?= htmlspecialchars((string) $item['category'], ENT_QUOTES, 'UTF-8') ?>">
-                                    <?= htmlspecialchars(ucfirst((string) $item['category']), ENT_QUOTES, 'UTF-8') ?>
-                                </span>
-                                <span class="card-date"><i class="far fa-calendar-alt"></i> <?= htmlspecialchars((string) $item['date_label'], ENT_QUOTES, 'UTF-8') ?></span>
+
+                        <div class="doc-card-main">
+                            <div class="doc-file-icon <?= $isPdf ? 'pdf' : 'word' ?>">
+                                <i class="fas <?= $isPdf ? 'fa-file-pdf' : 'fa-file-word' ?>"></i>
                             </div>
-                            <h3 class="card-title"><?= htmlspecialchars((string) $item['title'], ENT_QUOTES, 'UTF-8') ?></h3>
-                            <p class="card-excerpt"><?= htmlspecialchars((string) $item['excerpt'], ENT_QUOTES, 'UTF-8') ?></p>
-                            <button class="card-link btn-read-more-card">Leer más <i class="fas fa-arrow-right"></i></button>
-                            <div class="full-content" style="display: none;">
-                                <?= nl2br(htmlspecialchars((string) $item['content'], ENT_QUOTES, 'UTF-8')) ?>
+                            <div class="doc-card-details">
+                                <h3 class="doc-title"><?= htmlspecialchars((string) $doc['title'], ENT_QUOTES, 'UTF-8') ?></h3>
+                                <?php if (!empty($doc['description'])): ?>
+                                    <p class="doc-desc"><?= htmlspecialchars((string) $doc['description'], ENT_QUOTES, 'UTF-8') ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <div class="doc-card-footer">
+                            <span class="doc-date"><i class="far fa-calendar-alt"></i> <?= $dateFormatted ?></span>
+                            <div class="doc-actions">
+                                <a href="<?= htmlspecialchars($filePath, ENT_QUOTES, 'UTF-8') ?>" target="_blank" rel="noopener noreferrer" class="doc-btn preview" title="Previsualizar en pestaña nueva">
+                                    <i class="fas fa-eye"></i> Visualizar
+                                </a>
+                                <a href="<?= htmlspecialchars($filePath, ENT_QUOTES, 'UTF-8') ?>" download class="doc-btn download" title="Descargar archivo a tu dispositivo">
+                                    <i class="fas fa-download"></i> Descargar
+                                </a>
                             </div>
                         </div>
                     </article>
                 <?php endforeach; ?>
             </div>
+
+            <!-- Estado de búsqueda sin resultados -->
+            <div id="docNoSearchResults" class="doc-no-results" style="display:none;">
+                <i class="fas fa-search-minus"></i>
+                <h3>No se encontraron documentos que coincidan</h3>
+                <p>Intenta con otros términos de búsqueda o selecciona la categoría "Todas".</p>
+                <button type="button" class="doc-reset-search-btn" id="docResetSearchBtn">Restablecer filtros</button>
+            </div>
         <?php endif; ?>
-    </section>
+    </main>
 
-    <!-- MODAL DE LECTURA COMPLETA -->
-    <div id="newsModal" class="news-modal" role="dialog" aria-modal="true">
-        <div class="news-modal-overlay"></div>
-        <div class="news-modal-content">
-            <button class="news-modal-close" aria-label="Cerrar modal">&times;</button>
-            <div class="news-modal-image">
-                <div id="modalImageDisplay" class="modal-image-placeholder"></div>
-            </div>
-            <div class="news-modal-body">
-                <div class="news-modal-meta">
-                    <span id="modalCategoryBadge" class="category"></span>
-                    <span id="modalDateText" class="card-date"></span>
-                </div>
-                <h2 id="modalTitleText" class="news-modal-title"></h2>
-                <div id="modalFullContent" class="news-modal-text"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- FOOTER INSTITUCIONAL COMPLETO -->
+    <!-- FOOTER INSTITUCIONAL -->
     <footer class="main-footer">
         <div class="footer-container">
             <div class="footer-section">
                 <h3 class="footer-title">Sobre Nosotros</h3>
-                <p class="footer-text">Institución educativa comprometida con la excelencia académica y la formación integral de nuestros estudiantes.</p>
+                <p class="footer-text">Institución educativa comprometida con la excelencia académica, la formación integral y la transparencia en la comunicación institucional.</p>
                 <div class="footer-logo">
                     <img loading="lazy" src="../../img/logo del colegio.jpg" alt="Logo Institución">
                 </div>
@@ -290,8 +287,9 @@ function getCardBackgroundStyle(?string $imageUrl): string {
                     <li><a href="../../html/tecnicas.html">Medias Técnicas</a></li>
                     <li><a href="../../html/sedes.html">Nuestras Sedes</a></li>
                     <li><a href="../../html/deportes.html">Deportes</a></li>
+                    <li><a href="noticias.php">Noticias</a></li>
+                    <li><a href="documentos.php">Documentos</a></li>
                     <li><a href="../../html/pre.html">Pre-Inscripción</a></li>
-                    <li><a href="https://www.youtube.com/@alzatevirtual8374/videos" target="_blank" rel="noopener noreferrer">Alzate Virtual</a></li>
                 </ul>
             </div>
 
@@ -311,7 +309,7 @@ function getCardBackgroundStyle(?string $imageUrl): string {
 
             <div class="footer-section">
                 <h3 class="footer-title">Síguenos</h3>
-                                                                <div class="social-links">
+                <div class="social-links">
                     <a href="https://www.facebook.com/gilbertoalzate.tarde" target="_blank" class="social-icon facebook" rel="noopener noreferrer" aria-label="Facebook"><img src="../../img/facebook.png" alt="Facebook"></a>
                     <a href="https://www.instagram.com/elalzateviveporvos/" target="_blank" class="social-icon instagram" rel="noopener noreferrer" aria-label="Instagram"><img src="../../img/ig.png" alt="Instagram"></a>
                     <a href="https://www.youtube.com/@alzatevirtual8374" target="_blank" class="social-icon youtube" rel="noopener noreferrer" aria-label="YouTube"><img src="../../img/yt.png" alt="YouTube"></a>
@@ -396,7 +394,93 @@ function getCardBackgroundStyle(?string $imageUrl): string {
     <!-- Scripts -->
     <script src="../../js/search-data.js" defer></script>
     <script src="../../js/script.js"></script>
-    <script src="../../js/noticias.js"></script>
     <script src="../../js/accessibility.js" defer></script>
+
+    <!-- Script interactivo de filtrado y búsqueda de documentos -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('docSearchInput');
+            const searchClear = document.getElementById('docSearchClear');
+            const filterBtns = document.querySelectorAll('.doc-filter-btn');
+            const docCards = document.querySelectorAll('.doc-card');
+            const noResults = document.getElementById('docNoSearchResults');
+            const resetBtn = document.getElementById('docResetSearchBtn');
+
+            let currentCategory = 'todas';
+            let currentSearch = '';
+
+            function applyFilters() {
+                let visibleCount = 0;
+                const query = currentSearch.toLowerCase().trim();
+
+                docCards.forEach(card => {
+                    const category = card.getAttribute('data-category') || '';
+                    const title = card.getAttribute('data-title') || '';
+                    const desc = card.getAttribute('data-desc') || '';
+
+                    const matchesCategory = (currentCategory === 'todas' || category === currentCategory);
+                    const matchesSearch = (!query || title.includes(query) || desc.includes(query));
+
+                    if (matchesCategory && matchesSearch) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (noResults) {
+                    noResults.style.display = (visibleCount === 0 && docCards.length > 0) ? 'block' : 'none';
+                }
+            }
+
+            // Filtrado por botones de categoría
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentCategory = this.getAttribute('data-category') || 'todas';
+                    applyFilters();
+                });
+            });
+
+            // Búsqueda en tiempo real
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    currentSearch = this.value;
+                    if (searchClear) {
+                        searchClear.style.display = currentSearch.length > 0 ? 'block' : 'none';
+                    }
+                    applyFilters();
+                });
+            }
+
+            if (searchClear) {
+                searchClear.addEventListener('click', function() {
+                    if (searchInput) {
+                        searchInput.value = '';
+                        currentSearch = '';
+                        this.style.display = 'none';
+                        applyFilters();
+                        searchInput.focus();
+                    }
+                });
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    if (searchInput) searchInput.value = '';
+                    currentSearch = '';
+                    if (searchClear) searchClear.style.display = 'none';
+                    
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    const allBtn = document.querySelector('.doc-filter-btn[data-category="todas"]');
+                    if (allBtn) allBtn.classList.add('active');
+                    currentCategory = 'todas';
+                    applyFilters();
+                });
+            }
+        });
+    </script>
 </body>
 </html>

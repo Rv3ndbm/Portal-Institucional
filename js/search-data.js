@@ -43,6 +43,18 @@ const SEARCH_INDEX = [
         ]
     },
 
+    // ── DOCUMENTOS Y CIRCULARES ──────────────────────────────
+    {
+        titulo: "Circulares y Documentos Oficiales",
+        descripcion: "Repositorio institucional para consultar y descargar circulares de rectoría, formatos de matrícula, resoluciones y documentos curriculares en PDF.",
+        url: "documentos.html",
+        keywords: [
+            "documentos", "circulares", "formatos", "matriculas", "resoluciones", "pdf",
+            "descargas", "rectoria", "secretaria", "constancias", "autorizaciones", "planes",
+            "archivos", "papeles", "descargar circular", "comunicado oficial", "institucionales"
+        ]
+    },
+
     // ── SEDES ────────────────────────────────────────────────
     {
         titulo: "Nuestras Sedes Educativas",

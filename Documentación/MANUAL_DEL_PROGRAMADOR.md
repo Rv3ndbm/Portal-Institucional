@@ -125,21 +125,24 @@ c:\xampp\htdocs\portalweb/
 │
 ├── index.html                   # Página principal institucional (Landing page)
 ├── favicon.ico                  # Icono del sitio
+├── manifest.json                # PWA Manifest para instalación en celulares
+├── sw.js                        # Service Worker (Caché inteligente y soporte offline)
 │
 ├── css/                         # Hojas de estilo en cascada
-│   ├── styles.css               # Estilos globales, header, navegación, footer
+│   ├── styles.css               # Estilos globales, header, navegación, ticker continuo, footer
 │   ├── variables.css            # Tokens de diseño (colores, sombras, espaciados)
 │   ├── modern-theme.css         # Mejoras visuales modernas y glassmorphism
 │   ├── admin.css                # Estilos del Dashboard CRUD y Login (Super Responsive)
 │   ├── noticias.css             # Estilos de la sección y modal de noticias públicas
+│   ├── documentos.css           # Estilos del repositorio de circulares y documentos
 │   ├── search.css               # Interfaz del buscador flotante y resultados
 │   ├── accessibility.css        # Estilos del panel y modos de accesibilidad
-│   ├── calendar.css             # Estilos del calendario institucional
+│   ├── calendario.css           # Estilos del calendario institucional
 │   ├── sedes_landing.css        # Estilos específicos de la sección de sedes
-│   └── responsive.css           # Reglas de adaptación para móviles y tablets
+│   └── [seccion].css            # Estilos dedicados por vista institucional
 │
 ├── js/                          # Scripts del lado del cliente
-│   ├── script.js                # Lógica principal, carrusel 3D, navegación móvil
+│   ├── script.js                # Lógica principal, ticker marquee, carrusel 3D, PWA, navegación móvil
 │   ├── noticias.js              # Apertura de modales y filtros de categorías
 │   ├── search-data.js           # Índice de búsqueda con pesos, títulos y URLs
 │   ├── accessibility.js         # Lógica de contrastes, tamaños de fuente y dislexia
@@ -147,6 +150,7 @@ c:\xampp\htdocs\portalweb/
 │
 ├── html/                        # Vistas estáticas e informativas
 │   ├── noticias.html            # Redirección relativa a ../php/public/noticias.php
+│   ├── documentos.html          # Redirección relativa a ../php/public/documentos.php
 │   ├── admin.html               # Redirección relativa a ../php/admin/login.php
 │   ├── historia.html            # Historia y símbolos de la institución
 │   ├── calendario.html          # Calendario escolar institucional
@@ -174,13 +178,15 @@ c:\xampp\htdocs\portalweb/
 │
 ├── php/                         # Lógica dinámica del backend
 │   ├── config/
-│   │   └── database.php         # Conexión PDO, auto-aprovisionamiento, CSRF, auth y uploads
+│   │   └── database.php         # Conexión PDO, auto-aprovisionamiento, CSRF, auth y avisos
 │   ├── admin/
 │   │   ├── login.php            # Inicio de sesión con rate-limiting y Bcrypt
-│   │   ├── index.php            # Dashboard multisección (Noticias, Documentos, Perfil)
+│   │   ├── index.php            # Dashboard multisección (Noticias, Documentos, Avisos, Perfil)
 │   │   └── logout.php           # Cierre de sesión seguro y destrucción de cookies
 │   └── public/
-│       └── noticias.php         # Vista pública de noticias renderizada desde MySQL
+│       ├── noticias.php         # Vista pública de noticias renderizada desde MySQL
+│       ├── documentos.php       # Repositorio público de circulares y documentos
+│       └── api_aviso.php        # Endpoint JSON en tiempo real para avisos urgentes
 │
 ├── uploads/                     # Directorio de almacenamiento de archivos subidos
 │   ├── .htaccess                # Protección: Bloquea ejecución de scripts PHP/binarios

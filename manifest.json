@@ -1,0 +1,26 @@
+{
+  "name": "I.E. Gilberto Alzate Avendaño",
+  "short_name": "IE GAA",
+  "description": "Portal Institucional Oficial de la Institución Educativa Gilberto Alzate Avendaño (Medellín, Colombia)",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e3c72",
+  "orientation": "portrait-primary",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "img/logo_del_colegio-removebg-preview__1_-removebg-preview.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/logo_del_colegio-removebg-preview__1_-removebg-preview.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

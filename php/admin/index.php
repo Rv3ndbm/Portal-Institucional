@@ -240,6 +240,70 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
+
+        // --------------------------------------------------------
+        // 4. SECCIÓN: AVISO URGENTE
+        // --------------------------------------------------------
+        elseif ($section === 'aviso') {
+            $activo = isset($_POST['activo']) && $_POST['activo'] === '1' ? 1 : 0;
+            $titulo = trim((string) ($_POST['titulo'] ?? ''));
+            $mensaje = trim((string) ($_POST['mensaje'] ?? ''));
+            $tipo = trim((string) ($_POST['tipo'] ?? 'warning'));
+            $enlace = trim((string) ($_POST['enlace'] ?? ''));
+            $textoEnlace = trim((string) ($_POST['texto_enlace'] ?? 'Ver más'));
+            $duracionDias = (int) ($_POST['duracion_dias'] ?? 1);
+
+            if ($titulo === '' && $activo === 1) {
+                $message = 'El título del aviso es obligatorio si está activo.';
+                $messageType = 'error';
+            } elseif ($mensaje === '' && $activo === 1) {
+                $message = 'El mensaje del aviso es obligatorio si está activo.';
+                $messageType = 'error';
+            } else {
+                if ($activo === 1) {
+                    if ($duracionDias > 0) {
+                        $expiresAt = date('Y-m-d H:i:s', strtotime("+{$duracionDias} days"));
+                    } else {
+                        $expiresAt = null; // Permanente
+                    }
+                } else {
+                    $expiresAt = null;
+                }
+
+                // Guardar o actualizar registro
+                $stmtCheck = $pdo->query('SELECT id FROM avisos ORDER BY id DESC LIMIT 1');
+                $existingAvisoId = (int) $stmtCheck->fetchColumn();
+
+                if ($existingAvisoId > 0) {
+                    $stmt = $pdo->prepare('UPDATE avisos SET titulo = :titulo, mensaje = :mensaje, tipo = :tipo, enlace = :enlace, texto_enlace = :texto_enlace, duracion_dias = :duracion_dias, activo = :activo, expires_at = :expires_at WHERE id = :id');
+                    $stmt->execute([
+                        ':titulo'        => $titulo,
+                        ':mensaje'       => $mensaje,
+                        ':tipo'          => $tipo,
+                        ':enlace'        => $enlace,
+                        ':texto_enlace'  => $textoEnlace,
+                        ':duracion_dias' => $duracionDias,
+                        ':activo'        => $activo,
+                        ':expires_at'    => $expiresAt,
+                        ':id'            => $existingAvisoId
+                    ]);
+                } else {
+                    $stmt = $pdo->prepare('INSERT INTO avisos (titulo, mensaje, tipo, enlace, texto_enlace, duracion_dias, activo, expires_at) VALUES (:titulo, :mensaje, :tipo, :enlace, :texto_enlace, :duracion_dias, :activo, :expires_at)');
+                    $stmt->execute([
+                        ':titulo'        => $titulo,
+                        ':mensaje'       => $mensaje,
+                        ':tipo'          => $tipo,
+                        ':enlace'        => $enlace,
+                        ':texto_enlace'  => $textoEnlace,
+                        ':duracion_dias' => $duracionDias,
+                        ':activo'        => $activo,
+                        ':expires_at'    => $expiresAt
+                    ]);
+                }
+
+                $message = $activo ? 'Aviso urgente publicado y activado en el portal.' : 'Aviso desactivado correctamente.';
+            }
+        }
     }
 }
 
@@ -263,6 +327,20 @@ $newsList = $stmtNews->fetchAll();
 // Listado de documentos
 $stmtDocs = $pdo->query('SELECT * FROM documentos ORDER BY created_at DESC');
 $docsList = $stmtDocs->fetchAll();
+
+// Datos del aviso urgente
+$stmtAviso = $pdo->query('SELECT * FROM avisos ORDER BY id DESC LIMIT 1');
+$currentAviso = $stmtAviso->fetch() ?: [
+    'titulo'        => 'Aviso Importante',
+    'mensaje'       => '',
+    'tipo'          => 'warning',
+    'enlace'        => '',
+    'texto_enlace'  => 'Ver más',
+    'duracion_dias' => 1,
+    'activo'        => 0,
+    'expires_at'    => null
+];
+$isAvisoActiveAndValid = ($currentAviso['activo'] == 1 && (empty($currentAviso['expires_at']) || strtotime($currentAviso['expires_at']) > time()));
 
 // Datos del administrador actual
 $stmtAdmin = $pdo->prepare('SELECT username, full_name FROM admins WHERE id = :id LIMIT 1');
@@ -323,6 +401,12 @@ $currentAdmin = $stmtAdmin->fetch();
             <a href="?tab=documentos" class="dash-tab-link <?= $activeTab === 'documentos' ? 'active' : '' ?>">
                 <i class="fas fa-file-pdf"></i> <span>Documentos y Circulares</span>
                 <span class="tab-badge"><?= count($docsList) ?></span>
+            </a>
+            <a href="?tab=aviso" class="dash-tab-link <?= $activeTab === 'aviso' ? 'active' : '' ?>">
+                <i class="fas fa-bullhorn"></i> <span>Aviso Urgente</span>
+                <?php if ($isAvisoActiveAndValid): ?>
+                    <span class="tab-badge" style="background: #e74c3c; color: white;">Activo</span>
+                <?php endif; ?>
             </a>
             <a href="?tab=seguridad" class="dash-tab-link <?= $activeTab === 'seguridad' ? 'active' : '' ?>">
                 <i class="fas fa-user-shield"></i> <span>Seguridad y Contraseña</span>
@@ -573,6 +657,151 @@ $currentAdmin = $stmtAdmin->fetch();
                                 <?php endforeach; ?>
                             </div>
                         <?php endif; ?>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
+
+        <!-- SECCIÓN: AVISO URGENTE (COMUNICADO DE ÚLTIMA HORA) -->
+        <?php if ($activeTab === 'aviso'): ?>
+            <section class="dash-section active">
+                <div class="dash-grid-layout">
+                    <!-- Formulario de Configuración del Aviso -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h2><i class="fas fa-bullhorn"></i> Configurar Comunicado / Aviso Urgente</h2>
+                            <?php if ($isAvisoActiveAndValid): ?>
+                                <span class="badge-count" style="background:#27ae60; color:#fff;">
+                                    <i class="fas fa-circle" style="font-size:0.6rem; margin-right:4px;"></i> Publicado y Visible
+                                </span>
+                            <?php else: ?>
+                                <span class="badge-count" style="background:#95a5a6; color:#fff;">Inactivo / Oculto</span>
+                            <?php endif; ?>
+                        </div>
+
+                        <form class="dash-form" method="post" action="index.php?tab=aviso" autocomplete="off">
+                            <input type="hidden" name="form_section" value="aviso">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+
+                            <!-- Interruptor de Activación -->
+                            <div class="form-group" style="background: rgba(30, 60, 114, 0.04); padding: 16px; border-radius: 8px; border: 1px solid rgba(30, 60, 114, 0.1);">
+                                <label style="display:flex; align-items:center; gap: 12px; cursor: pointer; font-weight:600; font-size:1.05rem;">
+                                    <input type="checkbox" name="activo" value="1" <?= (!empty($currentAviso['activo'])) ? 'checked' : '' ?> style="width:20px; height:20px; cursor:pointer;">
+                                    <span>Activar y mostrar este aviso en el portal web</span>
+                                </label>
+                                <p class="form-helper-text" style="margin: 6px 0 0 32px;">
+                                    Cuando está activado, aparecerá un <strong>carrusel ticker continuo</strong> en la página de inicio justo arriba de la galería 3D y en los avisos del portal.
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="avisoTitulo">Título del Aviso / Encabezado *</label>
+                                <input type="text" id="avisoTitulo" name="titulo" value="<?= htmlspecialchars((string) ($currentAviso['titulo'] ?? 'Aviso Importante'), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: Jornada Pedagógica Institucional" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="avisoMensaje">Texto del Comunicado *</label>
+                                <textarea id="avisoMensaje" name="mensaje" rows="3" placeholder="Ej: Se informa a los padres y acudientes que este viernes no habrá actividad académica presencial por capacitación docente..." required><?= htmlspecialchars((string) ($currentAviso['mensaje'] ?? ''), ENT_QUOTES, 'UTF-8') ?></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="avisoTipo">Tipo / Nivel de Alerta *</label>
+                                    <select id="avisoTipo" name="tipo">
+                                        <option value="warning" <?= (($currentAviso['tipo'] ?? 'warning') === 'warning') ? 'selected' : '' ?>>⚠️ Importante / Alerta (Naranja)</option>
+                                        <option value="danger" <?= (($currentAviso['tipo'] ?? '') === 'danger') ? 'selected' : '' ?>>🚨 Urgente / Crítico (Rojo)</option>
+                                        <option value="info" <?= (($currentAviso['tipo'] ?? '') === 'info') ? 'selected' : '' ?>>ℹ️ Informativo / Comunicado (Azul)</option>
+                                        <option value="success" <?= (($currentAviso['tipo'] ?? '') === 'success') ? 'selected' : '' ?>>✅ Éxito / Felicitación (Verde)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="avisoDuracion">Duración Automática *</label>
+                                    <select id="avisoDuracion" name="duracion_dias">
+                                        <option value="1" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 1) ? 'selected' : '' ?>>1 Día (24 Horas)</option>
+                                        <option value="3" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 3) ? 'selected' : '' ?>>3 Días</option>
+                                        <option value="7" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 7) ? 'selected' : '' ?>>1 Semana (7 Días)</option>
+                                        <option value="15" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 15) ? 'selected' : '' ?>>15 Días</option>
+                                        <option value="30" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 30) ? 'selected' : '' ?>>1 Mes (30 Días)</option>
+                                        <option value="0" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 0) ? 'selected' : '' ?>>Permanente (Hasta desactivarlo manualmente)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="avisoEnlace">Enlace Opcional (Botón de acción)</label>
+                                    <input type="text" id="avisoEnlace" name="enlace" value="<?= htmlspecialchars((string) ($currentAviso['enlace'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: ../public/documentos.php o URL externa">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="avisoTextoEnlace">Texto del Botón</label>
+                                    <input type="text" id="avisoTextoEnlace" name="texto_enlace" value="<?= htmlspecialchars((string) ($currentAviso['texto_enlace'] ?? 'Ver más'), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: Ver circular oficial">
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="dash-btn primary">
+                                    <i class="fas fa-save"></i> Guardar y Aplicar Aviso
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Tarjeta de Estado y Vista Previa en Vivo -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h2><i class="fas fa-eye"></i> Vista Previa en Tiempo Real</h2>
+                        </div>
+
+                        <div style="padding: 16px 0;">
+                            <?php if ($isAvisoActiveAndValid): ?>
+                                <div style="background: #e8f8f5; border: 1px solid #a3e4d7; border-radius: 8px; padding: 14px; margin-bottom: 20px; display: flex; gap: 12px; align-items: center;">
+                                    <i class="fas fa-clock" style="font-size: 1.5rem; color: #16a085;"></i>
+                                    <div>
+                                        <strong style="color: #0e6251; display:block;">Aviso Activo en el Sitio</strong>
+                                        <small style="color: #117a65;">
+                                            <?php if (!empty($currentAviso['expires_at'])): ?>
+                                                Expira automáticamente el: <strong><?= htmlspecialchars(date('d/m/Y H:i', strtotime($currentAviso['expires_at'])), ENT_QUOTES, 'UTF-8') ?></strong>
+                                            <?php else: ?>
+                                                Configurado como permanente.
+                                            <?php endif; ?>
+                                        </small>
+                                    </div>
+                                </div>
+                            <?php else: ?>
+                                <div style="background: #fdf2e9; border: 1px solid #fad7a0; border-radius: 8px; padding: 14px; margin-bottom: 20px; display: flex; gap: 12px; align-items: center;">
+                                    <i class="fas fa-eye-slash" style="font-size: 1.5rem; color: #d35400;"></i>
+                                    <div>
+                                        <strong style="color: #7e5109; display:block;">El aviso no se muestra actualmente</strong>
+                                        <small style="color: #a04000;">
+                                            Activa la casilla "Activar y mostrar este aviso" y guarda los cambios para que se publique en el portal.
+                                        </small>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+
+                            <h3 style="font-size: 0.95rem; text-transform: uppercase; color: #666; margin-bottom: 10px;">Demostración del Marquee Ticker:</h3>
+
+                            <div style="background: #0f172a; border-radius: 12px; padding: 18px; color: #fff; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+                                <div style="display:flex; align-items:center; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
+                                    <span style="background: #e74c3c; color: #fff; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;">
+                                        <i class="fas fa-bell"></i> Comunicado
+                                    </span>
+                                    <span style="font-weight: 600; font-size: 0.95rem; color: #f1f5f9;">
+                                        <?= htmlspecialchars((string) ($currentAviso['titulo'] ?? 'Título del aviso'), ENT_QUOTES, 'UTF-8') ?>
+                                    </span>
+                                </div>
+                                <p style="font-size: 0.9rem; line-height: 1.5; color: #cbd5e1; margin: 0 0 12px 0;">
+                                    <?= htmlspecialchars((string) ($currentAviso['mensaje'] ?? 'Aquí se visualizará el mensaje del comunicado escolar que recorrerá la pantalla continuamente...'), ENT_QUOTES, 'UTF-8') ?>
+                                </p>
+                                <?php if (!empty($currentAviso['enlace'])): ?>
+                                    <a href="#" onclick="return false;" style="display:inline-flex; align-items:center; gap:6px; background: rgba(255,255,255,0.15); color: #fff; text-decoration: none; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">
+                                        <?= htmlspecialchars((string) ($currentAviso['texto_enlace'] ?? 'Ver más'), ENT_QUOTES, 'UTF-8') ?> <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                <?php endif; ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

@@ -1,13 +1,21 @@
-// ============================================
-// SCRIPT.JS - MENÚ HAMBURGUESA PROFESIONAL
-// I.E. Gilberto Alzate Avendaño
-// ============================================
+// === PWA SERVICE WORKER REGISTRATION ===
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        const path = (window.location?.pathname || '').replace(/\\/g, '/');
+        let swPath = 'sw.js';
+        if (path.includes('/php/public/') || path.includes('/html/tecnicas/')) {
+            swPath = '../../sw.js';
+        } else if (path.includes('/html/') || path.includes('/manuales/')) {
+            swPath = '../sw.js';
+        }
+        navigator.serviceWorker.register(swPath).catch(() => {});
+    });
+}
 
 // === LOADING SCREEN ===
 function hideLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen) {
-        // Esperar un poco para asegurar que todo está renderizado
         setTimeout(() => {
             loadingScreen.classList.add('hidden');
         }, 500);
@@ -17,12 +25,116 @@ function hideLoadingScreen() {
 // Ocultar loading screen cuando la página carga completamente
 window.addEventListener('load', hideLoadingScreen);
 
-// También ocultar si el DOM está listo (para páginas rápidas)
+// También ocultar si el DOM está listo
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(hideLoadingScreen, 300);
     initLazyLoading();
     updateManualConvivenciaLinks();
+    initUrgentAnnouncementTicker();
 });
+
+// === AVISO URGENTE: INFINITE MARQUEE TICKER ===
+function initUrgentAnnouncementTicker() {
+    const path = (window.location?.pathname || '').replace(/\\/g, '/');
+    let apiUrl = 'php/public/api_aviso.php';
+    if (path.includes('/php/public/')) {
+        apiUrl = 'api_aviso.php';
+    } else if (path.includes('/html/tecnicas/')) {
+        apiUrl = '../../php/public/api_aviso.php';
+    } else if (path.includes('/html/') || path.includes('/manuales/')) {
+        apiUrl = '../php/public/api_aviso.php';
+    }
+
+    fetch(apiUrl, { cache: 'no-store' })
+        .then(response => {
+            if (!response.ok) return { active: false };
+            return response.json();
+        })
+        .then(data => {
+            if (!data || !data.active) return;
+
+            const dismissKey = `gaa_dismiss_aviso_${data.id}_${data.expires_at || 'perm'}`;
+            if (sessionStorage.getItem(dismissKey) === 'true') {
+                return;
+            }
+
+            const tickerSection = document.createElement('section');
+            tickerSection.className = 'urgent-ticker-section';
+            tickerSection.setAttribute('aria-label', 'Comunicado oficial institucional');
+
+            const tipoClass = `ticker-${data.tipo || 'warning'}`;
+            const tipoLabel = (data.tipo === 'danger') ? '🚨 Urgente' :
+                              (data.tipo === 'info')   ? 'ℹ️ Comunicado' :
+                              (data.tipo === 'success')? '✅ Institucional' : '⚠️ Importante';
+
+            let linkHtml = '';
+            if (data.enlace && data.enlace.trim() !== '') {
+                let cleanLink = data.enlace.trim();
+                if (!cleanLink.startsWith('http')) {
+                    if (path.includes('/php/public/')) {
+                        cleanLink = cleanLink.replace('../public/', '');
+                    } else if (path.includes('/html/tecnicas/')) {
+                        cleanLink = '../../' + cleanLink.replace('../../', '').replace('../', '');
+                    } else if (path.includes('/html/') || path.includes('/manuales/')) {
+                        cleanLink = '../' + cleanLink.replace('../', '');
+                    }
+                }
+                const linkText = data.texto_enlace || 'Ver más';
+                linkHtml = `<a href="${cleanLink}" class="ticker-item-link">${linkText} <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>`;
+            }
+
+            const itemHtml = `
+                <span class="ticker-item">
+                    <strong>${data.titulo}:</strong> ${data.mensaje}
+                    ${linkHtml}
+                </span>
+                <span class="ticker-separator">✦</span>
+            `;
+
+            const blockContent = itemHtml.repeat(3);
+
+            tickerSection.innerHTML = `
+                <div class="urgent-ticker-wrapper ${tipoClass}">
+                    <div class="ticker-badge">
+                        <span class="ticker-pulse-dot"></span>
+                        <span>${tipoLabel}</span>
+                    </div>
+                    <div class="ticker-viewport">
+                        <div class="ticker-track">
+                            <div class="ticker-content">${blockContent}</div>
+                            <div class="ticker-content" aria-hidden="true">${blockContent}</div>
+                        </div>
+                    </div>
+                    <button type="button" class="ticker-close-btn" title="Cerrar aviso" aria-label="Cerrar aviso">&times;</button>
+                </div>
+            `;
+
+            // Insertar justo arriba de la galería 3D en index.html o en main
+            const cylinderSection = document.querySelector('.cylinder-gallery-wrapper');
+            if (cylinderSection && cylinderSection.parentNode) {
+                cylinderSection.parentNode.insertBefore(tickerSection, cylinderSection);
+            } else {
+                const mainEl = document.querySelector('main');
+                if (mainEl && mainEl.firstChild) {
+                    mainEl.insertBefore(tickerSection, mainEl.firstChild);
+                }
+            }
+
+            const closeBtn = tickerSection.querySelector('.ticker-close-btn');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                    tickerSection.style.opacity = '0';
+                    tickerSection.style.transform = 'translateY(-10px)';
+                    tickerSection.style.transition = 'all 0.3s ease';
+                    sessionStorage.setItem(dismissKey, 'true');
+                    setTimeout(() => {
+                        tickerSection.remove();
+                    }, 300);
+                });
+            }
+        })
+        .catch(() => {});
+}
 
 function updateManualConvivenciaLinks() {
     const file = 'MANUAL%20DE%20CONVIVENCIA%202026_IEGAA.docx.pdf';
