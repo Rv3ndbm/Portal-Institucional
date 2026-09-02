@@ -143,7 +143,7 @@ c:\xampp\htdocs\portalweb/
 │   ├── noticias.js              # Apertura de modales y filtros de categorías
 │   ├── search-data.js           # Índice de búsqueda con pesos, títulos y URLs
 │   ├── accessibility.js         # Lógica de contrastes, tamaños de fuente y dislexia
-│   └── admin.js                 # Scripts complementarios de administración
+│   └── [seccion].js             # Scripts interactivos por módulo (sedes, deportes, etc.)
 │
 ├── html/                        # Vistas estáticas e informativas
 │   ├── noticias.html            # Redirección relativa a ../php/public/noticias.php

@@ -297,9 +297,10 @@ function highlightCurrentPage() {
         let isActive = false;
 
         if (link) {
-            const href = link.getAttribute('href');
-            // Comparar el href con la página actual
-            if (href === currentPage || (currentPage === '' && href === 'index.html')) {
+            const href = link.getAttribute('href') || '';
+            const hrefFile = href.split('/').pop().split('#')[0];
+            // Comparar el archivo del href con la página actual
+            if (hrefFile === currentPage || ((currentPage === '' || currentPage === 'index.html') && hrefFile === 'index.html')) {
                 isActive = true;
             }
         }
@@ -617,18 +618,19 @@ function runSearch(query) {
         
         // Ajustar la URL solo si es relativa (no empieza con http)
         if (!newItem.url.startsWith('http')) {
+            const cleanUrl = newItem.url.replace('html/', '');
+            const isIndex = (cleanUrl === 'index.html' || cleanUrl.startsWith('index.html#'));
+
             if (path.includes('/php/')) {
-                if (newItem.url === 'index.html') {
-                    newItem.url = '../../index.html';
-                } else {
-                    newItem.url = '../../html/' + newItem.url.replace('html/', '');
-                }
+                newItem.url = isIndex ? '../../' + cleanUrl : '../../html/' + cleanUrl;
             } else if (path.includes('/html/tecnicas/')) {
-                newItem.url = '../../html/' + newItem.url.replace('html/', '');
+                newItem.url = isIndex ? '../../' + cleanUrl : '../' + cleanUrl;
             } else if (path.includes('/html/')) {
-                newItem.url = newItem.url.replace('html/', '');
+                newItem.url = isIndex ? '../' + cleanUrl : cleanUrl;
+            } else if (path.includes('/manuales/')) {
+                newItem.url = isIndex ? '../' + cleanUrl : '../html/' + cleanUrl;
             } else {
-                newItem.url = 'html/' + newItem.url.replace('html/', '');
+                newItem.url = isIndex ? cleanUrl : 'html/' + cleanUrl;
             }
         }
 
