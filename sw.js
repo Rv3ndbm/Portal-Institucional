@@ -2,12 +2,13 @@
 // SERVICE WORKER - PWA I.E. Gilberto Alzate Avendaño
 // ============================================================
 
-const CACHE_NAME = 'gaa-portal-v2.0';
+const CACHE_NAME = 'gaa-portal-v2.1';
 const STATIC_ASSETS = [
     './',
     './index.html',
     './manifest.json',
     './favicon.ico',
+    './vendor/fontawesome/css/all.min.css',
     './css/styles.css?v=2.5',
     './css/variables.css',
     './css/modern-theme.css',

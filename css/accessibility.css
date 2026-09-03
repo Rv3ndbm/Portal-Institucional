@@ -338,10 +338,35 @@ body.negative-contrast.grayscale::before {
 }
 
 body.dyslexia-friendly,
-body.dyslexia-friendly * {
+body.dyslexia-friendly *:not(i):not([class*="fa-"]):not(.fas):not(.far):not(.fab):not(.fa):not(svg):not(svg *) {
     font-family: 'Comic Sans MS', 'Arial', sans-serif !important;
-    letter-spacing: 0.1em !important;
+    letter-spacing: 0.08em !important;
     line-height: 1.8 !important;
+}
+
+/* Blindaje estricto para íconos Font Awesome en modo dislexia */
+body.dyslexia-friendly i,
+body.dyslexia-friendly .fas,
+body.dyslexia-friendly .far,
+body.dyslexia-friendly .fab,
+body.dyslexia-friendly .fa,
+body.dyslexia-friendly [class*="fa-"],
+body.dyslexia-friendly .search-item-header::before {
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome" !important;
+    letter-spacing: normal !important;
+    font-style: normal !important;
+}
+
+body.dyslexia-friendly .fab {
+    font-family: "Font Awesome 6 Brands", "FontAwesome" !important;
+}
+
+body.dyslexia-friendly .far {
+    font-weight: 400 !important;
+}
+
+body.dyslexia-friendly .fas {
+    font-weight: 900 !important;
 }
 
 body.underline-links a {
