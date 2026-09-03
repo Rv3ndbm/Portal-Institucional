@@ -19,13 +19,15 @@ $message = '';
 $messageType = 'success';
 $activeTab = $_GET['tab'] ?? 'noticias';
 
-function resolveAdminAsset(?string $path): string {
-    $p = trim((string) $path);
-    if ($p === '') return '';
-    if (str_starts_with($p, 'http://') || str_starts_with($p, 'https://')) {
-        return $p;
+if (!function_exists('resolveAdminAsset')) {
+    function resolveAdminAsset(?string $path): string {
+        $p = trim((string) $path);
+        if ($p === '') return '';
+        if (str_starts_with($p, 'http://') || str_starts_with($p, 'https://')) {
+            return $p;
+        }
+        return '../../' . ltrim($p, '/');
     }
-    return '../../' . ltrim($p, '/');
 }
 
 // ------------------------------------------------------------
@@ -242,66 +244,122 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // --------------------------------------------------------
-        // 4. SECCIÓN: AVISO URGENTE
+        // 4. SECCIÓN: AVISOS URGENTES Y COMUNICADOS
         // --------------------------------------------------------
         elseif ($section === 'aviso') {
-            $activo = isset($_POST['activo']) && $_POST['activo'] === '1' ? 1 : 0;
-            $titulo = trim((string) ($_POST['titulo'] ?? ''));
-            $mensaje = trim((string) ($_POST['mensaje'] ?? ''));
-            $tipo = trim((string) ($_POST['tipo'] ?? 'warning'));
-            $enlace = trim((string) ($_POST['enlace'] ?? ''));
-            $textoEnlace = trim((string) ($_POST['texto_enlace'] ?? 'Ver más'));
-            $duracionDias = (int) ($_POST['duracion_dias'] ?? 1);
+            $action = $_POST['action'] ?? 'save';
+            $avisoId = (int) ($_POST['id'] ?? 0);
 
-            if ($titulo === '' && $activo === 1) {
-                $message = 'El título del aviso es obligatorio si está activo.';
-                $messageType = 'error';
-            } elseif ($mensaje === '' && $activo === 1) {
-                $message = 'El mensaje del aviso es obligatorio si está activo.';
-                $messageType = 'error';
+            if ($action === 'delete') {
+                if ($avisoId > 0) {
+                    $stmt = $pdo->prepare('DELETE FROM avisos WHERE id = :id');
+                    $stmt->execute([':id' => $avisoId]);
+                    $message = 'Aviso eliminado correctamente del sistema.';
+                }
+            } elseif ($action === 'toggle') {
+                if ($avisoId > 0) {
+                    $stmt = $pdo->prepare('UPDATE avisos SET activo = IF(activo = 1, 0, 1) WHERE id = :id');
+                    $stmt->execute([':id' => $avisoId]);
+                    $message = 'Estado de publicación del aviso actualizado.';
+                }
             } else {
-                if ($activo === 1) {
+                $activo = isset($_POST['activo']) && $_POST['activo'] === '1' ? 1 : 0;
+                $titulo = trim((string) ($_POST['titulo'] ?? ''));
+                $mensaje = trim((string) ($_POST['mensaje'] ?? ''));
+                $tipo = trim((string) ($_POST['tipo'] ?? 'warning'));
+                $enlace = trim((string) ($_POST['enlace'] ?? ''));
+                $textoEnlace = trim((string) ($_POST['texto_enlace'] ?? 'Ver más'));
+                $duracionDias = (int) ($_POST['duracion_dias'] ?? 1);
+
+                if ($titulo === '') {
+                    $message = 'El título del aviso o comunicado es obligatorio.';
+                    $messageType = 'error';
+                } elseif ($mensaje === '') {
+                    $message = 'El mensaje del aviso es obligatorio.';
+                    $messageType = 'error';
+                } else {
                     if ($duracionDias > 0) {
                         $expiresAt = date('Y-m-d H:i:s', strtotime("+{$duracionDias} days"));
                     } else {
                         $expiresAt = null; // Permanente
                     }
-                } else {
-                    $expiresAt = null;
+
+                    if ($avisoId > 0) {
+                        $stmt = $pdo->prepare('UPDATE avisos SET titulo = :titulo, mensaje = :mensaje, tipo = :tipo, enlace = :enlace, texto_enlace = :texto_enlace, duracion_dias = :duracion_dias, activo = :activo, expires_at = :expires_at WHERE id = :id');
+                        $stmt->execute([
+                            ':titulo'        => $titulo,
+                            ':mensaje'       => $mensaje,
+                            ':tipo'          => $tipo,
+                            ':enlace'        => $enlace,
+                            ':texto_enlace'  => $textoEnlace,
+                            ':duracion_dias' => $duracionDias,
+                            ':activo'        => $activo,
+                            ':expires_at'    => $expiresAt,
+                            ':id'            => $avisoId
+                        ]);
+                        $message = 'Aviso actualizado correctamente.';
+                    } else {
+                        $stmt = $pdo->prepare('INSERT INTO avisos (titulo, mensaje, tipo, enlace, texto_enlace, duracion_dias, activo, expires_at) VALUES (:titulo, :mensaje, :tipo, :enlace, :texto_enlace, :duracion_dias, :activo, :expires_at)');
+                        $stmt->execute([
+                            ':titulo'        => $titulo,
+                            ':mensaje'       => $mensaje,
+                            ':tipo'          => $tipo,
+                            ':enlace'        => $enlace,
+                            ':texto_enlace'  => $textoEnlace,
+                            ':duracion_dias' => $duracionDias,
+                            ':activo'        => $activo,
+                            ':expires_at'    => $expiresAt
+                        ]);
+                        $message = 'Nuevo aviso institucional publicado exitosamente.';
+                    }
                 }
+            }
+        }
 
-                // Guardar o actualizar registro
-                $stmtCheck = $pdo->query('SELECT id FROM avisos ORDER BY id DESC LIMIT 1');
-                $existingAvisoId = (int) $stmtCheck->fetchColumn();
+        // --------------------------------------------------------
+        // 5. SECCIÓN: MENSAJES Y PQRS (CONTACTO)
+        // --------------------------------------------------------
+        elseif ($section === 'mensajes') {
+            $action = $_POST['action'] ?? '';
 
-                if ($existingAvisoId > 0) {
-                    $stmt = $pdo->prepare('UPDATE avisos SET titulo = :titulo, mensaje = :mensaje, tipo = :tipo, enlace = :enlace, texto_enlace = :texto_enlace, duracion_dias = :duracion_dias, activo = :activo, expires_at = :expires_at WHERE id = :id');
-                    $stmt->execute([
-                        ':titulo'        => $titulo,
-                        ':mensaje'       => $mensaje,
-                        ':tipo'          => $tipo,
-                        ':enlace'        => $enlace,
-                        ':texto_enlace'  => $textoEnlace,
-                        ':duracion_dias' => $duracionDias,
-                        ':activo'        => $activo,
-                        ':expires_at'    => $expiresAt,
-                        ':id'            => $existingAvisoId
-                    ]);
-                } else {
-                    $stmt = $pdo->prepare('INSERT INTO avisos (titulo, mensaje, tipo, enlace, texto_enlace, duracion_dias, activo, expires_at) VALUES (:titulo, :mensaje, :tipo, :enlace, :texto_enlace, :duracion_dias, :activo, :expires_at)');
-                    $stmt->execute([
-                        ':titulo'        => $titulo,
-                        ':mensaje'       => $mensaje,
-                        ':tipo'          => $tipo,
-                        ':enlace'        => $enlace,
-                        ':texto_enlace'  => $textoEnlace,
-                        ':duracion_dias' => $duracionDias,
-                        ':activo'        => $activo,
-                        ':expires_at'    => $expiresAt
-                    ]);
+            if ($action === 'toggle_read') {
+                $msgId = (int) ($_POST['id'] ?? 0);
+                if ($msgId > 0) {
+                    $stmt = $pdo->prepare('UPDATE mensajes_contacto SET leido = IF(leido = 1, 0, 1) WHERE id = :id');
+                    $stmt->execute([':id' => $msgId]);
+                    $message = 'Estado de lectura del mensaje actualizado correctamente.';
                 }
+            } elseif ($action === 'mark_all_read') {
+                $pdo->exec('UPDATE mensajes_contacto SET leido = 1');
+                $message = 'Todos los mensajes han sido marcados como leídos.';
+            } elseif ($action === 'delete') {
+                $msgId = (int) ($_POST['id'] ?? 0);
+                if ($msgId > 0) {
+                    $stmt = $pdo->prepare('DELETE FROM mensajes_contacto WHERE id = :id');
+                    $stmt->execute([':id' => $msgId]);
+                    $message = 'Mensaje eliminado del registro.';
+                }
+            } elseif ($action === 'save_mail_config') {
+                $destEmail = trim((string) ($_POST['destinatario_email'] ?? ''));
+                $remitEmail = trim((string) ($_POST['remitente_email'] ?? ''));
+                $destNombre = trim((string) ($_POST['destinatario_nombre'] ?? ''));
 
-                $message = $activo ? 'Aviso urgente publicado y activado en el portal.' : 'Aviso desactivado correctamente.';
+                if ($destEmail === '' || !filter_var($destEmail, FILTER_VALIDATE_EMAIL)) {
+                    $message = 'Por favor ingresa un correo de recepción válido.';
+                    $messageType = 'error';
+                } else {
+                    $configFile = __DIR__ . '/../config/mail_config.php';
+                    $cfg = file_exists($configFile) ? (include $configFile) : [];
+                    $cfg['destinatario_email'] = $destEmail;
+                    if ($destNombre !== '') $cfg['destinatario_nombre'] = $destNombre;
+                    if ($remitEmail !== '' && filter_var($remitEmail, FILTER_VALIDATE_EMAIL)) {
+                        $cfg['remitente_email'] = $remitEmail;
+                    }
+
+                    $exported = "<?php\n// Configuración generada desde el Panel de Administración GAA\nreturn " . var_export($cfg, true) . ";\n";
+                    file_put_contents($configFile, $exported);
+                    $message = 'Configuración de correo actualizada exitosamente.';
+                }
             }
         }
     }
@@ -328,19 +386,36 @@ $newsList = $stmtNews->fetchAll();
 $stmtDocs = $pdo->query('SELECT * FROM documentos ORDER BY created_at DESC');
 $docsList = $stmtDocs->fetchAll();
 
-// Datos del aviso urgente
-$stmtAviso = $pdo->query('SELECT * FROM avisos ORDER BY id DESC LIMIT 1');
-$currentAviso = $stmtAviso->fetch() ?: [
-    'titulo'        => 'Aviso Importante',
-    'mensaje'       => '',
-    'tipo'          => 'warning',
-    'enlace'        => '',
-    'texto_enlace'  => 'Ver más',
-    'duracion_dias' => 1,
-    'activo'        => 0,
-    'expires_at'    => null
-];
-$isAvisoActiveAndValid = ($currentAviso['activo'] == 1 && (empty($currentAviso['expires_at']) || strtotime($currentAviso['expires_at']) > time()));
+// Listado de mensajes de contacto y conteo de no leídos
+$stmtMsg = $pdo->query('SELECT * FROM mensajes_contacto ORDER BY created_at DESC');
+$mensajesList = $stmtMsg->fetchAll();
+$unreadMessagesCount = 0;
+foreach ($mensajesList as $m) {
+    if (empty($m['leido'])) {
+        $unreadMessagesCount++;
+    }
+}
+
+// Configuración actual de correo
+$mailConfig = file_exists(__DIR__ . '/../config/mail_config.php') ? (include __DIR__ . '/../config/mail_config.php') : [];
+$currentDestEmail = $mailConfig['destinatario_email'] ?? 'ie.gilbertoalzate@medellin.gov.co';
+$currentDestNombre = $mailConfig['destinatario_nombre'] ?? 'I.E. Gilberto Alzate Avendaño';
+$currentRemitEmail = $mailConfig['remitente_email'] ?? 'no-reply@alzate.edu.co';
+
+// Edición de aviso
+$editingAviso = null;
+if (!empty($_GET['edit_aviso'])) {
+    $stmt = $pdo->prepare('SELECT * FROM avisos WHERE id = :id LIMIT 1');
+    $stmt->execute([':id' => (int) $_GET['edit_aviso']]);
+    $editingAviso = $stmt->fetch();
+    $activeTab = 'aviso';
+}
+
+// Listado completo de avisos y conteo de activos
+$stmtAvisos = $pdo->query('SELECT * FROM avisos ORDER BY id DESC');
+$avisosList = $stmtAvisos->fetchAll();
+$activeAvisosList = getActiveAvisos($pdo);
+$activeAvisosCount = count($activeAvisosList);
 
 // Datos del administrador actual
 $stmtAdmin = $pdo->prepare('SELECT username, full_name FROM admins WHERE id = :id LIMIT 1');
@@ -355,7 +430,7 @@ $currentAdmin = $stmtAdmin->fetch();
     <title>Dashboard Administrativo - I.E. GAA</title>
     <link rel="icon" type="image/png" href="../../img/logo_del_colegio-removebg-preview__1_-removebg-preview.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../css/admin.css">
+    <link rel="stylesheet" href="../../css/admin.css?v=<?= time() ?>">
 </head>
 <body class="dashboard-body">
 
@@ -394,6 +469,14 @@ $currentAdmin = $stmtAdmin->fetch();
 
         <!-- PESTAÑAS DE NAVEGACIÓN -->
         <nav class="dash-tabs" role="tablist">
+            <a href="?tab=mensajes" class="dash-tab-link <?= $activeTab === 'mensajes' ? 'active' : '' ?>">
+                <i class="fas fa-inbox"></i> <span>Mensajes de Contacto</span>
+                <?php if ($unreadMessagesCount > 0): ?>
+                    <span class="tab-badge" style="background: #dc2626; color: white; font-weight: 700;"><?= $unreadMessagesCount ?> nuevos</span>
+                <?php else: ?>
+                    <span class="tab-badge"><?= count($mensajesList) ?></span>
+                <?php endif; ?>
+            </a>
             <a href="?tab=noticias" class="dash-tab-link <?= $activeTab === 'noticias' ? 'active' : '' ?>">
                 <i class="fas fa-newspaper"></i> <span>Noticias y Novedades</span>
                 <span class="tab-badge"><?= count($newsList) ?></span>
@@ -403,15 +486,285 @@ $currentAdmin = $stmtAdmin->fetch();
                 <span class="tab-badge"><?= count($docsList) ?></span>
             </a>
             <a href="?tab=aviso" class="dash-tab-link <?= $activeTab === 'aviso' ? 'active' : '' ?>">
-                <i class="fas fa-bullhorn"></i> <span>Aviso Urgente</span>
-                <?php if ($isAvisoActiveAndValid): ?>
-                    <span class="tab-badge" style="background: #e74c3c; color: white;">Activo</span>
+                <i class="fas fa-bullhorn"></i> <span>Avisos Urgentes</span>
+                <?php if ($activeAvisosCount > 0): ?>
+                    <span class="tab-badge" style="background: #16a34a; color: white;"><?= $activeAvisosCount ?> activos</span>
+                <?php else: ?>
+                    <span class="tab-badge"><?= count($avisosList) ?></span>
                 <?php endif; ?>
             </a>
             <a href="?tab=seguridad" class="dash-tab-link <?= $activeTab === 'seguridad' ? 'active' : '' ?>">
                 <i class="fas fa-user-shield"></i> <span>Seguridad y Contraseña</span>
             </a>
         </nav>
+
+        <!-- SECCIÓN 0: MENSAJES DE CONTACTO Y PQRS -->
+        <?php if ($activeTab === 'mensajes'): ?>
+            <section class="dash-section active">
+                <!-- Métricas KPI -->
+                <div class="stat-cards-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-inbox"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><?= count($mensajesList) ?></h3>
+                            <p>Total Mensajes Recibidos</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon red">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><?= $unreadMessagesCount ?></h3>
+                            <p>Nuevos (Sin Leer)</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-envelope-open-text"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3><?= count($mensajesList) - $unreadMessagesCount ?></h3>
+                            <p>Mensajes Atendidos</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fas fa-at"></i>
+                        </div>
+                        <div class="stat-info" style="min-width: 0;">
+                            <h3 style="font-size: 1.05rem; word-break: break-all;"><?= htmlspecialchars((string)$currentDestEmail, ENT_QUOTES, 'UTF-8') ?></h3>
+                            <p>Buzón Receptor Configurado</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dash-grid-layout" style="grid-template-columns: 1fr;">
+                    <!-- Bandeja de Entrada -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h2><i class="fas fa-comments"></i> Bandeja de Solicitudes y Contacto</h2>
+                            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                <?php if ($unreadMessagesCount > 0): ?>
+                                    <form method="post" action="index.php?tab=mensajes" style="margin: 0;">
+                                        <input type="hidden" name="form_section" value="mensajes">
+                                        <input type="hidden" name="action" value="mark_all_read">
+                                        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                        <button type="submit" class="dash-btn-small secondary" style="background:#e0e7ff; color:#3730a3;">
+                                            <i class="fas fa-check-double"></i> Marcar todos como leídos
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+
+                        <!-- Barra de Búsqueda y Filtros -->
+                        <div class="dash-filter-bar">
+                            <div class="search-bar-dash">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="msgSearchInput" placeholder="Buscar por radicado, nombre, email, sede, asunto..." onkeyup="filterMessagesTable()">
+                            </div>
+
+                            <div class="filter-pills">
+                                <button type="button" class="filter-pill active" onclick="setMsgFilter('all', this)">Todos (<?= count($mensajesList) ?>)</button>
+                                <button type="button" class="filter-pill" onclick="setMsgFilter('unread', this)">No leídos (<?= $unreadMessagesCount ?>)</button>
+                                <button type="button" class="filter-pill" onclick="setMsgFilter('read', this)">Leídos (<?= count($mensajesList) - $unreadMessagesCount ?>)</button>
+                            </div>
+                        </div>
+
+                        <!-- Tabla de Mensajes -->
+                        <div class="dash-table-wrapper">
+                            <?php if (empty($mensajesList)): ?>
+                                <div class="dash-empty-state">
+                                    <i class="fas fa-inbox empty-icon"></i>
+                                    <p>Aún no se han recibido solicitudes o mensajes de contacto.</p>
+                                </div>
+                            <?php else: ?>
+                                <table class="dash-table" id="messagesTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Radicado</th>
+                                            <th>Estado</th>
+                                            <th>Remitente</th>
+                                            <th>Asunto / Sede</th>
+                                            <th>Fecha y Hora</th>
+                                            <th style="text-align: right;">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($mensajesList as $msg): 
+                                            $radicadoCode = !empty($msg['radicado']) ? $msg['radicado'] : ('GAA-' . str_pad((string)$msg['id'], 5, '0', STR_PAD_LEFT));
+                                            $isUnread = empty($msg['leido']);
+                                            $fechaFormatted = !empty($msg['created_at']) ? date('d M Y, h:i A', strtotime($msg['created_at'])) : 'Reciente';
+                                        ?>
+                                            <tr class="msg-row <?= $isUnread ? 'unread-row' : 'read-row' ?>" 
+                                                data-status="<?= $isUnread ? 'unread' : 'read' ?>"
+                                                data-search="<?= htmlspecialchars(strtolower($radicadoCode . ' ' . $msg['nombre'] . ' ' . $msg['email'] . ' ' . ($msg['telefono'] ?? '') . ' ' . $msg['asunto'] . ' ' . ($msg['sede'] ?? '') . ' ' . $msg['mensaje']), ENT_QUOTES, 'UTF-8') ?>">
+                                                
+                                                <td>
+                                                    <span class="radicado-badge">#<?= htmlspecialchars($radicadoCode, ENT_QUOTES, 'UTF-8') ?></span>
+                                                </td>
+
+                                                <td>
+                                                    <?php if ($isUnread): ?>
+                                                        <span class="status-badge unread"><i class="fas fa-circle" style="font-size: 0.55rem;"></i> Nuevo</span>
+                                                    <?php else: ?>
+                                                        <span class="status-badge read"><i class="fas fa-check"></i> Leído</span>
+                                                    <?php endif; ?>
+                                                </td>
+
+                                                <td>
+                                                    <div class="sender-info">
+                                                        <span class="sender-name"><?= htmlspecialchars($msg['nombre'], ENT_QUOTES, 'UTF-8') ?></span>
+                                                        <div class="sender-links">
+                                                            <a href="mailto:<?= htmlspecialchars($msg['email'], ENT_QUOTES, 'UTF-8') ?>" title="Escribir a <?= htmlspecialchars($msg['email'], ENT_QUOTES, 'UTF-8') ?>">
+                                                                <i class="fas fa-envelope"></i> <?= htmlspecialchars($msg['email'], ENT_QUOTES, 'UTF-8') ?>
+                                                            </a>
+                                                            <?php if (!empty($msg['telefono'])): ?>
+                                                                <a href="https://wa.me/57<?= preg_replace('/\D/', '', $msg['telefono']) ?>" target="_blank" title="WhatsApp" style="color: #16a34a;">
+                                                                    <i class="fab fa-whatsapp"></i> <?= htmlspecialchars($msg['telefono'], ENT_QUOTES, 'UTF-8') ?>
+                                                                </a>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                                        <span class="asunto-pill"><?= htmlspecialchars($msg['asunto'], ENT_QUOTES, 'UTF-8') ?></span>
+                                                        <?php if (!empty($msg['sede'])): ?>
+                                                            <span class="sede-pill"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($msg['sede'], ENT_QUOTES, 'UTF-8') ?></span>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <small style="color: var(--dash-text-muted); white-space: nowrap; font-weight: 500;">
+                                                        <i class="far fa-clock"></i> <?= htmlspecialchars($fechaFormatted, ENT_QUOTES, 'UTF-8') ?>
+                                                    </small>
+                                                </td>
+
+                                                <td style="text-align: right;">
+                                                    <div style="display: flex; gap: 6px; justify-content: flex-end; align-items: center;">
+                                                        <!-- Ver Detalle -->
+                                                        <button type="button" class="action-btn edit" title="Ver Detalle Completo" 
+                                                                onclick="showMsgDetail(<?= htmlspecialchars(json_encode([
+                                                                    'id'         => $msg['id'],
+                                                                    'radicado'   => $radicadoCode,
+                                                                    'nombre'     => $msg['nombre'],
+                                                                    'email'      => $msg['email'],
+                                                                    'telefono'   => $msg['telefono'] ?? '',
+                                                                    'asunto'     => $msg['asunto'],
+                                                                    'sede'       => $msg['sede'] ?? 'No especificada',
+                                                                    'mensaje'    => $msg['mensaje'],
+                                                                    'ip_origen'  => $msg['ip_origen'] ?? 'Desconocida',
+                                                                    'fecha'      => $fechaFormatted,
+                                                                    'leido'      => !empty($msg['leido']) ? 1 : 0
+                                                                ]), ENT_QUOTES, 'UTF-8') ?>)">
+                                                            <i class="fas fa-eye"></i>
+                                                        </button>
+
+                                                        <!-- Toggle Leído -->
+                                                        <form method="post" action="index.php?tab=mensajes" style="margin: 0;">
+                                                            <input type="hidden" name="form_section" value="mensajes">
+                                                            <input type="hidden" name="action" value="toggle_read">
+                                                            <input type="hidden" name="id" value="<?= (int) $msg['id'] ?>">
+                                                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                                            <button type="submit" class="action-btn download" title="<?= $isUnread ? 'Marcar como leído' : 'Marcar como no leído' ?>">
+                                                                <i class="fas <?= $isUnread ? 'fa-envelope-open' : 'fa-envelope' ?>"></i>
+                                                            </button>
+                                                        </form>
+
+                                                        <!-- Responder por Gmail y Email -->
+                                                        <?php 
+                                                            $mailSubjectPlain = "Respuesta a Solicitud Radicado #" . $radicadoCode . " - I.E. Gilberto Alzate Avendaño";
+                                                            $mailBodyPlain = "Estimado(a) " . $msg['nombre'] . ",\n\nEn atención a su solicitud radicada a través del portal web institucional con el radicado #" . $radicadoCode . " referente a \"" . $msg['asunto'] . "\":\n\n[Escriba su respuesta aquí]\n\nAtentamente,\nEquipo Directivo y Administrativo\nI.E. Gilberto Alzate Avendaño";
+                                                            $gmailComposeUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=" . urlencode($msg['email']) . "&su=" . urlencode($mailSubjectPlain) . "&body=" . urlencode($mailBodyPlain);
+                                                            $mailtoUrl = "mailto:" . htmlspecialchars($msg['email'], ENT_QUOTES, 'UTF-8') . "?subject=" . rawurlencode($mailSubjectPlain) . "&body=" . rawurlencode($mailBodyPlain);
+                                                        ?>
+                                                        <a href="<?= htmlspecialchars($gmailComposeUrl, ENT_QUOTES, 'UTF-8') ?>" target="_blank" class="action-btn" style="background:#fee2e2; color:#ea4335;" title="Responder directamente en Gmail">
+                                                            <i class="fab fa-google"></i>
+                                                        </a>
+                                                        <a href="<?= $mailtoUrl ?>" class="action-btn edit" style="background:#dcfce7; color:#15803d;" title="Responder en aplicación de correo">
+                                                            <i class="fas fa-envelope"></i>
+                                                        </a>
+
+                                                        <!-- Eliminar -->
+                                                        <form method="post" action="index.php?tab=mensajes" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar este mensaje del registro institucional?');">
+                                                            <input type="hidden" name="form_section" value="mensajes">
+                                                            <input type="hidden" name="action" value="delete">
+                                                            <input type="hidden" name="id" value="<?= (int) $msg['id'] ?>">
+                                                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                                            <button type="submit" class="action-btn delete" title="Eliminar Mensaje">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Configuración de Correo Receptor -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h2><i class="fas fa-cog"></i> Configuración del Buzón Receptor de Mensajes</h2>
+                        </div>
+
+                        <form class="dash-form" method="post" action="index.php?tab=mensajes">
+                            <input type="hidden" name="form_section" value="mensajes">
+                            <input type="hidden" name="action" value="save_mail_config">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="destEmail">Correo Destinatario Oficial *</label>
+                                    <input type="email" id="destEmail" name="destinatario_email" value="<?= htmlspecialchars((string)$currentDestEmail, ENT_QUOTES, 'UTF-8') ?>" placeholder="ie.gilbertoalzate@medellin.gov.co" required>
+                                    <small style="color: var(--dash-text-muted);">A este correo electrónico llegarán todas las notificaciones de los mensajes enviados desde la página de contacto.</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="destNombre">Nombre Institucional de Recepción</label>
+                                    <input type="text" id="destNombre" name="destinatario_nombre" value="<?= htmlspecialchars((string)$currentDestNombre, ENT_QUOTES, 'UTF-8') ?>" placeholder="I.E. Gilberto Alzate Avendaño">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="remitEmail">Correo Remitente del Sistema (No-Reply)</label>
+                                    <input type="email" id="remitEmail" name="remitente_email" value="<?= htmlspecialchars((string)$currentRemitEmail, ENT_QUOTES, 'UTF-8') ?>" placeholder="no-reply@alzate.edu.co">
+                                </div>
+                            </div>
+
+                            <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px; margin-bottom: 18px; display: flex; gap: 12px; align-items: flex-start;">
+                                <i class="fas fa-info-circle" style="color: #2563eb; font-size: 1.25rem; margin-top: 2px;"></i>
+                                <div style="font-size: 0.85rem; color: #1e3a8a; line-height: 1.5;">
+                                    <strong>Información sobre el envío de correos:</strong>
+                                    <p style="margin: 4px 0 0 0;">
+                                        En servidores locales de desarrollo (como XAMPP en Windows), todos los mensajes se guardan de forma 100% segura en esta base de datos y se registran en los logs. En un servidor de producción en internet (hosting o VPS con Apache/cPanel), los correos se entregan en tiempo real a la bandeja de entrada configurada arriba.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="dash-btn primary">
+                                    <i class="fas fa-save"></i> Guardar Configuración de Correo
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
 
         <!-- SECCIÓN 1: NOTICIAS -->
         <?php if ($activeTab === 'noticias'): ?>
@@ -662,146 +1015,202 @@ $currentAdmin = $stmtAdmin->fetch();
             </section>
         <?php endif; ?>
 
-        <!-- SECCIÓN: AVISO URGENTE (COMUNICADO DE ÚLTIMA HORA) -->
+        <!-- SECCIÓN: AVISOS URGENTES Y COMUNICADOS (MÚLTIPLES AVISOS) -->
         <?php if ($activeTab === 'aviso'): ?>
             <section class="dash-section active">
                 <div class="dash-grid-layout">
-                    <!-- Formulario de Configuración del Aviso -->
+                    <!-- Formulario de Creación / Edición del Aviso -->
                     <div class="dash-card">
                         <div class="dash-card-header">
-                            <h2><i class="fas fa-bullhorn"></i> Configurar Comunicado / Aviso Urgente</h2>
-                            <?php if ($isAvisoActiveAndValid): ?>
-                                <span class="badge-count" style="background:#27ae60; color:#fff;">
-                                    <i class="fas fa-circle" style="font-size:0.6rem; margin-right:4px;"></i> Publicado y Visible
-                                </span>
-                            <?php else: ?>
-                                <span class="badge-count" style="background:#95a5a6; color:#fff;">Inactivo / Oculto</span>
+                            <h2><i class="fas <?= $editingAviso ? 'fa-edit' : 'fa-plus-circle' ?>"></i> <?= $editingAviso ? 'Editar Comunicado' : 'Publicar Nuevo Aviso / Comunicado' ?></h2>
+                            <?php if ($editingAviso): ?>
+                                <a href="index.php?tab=aviso" class="dash-btn-small secondary">Cancelar Edición</a>
                             <?php endif; ?>
                         </div>
 
                         <form class="dash-form" method="post" action="index.php?tab=aviso" autocomplete="off">
                             <input type="hidden" name="form_section" value="aviso">
+                            <input type="hidden" name="action" value="save">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars((string)($editingAviso['id'] ?? '0'), ENT_QUOTES, 'UTF-8') ?>">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
 
                             <!-- Interruptor de Activación -->
-                            <div class="form-group" style="background: rgba(30, 60, 114, 0.04); padding: 16px; border-radius: 8px; border: 1px solid rgba(30, 60, 114, 0.1);">
-                                <label style="display:flex; align-items:center; gap: 12px; cursor: pointer; font-weight:600; font-size:1.05rem;">
-                                    <input type="checkbox" name="activo" value="1" <?= (!empty($currentAviso['activo'])) ? 'checked' : '' ?> style="width:20px; height:20px; cursor:pointer;">
-                                    <span>Activar y mostrar este aviso en el portal web</span>
+                            <div class="form-group" style="background: rgba(30, 60, 114, 0.04); padding: 16px; border-radius: 12px; border: 1.5px solid rgba(30, 60, 114, 0.12);">
+                                <label style="display:flex; align-items:center; gap: 12px; cursor: pointer; font-weight:700; font-size:0.95rem;">
+                                    <input type="checkbox" name="activo" value="1" <?= (!empty($editingAviso) ? (!empty($editingAviso['activo']) ? 'checked' : '') : 'checked') ?> style="width:20px; height:20px; accent-color: var(--dash-primary); cursor:pointer;">
+                                    <span>Activar y mostrar este aviso inmediatamente en el portal</span>
                                 </label>
-                                <p class="form-helper-text" style="margin: 6px 0 0 32px;">
-                                    Cuando está activado, aparecerá un <strong>carrusel ticker continuo</strong> en la página de inicio justo arriba de la galería 3D y en los avisos del portal.
-                                </p>
+                                <small class="form-helper-text" style="display:block; margin: 6px 0 0 32px; color: var(--dash-text-muted);">
+                                    Los avisos activos se mostrarán en la marquesina institucional y en la página principal.
+                                </small>
                             </div>
 
                             <div class="form-group">
                                 <label for="avisoTitulo">Título del Aviso / Encabezado *</label>
-                                <input type="text" id="avisoTitulo" name="titulo" value="<?= htmlspecialchars((string) ($currentAviso['titulo'] ?? 'Aviso Importante'), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: Jornada Pedagógica Institucional" required>
+                                <input type="text" id="avisoTitulo" name="titulo" value="<?= htmlspecialchars((string) ($editingAviso['titulo'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: Jornada Pedagógica / Suspensión de Clases" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="avisoMensaje">Texto del Comunicado *</label>
-                                <textarea id="avisoMensaje" name="mensaje" rows="3" placeholder="Ej: Se informa a los padres y acudientes que este viernes no habrá actividad académica presencial por capacitación docente..." required><?= htmlspecialchars((string) ($currentAviso['mensaje'] ?? ''), ENT_QUOTES, 'UTF-8') ?></textarea>
+                                <label for="avisoMensaje">Texto Detallado del Comunicado *</label>
+                                <textarea id="avisoMensaje" name="mensaje" rows="3" placeholder="Redacta el mensaje que se mostrará a la comunidad escolar..." required><?= htmlspecialchars((string) ($editingAviso['mensaje'] ?? ''), ENT_QUOTES, 'UTF-8') ?></textarea>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="avisoTipo">Tipo / Nivel de Alerta *</label>
+                                    <label for="avisoTipo">Nivel / Tipo de Alerta *</label>
                                     <select id="avisoTipo" name="tipo">
-                                        <option value="warning" <?= (($currentAviso['tipo'] ?? 'warning') === 'warning') ? 'selected' : '' ?>>⚠️ Importante / Alerta (Naranja)</option>
-                                        <option value="danger" <?= (($currentAviso['tipo'] ?? '') === 'danger') ? 'selected' : '' ?>>🚨 Urgente / Crítico (Rojo)</option>
-                                        <option value="info" <?= (($currentAviso['tipo'] ?? '') === 'info') ? 'selected' : '' ?>>ℹ️ Informativo / Comunicado (Azul)</option>
-                                        <option value="success" <?= (($currentAviso['tipo'] ?? '') === 'success') ? 'selected' : '' ?>>✅ Éxito / Felicitación (Verde)</option>
+                                        <option value="warning" <?= (($editingAviso['tipo'] ?? 'warning') === 'warning') ? 'selected' : '' ?>>⚠️ Importante / Alerta (Naranja)</option>
+                                        <option value="danger" <?= (($editingAviso['tipo'] ?? '') === 'danger') ? 'selected' : '' ?>>🚨 Urgente / Crítico (Rojo)</option>
+                                        <option value="info" <?= (($editingAviso['tipo'] ?? '') === 'info') ? 'selected' : '' ?>>ℹ️ Informativo / Comunicado (Azul)</option>
+                                        <option value="success" <?= (($editingAviso['tipo'] ?? '') === 'success') ? 'selected' : '' ?>>✅ Institucional / Felicitación (Verde)</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="avisoDuracion">Duración Automática *</label>
+                                    <label for="avisoDuracion">Vigencia / Duración *</label>
                                     <select id="avisoDuracion" name="duracion_dias">
-                                        <option value="1" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 1) ? 'selected' : '' ?>>1 Día (24 Horas)</option>
-                                        <option value="3" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 3) ? 'selected' : '' ?>>3 Días</option>
-                                        <option value="7" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 7) ? 'selected' : '' ?>>1 Semana (7 Días)</option>
-                                        <option value="15" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 15) ? 'selected' : '' ?>>15 Días</option>
-                                        <option value="30" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 30) ? 'selected' : '' ?>>1 Mes (30 Días)</option>
-                                        <option value="0" <?= ((int)($currentAviso['duracion_dias'] ?? 1) === 0) ? 'selected' : '' ?>>Permanente (Hasta desactivarlo manualmente)</option>
+                                        <option value="1" <?= ((int)($editingAviso['duracion_dias'] ?? 1) === 1) ? 'selected' : '' ?>>1 Día (24 Horas)</option>
+                                        <option value="3" <?= ((int)($editingAviso['duracion_dias'] ?? 1) === 3) ? 'selected' : '' ?>>3 Días</option>
+                                        <option value="7" <?= ((int)($editingAviso['duracion_dias'] ?? 1) === 7) ? 'selected' : '' ?>>1 Semana (7 Días)</option>
+                                        <option value="15" <?= ((int)($editingAviso['duracion_dias'] ?? 1) === 15) ? 'selected' : '' ?>>15 Días</option>
+                                        <option value="30" <?= ((int)($editingAviso['duracion_dias'] ?? 1) === 30) ? 'selected' : '' ?>>1 Mes (30 Días)</option>
+                                        <option value="0" <?= ((int)($editingAviso['duracion_dias'] ?? 1) === 0) ? 'selected' : '' ?>>Permanente (Hasta desactivarlo)</option>
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="avisoEnlace">Enlace Opcional (Botón de acción)</label>
-                                    <input type="text" id="avisoEnlace" name="enlace" value="<?= htmlspecialchars((string) ($currentAviso['enlace'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: ../public/documentos.php o URL externa">
+                                    <label for="avisoEnlace">Enlace de Acción Opcional</label>
+                                    <input type="text" id="avisoEnlace" name="enlace" value="<?= htmlspecialchars((string) ($editingAviso['enlace'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: ../public/documentos.php o enlace externo">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="avisoTextoEnlace">Texto del Botón</label>
-                                    <input type="text" id="avisoTextoEnlace" name="texto_enlace" value="<?= htmlspecialchars((string) ($currentAviso['texto_enlace'] ?? 'Ver más'), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: Ver circular oficial">
+                                    <input type="text" id="avisoTextoEnlace" name="texto_enlace" value="<?= htmlspecialchars((string) ($editingAviso['texto_enlace'] ?? 'Ver más'), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: Ver circular oficial">
                                 </div>
                             </div>
 
                             <div class="form-actions">
                                 <button type="submit" class="dash-btn primary">
-                                    <i class="fas fa-save"></i> Guardar y Aplicar Aviso
+                                    <i class="fas fa-save"></i> <?= $editingAviso ? 'Guardar Cambios' : 'Publicar Comunicado' ?>
                                 </button>
+                                <?php if ($editingAviso): ?>
+                                    <a href="index.php?tab=aviso" class="dash-btn secondary">Cancelar</a>
+                                <?php endif; ?>
                             </div>
                         </form>
                     </div>
 
-                    <!-- Tarjeta de Estado y Vista Previa en Vivo -->
+                    <!-- Listado de Avisos Creados -->
                     <div class="dash-card">
                         <div class="dash-card-header">
-                            <h2><i class="fas fa-eye"></i> Vista Previa en Tiempo Real</h2>
+                            <h2><i class="fas fa-list-ul"></i> Todos los Avisos Registrados</h2>
+                            <span class="badge-count"><?= $activeAvisosCount ?> activo(s) de <?= count($avisosList) ?></span>
                         </div>
 
-                        <div style="padding: 16px 0;">
-                            <?php if ($isAvisoActiveAndValid): ?>
-                                <div style="background: #e8f8f5; border: 1px solid #a3e4d7; border-radius: 8px; padding: 14px; margin-bottom: 20px; display: flex; gap: 12px; align-items: center;">
-                                    <i class="fas fa-clock" style="font-size: 1.5rem; color: #16a085;"></i>
-                                    <div>
-                                        <strong style="color: #0e6251; display:block;">Aviso Activo en el Sitio</strong>
-                                        <small style="color: #117a65;">
-                                            <?php if (!empty($currentAviso['expires_at'])): ?>
-                                                Expira automáticamente el: <strong><?= htmlspecialchars(date('d/m/Y H:i', strtotime($currentAviso['expires_at'])), ENT_QUOTES, 'UTF-8') ?></strong>
-                                            <?php else: ?>
-                                                Configurado como permanente.
-                                            <?php endif; ?>
-                                        </small>
-                                    </div>
-                                </div>
-                            <?php else: ?>
-                                <div style="background: #fdf2e9; border: 1px solid #fad7a0; border-radius: 8px; padding: 14px; margin-bottom: 20px; display: flex; gap: 12px; align-items: center;">
-                                    <i class="fas fa-eye-slash" style="font-size: 1.5rem; color: #d35400;"></i>
-                                    <div>
-                                        <strong style="color: #7e5109; display:block;">El aviso no se muestra actualmente</strong>
-                                        <small style="color: #a04000;">
-                                            Activa la casilla "Activar y mostrar este aviso" y guarda los cambios para que se publique en el portal.
-                                        </small>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
-
-                            <h3 style="font-size: 0.95rem; text-transform: uppercase; color: #666; margin-bottom: 10px;">Demostración del Marquee Ticker:</h3>
-
-                            <div style="background: #0f172a; border-radius: 12px; padding: 18px; color: #fff; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
-                                <div style="display:flex; align-items:center; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
-                                    <span style="background: #e74c3c; color: #fff; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;">
-                                        <i class="fas fa-bell"></i> Comunicado
-                                    </span>
-                                    <span style="font-weight: 600; font-size: 0.95rem; color: #f1f5f9;">
-                                        <?= htmlspecialchars((string) ($currentAviso['titulo'] ?? 'Título del aviso'), ENT_QUOTES, 'UTF-8') ?>
-                                    </span>
-                                </div>
-                                <p style="font-size: 0.9rem; line-height: 1.5; color: #cbd5e1; margin: 0 0 12px 0;">
-                                    <?= htmlspecialchars((string) ($currentAviso['mensaje'] ?? 'Aquí se visualizará el mensaje del comunicado escolar que recorrerá la pantalla continuamente...'), ENT_QUOTES, 'UTF-8') ?>
-                                </p>
-                                <?php if (!empty($currentAviso['enlace'])): ?>
-                                    <a href="#" onclick="return false;" style="display:inline-flex; align-items:center; gap:6px; background: rgba(255,255,255,0.15); color: #fff; text-decoration: none; padding: 6px 14px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">
-                                        <?= htmlspecialchars((string) ($currentAviso['texto_enlace'] ?? 'Ver más'), ENT_QUOTES, 'UTF-8') ?> <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                <?php endif; ?>
+                        <?php if (empty($avisosList)): ?>
+                            <div class="dash-empty-state">
+                                <i class="fas fa-bullhorn empty-icon"></i>
+                                <p>No hay avisos registrados actualmente. ¡Crea el primero desde el formulario!</p>
                             </div>
-                        </div>
+                        <?php else: ?>
+                            <div class="dash-items-list">
+                                <?php foreach ($avisosList as $av): 
+                                    $isAvActive = (!empty($av['activo']) && (empty($av['expires_at']) || strtotime($av['expires_at']) > time()));
+                                    $isExpired = (!empty($av['expires_at']) && strtotime($av['expires_at']) <= time());
+                                    $tipoClassBadge = ($av['tipo'] === 'danger') ? 'status-badge unread' :
+                                                      (($av['tipo'] === 'success') ? 'status-badge' : 'status-badge');
+                                    $tipoColor = ($av['tipo'] === 'danger') ? '#dc2626' :
+                                                 (($av['tipo'] === 'success') ? '#16a34a' :
+                                                 (($av['tipo'] === 'info') ? '#2563eb' : '#d97706'));
+                                ?>
+                                    <article class="dash-item-card" style="border-left: 4px solid <?= $tipoColor ?>; <?= !$isAvActive ? 'opacity: 0.75;' : '' ?>">
+                                        <div class="item-content" style="flex: 1;">
+                                            <div style="display:flex; gap:8px; align-items:center; margin-bottom: 6px; flex-wrap: wrap;">
+                                                <?php if ($isAvActive): ?>
+                                                    <span class="status-badge" style="background:#dcfce7; color:#15803d;"><i class="fas fa-check-circle"></i> Activo</span>
+                                                <?php elseif ($isExpired): ?>
+                                                    <span class="status-badge" style="background:#fee2e2; color:#b91c1c;"><i class="fas fa-clock"></i> Expirado</span>
+                                                <?php else: ?>
+                                                    <span class="status-badge" style="background:#e2e8f0; color:#64748b;"><i class="fas fa-eye-slash"></i> Inactivo</span>
+                                                <?php endif; ?>
+
+                                                <span class="asunto-pill" style="font-size:0.75rem; text-transform:uppercase;">
+                                                    <?= htmlspecialchars($av['tipo'] ?? 'warning', ENT_QUOTES, 'UTF-8') ?>
+                                                </span>
+                                            </div>
+
+                                            <h3 class="item-title" style="margin-bottom: 4px;"><?= htmlspecialchars($av['titulo'], ENT_QUOTES, 'UTF-8') ?></h3>
+                                            <p style="font-size: 0.85rem; color: #475569; line-height: 1.4; margin-bottom: 8px;">
+                                                <?= htmlspecialchars(mb_substr($av['mensaje'], 0, 140), ENT_QUOTES, 'UTF-8') ?><?= mb_strlen($av['mensaje']) > 140 ? '...' : '' ?>
+                                            </p>
+
+                                            <div class="item-meta" style="font-size: 0.78rem;">
+                                                <?php if (!empty($av['expires_at'])): ?>
+                                                    <span><i class="far fa-calendar-alt"></i> Vence: <?= date('d/m/Y H:i', strtotime($av['expires_at'])) ?></span>
+                                                <?php else: ?>
+                                                    <span><i class="fas fa-infinity"></i> Permanente</span>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="item-actions">
+                                            <!-- Toggle Activar / Desactivar -->
+                                            <form method="post" action="index.php?tab=aviso" style="margin: 0;">
+                                                <input type="hidden" name="form_section" value="aviso">
+                                                <input type="hidden" name="action" value="toggle">
+                                                <input type="hidden" name="id" value="<?= (int) $av['id'] ?>">
+                                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                                <button type="submit" class="action-btn <?= $isAvActive ? 'download' : 'edit' ?>" title="<?= $isAvActive ? 'Desactivar Aviso' : 'Activar Aviso' ?>">
+                                                    <i class="fas <?= $isAvActive ? 'fa-toggle-on' : 'fa-toggle-off' ?>" style="font-size:1.1rem; color: <?= $isAvActive ? '#16a34a' : '#94a3b8' ?>;"></i>
+                                                </button>
+                                            </form>
+
+                                            <!-- Editar -->
+                                            <a class="action-btn edit" href="index.php?tab=aviso&edit_aviso=<?= (int) $av['id'] ?>" title="Editar Aviso">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+
+                                            <!-- Eliminar -->
+                                            <form method="post" action="index.php?tab=aviso" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar este aviso permanentemente?');">
+                                                <input type="hidden" name="form_section" value="aviso">
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="id" value="<?= (int) $av['id'] ?>">
+                                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
+                                                <button type="submit" class="action-btn delete" title="Eliminar Aviso">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </article>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <!-- Vista Previa de la Marquesina Ticker en Vivo -->
+                        <?php if ($activeAvisosCount > 0): ?>
+                            <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--dash-border);">
+                                <h3 style="font-size: 0.84rem; text-transform: uppercase; color: var(--dash-text-muted); font-weight: 700; margin-bottom: 10px;">
+                                    <i class="fas fa-tv"></i> Vista previa de la marquesina en el sitio:
+                                </h3>
+                                <div style="background: #0f172a; border-radius: 12px; padding: 14px 18px; color: #fff; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+                                    <div style="display:flex; align-items:center; gap: 10px; margin-bottom: 8px;">
+                                        <span style="background: #e74c3c; color: #fff; font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 12px; text-transform: uppercase;">
+                                            <i class="fas fa-bell"></i> En Vivo (<?= $activeAvisosCount ?> activo<?= $activeAvisosCount > 1 ? 's' : '' ?>)
+                                        </span>
+                                    </div>
+                                    <div style="font-size: 0.88rem; line-height: 1.5; color: #cbd5e1;">
+                                        <?php foreach ($activeAvisosList as $idx => $act): ?>
+                                            <span><strong><?= htmlspecialchars($act['titulo'], ENT_QUOTES, 'UTF-8') ?>:</strong> <?= htmlspecialchars($act['mensaje'], ENT_QUOTES, 'UTF-8') ?></span>
+                                            <?php if ($idx < count($activeAvisosList) - 1): ?>
+                                                <span style="color: #38bdf8; margin: 0 8px;">✦</span>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </section>
@@ -863,6 +1272,70 @@ $currentAdmin = $stmtAdmin->fetch();
 
     </main>
 
+    <!-- MODAL DE DETALLE DE MENSAJE -->
+    <div class="dash-modal-overlay" id="msgModalOverlay" style="display: none;" onclick="closeMsgModal(event)">
+        <div class="dash-modal-card" onclick="event.stopPropagation()">
+            <div class="dash-modal-header">
+                <h2><i class="fas fa-envelope-open-text"></i> Solicitud <span id="modalRadicado" class="radicado-badge" style="margin-left: 8px;"></span></h2>
+                <button type="button" class="dash-modal-close" onclick="closeMsgModal()" title="Cerrar">&times;</button>
+            </div>
+            
+            <div class="dash-modal-body">
+                <div class="msg-detail-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Nombre del Solicitante:</span>
+                        <span class="detail-value" id="modalNombre"></span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Correo Electrónico:</span>
+                        <span class="detail-value" id="modalEmail"></span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Teléfono / WhatsApp:</span>
+                        <span class="detail-value" id="modalTelefono"></span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Sede de Interés:</span>
+                        <span class="detail-value" id="modalSede"></span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Asunto / Motivo:</span>
+                        <span class="detail-value" id="modalAsunto"></span>
+                    </div>
+
+                    <div class="detail-item">
+                        <span class="detail-label">Fecha de Envío:</span>
+                        <span class="detail-value" id="modalFecha"></span>
+                    </div>
+                </div>
+
+                <div class="detail-item" style="margin-bottom: 8px;">
+                    <span class="detail-label">Mensaje Recibido:</span>
+                </div>
+                <div class="msg-body-box" id="modalMensaje"></div>
+            </div>
+
+            <div class="dash-modal-footer">
+                <a id="modalGmailBtn" href="#" target="_blank" class="dash-btn" style="background:#ea4335; color:#fff; font-size: 0.86rem; padding: 8px 16px;">
+                    <i class="fab fa-google"></i> Responder por Gmail
+                </a>
+                <a id="modalReplyBtn" href="#" class="dash-btn secondary" style="font-size: 0.86rem; padding: 8px 16px;">
+                    <i class="fas fa-envelope"></i> Otra App
+                </a>
+                <a id="modalWaBtn" href="#" target="_blank" class="dash-btn" style="background:#16a34a; color:#fff; font-size: 0.86rem; padding: 8px 16px; display:none;">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+                <button type="button" class="dash-btn secondary" onclick="closeMsgModal()" style="font-size: 0.86rem; padding: 8px 16px;">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function previewImage(input) {
             const previewContainer = document.getElementById('imagePreviewContainer');
@@ -881,6 +1354,93 @@ $currentAdmin = $stmtAdmin->fetch();
                 reader.readAsDataURL(input.files[0]);
             }
         }
+
+        // === GESTIÓN DE MENSAJES DE CONTACTO ===
+        let currentStatusFilter = 'all';
+
+        function showMsgDetail(data) {
+            document.getElementById('modalRadicado').textContent = '#' + data.radicado;
+            document.getElementById('modalNombre').textContent = data.nombre;
+            document.getElementById('modalEmail').textContent = data.email;
+            document.getElementById('modalTelefono').textContent = data.telefono ? data.telefono : 'No registrado';
+            document.getElementById('modalSede').textContent = data.sede;
+            document.getElementById('modalAsunto').textContent = data.asunto;
+            document.getElementById('modalFecha').textContent = data.fecha;
+            document.getElementById('modalMensaje').textContent = data.mensaje;
+
+            // Construir asunto y cuerpo institucional
+            const mailSubject = 'Respuesta a Solicitud Radicado #' + data.radicado + ' - I.E. Gilberto Alzate Avendaño';
+            const mailBody = 'Estimado(a) ' + data.nombre + ',\n\nEn atención a su solicitud enviada a través del portal web institucional con radicado #' + data.radicado + ' referente a "' + data.asunto + '":\n\n[Escriba su respuesta aquí]\n\nAtentamente,\nEquipo Directivo y Administrativo\nI.E. Gilberto Alzate Avendaño\nhttps://ie.alzate.edu.co';
+
+            // URL directa para Gmail Web Compose
+            const gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(data.email) + '&su=' + encodeURIComponent(mailSubject) + '&body=' + encodeURIComponent(mailBody);
+            document.getElementById('modalGmailBtn').href = gmailUrl;
+
+            // URL estándar mailto
+            const mailtoUrl = 'mailto:' + encodeURIComponent(data.email) + '?subject=' + encodeURIComponent(mailSubject) + '&body=' + encodeURIComponent(mailBody);
+            document.getElementById('modalReplyBtn').href = mailtoUrl;
+
+            // Link de WhatsApp si tiene teléfono
+            const waBtn = document.getElementById('modalWaBtn');
+            if (data.telefono) {
+                const cleanPhone = data.telefono.replace(/\D/g, '');
+                if (cleanPhone.length >= 7) {
+                    const waPhone = cleanPhone.length === 10 ? ('57' + cleanPhone) : cleanPhone;
+                    const waText = encodeURIComponent('Hola ' + data.nombre + ', le escribimos desde la I.E. Gilberto Alzate Avendaño respecto a su solicitud con radicado #' + data.radicado + '.');
+                    waBtn.href = 'https://wa.me/' + waPhone + '?text=' + waText;
+                    waBtn.style.display = 'inline-flex';
+                } else {
+                    waBtn.style.display = 'none';
+                }
+            } else {
+                waBtn.style.display = 'none';
+            }
+
+            const overlay = document.getElementById('msgModalOverlay');
+            overlay.style.display = 'flex';
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMsgModal(e) {
+            if (!e || e.target === document.getElementById('msgModalOverlay') || e.target.classList.contains('dash-modal-close') || e.target.tagName === 'BUTTON') {
+                const overlay = document.getElementById('msgModalOverlay');
+                overlay.classList.remove('active');
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMsgModal();
+            }
+        });
+
+        function setMsgFilter(status, btn) {
+            currentStatusFilter = status;
+            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+            filterMessagesTable();
+        }
+
+        function filterMessagesTable() {
+            const query = (document.getElementById('msgSearchInput')?.value || '').toLowerCase().trim();
+            const rows = document.querySelectorAll('#messagesTable tbody tr.msg-row');
+
+            rows.forEach(row => {
+                const status = row.getAttribute('data-status');
+                const searchContent = row.getAttribute('data-search') || '';
+
+                const matchesStatus = (currentStatusFilter === 'all') || (status === currentStatusFilter);
+                const matchesQuery = !query || searchContent.includes(query);
+
+                if (matchesStatus && matchesQuery) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
     </script>
 </body>
 </html>

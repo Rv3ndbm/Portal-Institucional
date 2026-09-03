@@ -11,20 +11,34 @@ header('Expires: 0');
 
 require_once __DIR__ . '/../config/database.php';
 
-$aviso = getActiveAviso($pdo);
+$avisos = getActiveAvisos($pdo);
 
-if (!$aviso) {
-    echo json_encode(['active' => false], JSON_UNESCAPED_UNICODE);
+if (empty($avisos)) {
+    echo json_encode(['active' => false, 'avisos' => []], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
+$first = $avisos[0];
+
 echo json_encode([
     'active'       => true,
-    'id'           => (int) $aviso['id'],
-    'titulo'       => (string) $aviso['titulo'],
-    'mensaje'      => (string) $aviso['mensaje'],
-    'tipo'         => (string) ($aviso['tipo'] ?? 'warning'),
-    'enlace'       => (string) ($aviso['enlace'] ?? ''),
-    'texto_enlace' => (string) ($aviso['texto_enlace'] ?? 'Ver más'),
-    'expires_at'   => (string) ($aviso['expires_at'] ?? ''),
+    'id'           => (int) $first['id'],
+    'titulo'       => (string) $first['titulo'],
+    'mensaje'      => (string) $first['mensaje'],
+    'tipo'         => (string) ($first['tipo'] ?? 'warning'),
+    'enlace'       => (string) ($first['enlace'] ?? ''),
+    'texto_enlace' => (string) ($first['texto_enlace'] ?? 'Ver más'),
+    'expires_at'   => (string) ($first['expires_at'] ?? ''),
+    'count'        => count($avisos),
+    'avisos'       => array_map(function($a) {
+        return [
+            'id'           => (int) $a['id'],
+            'titulo'       => (string) $a['titulo'],
+            'mensaje'      => (string) $a['mensaje'],
+            'tipo'         => (string) ($a['tipo'] ?? 'warning'),
+            'enlace'       => (string) ($a['enlace'] ?? ''),
+            'texto_enlace' => (string) ($a['texto_enlace'] ?? 'Ver más'),
+            'expires_at'   => (string) ($a['expires_at'] ?? ''),
+        ];
+    }, $avisos),
 ], JSON_UNESCAPED_UNICODE);

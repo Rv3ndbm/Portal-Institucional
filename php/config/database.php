@@ -172,24 +172,31 @@ function ensureDatabaseStructure(PDO $pdo): void
 ensureDatabaseStructure($pdo);
 
 /**
- * Obtiene el aviso urgente activo y no expirado (si existe).
+ * Obtiene todos los avisos urgentes activos y no expirados.
  */
-function getActiveAviso(PDO $pdo): ?array
+function getActiveAvisos(PDO $pdo): array
 {
     try {
         $stmt = $pdo->prepare('
             SELECT * FROM avisos 
             WHERE activo = 1 
               AND (expires_at IS NULL OR expires_at > NOW())
-            ORDER BY id DESC 
-            LIMIT 1
+            ORDER BY id DESC
         ');
         $stmt->execute();
-        $aviso = $stmt->fetch();
-        return $aviso ?: null;
+        return $stmt->fetchAll() ?: [];
     } catch (Exception $e) {
-        return null;
+        return [];
     }
+}
+
+/**
+ * Obtiene el aviso urgente más reciente activo (compatibilidad).
+ */
+function getActiveAviso(PDO $pdo): ?array
+{
+    $all = getActiveAvisos($pdo);
+    return !empty($all) ? $all[0] : null;
 }
 
 // ============================================================

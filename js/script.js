@@ -53,45 +53,51 @@ function initUrgentAnnouncementTicker() {
         .then(data => {
             if (!data || !data.active) return;
 
-            const dismissKey = `gaa_dismiss_aviso_${data.id}_${data.expires_at || 'perm'}`;
+            const avisosList = (Array.isArray(data.avisos) && data.avisos.length > 0) ? data.avisos : [data];
+            const dismissKey = `gaa_dismiss_avisos_${avisosList.map(a => a.id).join('_')}`;
             if (sessionStorage.getItem(dismissKey) === 'true') {
                 return;
             }
 
             const tickerSection = document.createElement('section');
             tickerSection.className = 'urgent-ticker-section';
-            tickerSection.setAttribute('aria-label', 'Comunicado oficial institucional');
+            tickerSection.setAttribute('aria-label', 'Comunicados oficiales institucionales');
 
-            const tipoClass = `ticker-${data.tipo || 'warning'}`;
-            const tipoLabel = (data.tipo === 'danger') ? '🚨 Urgente' :
-                              (data.tipo === 'info')   ? 'ℹ️ Comunicado' :
-                              (data.tipo === 'success')? '✅ Institucional' : '⚠️ Importante';
+            // Determinar estilo primario
+            const hasDanger = avisosList.some(a => a.tipo === 'danger');
+            const tipoClass = hasDanger ? 'ticker-danger' : `ticker-${avisosList[0].tipo || 'warning'}`;
+            const tipoLabel = hasDanger ? '🚨 Urgente' : (avisosList.length > 1 ? '📢 Comunicados' : '⚠️ Importante');
 
-            let linkHtml = '';
-            if (data.enlace && data.enlace.trim() !== '') {
-                let cleanLink = data.enlace.trim();
-                if (!cleanLink.startsWith('http')) {
-                    if (path.includes('/php/public/')) {
-                        cleanLink = cleanLink.replace('../public/', '');
-                    } else if (path.includes('/html/tecnicas/')) {
-                        cleanLink = '../../' + cleanLink.replace('../../', '').replace('../', '');
-                    } else if (path.includes('/html/') || path.includes('/manuales/')) {
-                        cleanLink = '../' + cleanLink.replace('../', '');
+            // Construir los ítems de todos los avisos activos
+            let itemsHtml = '';
+            avisosList.forEach(av => {
+                let linkHtml = '';
+                if (av.enlace && av.enlace.trim() !== '') {
+                    let cleanLink = av.enlace.trim();
+                    if (!cleanLink.startsWith('http')) {
+                        if (path.includes('/php/public/')) {
+                            cleanLink = cleanLink.replace('../public/', '');
+                        } else if (path.includes('/html/tecnicas/')) {
+                            cleanLink = '../../' + cleanLink.replace('../../', '').replace('../', '');
+                        } else if (path.includes('/html/') || path.includes('/manuales/')) {
+                            cleanLink = '../' + cleanLink.replace('../', '');
+                        }
                     }
+                    const linkText = av.texto_enlace || 'Ver más';
+                    linkHtml = `<a href="${cleanLink}" class="ticker-item-link">${linkText} <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>`;
                 }
-                const linkText = data.texto_enlace || 'Ver más';
-                linkHtml = `<a href="${cleanLink}" class="ticker-item-link">${linkText} <i class="fas fa-arrow-right" style="font-size:0.75rem;"></i></a>`;
-            }
 
-            const itemHtml = `
-                <span class="ticker-item">
-                    <strong>${data.titulo}:</strong> ${data.mensaje}
-                    ${linkHtml}
-                </span>
-                <span class="ticker-separator">✦</span>
-            `;
+                itemsHtml += `
+                    <span class="ticker-item">
+                        <strong>${av.titulo}:</strong> ${av.mensaje}
+                        ${linkHtml}
+                    </span>
+                    <span class="ticker-separator">✦</span>
+                `;
+            });
 
-            const blockContent = itemHtml.repeat(3);
+            const repeatCount = avisosList.length > 1 ? 2 : 3;
+            const blockContent = itemsHtml.repeat(repeatCount);
 
             tickerSection.innerHTML = `
                 <div class="urgent-ticker-wrapper ${tipoClass}">
