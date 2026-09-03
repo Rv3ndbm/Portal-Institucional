@@ -21,10 +21,6 @@
     overflow: hidden;
 }
 
-.main-header.scrolled + main .news-hero {
-    margin-top: var(--header-height-scrolled);
-}
-
 .news-hero-content {
     position: relative;
     z-index: 2;

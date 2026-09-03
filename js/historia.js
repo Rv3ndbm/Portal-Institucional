@@ -53,32 +53,6 @@ navItems.forEach(item => {
     });
 });
 
-// Animación de scroll - Header minimizado con menú separado
-let ticking = false;
-
-window.addEventListener('scroll', function () {
-    lastScrollTop = window.scrollY;
-
-    if (!ticking) {
-        window.requestAnimationFrame(function () {
-            handleScroll();
-            ticking = false;
-        });
-        ticking = true;
-    }
-});
-
-function handleScroll() {
-    const scrollPosition = lastScrollTop;
-
-    // Si el scroll es mayor a 50px, minimizar el header
-    if (scrollPosition > 50) {
-        mainHeader.classList.add('scrolled');
-    } else {
-        mainHeader.classList.remove('scrolled');
-    }
-}
-
 // Smooth scroll con offset para los quick-nav items
 const quickNavItems = document.querySelectorAll('.quick-nav-item');
 

@@ -112,6 +112,23 @@ function ensureDatabaseStructure(PDO $pdo): void
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ");
 
+    // Tabla 5: Mensajes recibidos del formulario de contacto
+    $pdo->exec("
+        CREATE TABLE IF NOT EXISTS mensajes_contacto (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(150) NOT NULL,
+            email VARCHAR(150) NOT NULL,
+            telefono VARCHAR(50) DEFAULT NULL,
+            asunto VARCHAR(150) NOT NULL,
+            sede VARCHAR(100) DEFAULT NULL,
+            mensaje TEXT NOT NULL,
+            ip_origen VARCHAR(45) DEFAULT NULL,
+            estado_envio VARCHAR(50) DEFAULT 'enviado',
+            leido TINYINT(1) DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ");
+
     // Crear registro inicial de aviso si no existe
     $avisoCount = (int) $pdo->query("SELECT COUNT(*) FROM avisos")->fetchColumn();
     if ($avisoCount === 0) {
@@ -138,13 +155,14 @@ function ensureDatabaseStructure(PDO $pdo): void
         ]);
     }
 
-    // Crear carpetas físicas de uploads si no existen
-    $uploadDirs = [
+    // Crear carpetas físicas de uploads y logs si no existen
+    $dirs = [
         __DIR__ . '/../../uploads',
         __DIR__ . '/../../uploads/noticias',
-        __DIR__ . '/../../uploads/documentos'
+        __DIR__ . '/../../uploads/documentos',
+        __DIR__ . '/../logs'
     ];
-    foreach ($uploadDirs as $dir) {
+    foreach ($dirs as $dir) {
         if (!is_dir($dir)) {
             @mkdir($dir, 0755, true);
         }

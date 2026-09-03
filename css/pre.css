@@ -12,11 +12,6 @@
     background: #000;
 }
 
-/* Ajuste cuando el header se contrae al hacer scroll */
-.main-header.scrolled + main .hero-inscripcion {
-    margin-top: var(--header-height-scrolled);
-}
-
 @media (max-width: 1024px) {
     .hero-inscripcion {
         margin-top: var(--header-height-mobile);

@@ -5,39 +5,22 @@
 
 /* ============================================================
    LAYOUT - Espaciado correcto bajo header fijo
-   El header fijo mide ~150px (header-top ~90px + nav ~54px)
    ============================================================ */
-body {
-    padding-top: var(--header-height-desktop); /* Ajustado para eliminar espacio en blanco */
-}
-
-/* Ajuste cuando el header se contrae al hacer scroll */
-.main-header.scrolled + body,
-.main-header.scrolled ~ main {
-    padding-top: var(--header-height-scrolled);
-}
-
-@media (max-width: 1024px) {
-    body {
-        padding-top: var(--header-height-mobile); /* Ajustado para el header móvil */
-    }
-}
-
-@media (max-width: 768px) {
-    body {
-        padding-top: var(--header-height-mobile);
-    }
-}
-
 .historia-content {
-    padding: 0 40px 60px;
+    padding: var(--header-height-desktop) 40px 60px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
+@media (max-width: 1024px) {
+    .historia-content {
+        padding: var(--header-height-mobile) 24px 40px;
+    }
+}
+
 @media (max-width: 768px) {
     .historia-content {
-        padding: 0 20px 40px;
+        padding: var(--header-height-mobile) 16px 40px;
     }
 }
 

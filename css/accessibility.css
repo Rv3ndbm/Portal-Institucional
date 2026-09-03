@@ -1,34 +1,34 @@
 /* ============================================================
-   WIDGET DE ACCESIBILIDAD
+   WIDGET DE ACCESIBILIDAD — DISEÑO MODERNO Y ROBUSTO
    I.E. Gilberto Alzate Avendaño
    ============================================================ */
 
 .accessibility-widget {
     position: fixed;
-    right: 30px;
-    bottom: 30px;
+    right: 24px;
+    bottom: 24px;
     z-index: 10001;
 }
 
 /* Botón flotante principal */
 .accessibility-toggle {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #e53e3e, #c53030);
-    border: 3px solid white;
-    color: white;
+    background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+    border: 3px solid #ffffff;
+    color: #ffffff;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.1rem;
-    box-shadow: 0 10px 35px rgba(229, 62, 62, 0.5);
+    font-size: 1.6rem;
+    box-shadow: 0 8px 25px rgba(229, 62, 62, 0.45);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     position: relative;
 }
 
-/* Efecto de pulso premium para denotar su existencia */
+/* Efecto de pulso suave */
 .accessibility-toggle::after {
     content: '';
     position: absolute;
@@ -39,28 +39,28 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: accPulse 2.5s infinite;
+    animation: accPulse 2.8s infinite;
     pointer-events: none;
-    opacity: 0.8;
+    opacity: 0.7;
 }
 
 @keyframes accPulse {
     0% {
         width: 100%;
         height: 100%;
-        opacity: 0.8;
+        opacity: 0.7;
     }
     100% {
-        width: 140%;
-        height: 140%;
+        width: 135%;
+        height: 135%;
         opacity: 0;
     }
 }
 
 .accessibility-toggle:hover {
-    transform: scale(1.15) rotate(5deg);
-    background: linear-gradient(135deg, #c53030, #9b2c2c);
-    box-shadow: 0 12px 40px rgba(229, 62, 62, 0.65);
+    transform: scale(1.1) rotate(5deg);
+    background: linear-gradient(135deg, #c53030 0%, #9b2c2c 100%);
+    box-shadow: 0 10px 30px rgba(229, 62, 62, 0.55);
 }
 
 .accessibility-toggle:active {
@@ -70,47 +70,47 @@
 /* Panel de opciones */
 .accessibility-panel {
     position: absolute;
-    bottom: 92px;
+    bottom: 74px;
     right: 0;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    width: 240px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+    padding: 16px;
+    width: 250px;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-    border: 1px solid rgba(26, 54, 93, 0.1);
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+    border: 1px solid rgba(26, 54, 93, 0.12);
     opacity: 0;
     pointer-events: none;
 }
 
 .accessibility-panel.active {
-    max-height: calc(100vh - 140px);
+    max-height: calc(100vh - 120px);
     opacity: 1;
     pointer-events: auto;
     overflow-y: auto;
 }
 
 .accessibility-title {
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: var(--color-primary);
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--color-primary, #1e3c72);
     text-transform: uppercase;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.2px;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
-    border-bottom: 2px solid var(--color-secondary);
-    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-secondary, #dc143c);
+    padding-bottom: 8px;
 }
 
 /* Opciones de accesibilidad */
 .accessibility-option {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     padding: 6px 0;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #f1f5f9;
 }
 
 .accessibility-option:last-of-type:not(.accessibility-reset-wrapper) {
@@ -120,30 +120,31 @@
 .accessibility-option label {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     cursor: pointer;
-    font-size: 0.8125rem;
-    color: #333;
-    font-weight: 500;
+    font-size: 0.82rem;
+    color: #1e293b;
+    font-weight: 600;
     transition: color 0.2s ease;
+    user-select: none;
 }
 
 .accessibility-option label:hover,
 .accessibility-action-btn:hover {
-    color: #1a365d;
+    color: var(--color-primary, #1e3c72);
 }
 
 .accessibility-action-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     width: 100%;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0.8125rem;
-    color: #333;
-    font-weight: 500;
+    font-size: 0.82rem;
+    color: #1e293b;
+    font-weight: 600;
     transition: color 0.2s ease;
     padding: 0;
     text-align: left;
@@ -154,250 +155,169 @@
 .accessibility-action-btn i {
     width: 18px;
     text-align: center;
+    color: #64748b;
 }
 
 .accessibility-option input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
+    width: 17px;
+    height: 17px;
     cursor: pointer;
     accent-color: #e53e3e;
 }
 
-.accessibility-option input[type="range"] {
-    width: 100%;
-    height: 4px;
-    border-radius: 2px;
-    background: #e2e8f0;
-    outline: none;
-    -webkit-appearance: none;
-    appearance: none;
-    cursor: pointer;
-    margin-top: 8px;
-}
-
-.accessibility-option input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #e53e3e;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(229, 62, 62, 0.3);
-}
-
-.accessibility-option input[type="range"]::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #e53e3e;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 6px rgba(229, 62, 62, 0.3);
-}
-
 /* Botón de reset */
 .accessibility-reset-wrapper {
-    margin-top: 12px;
-    padding-top: 12px;
-    border-top: 2px solid #e53e3e;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1.5px solid #e2e8f0;
 }
 
 .accessibility-reset {
     width: 100%;
-    padding: 10px;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
-    color: white;
+    padding: 9px;
+    background: linear-gradient(135deg, var(--color-primary, #1e3c72), var(--color-primary-light, #2a5298));
+    color: #ffffff;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 0.75rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
 }
 
 .accessibility-reset:hover {
-    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
+    background: linear-gradient(135deg, var(--color-primary-dark, #152a52), var(--color-primary, #1e3c72));
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(30, 60, 114, 0.25);
 }
 
-/* Alto contraste verdadero (Fondo negro, texto amarillo/blanco) */
-body.high-contrast,
-body.high-contrast main,
-body.high-contrast header,
-body.high-contrast section:not(.photo-strip),
-body.high-contrast footer,
-body.high-contrast div:not(.accessibility-widget):not(.accessibility-widget *):not(.photo-strip *):not(.glass-orb),
-body.high-contrast nav,
-body.high-contrast ul,
-body.high-contrast li,
-body.high-contrast article {
-    background: #000000 !important;
-    background-image: none !important;
+/* ============================================================
+   MODOS DE ACCESIBILIDAD — FILTROS NATIVOS LIMPIOS Y ULTRA-FLUIDOS
+   ============================================================ */
+
+/* 1. Escala de Grises (Grayscale) */
+html.grayscale {
+    filter: grayscale(100%) !important;
 }
 
-body.high-contrast .photo-strip {
-    background: #000000 !important;
+/* 2. Contraste Negativo / Modo Oscuro Accesible (Invert) */
+html.negative-contrast {
+    filter: invert(100%) hue-rotate(180deg) !important;
+    background-color: #000000 !important;
 }
 
-body.high-contrast .strip-panel {
-    filter: grayscale(100%) contrast(150%) brightness(0.8) !important;
-    border: 1px solid #ffff00 !important;
+/* Re-invertir medios para que no se vean distorsionados en negativo */
+html.negative-contrast img,
+html.negative-contrast video,
+html.negative-contrast iframe,
+html.negative-contrast picture,
+html.negative-contrast .logo,
+html.negative-contrast .accessibility-widget {
+    filter: invert(100%) hue-rotate(180deg) !important;
 }
 
-body.high-contrast .strip-label {
-    background: rgba(0, 0, 0, 0.9) !important;
-    color: #ffff00 !important;
-}
-
-body.high-contrast * {
-    text-shadow: none !important;
-    box-shadow: none !important;
-}
-
-body.high-contrast h1,
-body.high-contrast h2,
-body.high-contrast h3,
-body.high-contrast h4,
-body.high-contrast h5,
-body.high-contrast h6,
-body.high-contrast p,
-body.high-contrast span:not(.accessibility-widget *),
-body.high-contrast strong,
-body.high-contrast i:not(.accessibility-widget *),
-body.high-contrast a,
-body.high-contrast label:not(.accessibility-widget *) {
-    color: #ffff00 !important;
-    border-color: #ffff00 !important;
+/* 3. Alto Contraste (High Contrast) */
+html.high-contrast {
+    filter: contrast(175%) brightness(105%) saturate(120%) !important;
 }
 
 body.high-contrast a {
     text-decoration: underline !important;
+    font-weight: 700 !important;
 }
 
-body.high-contrast img,
-body.high-contrast svg {
-    filter: grayscale(100%) contrast(120%) !important;
+body.high-contrast button,
+body.high-contrast input,
+body.high-contrast select,
+body.high-contrast textarea {
+    outline: 2px solid currentColor !important;
+    outline-offset: 2px !important;
 }
 
-/* Asegurar que los elementos animados por scroll sean visibles inmediatamente en modos de accesibilidad */
-body.high-contrast [data-scroll-animate],
-body.negative-contrast [data-scroll-animate],
-body.grayscale [data-scroll-animate],
-body.high-contrast .scroll-reveal,
-body.negative-contrast .scroll-reveal,
-body.grayscale .scroll-reveal {
-    opacity: 1 !important;
-    transform: none !important;
-    visibility: visible !important;
+/* Combinaciones de modos */
+html.high-contrast.negative-contrast {
+    filter: invert(100%) hue-rotate(180deg) contrast(175%) brightness(105%) !important;
 }
 
-/* Fix para los textos de las "burbujas" (cylinder cards) */
-body.high-contrast .card-info,
-body.negative-contrast .card-info,
-body.grayscale .card-info {
-    opacity: 1 !important;
-    visibility: visible !important;
-    background: rgba(0, 0, 0, 0.8) !important;
+html.grayscale.high-contrast {
+    filter: grayscale(100%) contrast(175%) brightness(105%) !important;
 }
 
-body.high-contrast .card-info * {
-    color: #ffff00 !important;
+html.grayscale.negative-contrast {
+    filter: grayscale(100%) invert(100%) hue-rotate(180deg) !important;
 }
 
-/* Alternativa compatible para contraste negativo y escala de grises sin depender de backdrop-filter */
-body.negative-contrast::before,
-body.grayscale::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 2147483647; /* Máximo z-index posible para cubrir header y menú */
-    pointer-events: none;
+html.grayscale.high-contrast.negative-contrast {
+    filter: grayscale(100%) invert(100%) hue-rotate(180deg) contrast(175%) !important;
 }
 
-body.negative-contrast::before {
-    background: rgba(0, 0, 0, 0.95);
-    mix-blend-mode: difference;
-}
-
-body.grayscale::before {
-    background: rgba(255, 255, 255, 0.95);
-    filter: grayscale(100%);
-}
-
-/* Si ambos están activos a la vez */
-body.negative-contrast.grayscale::before {
-    background: rgba(0, 0, 0, 0.95);
-    filter: grayscale(100%) contrast(1.2);
-}
-
+/* 4. Fuente Legible / Dislexia */
 body.dyslexia-friendly,
-body.dyslexia-friendly *:not(i):not([class*="fa-"]):not(.fas):not(.far):not(.fab):not(.fa):not(svg):not(svg *) {
-    font-family: 'Comic Sans MS', 'Arial', sans-serif !important;
-    letter-spacing: 0.08em !important;
-    line-height: 1.8 !important;
+body.dyslexia-friendly p,
+body.dyslexia-friendly h1,
+body.dyslexia-friendly h2,
+body.dyslexia-friendly h3,
+body.dyslexia-friendly h4,
+body.dyslexia-friendly h5,
+body.dyslexia-friendly h6,
+body.dyslexia-friendly a,
+body.dyslexia-friendly li,
+body.dyslexia-friendly button,
+body.dyslexia-friendly input,
+body.dyslexia-friendly select,
+body.dyslexia-friendly textarea {
+    font-family: 'OpenDyslexic', 'Comic Sans MS', 'Arial Rounded MT Bold', 'Verdana', sans-serif !important;
+    letter-spacing: 0.05em !important;
+    word-spacing: 0.1em !important;
+    line-height: 1.75 !important;
 }
 
-/* Blindaje estricto para íconos Font Awesome en modo dislexia */
+/* Protección de Iconos Font Awesome */
 body.dyslexia-friendly i,
 body.dyslexia-friendly .fas,
 body.dyslexia-friendly .far,
 body.dyslexia-friendly .fab,
 body.dyslexia-friendly .fa,
-body.dyslexia-friendly [class*="fa-"],
-body.dyslexia-friendly .search-item-header::before {
+body.dyslexia-friendly [class*="fa-"] {
     font-family: "Font Awesome 6 Free", "Font Awesome 5 Free", "FontAwesome" !important;
     letter-spacing: normal !important;
-    font-style: normal !important;
+    word-spacing: normal !important;
 }
 
 body.dyslexia-friendly .fab {
     font-family: "Font Awesome 6 Brands", "FontAwesome" !important;
 }
 
-body.dyslexia-friendly .far {
-    font-weight: 400 !important;
-}
-
-body.dyslexia-friendly .fas {
-    font-weight: 900 !important;
-}
-
+/* 5. Subrayar Enlaces */
 body.underline-links a {
     text-decoration: underline !important;
+    text-underline-offset: 3px !important;
+    text-decoration-thickness: 1.5px !important;
 }
 
-body.font-size-large {
-    font-size: 110%;
-}
-
-body.font-size-xlarge {
-    font-size: 125%;
-}
-
+/* Responsive móvil */
 @media (max-width: 480px) {
     .accessibility-widget {
-        right: 20px;
-        bottom: 20px;
+        right: 16px;
+        bottom: 16px;
     }
 
     .accessibility-toggle {
-        width: 72px;
-        height: 72px;
-        font-size: 1.9rem;
+        width: 52px;
+        height: 52px;
+        font-size: 1.4rem;
     }
 
     .accessibility-panel {
-        width: calc(100vw - 40px);
-        max-width: 260px;
-        padding: 15px;
-        bottom: 82px;
+        width: calc(100vw - 32px);
+        max-width: 250px;
+        bottom: 64px;
         right: 0;
     }
 }

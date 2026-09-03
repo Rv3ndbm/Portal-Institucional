@@ -77,32 +77,6 @@
         });
     });
 
-    // Animación de scroll - Header minimizado
-    let lastScrollTop = 0;
-    let ticking = false;
-
-    window.addEventListener('scroll', function () {
-        lastScrollTop = window.scrollY;
-
-        if (!ticking) {
-            window.requestAnimationFrame(function () {
-                handleScroll();
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
-
-    function handleScroll() {
-        const scrollPosition = lastScrollTop;
-
-        if (scrollPosition > 50) {
-            mainHeader.classList.add('scrolled');
-        } else {
-            mainHeader.classList.remove('scrolled');
-        }
-    }
-
     // Sistema de Tabs
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');

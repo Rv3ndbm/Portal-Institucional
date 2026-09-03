@@ -290,24 +290,11 @@ function toggleMenu() {
 
 // Abrir menú
 function openMenu() {
+    isMenuOpen = true;
     hamburgerButton?.classList.add('active');
     mainNav?.classList.add('active');
     document.body.classList.add('menu-open');
     hamburgerButton?.setAttribute('aria-expanded', 'true');
-
-    // Crear botón X de cierre si no existe
-    if (!document.querySelector('.menu-close-button')) {
-        const closeButton = document.createElement('button');
-        closeButton.className = 'menu-close-button';
-        closeButton.setAttribute('aria-label', 'Cerrar menú');
-        closeButton.innerHTML = '✕';
-
-        const navContainer = mainNav?.querySelector('.nav-container');
-        if (navContainer) {
-            navContainer.insertBefore(closeButton, navContainer.firstChild);
-            closeButton.addEventListener('click', closeMenu);
-        }
-    }
 
     // Cerrar al hacer click en el overlay
     setTimeout(() => {
@@ -327,12 +314,6 @@ function closeMenu() {
     document.querySelectorAll('.nav-item.dropdown-open').forEach(item => {
         item.classList.remove('dropdown-open');
     });
-
-    // Remover botón X de cierre
-    const closeButton = document.querySelector('.menu-close-button');
-    if (closeButton) {
-        closeButton.remove();
-    }
 
     document.removeEventListener('click', handleOutsideClick);
 }
@@ -509,12 +490,21 @@ window.addEventListener('scroll', function () {
 });
 
 function handleScroll() {
+    if (!mainHeader) {
+        ticking = false;
+        return;
+    }
+
     const scrollPosition = lastScrollTop;
 
-    if (scrollPosition > SCROLL_THRESHOLD) {
-        mainHeader.classList.add('scrolled');
-    } else {
-        mainHeader.classList.remove('scrolled');
+    if (scrollPosition > 50) {
+        if (!mainHeader.classList.contains('scrolled')) {
+            mainHeader.classList.add('scrolled');
+        }
+    } else if (scrollPosition < 20) {
+        if (mainHeader.classList.contains('scrolled')) {
+            mainHeader.classList.remove('scrolled');
+        }
     }
 
     ticking = false;

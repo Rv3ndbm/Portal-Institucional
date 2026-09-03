@@ -21,11 +21,6 @@
     text-align: center;
 }
 
-/* Ajuste cuando el header se contrae al hacer scroll */
-.main-header.scrolled + main .hero-deportes {
-    margin-top: var(--header-height-scrolled);
-}
-
 .hero-deportes::before {
     content: '';
     position: absolute;

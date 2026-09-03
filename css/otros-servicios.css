@@ -23,11 +23,6 @@
     text-align: center;
 }
 
-/* Ajuste cuando el header se contrae al hacer scroll */
-.main-header.scrolled + main .hero-servicios {
-    margin-top: var(--header-height-scrolled);
-}
-
 @media (max-width: 1024px) {
     .hero-servicios {
         margin-top: var(--header-height-mobile);

@@ -46,32 +46,6 @@ navItems.forEach(item => {
     });
 });
 
-// Animación de scroll - Header minimizado
-let lastScrollTop = 0;
-let ticking = false;
-
-window.addEventListener('scroll', function () {
-    lastScrollTop = window.scrollY;
-
-    if (!ticking) {
-        window.requestAnimationFrame(function () {
-            handleScroll();
-            ticking = false;
-        });
-        ticking = true;
-    }
-});
-
-function handleScroll() {
-    const scrollPosition = lastScrollTop;
-
-    if (scrollPosition > 50) {
-        mainHeader.classList.add('scrolled');
-    } else {
-        mainHeader.classList.remove('scrolled');
-    }
-}
-
 // AQUÍ CONFIGURAS TUS LINKS
 const antiguosLink = document.getElementById('antiguos-link');
 const nuevosLink = document.getElementById('nuevos-link');

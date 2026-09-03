@@ -1,5 +1,5 @@
 // ============================================================
-// WIDGET DE ACCESIBILIDAD
+// WIDGET DE ACCESIBILIDAD — JS ROBUSTO Y FLUIDO
 // I.E. Gilberto Alzate Avendaño
 // ============================================================
 
@@ -27,29 +27,64 @@
             if (!this.toggle) return;
 
             // Event listeners
-            this.toggle.addEventListener('click', () => this.togglePanel());
-            this.increaseTextBtn?.addEventListener('click', () => this.adjustFontSize(10));
-            this.decreaseTextBtn?.addEventListener('click', () => this.adjustFontSize(-10));
-            this.highContrastCheckbox?.addEventListener('change', (e) => this.toggleHighContrast(e.target.checked));
-            this.negativeContrastCheckbox?.addEventListener('change', (e) => this.toggleNegativeContrast(e.target.checked));
-            this.grayscaleCheckbox?.addEventListener('change', (e) => this.toggleGrayscale(e.target.checked));
-            this.dyslexiaFriendlyCheckbox?.addEventListener('change', (e) => this.toggleDyslexiaFriendly(e.target.checked));
-            this.underlineLinksCheckbox?.addEventListener('change', (e) => this.toggleUnderlineLinks(e.target.checked));
-            this.resetButton?.addEventListener('click', () => this.resetSettings());
+            this.toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.togglePanel();
+            });
+
+            this.increaseTextBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.adjustFontSize(10);
+            });
+
+            this.decreaseTextBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.adjustFontSize(-10);
+            });
+
+            this.highContrastCheckbox?.addEventListener('change', (e) => {
+                this.toggleHighContrast(e.target.checked);
+            });
+
+            this.negativeContrastCheckbox?.addEventListener('change', (e) => {
+                this.toggleNegativeContrast(e.target.checked);
+            });
+
+            this.grayscaleCheckbox?.addEventListener('change', (e) => {
+                this.toggleGrayscale(e.target.checked);
+            });
+
+            this.dyslexiaFriendlyCheckbox?.addEventListener('change', (e) => {
+                this.toggleDyslexiaFriendly(e.target.checked);
+            });
+
+            this.underlineLinksCheckbox?.addEventListener('change', (e) => {
+                this.toggleUnderlineLinks(e.target.checked);
+            });
+
+            this.resetButton?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.resetSettings();
+            });
+
+            // Evitar que clics dentro del panel lo cierren
+            this.panel?.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
 
             // Cargar configuración guardada
             this.loadSettings();
 
             // Cerrar panel al hacer clic fuera
             document.addEventListener('click', (e) => {
-                if (!e.target.closest('.accessibility-widget')) {
+                if (this.panel && !this.panel.contains(e.target) && !this.toggle.contains(e.target)) {
                     this.closePanel();
                 }
             });
         }
 
         togglePanel() {
-            if (this.panel.classList.contains('active')) {
+            if (this.panel?.classList.contains('active')) {
                 this.closePanel();
             } else {
                 this.openPanel();
@@ -57,89 +92,65 @@
         }
 
         openPanel() {
-            this.panel.classList.add('active');
-            this.toggle.classList.add('active');
+            this.panel?.classList.add('active');
+            this.toggle?.classList.add('active');
         }
 
         closePanel() {
-            this.panel.classList.remove('active');
-            this.toggle.classList.remove('active');
+            this.panel?.classList.remove('active');
+            this.toggle?.classList.remove('active');
         }
 
         adjustFontSize(delta) {
-            // Rango de 80% a 200% con pasos de 10%
-            this.currentFontSize = Math.max(80, Math.min(200, this.currentFontSize + delta));
+            // Rango de 80% a 180%
+            this.currentFontSize = Math.max(80, Math.min(180, this.currentFontSize + delta));
             this.setFontSize(this.currentFontSize);
         }
 
         setFontSize(value) {
-            // Aplicar al elemento raíz (html) para que todas las unidades rem escalen proporcionalmente
-            // Esto es la mejor práctica para accesibilidad web moderna
-            document.documentElement.style.fontSize = `${value}%`;
-            
-            // Guardar en localStorage para persistencia entre páginas
+            document.documentElement.style.fontSize = value === 100 ? '' : `${value}%`;
             localStorage.setItem('a11y-font-size', value);
-            
-            // Opcional: Añadir una clase al body para indicar que el texto ha sido modificado
-            if (value !== 100) {
-                document.body.classList.add('text-scaled');
-            } else {
-                document.body.classList.remove('text-scaled');
-            }
         }
 
         toggleHighContrast(enabled) {
-            if (enabled) {
-                document.body.classList.add('high-contrast');
-            } else {
-                document.body.classList.remove('high-contrast');
-            }
-            localStorage.setItem('a11y-high-contrast', enabled);
+            document.documentElement.classList.toggle('high-contrast', enabled);
+            document.body?.classList.toggle('high-contrast', enabled);
+            localStorage.setItem('a11y-high-contrast', enabled ? 'true' : 'false');
         }
 
         toggleNegativeContrast(enabled) {
-            if (enabled) {
-                document.body.classList.add('negative-contrast');
-            } else {
-                document.body.classList.remove('negative-contrast');
-            }
-            localStorage.setItem('a11y-negative-contrast', enabled);
+            document.documentElement.classList.toggle('negative-contrast', enabled);
+            document.body?.classList.toggle('negative-contrast', enabled);
+            localStorage.setItem('a11y-negative-contrast', enabled ? 'true' : 'false');
         }
 
         toggleGrayscale(enabled) {
-            if (enabled) {
-                document.body.classList.add('grayscale');
-            } else {
-                document.body.classList.remove('grayscale');
-            }
-            localStorage.setItem('a11y-grayscale', enabled);
+            document.documentElement.classList.toggle('grayscale', enabled);
+            document.body?.classList.toggle('grayscale', enabled);
+            localStorage.setItem('a11y-grayscale', enabled ? 'true' : 'false');
         }
 
         toggleDyslexiaFriendly(enabled) {
-            if (enabled) {
-                document.body.classList.add('dyslexia-friendly');
-            } else {
-                document.body.classList.remove('dyslexia-friendly');
-            }
-            localStorage.setItem('a11y-dyslexia', enabled);
+            document.documentElement.classList.toggle('dyslexia-friendly', enabled);
+            document.body?.classList.toggle('dyslexia-friendly', enabled);
+            localStorage.setItem('a11y-dyslexia', enabled ? 'true' : 'false');
         }
 
         toggleUnderlineLinks(enabled) {
-            if (enabled) {
-                document.body.classList.add('underline-links');
-            } else {
-                document.body.classList.remove('underline-links');
-            }
-            localStorage.setItem('a11y-underline-links', enabled);
+            document.documentElement.classList.toggle('underline-links', enabled);
+            document.body?.classList.toggle('underline-links', enabled);
+            localStorage.setItem('a11y-underline-links', enabled ? 'true' : 'false');
         }
 
         resetSettings() {
-            // Limpiar clases
-            document.body.classList.remove('high-contrast', 'negative-contrast', 'grayscale', 'dyslexia-friendly', 'underline-links');
+            // Limpiar clases en html y body
+            const classes = ['high-contrast', 'negative-contrast', 'grayscale', 'dyslexia-friendly', 'underline-links'];
+            document.documentElement.classList.remove(...classes);
+            document.body?.classList.remove(...classes);
             
-            // Resetear estilos
+            // Resetear estilos de fuente
             document.documentElement.style.fontSize = '';
-            document.body.style.fontSize = '';
+            this.currentFontSize = 100;
 
             // Resetear checkboxes
             if (this.highContrastCheckbox) this.highContrastCheckbox.checked = false;
@@ -147,9 +158,6 @@
             if (this.grayscaleCheckbox) this.grayscaleCheckbox.checked = false;
             if (this.dyslexiaFriendlyCheckbox) this.dyslexiaFriendlyCheckbox.checked = false;
             if (this.underlineLinksCheckbox) this.underlineLinksCheckbox.checked = false;
-
-            // Resetear tamaño de fuente
-            this.currentFontSize = 100;
 
             // Limpiar localStorage
             localStorage.removeItem('a11y-font-size');
@@ -161,55 +169,54 @@
         }
 
         loadSettings() {
-            // Cargar tamaño de fuente
-            const savedFontSize = localStorage.getItem('a11y-font-size');
-            if (savedFontSize) {
-                this.currentFontSize = parseInt(savedFontSize, 10);
-                this.setFontSize(this.currentFontSize);
-            }
+            try {
+                // Tamaño de fuente
+                const savedFontSize = localStorage.getItem('a11y-font-size');
+                if (savedFontSize) {
+                    this.currentFontSize = parseInt(savedFontSize, 10) || 100;
+                    if (this.currentFontSize !== 100) {
+                        this.setFontSize(this.currentFontSize);
+                    }
+                }
 
-            // Cargar alto contraste
-            const savedHighContrast = localStorage.getItem('a11y-high-contrast');
-            if (savedHighContrast === 'true') {
-                if (this.highContrastCheckbox) this.highContrastCheckbox.checked = true;
-                this.toggleHighContrast(true);
-            }
+                // Alto contraste
+                if (localStorage.getItem('a11y-high-contrast') === 'true') {
+                    if (this.highContrastCheckbox) this.highContrastCheckbox.checked = true;
+                    this.toggleHighContrast(true);
+                }
 
-            // Cargar contraste negativo
-            const savedNegativeContrast = localStorage.getItem('a11y-negative-contrast');
-            if (savedNegativeContrast === 'true') {
-                if (this.negativeContrastCheckbox) this.negativeContrastCheckbox.checked = true;
-                this.toggleNegativeContrast(true);
-            }
+                // Contraste negativo
+                if (localStorage.getItem('a11y-negative-contrast') === 'true') {
+                    if (this.negativeContrastCheckbox) this.negativeContrastCheckbox.checked = true;
+                    this.toggleNegativeContrast(true);
+                }
 
-            // Cargar escala de grises
-            const savedGrayscale = localStorage.getItem('a11y-grayscale');
-            if (savedGrayscale === 'true') {
-                if (this.grayscaleCheckbox) this.grayscaleCheckbox.checked = true;
-                this.toggleGrayscale(true);
-            }
+                // Escala de grises
+                if (localStorage.getItem('a11y-grayscale') === 'true') {
+                    if (this.grayscaleCheckbox) this.grayscaleCheckbox.checked = true;
+                    this.toggleGrayscale(true);
+                }
 
-            // Cargar fuente amigable
-            const savedDyslexia = localStorage.getItem('a11y-dyslexia');
-            if (savedDyslexia === 'true') {
-                if (this.dyslexiaFriendlyCheckbox) this.dyslexiaFriendlyCheckbox.checked = true;
-                this.toggleDyslexiaFriendly(true);
-            }
+                // Fuente dislexia
+                if (localStorage.getItem('a11y-dyslexia') === 'true') {
+                    if (this.dyslexiaFriendlyCheckbox) this.dyslexiaFriendlyCheckbox.checked = true;
+                    this.toggleDyslexiaFriendly(true);
+                }
 
-            // Cargar subrayar enlaces
-            const savedUnderlineLinks = localStorage.getItem('a11y-underline-links');
-            if (savedUnderlineLinks === 'true') {
-                if (this.underlineLinksCheckbox) this.underlineLinksCheckbox.checked = true;
-                this.toggleUnderlineLinks(true);
+                // Subrayar enlaces
+                if (localStorage.getItem('a11y-underline-links') === 'true') {
+                    if (this.underlineLinksCheckbox) this.underlineLinksCheckbox.checked = true;
+                    this.toggleUnderlineLinks(true);
+                }
+            } catch (err) {
+                console.warn('No se pudieron cargar los ajustes de accesibilidad de localStorage:', err);
             }
         }
     }
 
-    // Inicializar cuando el DOM esté listo
+    // Inicialización al cargar el DOM
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            new AccessibilityWidget();
-        });
+        document.addEventListener('DOMContentLoaded', () => new AccessibilityWidget());
     } else {
         new AccessibilityWidget();
     }

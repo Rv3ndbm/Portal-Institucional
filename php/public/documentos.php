@@ -43,7 +43,6 @@ function resolveDocAsset(?string $path): string {
     <!-- CSS Institucional -->
     <link rel="stylesheet" href="../../css/styles.css?v=2.5">
     <link rel="stylesheet" href="../../css/variables.css">
-    <link rel="stylesheet" href="../../css/modern-theme.css">
     <link rel="stylesheet" href="../../css/documentos.css">
     <link rel="stylesheet" href="../../css/accessibility.css">
     <link rel="stylesheet" href="../../css/search.css">

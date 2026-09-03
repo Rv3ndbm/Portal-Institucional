@@ -152,8 +152,7 @@ img:not([data-src]) {
     left: 0;
     right: 0;
     z-index: 9999 !important;
-    /* Forzado al máximo para evitar bugs de Chrome con backdrop-filter y transforms */
-    transition: all var(--transition-slow) var(--ease-smooth);
+    transition: box-shadow var(--transition-base) var(--ease-smooth);
 }
 
 .header-content {
@@ -188,8 +187,7 @@ img:not([data-src]) {
     align-items: center;
     padding: 1rem var(--spacing-md);
     background: var(--color-primary);
-    /* Solid color instead of rgba */
-    transition: all var(--transition-slow) var(--ease-smooth);
+    transition: padding var(--transition-base) var(--ease-smooth), min-height var(--transition-base) var(--ease-smooth);
     position: relative;
 }
 
@@ -204,15 +202,34 @@ img:not([data-src]) {
 
 @media (max-width: 1024px) {
     .header-top {
-        padding: var(--spacing-md) var(--spacing-sm);
+        padding: 10px var(--spacing-sm);
+        position: relative;
+        min-height: 64px;
     }
 
     .logo-title-container {
-        justify-content: center;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-left: 0;
         width: 100%;
-        padding: 0 50px;
-        /* Espacio lateral para evitar solapamiento con el menú */
+        padding-left: 56px; /* Espacio para equilibrar el botón hamburguesa a la izquierda (44px + 12px) */
+        padding-right: 12px;
+        gap: 10px;
+    }
+
+    .institution-name {
+        order: 1; /* Título centrado en medio */
+        flex: 1;
+        text-align: center;
+    }
+
+    .logo-container {
+        order: 2; /* Escudo a la derecha */
+        margin-left: auto;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
     }
 }
 
@@ -222,13 +239,6 @@ img:not([data-src]) {
     flex-shrink: 0;
     transition: all var(--transition-slow) var(--ease-smooth);
     animation: fadeInLeft 1s var(--ease-out);
-}
-
-@media (max-width: 1024px) {
-    .logo-container {
-        width: clamp(40px, 12vw, 60px);
-        height: clamp(40px, 12vw, 60px);
-    }
 }
 
 .logo {
@@ -256,9 +266,10 @@ img:not([data-src]) {
 
 @media (max-width: 1024px) {
     .institution-name h1 {
-        font-size: clamp(0.875rem, 3.5vw, 1.125rem);
+        font-size: clamp(0.82rem, 3.6vw, 1.05rem);
         letter-spacing: 0.5px;
         text-align: center;
+        margin: 0;
     }
 }
 
@@ -272,11 +283,10 @@ img:not([data-src]) {
     width: var(--hamburger-size);
     height: var(--hamburger-size);
     background: var(--color-primary-light);
-    /* Solid color */
     border: none;
     border-radius: var(--border-radius-md);
     cursor: pointer;
-    z-index: 1001;
+    z-index: 10002;
     transition: all var(--transition-base) var(--ease-smooth);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -288,6 +298,9 @@ img:not([data-src]) {
         justify-content: center;
         align-items: center;
         gap: var(--hamburger-gap);
+        left: 12px;
+        width: 44px;
+        height: 44px;
     }
 }
 
@@ -300,6 +313,15 @@ img:not([data-src]) {
     transform: translateY(-50%) scale(0.95);
 }
 
+.hamburger-button.active {
+    background: transparent;
+    box-shadow: none;
+}
+
+.hamburger-button.active:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
 /* Líneas del hamburguesa */
 .hamburger-line {
     width: var(--hamburger-line-width);
@@ -310,7 +332,7 @@ img:not([data-src]) {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Animación cuando está abierto */
+/* Animación cuando está abierto (transforma en X limpia) */
 .hamburger-button.active .hamburger-line:nth-child(1) {
     transform: translateY(var(--hamburger-translate-y)) rotate(var(--hamburger-rotate-primary));
 }
@@ -322,36 +344,6 @@ img:not([data-src]) {
 
 .hamburger-button.active .hamburger-line:nth-child(3) {
     transform: translateY(calc(var(--hamburger-translate-y) * -1)) rotate(var(--hamburger-rotate-secondary));
-}
-
-/* === BOTÓN X DE CIERRE EN MENÚ MÓVIL === */
-.menu-close-button {
-    position: fixed;
-    top: calc(var(--spacing-md) + 8px);
-    left: var(--spacing-md);
-    width: 40px;
-    height: 40px;
-    background: var(--color-primary-light);
-    border: 2px solid var(--color-white);
-    border-radius: var(--border-radius-md);
-    color: var(--color-white);
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all var(--transition-base) var(--ease-smooth);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1002;
-}
-
-.menu-close-button:hover {
-    background: var(--color-primary-dark);
-    border-color: var(--color-white);
-    transform: scale(1.1);
-}
-
-.menu-close-button:active {
-    transform: scale(0.95);
 }
 
 /* === HEADER MINIMIZADO (SCROLL) === */
@@ -372,22 +364,9 @@ img:not([data-src]) {
     font-size: clamp(0.9rem, 0.85rem + 0.2vw, 1rem);
 }
 
-@media (max-width: 1024px) {
-    .main-header.scrolled .header-top {
-        padding: var(--spacing-sm);
-    }
-}
-
 .main-header.scrolled .logo-container {
     width: var(--logo-size-mobile);
     height: var(--logo-size-mobile);
-}
-
-@media (max-width: 1024px) {
-    .main-header.scrolled .logo-container {
-        width: var(--logo-size-scrolled);
-        height: var(--logo-size-scrolled);
-    }
 }
 
 .main-header.scrolled .institution-name h1 {
@@ -396,8 +375,18 @@ img:not([data-src]) {
 }
 
 @media (max-width: 1024px) {
+    .main-header.scrolled .header-top {
+        padding: 6px var(--spacing-sm);
+        min-height: 54px;
+    }
+
+    .main-header.scrolled .logo-container {
+        width: 36px;
+        height: 36px;
+    }
+
     .main-header.scrolled .institution-name h1 {
-        font-size: clamp(0.75rem, 3vw, 1rem);
+        font-size: clamp(0.76rem, 3.2vw, 0.95rem);
     }
 }
 
@@ -406,7 +395,7 @@ img:not([data-src]) {
     position: relative;
     background: var(--color-primary-dark);
     /* Solid color instead of rgba */
-    transition: all var(--transition-slow) var(--ease-smooth);
+    transition: padding var(--transition-base) var(--ease-smooth), box-shadow var(--transition-base) var(--ease-smooth);
 }
 
 /* MENÚ MÓVIL */

@@ -11,11 +11,6 @@ main {
     margin-top: var(--header-height-desktop); /* Ajustado para eliminar espacio en blanco */
 }
 
-/* Ajuste cuando el header se contrae al hacer scroll */
-.main-header.scrolled + main {
-    margin-top: var(--header-height-scrolled);
-}
-
 @media (max-width: 1024px) {
     main {
         margin-top: var(--header-height-mobile); /* Ajustado para el header móvil */

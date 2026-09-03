@@ -24,16 +24,13 @@
     <!-- CSS Institucional -->
     <link rel="stylesheet" href="../css/styles.css?v=2.5">
     <link rel="stylesheet" href="../css/variables.css">
-    <link rel="stylesheet" href="../css/accessibility.css">
-
-    <!-- CSS Específico de Contáctanos -->
     <link rel="stylesheet" href="../css/contacto.css">
-
-    <!-- Fuentes e Iconos -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/accessibility.css">
     <link rel="stylesheet" href="../css/search.css">
-    <link rel="stylesheet" href="../css/a11y-new.css">
+    
+    <!-- Fuentes e Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -158,8 +155,8 @@
                 <div data-contact-animate data-delay="100">
                     <div class="contact-section-label">Canales Directos</div>
                     <h2 class="contact-info-heading">Ponte en Contacto</h2>
-                    <p class="contact-info-text">Nuestra institución cuenta con canales para atender las
-                        solicitudes de estudiantes, padres y comunidad en general.</p>
+                    <p class="contact-info-text">Nuestra institución cuenta con canales de atención para resolver las
+                        inquietudes de estudiantes, padres de familia, acudientes y la comunidad educativa en general.</p>
                 </div>
 
                 <div class="contact-cards">
@@ -169,6 +166,7 @@
                         <div class="contact-card-body">
                             <div class="contact-card-label">Teléfono Principal</div>
                             <div class="contact-card-value"><a href="tel:+5715551234">+57 1 555 1234</a></div>
+                            <div class="contact-card-sub">Línea de atención telefónica</div>
                         </div>
                     </div>
 
@@ -176,9 +174,9 @@
                     <div class="contact-card" data-contact-animate data-delay="200">
                         <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
                         <div class="contact-card-body">
-                            <div class="contact-card-label">Correo Electrónico</div>
-                            <div class="contact-card-value"><a href="mailto:info@alzate.edu.co">info@alzate.edu.co</a>
-                            </div>
+                            <div class="contact-card-label">Correo Institucional</div>
+                            <div class="contact-card-value"><a href="mailto:ie.gilbertoalzate@medellin.gov.co">ie.gilbertoalzate@medellin.gov.co</a></div>
+                            <div class="contact-card-sub">Recepción oficial de correspondencia</div>
                         </div>
                     </div>
 
@@ -193,6 +191,7 @@
                                     Cl. 92 #51a-100, Aranjuez, Medellín
                                 </a>
                             </div>
+                            <div class="contact-card-sub">Medellín, Antioquia - Colombia</div>
                         </div>
                     </div>
 
@@ -201,77 +200,186 @@
                         <div class="contact-card-icon"><i class="fas fa-clock"></i></div>
                         <div class="contact-card-body">
                             <div class="contact-card-label">Horario de Atención</div>
-                            <div class="contact-card-value">Lunes a Viernes: 7:00 a.m. a 2:00 p.m.</div>
+                            <div class="contact-card-value">Lunes a Viernes</div>
+                            <div class="contact-card-sub">7:00 a.m. a 2:00 p.m. (Jornada Continua)</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Redes Sociales -->
-                <div style="margin-top: 10px;" data-contact-animate data-delay="350">
-                    <div class="contact-social-title">Nuestras Redes</div>
+                <div class="contact-social-box" data-contact-animate data-delay="350">
+                    <div class="contact-social-title">Canales Digitales Oficiales</div>
                     <div class="contact-social-row">
                         <a href="https://www.facebook.com/gilbertoalzate.tarde" target="_blank" rel="noopener noreferrer"
-                            class="contact-social-btn fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+                            class="contact-social-btn fb" aria-label="Facebook Oficial"><i class="fab fa-facebook-f"></i> Facebook</a>
                         <a href="https://www.instagram.com/elalzateviveporvos/" target="_blank" rel="noopener noreferrer"
-                            class="contact-social-btn ig"><i class="fab fa-instagram"></i> Instagram</a>
+                            class="contact-social-btn ig" aria-label="Instagram Oficial"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://www.youtube.com/@alzatevirtual8374" target="_blank" rel="noopener noreferrer"
+                            class="contact-social-btn yt" aria-label="YouTube Institucional"><i class="fab fa-youtube"></i> YouTube</a>
                         <a href="https://www.whatsapp.com/channel/0029VaLVU0m5Ejy0YiRme508" target="_blank" rel="noopener noreferrer"
-                            class="contact-social-btn wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            class="contact-social-btn wa" aria-label="Canal de WhatsApp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     </div>
+                </div>
+
+                <!-- Tarjeta Accesos a Sedes -->
+                <div class="contact-sedes-card" data-contact-animate data-delay="400">
+                    <div class="contact-sedes-header">
+                        <i class="fas fa-school"></i>
+                        <span>Nuestras 5 Sedes Educativas</span>
+                    </div>
+                    <p>Contamos con sedes articuladas en el barrio Aranjuez y sectores aledaños.</p>
+                    <a href="sedes.html" class="contact-sedes-link">Conocer detalles de cada sede <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <!-- COLUMNA DERECHA: FORMULARIO DE CONTACTO -->
             <div class="contact-form-col" data-contact-animate data-delay="200">
-                <h3 class="contact-form-title">Envíanos un Mensaje</h3>
-                <p class="contact-form-subtitle">Completa el formulario y nuestro equipo te contactará a la brevedad
-                    posible.</p>
+                <div class="contact-form-header">
+                    <div class="contact-form-badge"><i class="fas fa-shield-alt"></i> Formulario Oficial</div>
+                    <h3 class="contact-form-title">Envíanos un Mensaje</h3>
+                    <p class="contact-form-subtitle">Diligencia los siguientes campos. Recibirás respuesta directa a tu correo electrónico institucional o personal.</p>
+                </div>
+
+                <!-- Alerta de Error / Notificación del Servidor -->
+                <div class="form-alert" id="formAlert" style="display: none;" role="alert">
+                    <div class="form-alert-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <div class="form-alert-text" id="formAlertText"></div>
+                </div>
 
                 <!-- Mensaje de éxito (oculto por defecto) -->
-                <div class="form-success-message" id="formSuccessMessage">
-                    <div class="form-success-icon"><i class="fas fa-check"></i></div>
-                    <h3>¡Mensaje Enviado!</h3>
-                    <p>Gracias por contactarnos. Hemos recibido tu solicitud y te daremos respuesta pronto al correo
-                        electrónico proporcionado.</p>
+                <div class="form-success-message" id="formSuccessMessage" style="display: none;">
+                    <div class="form-success-icon"><i class="fas fa-check-circle"></i></div>
+                    <h3>¡Mensaje Recibido con Éxito!</h3>
+                    <div class="form-radicado-wrapper">
+                        <span class="radicado-label">Número de Radicado:</span>
+                        <span class="radicado-code" id="radicadoCode">GAA-00000</span>
+                    </div>
+                    <p class="form-success-desc">
+                        Hemos registrado tu solicitud en el sistema y enviado un acuse de recibo. Nuestro equipo se pondrá en contacto contigo a la mayor brevedad.
+                    </p>
+                    <div class="form-success-summary" id="successSummary"></div>
+                    <button type="button" class="btn-new-message" id="btnNewMessage">
+                        <i class="fas fa-paper-plane"></i> Enviar otra consulta
+                    </button>
                 </div>
 
                 <!-- Formulario -->
-                <form id="contactForm" novalidate>
-                    <div class="form-group">
-                        <label for="frmName">Nombre Completo *</label>
-                        <input type="text" id="frmName" class="form-control" required placeholder="Ej. Juan Pérez">
+                <form id="contactForm" action="../php/public/enviar_contacto.php" method="POST" novalidate>
+                    <!-- Campo Señuelo Anti-Spam (Honeypot para bots) -->
+                    <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+                        <label for="website_hp">No llenar este campo:</label>
+                        <input type="text" id="website_hp" name="website_hp" tabindex="-1" autocomplete="off">
+                        <input type="hidden" id="form_time" name="form_time" value="">
                     </div>
 
+                    <!-- Nombre Completo -->
+                    <div class="form-group" id="grpName">
+                        <label for="frmName">Nombre Completo <span class="required">*</span></label>
+                        <div class="input-icon-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="frmName" name="nombre" class="form-control" required 
+                                placeholder="Ej. Andrea Gómez Pérez" autocomplete="name" maxlength="120">
+                        </div>
+                        <span class="form-error" id="errName"></span>
+                    </div>
+
+                    <!-- Fila Correo y Teléfono -->
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="frmEmail">Correo Electrónico *</label>
-                            <input type="email" id="frmEmail" class="form-control" required
-                                placeholder="ejemplo@correo.com">
+                        <div class="form-group" id="grpEmail">
+                            <label for="frmEmail">Correo Electrónico <span class="required">*</span></label>
+                            <div class="input-icon-wrapper">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" id="frmEmail" name="email" class="form-control" required
+                                    placeholder="ejemplo@correo.com" autocomplete="email" maxlength="120">
+                            </div>
+                            <span class="form-error" id="errEmail"></span>
                         </div>
-                        <div class="form-group">
-                            <label for="frmSubject">Asunto *</label>
-                            <select id="frmSubject" class="form-control" required>
-                                <option value="" disabled selected>Selecciona un motivo</option>
-                                <option value="academico">Información Académica</option>
-                                <option value="matriculas">Matrículas e Inscripciones</option>
-                                <option value="certificados">Solicitud de Certificados</option>
-                                <option value="pqrs">Quejas y Reclamos</option>
-                                <option value="otro">Otro Motivo</option>
-                            </select>
+
+                        <div class="form-group" id="grpPhone">
+                            <label for="frmPhone">Teléfono / Celular</label>
+                            <div class="input-icon-wrapper">
+                                <i class="fas fa-phone input-icon"></i>
+                                <input type="tel" id="frmPhone" name="telefono" class="form-control"
+                                    placeholder="Ej. 300 123 4567" autocomplete="tel" maxlength="25">
+                            </div>
+                            <span class="form-error" id="errPhone"></span>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="frmMessage">Tu Mensaje *</label>
-                        <textarea id="frmMessage" class="form-control" required
-                            placeholder="Escribe aquí los detalles de tu consulta..."></textarea>
+                    <!-- Fila Sede y Asunto -->
+                    <div class="form-row">
+                        <div class="form-group" id="grpSede">
+                            <label for="frmSede">Sede de Interés</label>
+                            <div class="input-icon-wrapper">
+                                <i class="fas fa-school input-icon"></i>
+                                <select id="frmSede" name="sede" class="form-control">
+                                    <option value="Sede Central" selected>Sede Central</option>
+                                    <option value="Sede San Isidro">Sede San Isidro</option>
+                                    <option value="Sede Seguros Bolívar">Sede Seguros Bolívar</option>
+                                    <option value="Sede Tomás Carrasquilla">Sede Tomás Carrasquilla</option>
+                                    <option value="Sede Carlos Villa">Sede Carlos Villa</option>
+                                    <option value="General">General / Todas las Sedes</option>
+                                </select>
+                            </div>
+                            <span class="form-error" id="errSede"></span>
+                        </div>
+
+                        <div class="form-group" id="grpSubject">
+                            <label for="frmSubject">Asunto o Motivo <span class="required">*</span></label>
+                            <div class="input-icon-wrapper">
+                                <i class="fas fa-tag input-icon"></i>
+                                <select id="frmSubject" name="asunto" class="form-control" required>
+                                    <option value="" disabled selected>Selecciona un motivo</option>
+                                    <option value="academico">Información Académica</option>
+                                    <option value="matriculas">Matrículas e Inscripciones</option>
+                                    <option value="certificados">Certificados y Constancias</option>
+                                    <option value="padres">Atención a Familias y Padres</option>
+                                    <option value="sedes">Información sobre Sedes</option>
+                                    <option value="pqrs">Petición, Queja o Reclamo (PQRSF)</option>
+                                    <option value="otro">Otro Motivo / Consulta General</option>
+                                </select>
+                            </div>
+                            <span class="form-error" id="errSubject"></span>
+                        </div>
                     </div>
 
-                    <button type="submit" class="form-submit-btn">
-                        <span>Enviar Mensaje</span>
-                        <i class="fas fa-paper-plane"></i>
+                    <!-- Mensaje -->
+                    <div class="form-group" id="grpMessage">
+                        <div class="label-char-row">
+                            <label for="frmMessage">Tu Mensaje <span class="required">*</span></label>
+                            <span class="char-count" id="charCount">0 / 4000</span>
+                        </div>
+                        <div class="input-icon-wrapper textarea-wrapper">
+                            <textarea id="frmMessage" name="mensaje" class="form-control" required maxlength="4000"
+                                placeholder="Describe detalladamente tu consulta, inquietud o solicitud para poder brindarte una respuesta oportuna..."></textarea>
+                        </div>
+                        <span class="form-error" id="errMessage"></span>
+                    </div>
+
+                    <!-- Tratamiento de Datos Personales (Habeas Data) -->
+                    <div class="form-group form-checkbox-group" id="grpHabeas">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="frmHabeas" name="habeas_data" value="1" required>
+                            <span class="checkmark"></span>
+                            <span class="checkbox-text">
+                                Autorizo a la <strong>I.E. Gilberto Alzate Avendaño</strong> el tratamiento de mis datos personales conforme a la 
+                                <a href="https://alzate.edu.co/wp-content/uploads/2024/07/MANUAL-DE-CONVIVENCIA-2024.pdf" target="_blank" rel="noopener noreferrer">Política de Privacidad</a> 
+                                y la Ley Estatutaria 1581 de 2012. <span class="required">*</span>
+                            </span>
+                        </label>
+                        <span class="form-error" id="errHabeas"></span>
+                    </div>
+
+                    <!-- Botón de Envío -->
+                    <button type="submit" class="form-submit-btn" id="btnSubmitContact">
+                        <span class="btn-text">Enviar Mensaje</span>
+                        <i class="fas fa-paper-plane btn-icon"></i>
                     </button>
-                    <p style="font-size: 11px; color: #9e9e9e; text-align: center; margin-top: 14px;">* Todos los campos
-                        son obligatorios</p>
+
+                    <div class="form-security-footer">
+                        <i class="fas fa-lock"></i>
+                        <span>Tus datos son confidenciales y no se compartirán con terceros.</span>
+                    </div>
                 </form>
             </div>
         </div>
