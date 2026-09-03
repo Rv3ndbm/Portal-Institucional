@@ -1,0 +1,17 @@
+# OS metadata
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Temporary browser profiles and screenshots in scratch
+scratch/*.png
+scratch/*.txt
+scratch/chrome-*/
+
+# Local IDE / editor folders
+.vscode/
+.idea/
+*.swp
+*~
