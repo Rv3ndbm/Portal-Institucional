@@ -95,14 +95,14 @@
 .accessibility-title {
     font-size: 0.8125rem;
     font-weight: 700;
-    color: #1a365d;
+    color: var(--color-primary);
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-bottom: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
-    border-bottom: 2px solid #e53e3e;
+    border-bottom: 2px solid var(--color-secondary);
     padding-bottom: 10px;
 }
 
@@ -206,7 +206,7 @@
 .accessibility-reset {
     width: 100%;
     padding: 10px;
-    background: linear-gradient(135deg, #1a365d, #2c5282);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
     color: white;
     border: none;
     border-radius: 6px;
@@ -219,9 +219,9 @@
 }
 
 .accessibility-reset:hover {
-    background: linear-gradient(135deg, #0f1f3c, #1a365d);
+    background: linear-gradient(135deg, var(--color-primary-dark), var(--color-primary));
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(26, 54, 93, 0.25);
+    box-shadow: 0 4px 12px rgba(30, 60, 114, 0.25);
 }
 
 /* Alto contraste verdadero (Fondo negro, texto amarillo/blanco) */

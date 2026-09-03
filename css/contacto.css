@@ -12,10 +12,10 @@
 :root {
     --contact-bg: #f8fafc;
     --contact-white: #ffffff;
-    --contact-primary: #1e40af;
-    --contact-primary-dark: #1e3a8a;
-    --contact-accent: #dc2626;
-    --contact-accent-light: #f87171;
+    --contact-primary: var(--color-primary, #1e3c72);
+    --contact-primary-dark: var(--color-primary-dark, #152a52);
+    --contact-accent: var(--color-secondary, #dc143c);
+    --contact-accent-light: var(--color-secondary-light, #ff4757);
     --contact-dark: #0f172a;
     --contact-gray-100: #f1f5f9;
     --contact-gray-200: #e2e8f0;
