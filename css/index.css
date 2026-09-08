@@ -550,6 +550,10 @@ main {
     position: relative;
 }
 
+.shortcuts-section .section-title {
+    color: #ffffff !important;
+}
+
 .section-title::after {
     content: '';
     display: block;
@@ -558,6 +562,10 @@ main {
     background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
     margin: 15px auto 0;
     border-radius: 2px;
+}
+
+.shortcuts-section .section-title::after {
+    background: linear-gradient(90deg, #ffffff, var(--color-secondary));
 }
 
 .stats-grid {

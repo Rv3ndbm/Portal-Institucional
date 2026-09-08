@@ -5,17 +5,16 @@
 /* --- Hero Section --- */
 .hero-tecnicas {
     position: relative;
-    height: 48vh;
-    min-height: 350px;
+    min-height: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 200px;
-    /* Ajuste para el header fijo */
+    margin-top: 0;
+    padding: 210px 24px 75px;
     background-size: cover;
-    background-position: center;
+    background-position: center top;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: scroll;
     color: #fff;
     text-align: center;
     overflow: hidden;
@@ -240,14 +239,16 @@
 /* --- Responsive --- */
 @media (max-width: 1024px) {
     .hero-tecnicas {
-        margin-top: 140px;
+        min-height: 300px;
+        padding: 130px 20px 50px;
+        margin-top: 0;
     }
 }
 
 @media (max-width: 768px) {
     .hero-tecnicas {
         height: auto;
-        min-height: 280px;
+        min-height: 260px;
         margin-top: 0;
         padding: 120px 0 40px;
         background-attachment: scroll;

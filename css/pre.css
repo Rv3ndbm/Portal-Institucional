@@ -1,20 +1,21 @@
 /* Hero Banner con Video de Fondo */
 .hero-inscripcion {
     position: relative;
-    height: 48vh;
-    min-height: 320px;
+    min-height: 420px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: var(--header-height-desktop); /* Ajustado para eliminar espacio en blanco */
-    padding-top: 0;
+    margin-top: 0;
+    padding: 220px 24px 70px;
     overflow: hidden;
     background: #000;
 }
 
 @media (max-width: 1024px) {
     .hero-inscripcion {
-        margin-top: var(--header-height-mobile);
+        min-height: 300px;
+        padding: 130px 20px 50px;
+        margin-top: 0;
     }
 }
 
@@ -266,10 +267,9 @@
 @media (max-width: 768px) {
     .hero-inscripcion {
         height: auto;
-        min-height: 240px; /* Aún más bajo */
-        padding: 80px 20px 20px; /* Reducido drásticamente el espacio vertical */
-        margin-top: var(--header-height-mobile);
-        /* No usar padding-top de 280px, ya que es demasiado para un hero compacto */
+        min-height: 300px;
+        padding: 120px 20px 50px;
+        margin-top: 0;
     }
 
     .hero-title {

@@ -321,57 +321,62 @@
                 </div>
             </div>
         </section>
-        <!-- DIAGONAL SEPARATOR 2 -->
-        <div class="diagonal-divider diagonal-blue"></div>
-
-        <!-- SECTION: MEDIAS TÉCNICAS -->
-        <section class="feature-section tecnicas-feature" data-scroll-animate>
+        <!-- SECCIÓN: CARRUSEL DE NOTICIAS INSTITUCIONALES (Conectado con Admin) -->
+        <section class="home-news-carousel-section" id="noticiasHome" data-scroll-animate>
             <div class="container">
-                <div class="feature-grid reverse">
-                    <div class="feature-image circle-shape" data-scroll-animate>
-                        <img src="img/clases interactivas ce.jpg" alt="Técnicas">
-                        <div class="glass-orb orb-1"></div>
-                        <div class="glass-orb orb-2"></div>
+                <div class="news-carousel-header">
+                    <div class="news-header-left">
+                        <span class="news-section-badge"><i class="fas fa-newspaper"></i> Actualidad Alzatista</span>
+                        <h2 class="news-carousel-title">Últimas Noticias y Novedades</h2>
+                        <p class="news-carousel-subtitle">Acontecimientos, actividades y comunicados más recientes de nuestra comunidad educativa.</p>
                     </div>
-                    <div class="feature-text" data-scroll-animate>
-                        <span class="feature-badge">Formación Técnica</span>
-                        <h2>Prepárate para Mañana</h2>
-                        <p>Articulación con SENA y universidades en software, diseño, gestión ambiental y música.
-                            Competencias laborales reconocidas globalmente.</p>
-                        <ul class="feature-bullets">
-                            <li><i class="fas fa-check-circle"></i> Pascual Bravo Software</li>
-                            <li><i class="fas fa-check-circle"></i> SENA certificado</li>
-                        </ul>
-                        <a href="html/tecnicas.html" class="btn-feature">Explora Técnicas →</a>
+                    <div class="news-carousel-controls">
+                        <button class="carousel-nav-btn prev-btn" id="newsPrevBtn" aria-label="Noticia anterior">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-nav-btn next-btn" id="newsNextBtn" aria-label="Noticia siguiente">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
                     </div>
+                </div>
+                <div class="news-carousel-viewport" id="newsCarouselViewport">
+                    <div class="news-carousel-track" id="newsCarouselTrack">
+                        <div class="news-loading-placeholder">
+                            <div class="spinner-border"></div>
+                            <span>Cargando últimas noticias...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="news-carousel-footer">
+                    <div class="news-carousel-dots" id="newsCarouselDots"></div>
+                    <a href="php/public/noticias.php" class="btn-all-news">
+                        Ver todas las noticias <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION: MODALIDAD ACADÉMICA -->
-        <section class="feature-section academic-feature" data-scroll-animate>
-            <div class="container">
-                <div class="feature-grid">
-                    <div class="feature-text" data-scroll-animate>
-                        <span class="feature-badge academic-badge">Enfoque Académico</span>
-                        <h2>Tu Camino a la Universidad</h2>
-                        <p>Preparación intensiva enfocada en el ICFES Saber 11, simulacros de admisión y convenios para
-                            la educación superior. Orientación profesional y flexibilidad de horarios.</p>
-                        <ul class="feature-bullets">
-                            <li><i class="fas fa-graduation-cap"></i> Enfoque Saber 11 e ICFES</li>
-                            <li><i class="fas fa-book-reader"></i> Habilidades de Investigación</li>
-                            <li><i class="fas fa-clock"></i> Flexibilidad Vocacional</li>
-                        </ul>
-                        <a href="html/academico.html" class="btn-feature btn-academic">Explora Modalidad →</a>
+        <!-- Modal de Lectura de Noticia en Home -->
+        <div id="homeNewsModal" class="home-news-modal" role="dialog" aria-modal="true" aria-hidden="true">
+            <div class="home-news-modal-overlay"></div>
+            <div class="home-news-modal-content">
+                <button class="home-news-modal-close" id="homeNewsModalClose" aria-label="Cerrar modal">&times;</button>
+                <div class="home-news-modal-img-wrap">
+                    <img id="homeModalImg" src="img/banner ce.JPG" alt="Noticia">
+                </div>
+                <div class="home-news-modal-body">
+                    <div class="home-news-modal-meta">
+                        <span id="homeModalCategory" class="news-category-badge"></span>
+                        <span id="homeModalDate" class="card-date"></span>
                     </div>
-                    <div class="feature-image circle-shape" data-scroll-animate>
-                        <img src="img/admiinistrativo.jpeg" alt="Académico">
-                        <div class="glass-orb orb-1"></div>
-                        <div class="glass-orb orb-2"></div>
+                    <h2 id="homeModalTitle" class="home-news-modal-title"></h2>
+                    <div id="homeModalText" class="home-news-modal-text"></div>
+                    <div class="home-news-modal-footer">
+                        <a id="homeModalFullLink" href="php/public/noticias.php" class="btn-all-news">Ir al portal de noticias →</a>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- BENTO GRID: SERVICIOS COMUNIDAD EDUCATIVA -->
         <section class="bento-services-section" data-scroll-animate>
@@ -646,6 +651,7 @@
     <script src="js/search-data.js" defer></script>
     <script src="js/script.js" defer></script>
     <script src="js/accessibility.js" defer></script>
+    <script src="js/index_news_carousel.js" defer></script>
 </body>
 
 </html>

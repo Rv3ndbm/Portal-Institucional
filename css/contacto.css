@@ -47,15 +47,22 @@ main {
    ============================================ */
 .contact-hero {
     position: relative;
-    min-height: 400px;
+    min-height: 440px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--contact-primary) 0%, var(--contact-primary-dark) 100%);
     overflow: hidden;
-    padding: 160px 24px 70px;
+    padding: 235px 24px 75px;
     margin-top: 0;
     text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .contact-hero {
+        min-height: 340px;
+        padding: 130px 20px 55px;
+    }
 }
 
 .contact-hero::before {

@@ -122,17 +122,22 @@ h4,
     position: relative;
     height: 55vh;
     /* Más amplio y espectacular */
-    min-height: 380px;
+    min-height: 420px;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    margin-top: var(--header-height-desktop);
+    margin-top: 0;
+    padding-top: 195px;
 }
 
 @media (max-width: 1024px) {
     .hero-tecnica {
-        margin-top: var(--header-height-mobile);
+        height: auto;
+        min-height: 280px;
+        margin-top: 0;
+        padding-top: 90px;
+        padding-bottom: 30px;
     }
 }
 

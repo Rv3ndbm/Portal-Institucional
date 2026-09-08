@@ -302,14 +302,13 @@
 `;
     document.head.appendChild(lightboxStyles);
 
-    // Efecto parallax en hero
+    // Efecto sutil de fade al hacer scroll en hero sin desplazar el contenedor
     window.addEventListener('scroll', () => {
         const scrolled = window.pageYOffset;
         const hero = document.querySelector('.hero-tecnicas');
 
         if (hero && scrolled < hero.offsetHeight) {
-            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            hero.style.opacity = 1 - (scrolled / hero.offsetHeight);
+            hero.style.opacity = Math.max(0.15, 1 - (scrolled / hero.offsetHeight));
         }
     });
 
