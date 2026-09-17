@@ -323,21 +323,35 @@ portalweb/
 │   ├── manual-usuario.html         # Manual de usuario institucional público
 │   └── MANUALES.html               # Índice de documentación de usuario
 ├── media/                          # Archivos curriculares, himno institucional y PDFs
-├── php/                            # Capa de backend dinámico y seguridad
-│   ├── admin/                      # Controladores del panel de administración
-│   │   ├── index.php               # Dashboard multisección (Noticias, Docs, Avisos)
-│   │   ├── login.php               # Inicio de sesión seguro con rate-limiting
-│   │   └── logout.php              # Cierre de sesión y destrucción de cookies
-│   ├── config/                     # Configuraciones centrales
-│   │   ├── database.php            # Conexión PDO, auto-creación de tablas y helpers
-│   │   └── mail_config.php         # Configuración del envío de formularios
-│   ├── logs/                       # Registro de eventos de seguridad del sistema
-│   └── public/                     # Vistas dinámicas y endpoints públicos
-│       ├── api_aviso.php           # API JSON en tiempo real para avisos urgentes
-│       ├── api_noticias.php        # API de consulta de noticias
-│       ├── documentos.php          # Repositorio público de circulares descargables
-│       ├── enviar_contacto.php     # Procesamiento seguro de mensajes de contacto
-│       └── noticias.php            # Cartelera pública de noticias renderizadas de BD
+├── php/                            # Capa de backend bajo arquitectura MVC (PHP 8.2+)
+│   ├── controlador/                # Controladores que reciben peticiones y orquestan
+│   │   ├── admin.php               # Dashboard multisección y despacho CRUD
+│   │   ├── api_aviso.php           # API JSON para avisos urgentes en tiempo real
+│   │   ├── api_noticias.php        # API JSON de noticias para el carrusel
+│   │   ├── documentos.php          # Despacho de documentos y circulares
+│   │   ├── enviar_contacto.php     # Procesamiento y validación de PQRS/contacto
+│   │   ├── login.php               # Inicio de sesión seguro con rate-limiting y CSRF
+│   │   ├── logout.php              # Cierre de sesión seguro
+│   │   └── noticias.php            # Despacho de la cartelera de noticias
+│   ├── modelo/                     # Capa de datos y persistencia (MySQL con PDO)
+│   │   ├── .htaccess               # Blindaje de servidor: Bloquea acceso web directo
+│   │   ├── admin.php               # Consultas y actualización de credenciales
+│   │   ├── avisos.php              # Operaciones de avisos urgentes
+│   │   ├── contacto.php            # Operaciones de mensajes de contacto
+│   │   ├── database.php            # Conexión PDO, auto-aprovisionamiento y seguridad
+│   │   ├── documentos.php          # Operaciones de documentos y circulares
+│   │   ├── mail_config.php         # Configuración del correo electrónico
+│   │   ├── noticias.php            # Operaciones CRUD de noticias
+│   │   └── properties.php          # Propiedades globales y constantes del sistema
+│   ├── vistas/                     # Plantillas HTML puras de presentación
+│   │   ├── .htaccess               # Bloqueo de acceso web directo (solo controladores)
+│   │   ├── admin.php               # Interfaz visual del Dashboard de gestión
+│   │   ├── documentos.php          # Interfaz visual pública de documentos
+│   │   ├── login.php               # Interfaz visual del formulario de acceso
+│   │   └── noticias.php            # Interfaz visual pública de noticias
+│   └── logs/                       # Registro histórico y auditoría del sistema
+│       ├── .htaccess               # Bloqueo de lectura pública
+│       └── contacto.log            # Registro de envíos de formularios web
 ├── scratch/                        # Scripts utilitarios de mantenimiento
 ├── sw.js                           # Service Worker para caché offline
 ├── templates/                      # Plantillas modulares reutilizables
@@ -1194,38 +1208,48 @@ http://localhost/portalweb/php/controlador/login.php
 
 # 17. CONFIGURACIÓN DEL PROYECTO
 
-### 17.1 Parámetros de Conexión en `php/modelo/database.php`
-Para cambiar las credenciales de conexión al servidor de base de datos local o de producción:
+### 17.1 Parámetros Globales en `php/modelo/properties.php`
+Las constantes del sistema y credenciales de la base de datos están centralizadas en el archivo de propiedades:
 ```php
-$host = '127.0.0.1';     // Dirección del host MySQL
-$db   = 'gaa_colegio';   // Nombre de la base de datos
-$user = 'root';          // Usuario con privilegios
-$pass = '';              // Contraseña de MySQL (vacía por defecto en XAMPP)
+// Configuración de Base de Datos MySQL
+define('DB_HOST', '127.0.0.1');   // Dirección del host MySQL
+define('DB_NAME', 'gaa_colegio'); // Nombre de la base de datos
+define('DB_USER', 'root');        // Usuario con privilegios
+define('DB_PASS', '');            // Contraseña de MySQL (vacía por defecto en XAMPP)
+define('DB_CHARSET', 'utf8mb4');  // Codificación de caracteres
+
+// Parámetros de la Aplicación
+define('APP_NAME', 'Portal Institucional I.E. Gilberto Alzate Avendaño');
+define('APP_TIMEZONE', 'America/Bogota');
 ```
 
-### 17.2 Configuración del Servidor Apache (`uploads/.htaccess`)
-Para blindar el directorio de subidas de archivos contra ataques cibernéticos, el archivo [`uploads/.htaccess`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/uploads/.htaccess) contiene las siguientes directivas de ejecución:
-```apache
-# Bloqueo total de ejecución de scripts interpretables en la carpeta de uploads
-<FilesMatch "\.(php|phtml|php3|php4|php5|php7|phps|pl|py|cgi|sh|exe)$">
-    Order Deny,Allow
-    Deny from all
-</FilesMatch>
-
-# Desactiva el motor de PHP en este subdirectorio
-php_flag engine off
-```
+### 17.2 Blindaje de Directorios Privados mediante `.htaccess` (Apache)
+Para proteger el sistema contra accesos web no autorizados y ejecución remota de código (RCE), se implementan 4 capas de seguridad:
+* **`uploads/.htaccess`:** Bloquea la ejecución de cualquier script interpretable (`.php`, `.sh`, `.exe`) y desactiva el motor de PHP:
+  ```apache
+  <FilesMatch "\.(php|phtml|php3|php4|php5|php7|php8|phps|pht|phar|inc|pl|py|cgi|sh|bash|exe|asp|aspx|jsp)$">
+      Order Deny,Allow
+      Deny from all
+  </FilesMatch>
+  Options -Indexes -ExecCGI
+  ```
+* **`php/modelo/.htaccess`:** Bloquea el acceso web directo a `properties.php` y consultas SQL (`Require all denied`).
+* **`php/logs/.htaccess`:** Impide la lectura pública de los registros de auditoría y PQRS (`contacto.log`).
+* **`php/vistas/.htaccess`:** Asegura que las plantillas HTML solo puedan ser despachadas internamente por sus respectivos controladores.
 
 ### 17.3 Configuración del Correo Electrónico (`php/modelo/mail_config.php`)
 Permite definir los correos institucionales destinatarios de los mensajes de contacto:
 ```php
 return [
-    'email_destino'       => 'ie.gilbertoalzate@medellin.gov.co',
-    'nombre_remitente'    => 'Portal Web I.E. Gilberto Alzate Avendaño',
+    'destinatario_email'  => 'ie.gilbertoalzate@medellin.gov.co',
+    'destinatario_nombre' => 'I.E. Gilberto Alzate Avendaño - Atención al Ciudadano',
     'min_segundos_envio'  => 3,
     'honeypot_field'      => 'website_hp'
 ];
 ```
+
+### 17.4 Migración y Despliegue en Hosting (`Documentación/database.sql`)
+El proyecto incluye el script maestro de base de datos en la ruta protegida [`Documentación/database.sql`](file:///c:/xampp/htdocs/portalweb/Documentaci%C3%B3n/database.sql) para importar la base de datos `gaa_colegio` en phpMyAdmin con un solo clic durante el despliegue en el servidor web de producción.
 
 ---
 
@@ -1395,10 +1419,12 @@ ALTER TABLE `noticias` ADD COLUMN `autor` VARCHAR(100) DEFAULT 'Comunicaciones';
 * **Contraseña inicial:** `alzate2026`
 
 ### 26.3 Enlaces a la Documentación Relacionada del Proyecto
-* **Manual de Usuario Institucional (Web):** [`manuales/manual-usuario.html`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/manuales/manual-usuario.html)
-* **Índice de Manuales de Usuario:** [`manuales/MANUALES.html`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/manuales/MANUALES.html)
-* **Guía de Carga Perezosa de Imágenes:** [`Documentación/LAZY_LOADING_GUIA.txt`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/Documentaci%C3%B3n/LAZY_LOADING_GUIA.txt)
-* **Plantilla Canónica de Pie de Página:** [`templates/FOOTER_TEMPLATE.html`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/templates/FOOTER_TEMPLATE.html)
+* **Guía Técnica de Arquitectura MVC y Sustentación:** [`Documentación/GUIA_ARQUITECTURA_Y_SUSTENTACION.md`](file:///c:/xampp/htdocs/portalweb/Documentaci%C3%B3n/GUIA_ARQUITECTURA_Y_SUSTENTACION.md)
+* **Script Maestro de Base de Datos MySQL:** [`Documentación/database.sql`](file:///c:/xampp/htdocs/portalweb/Documentaci%C3%B3n/database.sql)
+* **Manual de Usuario Institucional (Web):** [`manuales/manual-usuario.html`](file:///c:/xampp/htdocs/portalweb/manuales/manual-usuario.html)
+* **Índice de Manuales de Usuario:** [`manuales/MANUALES.html`](file:///c:/xampp/htdocs/portalweb/manuales/MANUALES.html)
+* **Guía de Carga Perezosa de Imágenes:** [`Documentación/LAZY_LOADING_GUIA.txt`](file:///c:/xampp/htdocs/portalweb/Documentaci%C3%B3n/LAZY_LOADING_GUIA.txt)
+* **Plantilla Canónica de Pie de Página:** [`templates/FOOTER_TEMPLATE.html`](file:///c:/xampp/htdocs/portalweb/templates/FOOTER_TEMPLATE.html)
 
 ---
 
