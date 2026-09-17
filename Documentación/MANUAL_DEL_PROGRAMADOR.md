@@ -240,17 +240,17 @@ El proyecto se ejecutó mediante una metodología adaptativa estructurada en cin
             ▼                                                     ▼
 ┌──────────────────────────────────────┐    ┌─────────────────────────────────┐
 │       VISTAS PÚBLICAS DINÁMICAS      │    │     PANEL ADMINISTRATIVO (CMS)  │
-│  • /php/public/noticias.php          │    │  • /php/admin/login.php (Auth)  │
-│  • /php/public/documentos.php        │    │  • /php/admin/index.php (CRUD)  │
-│  • /php/public/api_aviso.php         │    │  • /php/admin/logout.php        │
-│  • /php/public/enviar_contacto.php   │    │  • Subida Segura de Archivos    │
+│  • /php/controlador/noticias.php          │    │  • /php/controlador/login.php (Auth)  │
+│  • /php/controlador/documentos.php        │    │  • /php/controlador/admin.php (CRUD)  │
+│  • /php/controlador/api_aviso.php         │    │  • /php/controlador/logout.php        │
+│  • /php/controlador/enviar_contacto.php   │    │  • Subida Segura de Archivos    │
 └──────────────────┬───────────────────┘    └────────────────┬────────────────┘
                    │                                         │
                    └────────────────────┬────────────────────┘
                                         ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                    NÚCLEO DE BACKEND Y SEGURIDAD (PHP 8.2)                  │
-│  • /php/config/database.php: Conexión PDO y Auto-aprovisionamiento de BD    │
+│  • /php/modelo/database.php: Conexión PDO y Auto-aprovisionamiento de BD    │
 │  • Control Criptográfico CSRF (hash_equals)  • Rate-Limiting Anti-Fuerza    │
 │  • Sanitización XSS (htmlspecialchars)       • Inspección Binaria MIME      │
 │  • Cifrado de Contraseñas (PASSWORD_BCRYPT)  • Sesiones HttpOnly / SameSite │
@@ -353,9 +353,9 @@ portalweb/
 ### 8.2 Función Técnica de Cada Directorio
 
 * **`/css`:** Contiene la capa de presentación. Se rige bajo el principio de **cero frameworks pesados**, empleando Custom Properties centralizadas en `variables.css`.
-* **`/php/admin`:** Aloja la lógica protegida del CMS. Implementa validación rigurosa de sesión mediante la función `requireAdmin()`.
-* **`/php/config`:** Centraliza los parámetros de conexión a MySQL, inicialización de sesiones seguras y generación de tokens criptográficos.
-* **`/php/public`:** Contiene los scripts que interactúan con el público general, procesando peticiones GET/POST y devolviendo HTML o JSON.
+* **`/php/controlador`:** Aloja la lógica protegida del CMS. Implementa validación rigurosa de sesión mediante la función `requireAdmin()`.
+* **`/php/modelo`:** Centraliza los parámetros de conexión a MySQL, inicialización de sesiones seguras y generación de tokens criptográficos.
+* **`/php/vistas`:** Contiene los scripts que interactúan con el público general, procesando peticiones GET/POST y devolviendo HTML o JSON.
 * **`/uploads`:** Espacio destinado exclusivamente a la escritura de archivos dinámicos. Está protegido contra ataques de Inclusión de Archivos Locales (LFI/RFI) y Ejecución Remota de Código mediante configuración de Apache.
 * **`/manuales`:** Aloja la documentación web orientada al usuario final, manteniendo independencia del presente manual técnico.
 
@@ -628,7 +628,7 @@ VALUES (
 ```
 
 ### 10.4 Auto-Aprovisionamiento Automático en PHP
-El sistema cuenta con una funcionalidad en [`php/config/database.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/config/database.php) denominada **Auto-Aprovisionamiento**. Al ejecutarse cualquier vista de PHP en un entorno local recién clonado, la función `ensureDatabaseStructure($pdo)` comprueba la existencia de la base de datos y de las cinco tablas. Si alguna tabla no existe, la crea automáticamente e inserta las credenciales iniciales sin requerir la importación manual de archivos `.sql` en phpMyAdmin.
+El sistema cuenta con una funcionalidad en [`php/modelo/database.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/modelo/database.php) denominada **Auto-Aprovisionamiento**. Al ejecutarse cualquier vista de PHP en un entorno local recién clonado, la función `ensureDatabaseStructure($pdo)` comprueba la existencia de la base de datos y de las cinco tablas. Si alguna tabla no existe, la crea automáticamente e inserta las credenciales iniciales sin requerir la importación manual de archivos `.sql` en phpMyAdmin.
 
 ---
 
@@ -648,7 +648,7 @@ A continuación se desglosan los módulos funcionales del sistema, detallando pa
   3. Consulta en la tabla `admins` por el nombre de usuario usando sentencia preparada PDO.
   4. Cotejo del hash de la contraseña mediante `password_verify($password, $user['password_hash'])`.
   5. Regeneración de identificador de sesión con `session_regenerate_id(true)` para prevenir fijación de sesiones.
-* **Salidas:** Redirección segura al Dashboard (`php/admin/index.php`) en caso de éxito, o despliegue de alerta con intentos restantes en caso de error.
+* **Salidas:** Redirección segura al Dashboard (`php/controlador/admin.php`) en caso de éxito, o despliegue de alerta con intentos restantes en caso de error.
 
 ### 11.2 Módulo de Gestión de Noticias Institucionales (CRUD)
 * **Objetivo:** Permitir la creación, edición, listado y eliminación de noticias escolares con soporte para portadas fotográficas.
@@ -671,7 +671,7 @@ A continuación se desglosan los módulos funcionales del sistema, detallando pa
   2. Almacenamiento físico en la carpeta `/uploads/documentos/`.
   3. Cálculo automático del tamaño del archivo en formato legible (KB o MB).
   4. Inserción de metadatos en la tabla `documentos`.
-* **Salidas:** Archivo disponible para visualización en línea y descarga directa en el repositorio público [`php/public/documentos.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/public/documentos.php).
+* **Salidas:** Archivo disponible para visualización en línea y descarga directa en el repositorio público [`php/public/documentos.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/controlador/documentos.php).
 
 ### 11.4 Módulo de Avisos Urgentes y Banner de Emergencia
 * **Objetivo:** Emitir alertas escolares prioritarias (ej. suspensiones de clase, emergencias climáticas, reuniones urgentes de padres).
@@ -679,7 +679,7 @@ A continuación se desglosan los módulos funcionales del sistema, detallando pa
 * **Procesos:**
   1. Cálculo de la marca temporal de expiración: `expires_at = NOW() + INTERVAL duracion_dias DAY`.
   2. Persistencia en la tabla `avisos`.
-  3. Exposición del aviso a través del endpoint liviano [`php/public/api_aviso.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/public/api_aviso.php).
+  3. Exposición del aviso a través del endpoint liviano [`php/public/api_aviso.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/controlador/api_aviso.php).
 * **Salidas:** Inyección dinámica de una barra superior de advertencia en todas las vistas públicas del portal mientras la alerta esté activa y vigente.
 
 ### 11.5 Módulo de Perfil y Actualización Segura de Contraseña
@@ -699,7 +699,7 @@ A continuación se desglosan los módulos funcionales del sistema, detallando pa
   1. Validación anti-spam mediante técnica **Honeypot** (campo trampa oculto) y tiempo mínimo de envío.
   2. Sanitización de cadenas de texto.
   3. Registro persistente en la tabla `mensajes_contacto` capturando la dirección IP de origen.
-  4. Envío opcional de notificación por correo mediante [`mail_config.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/config/mail_config.php).
+  4. Envío opcional de notificación por correo mediante [`mail_config.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/modelo/mail_config.php).
 * **Salidas:** Respuesta JSON con código de estado HTTP 200 y confirmación visual al usuario en pantalla.
 
 ### 11.7 Módulo de Buscador Predictivo Multicriterio
@@ -735,7 +735,7 @@ A continuación se desglosan los módulos funcionales del sistema, detallando pa
 
 A continuación se detalla la función técnica, variables utilizadas, dependencias y flujo lógico de los archivos centrales del proyecto:
 
-### 12.1 `php/config/database.php`
+### 12.1 `php/modelo/database.php`
 * **Función:** Establece la conexión persistente con MySQL, inicializa directivas de seguridad para sesiones PHP, auto-crea la estructura relacional y provee funciones utilitarias globales.
 * **Variables Utilizadas:**
   * `$host`, `$db`, `$user`, `$pass`: Parámetros de conexión local a MySQL.
@@ -748,13 +748,13 @@ A continuación se detalla la función técnica, variables utilizadas, dependenc
   4. Crea directorios de `/uploads/` y `/php/logs/` con permisos `0755` si no existen.
   5. Expone funciones globales de seguridad: `generateCsrfToken()`, `validateCsrfToken()`, `requireAdmin()`, `handleSecureUpload()`.
 
-### 12.2 `php/admin/login.php`
+### 12.2 `php/controlador/login.php`
 * **Función:** Gestiona la interfaz y validación de acceso al panel de administración institucional.
 * **Variables Utilizadas:**
   * `$_SESSION['login_attempts']`: Contador de fallos consecutivos de autenticación.
   * `$_SESSION['login_last_attempt']`: Marca de tiempo del último intento registrado.
   * `$postedToken`: Token CSRF recibido vía POST.
-* **Archivos que Incluye:** `php/config/database.php`.
+* **Archivos que Incluye:** `php/modelo/database.php`.
 * **Flujo del Programa:**
   1. Si existe `$_SESSION['admin_id']`, redirige inmediatamente a `index.php`.
   2. Ante una petición POST, comprueba si el usuario está bloqueado por exceder 5 intentos fallidos en un lapso de 15 minutos.
@@ -762,13 +762,13 @@ A continuación se detalla la función técnica, variables utilizadas, dependenc
   4. Realiza la consulta preparada a la tabla `admins` y valida el hash con `password_verify()`.
   5. En caso de éxito, regenera el ID de sesión, asigna las variables de sesión y redirige al panel. En caso de error, incrementa el contador de intentos y despliega el mensaje correspondiente.
 
-### 12.3 `php/admin/index.php`
+### 12.3 `php/controlador/admin.php`
 * **Función:** Panel de administración general (CMS) que agrupa los CRUDs de noticias, circulares, avisos, bandeja de mensajes y configuración de perfil.
 * **Variables Utilizadas:**
   * `$activeTab`: Pestaña seleccionada en el menú del panel (`noticias`, `documentos`, `avisos`, `seguridad`, `mensajes`).
   * `$csrfToken`: Token de seguridad inyectado en cada uno de los formularios.
   * `$_FILES`: Arreglo de archivos binarios subidos para noticias o circulares.
-* **Archivos que Incluye:** `php/config/database.php`.
+* **Archivos que Incluye:** `php/modelo/database.php`.
 * **Flujo del Programa:**
   1. Ejecuta `requireAdmin()` para bloquear accesos no autorizados.
   2. Evalúa inactividad de sesión: si pasaron más de 30 minutos sin interacción, redirige a `logout.php`.
@@ -776,12 +776,12 @@ A continuación se detalla la función técnica, variables utilizadas, dependenc
   4. Si es subida de archivo, invoca a `handleSecureUpload()`.
   5. Ejecuta las consultas preparadas en MySQL y renderiza la interfaz administrativa con los listados actualizados.
 
-### 12.4 `php/public/enviar_contacto.php`
+### 12.4 `php/controlador/enviar_contacto.php`
 * **Función:** Endpoint que procesa de manera asíncrona las solicitudes enviadas desde el formulario web de contacto.
 * **Variables Utilizadas:**
   * `$inputData`: Datos parseados desde JSON o formulario estándar.
   * `$honeypotKey`: Campo trampa (`website_hp`) para detección de bots automáticos.
-* **Archivos que Incluye:** `php/config/database.php`, `php/config/mail_config.php`.
+* **Archivos que Incluye:** `php/modelo/database.php`, `php/modelo/mail_config.php`.
 * **Flujo del Programa:**
   1. Establece encabezado de respuesta `Content-Type: application/json`.
   2. Valida método POST; si no, responde con error HTTP 405.
@@ -1177,15 +1177,15 @@ post_max_size = 25M
 1. Abrir el navegador web (Google Chrome, Microsoft Edge o Firefox).
 2. Ingresar a la siguiente dirección para disparar el aprovisionamiento automático:
 ```
-http://localhost/portalweb/php/admin/login.php
+http://localhost/portalweb/php/controlador/login.php
 ```
-3. El script [`php/config/database.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/config/database.php) se conectará a MySQL, creará la base de datos `gaa_colegio`, generará las 5 tablas relacionales e insertará al usuario administrador inicial.
+3. El script [`php/modelo/database.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/modelo/database.php) se conectará a MySQL, creará la base de datos `gaa_colegio`, generará las 5 tablas relacionales e insertará al usuario administrador inicial.
 
 ### Paso 6: Acceso al Sistema y Credenciales Iniciales
 * **Portal Institucional Público:**  
   `http://localhost/portalweb/index.html`
 * **Panel Administrativo (CMS):**  
-  `http://localhost/portalweb/php/admin/login.php`
+  `http://localhost/portalweb/php/controlador/login.php`
   * **Usuario predeterminado:** `admin`
   * **Contraseña predeterminada:** `alzate2026`
 * *Nota:* Tras el primer ingreso, se debe acceder a la pestaña **Seguridad y Contraseña** para modificar la clave institucional.
@@ -1194,7 +1194,7 @@ http://localhost/portalweb/php/admin/login.php
 
 # 17. CONFIGURACIÓN DEL PROYECTO
 
-### 17.1 Parámetros de Conexión en `php/config/database.php`
+### 17.1 Parámetros de Conexión en `php/modelo/database.php`
 Para cambiar las credenciales de conexión al servidor de base de datos local o de producción:
 ```php
 $host = '127.0.0.1';     // Dirección del host MySQL
@@ -1216,7 +1216,7 @@ Para blindar el directorio de subidas de archivos contra ataques cibernéticos, 
 php_flag engine off
 ```
 
-### 17.3 Configuración del Correo Electrónico (`php/config/mail_config.php`)
+### 17.3 Configuración del Correo Electrónico (`php/modelo/mail_config.php`)
 Permite definir los correos institucionales destinatarios de los mensajes de contacto:
 ```php
 return [
@@ -1292,7 +1292,7 @@ Historial de control de versiones y trazabilidad técnica del proyecto instituci
 Instrucciones técnicas para desarrolladores que realicen mantenimiento a la plataforma:
 
 ### 22.1 Cómo Agregar una Nueva Noticia o Circular
-1. Iniciar sesión en el panel administrativo (`http://localhost/portalweb/php/admin/login.php`).
+1. Iniciar sesión en el panel administrativo (`http://localhost/portalweb/php/controlador/login.php`).
 2. Seleccionar la pestaña **Noticias y Novedades** o **Documentos y Circulares**.
 3. Diligenciar los campos obligatorios del formulario.
 4. Adjuntar la imagen de portada (JPG/PNG) o el archivo institucional (PDF/Word).
@@ -1318,8 +1318,8 @@ Instrucciones técnicas para desarrolladores que realicen mantenimiento a la pla
 ```sql
 ALTER TABLE `noticias` ADD COLUMN `autor` VARCHAR(100) DEFAULT 'Comunicaciones';
 ```
-3. Reflejar el cambio en la función `ensureDatabaseStructure()` dentro de [`php/config/database.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/config/database.php) para mantener sincronizado el auto-aprovisionamiento.
-4. Actualizar las sentencias preparadas de `INSERT` y `UPDATE` en [`php/admin/index.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/admin/index.php).
+3. Reflejar el cambio en la función `ensureDatabaseStructure()` dentro de [`php/modelo/database.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/modelo/database.php) para mantener sincronizado el auto-aprovisionamiento.
+4. Actualizar las sentencias preparadas de `INSERT` y `UPDATE` en [`php/controlador/admin.php`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/controlador/admin.php).
 
 ### 22.4 Depuración y Monitoreo de Logs de Seguridad
 * La carpeta [`php/logs/`](file:///C:/Users/RUBEN/.gemini/antigravity/worktrees/portalweb/rising_flare_phases_06h37/php/logs/) almacena registros de eventos de seguridad.
@@ -1390,7 +1390,7 @@ ALTER TABLE `noticias` ADD COLUMN `autor` VARCHAR(100) DEFAULT 'Comunicaciones';
   *(Aclaración de hosting: Entorno de previsualización estática en GitHub Pages. Los módulos de backend en PHP y base de datos MySQL se ejecutan en entorno local XAMPP hasta la adquisición del hosting web institucional definitivo).*
 
 ### 26.2 Credenciales Iniciales de Acceso para Pruebas y Auditoría
-* **Ruta de Acceso Local:** `http://localhost/portalweb/php/admin/login.php`
+* **Ruta de Acceso Local:** `http://localhost/portalweb/php/controlador/login.php`
 * **Usuario:** `admin`
 * **Contraseña inicial:** `alzate2026`
 

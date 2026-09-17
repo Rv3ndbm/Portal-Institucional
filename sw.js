@@ -58,8 +58,8 @@ self.addEventListener('fetch', (event) => {
 
     const url = new URL(event.request.url);
 
-    // No cachear llamadas dinámicas a PHP admin o API para no romper sesiones o estados en vivo
-    if (url.pathname.includes('/php/admin/') || url.pathname.includes('api_aviso.php')) {
+    // No cachear llamadas dinámicas a PHP o APIs para no romper sesiones o estados en vivo
+    if (url.pathname.includes('/php/') || url.pathname.includes('api_aviso.php')) {
         return;
     }
 

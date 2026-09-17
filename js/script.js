@@ -3,7 +3,7 @@ if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         const path = (window.location?.pathname || '').replace(/\\/g, '/');
         let swPath = 'sw.js';
-        if (path.includes('/php/public/') || path.includes('/html/tecnicas/')) {
+        if (path.includes('/php/controlador/') || path.includes('/html/tecnicas/')) {
             swPath = '../../sw.js';
         } else if (path.includes('/html/') || path.includes('/manuales/')) {
             swPath = '../sw.js';
@@ -36,13 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // === AVISO URGENTE: INFINITE MARQUEE TICKER ===
 function initUrgentAnnouncementTicker() {
     const path = (window.location?.pathname || '').replace(/\\/g, '/');
-    let apiUrl = 'php/public/api_aviso.php';
-    if (path.includes('/php/public/')) {
+    let apiUrl = 'php/controlador/api_aviso.php';
+    if (path.includes('/php/controlador/')) {
         apiUrl = 'api_aviso.php';
     } else if (path.includes('/html/tecnicas/')) {
-        apiUrl = '../../php/public/api_aviso.php';
+        apiUrl = '../../php/controlador/api_aviso.php';
     } else if (path.includes('/html/') || path.includes('/manuales/')) {
-        apiUrl = '../php/public/api_aviso.php';
+        apiUrl = '../php/controlador/api_aviso.php';
     }
 
     fetch(apiUrl, { cache: 'no-store' })
@@ -75,7 +75,7 @@ function initUrgentAnnouncementTicker() {
                 if (av.enlace && av.enlace.trim() !== '') {
                     let cleanLink = av.enlace.trim();
                     if (!cleanLink.startsWith('http')) {
-                        if (path.includes('/php/public/')) {
+                        if (path.includes('/php/controlador/')) {
                             cleanLink = cleanLink.replace('../public/', '');
                         } else if (path.includes('/html/tecnicas/')) {
                             cleanLink = '../../' + cleanLink.replace('../../', '').replace('../', '');

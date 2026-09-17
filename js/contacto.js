@@ -168,7 +168,7 @@ function initContactForm() {
         try {
             const formData = new FormData(form);
 
-            const response = await fetch(form.action || '../php/public/enviar_contacto.php', {
+            const response = await fetch(form.action || '../php/controlador/enviar_contacto.php', {
                 method: 'POST',
                 body: formData,
                 headers: {

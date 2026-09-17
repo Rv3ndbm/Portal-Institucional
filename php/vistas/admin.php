@@ -1,427 +1,3 @@
-<?php
-// ============================================================
-// DASHBOARD ADMINISTRATIVO MULTISECCIÓN
-// I.E. Gilberto Alzate Avendaño
-// ============================================================
-
-require_once __DIR__ . '/../config/database.php';
-requireAdmin();
-
-// Control de inactividad de sesión (30 minutos)
-if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 1800)) {
-    header('Location: logout.php');
-    exit;
-}
-$_SESSION['last_activity'] = time();
-
-$csrfToken = generateCsrfToken();
-$message = '';
-$messageType = 'success';
-$activeTab = $_GET['tab'] ?? 'noticias';
-
-if (!function_exists('resolveAdminAsset')) {
-    function resolveAdminAsset(?string $path): string {
-        $p = trim((string) $path);
-        if ($p === '') return '';
-        if (str_starts_with($p, 'http://') || str_starts_with($p, 'https://')) {
-            return $p;
-        }
-        return '../../' . ltrim($p, '/');
-    }
-}
-
-// ------------------------------------------------------------
-// PROCESAMIENTO DE FORMULARIOS (POST)
-// ------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $submittedToken = (string) ($_POST['csrf_token'] ?? '');
-    
-    if (!validateCsrfToken($submittedToken)) {
-        $message = 'Error de seguridad (Token CSRF inválido o expirado). Por favor recarga e intenta de nuevo.';
-        $messageType = 'error';
-    } else {
-        $section = $_POST['form_section'] ?? 'noticias';
-        $activeTab = $section;
-
-        // --------------------------------------------------------
-        // 1. SECCIÓN: NOTICIAS
-        // --------------------------------------------------------
-        if ($section === 'noticias') {
-            $action = $_POST['action'] ?? 'save';
-
-            if ($action === 'delete') {
-                $id = (int) ($_POST['id'] ?? 0);
-                if ($id > 0) {
-                    $stmtImg = $pdo->prepare('SELECT image_url FROM noticias WHERE id = :id');
-                    $stmtImg->execute([':id' => $id]);
-                    $oldImg = $stmtImg->fetchColumn();
-
-                    $stmt = $pdo->prepare('DELETE FROM noticias WHERE id = :id');
-                    $stmt->execute([':id' => $id]);
-
-                    if ($oldImg && (str_starts_with($oldImg, 'uploads/noticias/') || str_starts_with($oldImg, '/uploads/noticias/'))) {
-                        $fullOldPath = __DIR__ . '/../../' . ltrim($oldImg, '/');
-                        if (file_exists($fullOldPath)) {
-                            @unlink($fullOldPath);
-                        }
-                    }
-
-                    $message = 'Noticia eliminada correctamente.';
-                }
-            } else {
-                $id = (int) ($_POST['id'] ?? 0);
-                $title = trim((string) ($_POST['title'] ?? ''));
-                $category = trim((string) ($_POST['category'] ?? 'sedes'));
-                $dateLabel = trim((string) ($_POST['date_label'] ?? ''));
-                $excerpt = trim((string) ($_POST['excerpt'] ?? ''));
-                $content = trim((string) ($_POST['content'] ?? ''));
-                $existingImage = trim((string) ($_POST['existing_image'] ?? ''));
-                $imageUrl = $existingImage;
-
-                if ($dateLabel === '') {
-                    $meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-                    $dateLabel = date('d') . ' ' . $meses[date('n') - 1] . ', ' . date('Y');
-                }
-
-                // Subida de nueva imagen
-                if (!empty($_FILES['image_file']['name'])) {
-                    $uploadResult = handleSecureUpload($_FILES['image_file'], 'noticias', ['jpg', 'jpeg', 'png', 'webp'], 5242880);
-                    if ($uploadResult['success']) {
-                        $imageUrl = $uploadResult['path'];
-                    } else {
-                        $message = 'Error en imagen: ' . $uploadResult['error'];
-                        $messageType = 'error';
-                    }
-                }
-
-                if ($messageType !== 'error') {
-                    if ($title === '' || $excerpt === '' || $content === '') {
-                        $message = 'Por favor completa todos los campos obligatorios.';
-                        $messageType = 'error';
-                    } else {
-                        if ($id > 0) {
-                            $stmt = $pdo->prepare('UPDATE noticias SET title = :title, category = :category, date_label = :date_label, image_url = :image_url, excerpt = :excerpt, content = :content WHERE id = :id');
-                            $stmt->execute([
-                                ':id'         => $id,
-                                ':title'      => $title,
-                                ':category'   => $category,
-                                ':date_label' => $dateLabel,
-                                ':image_url'  => $imageUrl,
-                                ':excerpt'    => $excerpt,
-                                ':content'    => $content,
-                            ]);
-                            $message = 'Noticia actualizada correctamente.';
-                        } else {
-                            $stmt = $pdo->prepare('INSERT INTO noticias (title, category, date_label, image_url, excerpt, content) VALUES (:title, :category, :date_label, :image_url, :excerpt, :content)');
-                            $stmt->execute([
-                                ':title'      => $title,
-                                ':category'   => $category,
-                                ':date_label' => $dateLabel,
-                                ':image_url'  => $imageUrl,
-                                ':excerpt'    => $excerpt,
-                                ':content'    => $content,
-                            ]);
-                            $message = 'Noticia creada y publicada exitosamente.';
-                        }
-                    }
-                }
-            }
-        }
-
-        // --------------------------------------------------------
-        // 2. SECCIÓN: DOCUMENTOS Y CIRCULARES
-        // --------------------------------------------------------
-        elseif ($section === 'documentos') {
-            $action = $_POST['action'] ?? 'save';
-
-            if ($action === 'delete') {
-                $id = (int) ($_POST['id'] ?? 0);
-                if ($id > 0) {
-                    $stmtDoc = $pdo->prepare('SELECT file_path FROM documentos WHERE id = :id');
-                    $stmtDoc->execute([':id' => $id]);
-                    $filePath = $stmtDoc->fetchColumn();
-
-                    $stmt = $pdo->prepare('DELETE FROM documentos WHERE id = :id');
-                    $stmt->execute([':id' => $id]);
-
-                    if ($filePath && (str_starts_with($filePath, 'uploads/documentos/') || str_starts_with($filePath, '/uploads/documentos/'))) {
-                        $fullOldPath = __DIR__ . '/../../' . ltrim($filePath, '/');
-                        if (file_exists($fullOldPath)) {
-                            @unlink($fullOldPath);
-                        }
-                    }
-
-                    $message = 'Documento eliminado correctamente.';
-                }
-            } else {
-                $docTitle = trim((string) ($_POST['doc_title'] ?? ''));
-                $docCategory = trim((string) ($_POST['doc_category'] ?? 'circulares'));
-                $docDescription = trim((string) ($_POST['doc_description'] ?? ''));
-
-                if ($docTitle === '') {
-                    $message = 'El título del documento es obligatorio.';
-                    $messageType = 'error';
-                } elseif (empty($_FILES['doc_file']['name'])) {
-                    $message = 'Debes seleccionar un archivo PDF o documento para subir.';
-                    $messageType = 'error';
-                } else {
-                    $uploadResult = handleSecureUpload($_FILES['doc_file'], 'documentos', ['pdf', 'doc', 'docx'], 10485760);
-                    if ($uploadResult['success']) {
-                        $stmt = $pdo->prepare('INSERT INTO documentos (title, category, file_path, file_size, description) VALUES (:title, :category, :file_path, :file_size, :description)');
-                        $stmt->execute([
-                            ':title'       => $docTitle,
-                            ':category'    => $docCategory,
-                            ':file_path'   => $uploadResult['path'],
-                            ':file_size'   => $uploadResult['size_formatted'],
-                            ':description' => $docDescription,
-                        ]);
-                        $message = 'Documento subido y registrado exitosamente.';
-                    } else {
-                        $message = 'Error al subir documento: ' . $uploadResult['error'];
-                        $messageType = 'error';
-                    }
-                }
-            }
-        }
-
-        // --------------------------------------------------------
-        // 3. SECCIÓN: SEGURIDAD Y PERFIL
-        // --------------------------------------------------------
-        elseif ($section === 'seguridad') {
-            $adminId = (int) $_SESSION['admin_id'];
-            $fullName = trim((string) ($_POST['full_name'] ?? ''));
-            $newUsername = trim((string) ($_POST['username'] ?? ''));
-            $currentPassword = (string) ($_POST['current_password'] ?? '');
-            $newPassword = (string) ($_POST['new_password'] ?? '');
-            $confirmPassword = (string) ($_POST['confirm_password'] ?? '');
-
-            // Validar contraseña actual
-            $stmt = $pdo->prepare('SELECT password_hash FROM admins WHERE id = :id LIMIT 1');
-            $stmt->execute([':id' => $adminId]);
-            $currentHash = $stmt->fetchColumn();
-
-            if (!$currentHash || !password_verify($currentPassword, $currentHash)) {
-                $message = 'La contraseña actual ingresada es incorrecta.';
-                $messageType = 'error';
-            } else {
-                if ($newUsername === '') {
-                    $message = 'El nombre de usuario no puede estar vacío.';
-                    $messageType = 'error';
-                } else {
-                    if ($newPassword !== '') {
-                        if (strlen($newPassword) < 6) {
-                            $message = 'La nueva contraseña debe tener al menos 6 caracteres.';
-                            $messageType = 'error';
-                        } elseif ($newPassword !== $confirmPassword) {
-                            $message = 'La nueva contraseña y su confirmación no coinciden.';
-                            $messageType = 'error';
-                        } else {
-                            $newHash = password_hash($newPassword, PASSWORD_BCRYPT);
-                            $stmt = $pdo->prepare('UPDATE admins SET full_name = :full_name, username = :username, password_hash = :hash WHERE id = :id');
-                            $stmt->execute([
-                                ':full_name' => $fullName,
-                                ':username'  => $newUsername,
-                                ':hash'      => $newHash,
-                                ':id'        => $adminId
-                            ]);
-                            $_SESSION['admin_username'] = $newUsername;
-                            $_SESSION['admin_name'] = $fullName;
-                            $message = 'Datos de acceso y contraseña actualizados correctamente.';
-                        }
-                    } else {
-                        $stmt = $pdo->prepare('UPDATE admins SET full_name = :full_name, username = :username WHERE id = :id');
-                        $stmt->execute([
-                            ':full_name' => $fullName,
-                            ':username'  => $newUsername,
-                            ':id'        => $adminId
-                        ]);
-                        $_SESSION['admin_username'] = $newUsername;
-                        $_SESSION['admin_name'] = $fullName;
-                        $message = 'Datos del perfil actualizados correctamente.';
-                    }
-                }
-            }
-        }
-
-        // --------------------------------------------------------
-        // 4. SECCIÓN: AVISOS URGENTES Y COMUNICADOS
-        // --------------------------------------------------------
-        elseif ($section === 'aviso') {
-            $action = $_POST['action'] ?? 'save';
-            $avisoId = (int) ($_POST['id'] ?? 0);
-
-            if ($action === 'delete') {
-                if ($avisoId > 0) {
-                    $stmt = $pdo->prepare('DELETE FROM avisos WHERE id = :id');
-                    $stmt->execute([':id' => $avisoId]);
-                    $message = 'Aviso eliminado correctamente del sistema.';
-                }
-            } elseif ($action === 'toggle') {
-                if ($avisoId > 0) {
-                    $stmt = $pdo->prepare('UPDATE avisos SET activo = IF(activo = 1, 0, 1) WHERE id = :id');
-                    $stmt->execute([':id' => $avisoId]);
-                    $message = 'Estado de publicación del aviso actualizado.';
-                }
-            } else {
-                $activo = isset($_POST['activo']) && $_POST['activo'] === '1' ? 1 : 0;
-                $titulo = trim((string) ($_POST['titulo'] ?? ''));
-                $mensaje = trim((string) ($_POST['mensaje'] ?? ''));
-                $tipo = trim((string) ($_POST['tipo'] ?? 'warning'));
-                $enlace = trim((string) ($_POST['enlace'] ?? ''));
-                $textoEnlace = trim((string) ($_POST['texto_enlace'] ?? 'Ver más'));
-                $duracionDias = (int) ($_POST['duracion_dias'] ?? 1);
-
-                if ($titulo === '') {
-                    $message = 'El título del aviso o comunicado es obligatorio.';
-                    $messageType = 'error';
-                } elseif ($mensaje === '') {
-                    $message = 'El mensaje del aviso es obligatorio.';
-                    $messageType = 'error';
-                } else {
-                    if ($duracionDias > 0) {
-                        $expiresAt = date('Y-m-d H:i:s', strtotime("+{$duracionDias} days"));
-                    } else {
-                        $expiresAt = null; // Permanente
-                    }
-
-                    if ($avisoId > 0) {
-                        $stmt = $pdo->prepare('UPDATE avisos SET titulo = :titulo, mensaje = :mensaje, tipo = :tipo, enlace = :enlace, texto_enlace = :texto_enlace, duracion_dias = :duracion_dias, activo = :activo, expires_at = :expires_at WHERE id = :id');
-                        $stmt->execute([
-                            ':titulo'        => $titulo,
-                            ':mensaje'       => $mensaje,
-                            ':tipo'          => $tipo,
-                            ':enlace'        => $enlace,
-                            ':texto_enlace'  => $textoEnlace,
-                            ':duracion_dias' => $duracionDias,
-                            ':activo'        => $activo,
-                            ':expires_at'    => $expiresAt,
-                            ':id'            => $avisoId
-                        ]);
-                        $message = 'Aviso actualizado correctamente.';
-                    } else {
-                        $stmt = $pdo->prepare('INSERT INTO avisos (titulo, mensaje, tipo, enlace, texto_enlace, duracion_dias, activo, expires_at) VALUES (:titulo, :mensaje, :tipo, :enlace, :texto_enlace, :duracion_dias, :activo, :expires_at)');
-                        $stmt->execute([
-                            ':titulo'        => $titulo,
-                            ':mensaje'       => $mensaje,
-                            ':tipo'          => $tipo,
-                            ':enlace'        => $enlace,
-                            ':texto_enlace'  => $textoEnlace,
-                            ':duracion_dias' => $duracionDias,
-                            ':activo'        => $activo,
-                            ':expires_at'    => $expiresAt
-                        ]);
-                        $message = 'Nuevo aviso institucional publicado exitosamente.';
-                    }
-                }
-            }
-        }
-
-        // --------------------------------------------------------
-        // 5. SECCIÓN: MENSAJES Y PQRS (CONTACTO)
-        // --------------------------------------------------------
-        elseif ($section === 'mensajes') {
-            $action = $_POST['action'] ?? '';
-
-            if ($action === 'toggle_read') {
-                $msgId = (int) ($_POST['id'] ?? 0);
-                if ($msgId > 0) {
-                    $stmt = $pdo->prepare('UPDATE mensajes_contacto SET leido = IF(leido = 1, 0, 1) WHERE id = :id');
-                    $stmt->execute([':id' => $msgId]);
-                    $message = 'Estado de lectura del mensaje actualizado correctamente.';
-                }
-            } elseif ($action === 'mark_all_read') {
-                $pdo->exec('UPDATE mensajes_contacto SET leido = 1');
-                $message = 'Todos los mensajes han sido marcados como leídos.';
-            } elseif ($action === 'delete') {
-                $msgId = (int) ($_POST['id'] ?? 0);
-                if ($msgId > 0) {
-                    $stmt = $pdo->prepare('DELETE FROM mensajes_contacto WHERE id = :id');
-                    $stmt->execute([':id' => $msgId]);
-                    $message = 'Mensaje eliminado del registro.';
-                }
-            } elseif ($action === 'save_mail_config') {
-                $destEmail = trim((string) ($_POST['destinatario_email'] ?? ''));
-                $remitEmail = trim((string) ($_POST['remitente_email'] ?? ''));
-                $destNombre = trim((string) ($_POST['destinatario_nombre'] ?? ''));
-
-                if ($destEmail === '' || !filter_var($destEmail, FILTER_VALIDATE_EMAIL)) {
-                    $message = 'Por favor ingresa un correo de recepción válido.';
-                    $messageType = 'error';
-                } else {
-                    $configFile = __DIR__ . '/../config/mail_config.php';
-                    $cfg = file_exists($configFile) ? (include $configFile) : [];
-                    $cfg['destinatario_email'] = $destEmail;
-                    if ($destNombre !== '') $cfg['destinatario_nombre'] = $destNombre;
-                    if ($remitEmail !== '' && filter_var($remitEmail, FILTER_VALIDATE_EMAIL)) {
-                        $cfg['remitente_email'] = $remitEmail;
-                    }
-
-                    $exported = "<?php\n// Configuración generada desde el Panel de Administración GAA\nreturn " . var_export($cfg, true) . ";\n";
-                    file_put_contents($configFile, $exported);
-                    $message = 'Configuración de correo actualizada exitosamente.';
-                }
-            }
-        }
-    }
-}
-
-// ------------------------------------------------------------
-// CONSULTAS PARA RENDERIZADO
-// ------------------------------------------------------------
-
-// Edición de noticia
-$editingNews = null;
-if (!empty($_GET['edit_news'])) {
-    $stmt = $pdo->prepare('SELECT * FROM noticias WHERE id = :id LIMIT 1');
-    $stmt->execute([':id' => (int) $_GET['edit_news']]);
-    $editingNews = $stmt->fetch();
-    $activeTab = 'noticias';
-}
-
-// Listado de noticias
-$stmtNews = $pdo->query('SELECT * FROM noticias ORDER BY created_at DESC');
-$newsList = $stmtNews->fetchAll();
-
-// Listado de documentos
-$stmtDocs = $pdo->query('SELECT * FROM documentos ORDER BY created_at DESC');
-$docsList = $stmtDocs->fetchAll();
-
-// Listado de mensajes de contacto y conteo de no leídos
-$stmtMsg = $pdo->query('SELECT * FROM mensajes_contacto ORDER BY created_at DESC');
-$mensajesList = $stmtMsg->fetchAll();
-$unreadMessagesCount = 0;
-foreach ($mensajesList as $m) {
-    if (empty($m['leido'])) {
-        $unreadMessagesCount++;
-    }
-}
-
-// Configuración actual de correo
-$mailConfig = file_exists(__DIR__ . '/../config/mail_config.php') ? (include __DIR__ . '/../config/mail_config.php') : [];
-$currentDestEmail = $mailConfig['destinatario_email'] ?? 'ie.gilbertoalzate@medellin.gov.co';
-$currentDestNombre = $mailConfig['destinatario_nombre'] ?? 'I.E. Gilberto Alzate Avendaño';
-$currentRemitEmail = $mailConfig['remitente_email'] ?? 'no-reply@alzate.edu.co';
-
-// Edición de aviso
-$editingAviso = null;
-if (!empty($_GET['edit_aviso'])) {
-    $stmt = $pdo->prepare('SELECT * FROM avisos WHERE id = :id LIMIT 1');
-    $stmt->execute([':id' => (int) $_GET['edit_aviso']]);
-    $editingAviso = $stmt->fetch();
-    $activeTab = 'aviso';
-}
-
-// Listado completo de avisos y conteo de activos
-$stmtAvisos = $pdo->query('SELECT * FROM avisos ORDER BY id DESC');
-$avisosList = $stmtAvisos->fetchAll();
-$activeAvisosList = getActiveAvisos($pdo);
-$activeAvisosCount = count($activeAvisosList);
-
-// Datos del administrador actual
-$stmtAdmin = $pdo->prepare('SELECT username, full_name FROM admins WHERE id = :id LIMIT 1');
-$stmtAdmin->execute([':id' => (int) $_SESSION['admin_id']]);
-$currentAdmin = $stmtAdmin->fetch();
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -446,7 +22,7 @@ $currentAdmin = $stmtAdmin->fetch();
             </div>
 
             <div class="dash-actions">
-                <a class="dash-btn secondary" href="../public/noticias.php" target="_blank">
+                <a class="dash-btn secondary" href="noticias.php" target="_blank">
                     <i class="fas fa-external-link-alt"></i> Ver Sitio Web
                 </a>
                 <a class="dash-btn danger" href="logout.php">
@@ -551,7 +127,7 @@ $currentAdmin = $stmtAdmin->fetch();
                             <h2><i class="fas fa-comments"></i> Bandeja de Solicitudes y Contacto</h2>
                             <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
                                 <?php if ($unreadMessagesCount > 0): ?>
-                                    <form method="post" action="index.php?tab=mensajes" style="margin: 0;">
+                                    <form method="post" action="admin.php?tab=mensajes" style="margin: 0;">
                                         <input type="hidden" name="form_section" value="mensajes">
                                         <input type="hidden" name="action" value="mark_all_read">
                                         <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
@@ -670,7 +246,7 @@ $currentAdmin = $stmtAdmin->fetch();
                                                         </button>
 
                                                         <!-- Toggle Leído -->
-                                                        <form method="post" action="index.php?tab=mensajes" style="margin: 0;">
+                                                        <form method="post" action="admin.php?tab=mensajes" style="margin: 0;">
                                                             <input type="hidden" name="form_section" value="mensajes">
                                                             <input type="hidden" name="action" value="toggle_read">
                                                             <input type="hidden" name="id" value="<?= (int) $msg['id'] ?>">
@@ -695,7 +271,7 @@ $currentAdmin = $stmtAdmin->fetch();
                                                         </a>
 
                                                         <!-- Eliminar -->
-                                                        <form method="post" action="index.php?tab=mensajes" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar este mensaje del registro institucional?');">
+                                                        <form method="post" action="admin.php?tab=mensajes" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar este mensaje del registro institucional?');">
                                                             <input type="hidden" name="form_section" value="mensajes">
                                                             <input type="hidden" name="action" value="delete">
                                                             <input type="hidden" name="id" value="<?= (int) $msg['id'] ?>">
@@ -720,7 +296,7 @@ $currentAdmin = $stmtAdmin->fetch();
                             <h2><i class="fas fa-cog"></i> Configuración del Buzón Receptor de Mensajes</h2>
                         </div>
 
-                        <form class="dash-form" method="post" action="index.php?tab=mensajes">
+                        <form class="dash-form" method="post" action="admin.php?tab=mensajes">
                             <input type="hidden" name="form_section" value="mensajes">
                             <input type="hidden" name="action" value="save_mail_config">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
@@ -775,11 +351,11 @@ $currentAdmin = $stmtAdmin->fetch();
                         <div class="dash-card-header">
                             <h2><i class="fas <?= $editingNews ? 'fa-edit' : 'fa-plus-circle' ?>"></i> <?= $editingNews ? 'Editar Noticia' : 'Publicar Nueva Noticia' ?></h2>
                             <?php if ($editingNews): ?>
-                                <a href="index.php?tab=noticias" class="dash-btn-small secondary">Cancelar Edición</a>
+                                <a href="admin.php?tab=noticias" class="dash-btn-small secondary">Cancelar Edición</a>
                             <?php endif; ?>
                         </div>
 
-                        <form class="dash-form" method="post" action="index.php?tab=noticias" enctype="multipart/form-data">
+                        <form class="dash-form" method="post" action="admin.php?tab=noticias" enctype="multipart/form-data">
                             <input type="hidden" name="form_section" value="noticias">
                             <input type="hidden" name="action" value="save">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
@@ -838,7 +414,7 @@ $currentAdmin = $stmtAdmin->fetch();
                                     <i class="fas fa-save"></i> <?= $editingNews ? 'Guardar Cambios' : 'Publicar Noticia' ?>
                                 </button>
                                 <?php if ($editingNews): ?>
-                                    <a href="index.php?tab=noticias" class="dash-btn secondary">Cancelar</a>
+                                    <a href="admin.php?tab=noticias" class="dash-btn secondary">Cancelar</a>
                                 <?php endif; ?>
                             </div>
                         </form>
@@ -881,10 +457,10 @@ $currentAdmin = $stmtAdmin->fetch();
                                         </div>
 
                                         <div class="item-actions">
-                                            <a class="action-btn edit" href="index.php?tab=noticias&edit_news=<?= (int) $item['id'] ?>" title="Editar">
+                                            <a class="action-btn edit" href="admin.php?tab=noticias&edit_news=<?= (int) $item['id'] ?>" title="Editar">
                                                 <i class="fas fa-pencil-alt"></i>
                                             </a>
-                                            <form method="post" action="index.php?tab=noticias" onsubmit="return confirm('¿Estás seguro de que deseas eliminar permanentemente esta noticia?');">
+                                            <form method="post" action="admin.php?tab=noticias" onsubmit="return confirm('¿Estás seguro de que deseas eliminar permanentemente esta noticia?');">
                                                 <input type="hidden" name="form_section" value="noticias">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
@@ -913,7 +489,7 @@ $currentAdmin = $stmtAdmin->fetch();
                             <h2><i class="fas fa-upload"></i> Subir Documento / Circular</h2>
                         </div>
 
-                        <form class="dash-form" method="post" action="index.php?tab=documentos" enctype="multipart/form-data">
+                        <form class="dash-form" method="post" action="admin.php?tab=documentos" enctype="multipart/form-data">
                             <input type="hidden" name="form_section" value="documentos">
                             <input type="hidden" name="action" value="save">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
@@ -996,7 +572,7 @@ $currentAdmin = $stmtAdmin->fetch();
                                             <a class="action-btn download" href="<?= htmlspecialchars(resolveAdminAsset($doc['file_path']), ENT_QUOTES, 'UTF-8') ?>" target="_blank" title="Ver / Descargar">
                                                 <i class="fas fa-download"></i>
                                             </a>
-                                            <form method="post" action="index.php?tab=documentos" onsubmit="return confirm('¿Deseas eliminar este documento?');">
+                                            <form method="post" action="admin.php?tab=documentos" onsubmit="return confirm('¿Deseas eliminar este documento?');">
                                                 <input type="hidden" name="form_section" value="documentos">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
@@ -1024,11 +600,11 @@ $currentAdmin = $stmtAdmin->fetch();
                         <div class="dash-card-header">
                             <h2><i class="fas <?= $editingAviso ? 'fa-edit' : 'fa-plus-circle' ?>"></i> <?= $editingAviso ? 'Editar Comunicado' : 'Publicar Nuevo Aviso / Comunicado' ?></h2>
                             <?php if ($editingAviso): ?>
-                                <a href="index.php?tab=aviso" class="dash-btn-small secondary">Cancelar Edición</a>
+                                <a href="admin.php?tab=aviso" class="dash-btn-small secondary">Cancelar Edición</a>
                             <?php endif; ?>
                         </div>
 
-                        <form class="dash-form" method="post" action="index.php?tab=aviso" autocomplete="off">
+                        <form class="dash-form" method="post" action="admin.php?tab=aviso" autocomplete="off">
                             <input type="hidden" name="form_section" value="aviso">
                             <input type="hidden" name="action" value="save">
                             <input type="hidden" name="id" value="<?= htmlspecialchars((string)($editingAviso['id'] ?? '0'), ENT_QUOTES, 'UTF-8') ?>">
@@ -1082,7 +658,7 @@ $currentAdmin = $stmtAdmin->fetch();
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="avisoEnlace">Enlace de Acción Opcional</label>
-                                    <input type="text" id="avisoEnlace" name="enlace" value="<?= htmlspecialchars((string) ($editingAviso['enlace'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: ../public/documentos.php o enlace externo">
+                                    <input type="text" id="avisoEnlace" name="enlace" value="<?= htmlspecialchars((string) ($editingAviso['enlace'] ?? ''), ENT_QUOTES, 'UTF-8') ?>" placeholder="Ej: documentos.php o enlace externo">
                                 </div>
 
                                 <div class="form-group">
@@ -1096,7 +672,7 @@ $currentAdmin = $stmtAdmin->fetch();
                                     <i class="fas fa-save"></i> <?= $editingAviso ? 'Guardar Cambios' : 'Publicar Comunicado' ?>
                                 </button>
                                 <?php if ($editingAviso): ?>
-                                    <a href="index.php?tab=aviso" class="dash-btn secondary">Cancelar</a>
+                                    <a href="admin.php?tab=aviso" class="dash-btn secondary">Cancelar</a>
                                 <?php endif; ?>
                             </div>
                         </form>
@@ -1157,7 +733,7 @@ $currentAdmin = $stmtAdmin->fetch();
 
                                         <div class="item-actions">
                                             <!-- Toggle Activar / Desactivar -->
-                                            <form method="post" action="index.php?tab=aviso" style="margin: 0;">
+                                            <form method="post" action="admin.php?tab=aviso" style="margin: 0;">
                                                 <input type="hidden" name="form_section" value="aviso">
                                                 <input type="hidden" name="action" value="toggle">
                                                 <input type="hidden" name="id" value="<?= (int) $av['id'] ?>">
@@ -1168,12 +744,12 @@ $currentAdmin = $stmtAdmin->fetch();
                                             </form>
 
                                             <!-- Editar -->
-                                            <a class="action-btn edit" href="index.php?tab=aviso&edit_aviso=<?= (int) $av['id'] ?>" title="Editar Aviso">
+                                            <a class="action-btn edit" href="admin.php?tab=aviso&edit_aviso=<?= (int) $av['id'] ?>" title="Editar Aviso">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
                                             <!-- Eliminar -->
-                                            <form method="post" action="index.php?tab=aviso" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar este aviso permanentemente?');">
+                                            <form method="post" action="admin.php?tab=aviso" style="margin: 0;" onsubmit="return confirm('¿Estás seguro de eliminar este aviso permanentemente?');">
                                                 <input type="hidden" name="form_section" value="aviso">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="id" value="<?= (int) $av['id'] ?>">
@@ -1225,7 +801,7 @@ $currentAdmin = $stmtAdmin->fetch();
                             <h2><i class="fas fa-user-shield"></i> Ajustes de Acceso y Seguridad</h2>
                         </div>
 
-                        <form class="dash-form" method="post" action="index.php?tab=seguridad" autocomplete="off">
+                        <form class="dash-form" method="post" action="admin.php?tab=seguridad" autocomplete="off">
                             <input type="hidden" name="form_section" value="seguridad">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrfToken, ENT_QUOTES, 'UTF-8') ?>">
 

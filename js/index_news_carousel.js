@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Obtener noticias de la API
     async function loadNews() {
         try {
-            const response = await fetch('php/public/api_noticias.php?limit=8');
+            const response = await fetch('php/controlador/api_noticias.php?limit=8');
             if (!response.ok) throw new Error('Error de red');
             const data = await response.json();
 
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="news-empty-notice">
                 <i class="far fa-newspaper"></i>
                 <p>Pronto publicaremos nuevas noticias y comunicados institucionales.</p>
-                <a href="php/public/noticias.php" class="btn-read-more">Visitar sección de noticias →</a>
+                <a href="php/controlador/noticias.php" class="btn-read-more">Visitar sección de noticias →</a>
             </div>
         `;
         if (prevBtn) prevBtn.style.display = 'none';
@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (modalDate) modalDate.textContent = item.date_label || 'Noticia reciente';
         if (modalTitle) modalTitle.textContent = item.title;
         if (modalText) modalText.textContent = item.content || item.excerpt;
-        if (modalFullLink) modalFullLink.href = item.url || 'php/public/noticias.php';
+        if (modalFullLink) modalFullLink.href = item.url || 'php/controlador/noticias.php';
 
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';

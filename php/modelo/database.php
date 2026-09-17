@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// CONFIGURACIÓN DE BASE DE DATOS Y SEGURIDAD GLOBAL
+// MODELO BASE: CONFIGURACIÓN DE BASE DE DATOS Y SEGURIDAD GLOBAL
 // I.E. Gilberto Alzate Avendaño
 // ============================================================
 
@@ -23,14 +23,14 @@ function connectDatabase(): PDO
     $pass = '';
 
     try {
-        // Paso A: Conexión al servidor MySQL general para asegurar existencia de la BD
+        // Conexión general para asegurar existencia de la BD
         $pdoInit = new PDO("mysql:host={$host};charset=utf8mb4", $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
         $pdoInit->exec("CREATE DATABASE IF NOT EXISTS `{$db}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
 
-        // Paso B: Conexión directa a la base de datos de la institución
+        // Conexión a la base de datos de la institución
         $dsn = "mysql:host={$host};dbname={$db};charset=utf8mb4";
         $pdo = new PDO($dsn, $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -171,36 +171,8 @@ function ensureDatabaseStructure(PDO $pdo): void
 
 ensureDatabaseStructure($pdo);
 
-/**
- * Obtiene todos los avisos urgentes activos y no expirados.
- */
-function getActiveAvisos(PDO $pdo): array
-{
-    try {
-        $stmt = $pdo->prepare('
-            SELECT * FROM avisos 
-            WHERE activo = 1 
-              AND (expires_at IS NULL OR expires_at > NOW())
-            ORDER BY id DESC
-        ');
-        $stmt->execute();
-        return $stmt->fetchAll() ?: [];
-    } catch (Exception $e) {
-        return [];
-    }
-}
-
-/**
- * Obtiene el aviso urgente más reciente activo (compatibilidad).
- */
-function getActiveAviso(PDO $pdo): ?array
-{
-    $all = getActiveAvisos($pdo);
-    return !empty($all) ? $all[0] : null;
-}
-
 // ============================================================
-// FUNCIONES DE SEGURIDAD Y AUXILIARES
+// FUNCIONES DE SEGURIDAD Y AUXILIARES DEL MODELO
 // ============================================================
 
 /**
@@ -238,13 +210,6 @@ function requireAdmin(): void
 
 /**
  * Procesa la subida segura de archivos al servidor.
- * Valida extensión, tipo MIME real, tamaño máximo y renombra con hash aleatorio.
- *
- * @param array $file Archivo proveniente de $_FILES['nombre']
- * @param string $subDir 'noticias' o 'documentos'
- * @param array $allowedExtensions Extensiones válidas
- * @param int $maxSizeBytes Tamaño máximo (5MB por defecto)
- * @return array ['success' => bool, 'path' => string, 'error' => string, 'size_formatted' => string]
  */
 function handleSecureUpload(
     array $file,

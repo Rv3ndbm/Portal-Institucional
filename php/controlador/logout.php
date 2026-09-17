@@ -1,10 +1,10 @@
 <?php
 // ============================================================
-// CIERRE DE SESIÓN SEGURO
+// CONTROLADOR: CIERRE DE SESIÓN SEGURO
 // I.E. Gilberto Alzate Avendaño
 // ============================================================
 
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../modelo/database.php';
 
 $_SESSION = [];
 

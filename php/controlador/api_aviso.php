@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// API PÚBLICA DE AVISOS URGENTES EN TIEMPO REAL
+// CONTROLADOR / API PÚBLICA DE AVISOS URGENTES EN TIEMPO REAL
 // I.E. Gilberto Alzate Avendaño
 // ============================================================
 
@@ -9,9 +9,10 @@ header('Cache-Control: no-cache, no-store, must-revalidate');
 header('Pragma: no-cache');
 header('Expires: 0');
 
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../modelo/database.php';
+require_once __DIR__ . '/../modelo/avisos.php';
 
-$avisos = getActiveAvisos($pdo);
+$avisos = obtenerAvisosActivos($pdo);
 
 if (empty($avisos)) {
     echo json_encode(['active' => false, 'avisos' => []], JSON_UNESCAPED_UNICODE);

@@ -1,6 +1,6 @@
 <?php
 // ============================================================
-// API PÚBLICA DE NOTICIAS EN TIEMPO REAL
+// CONTROLADOR / API PÚBLICA DE NOTICIAS EN TIEMPO REAL
 // I.E. Gilberto Alzate Avendaño
 // ============================================================
 
@@ -9,14 +9,12 @@ header('Cache-Control: no-cache, no-store, must-revalidate');
 header('Pragma: no-cache');
 header('Expires: 0');
 
-require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../modelo/database.php';
+require_once __DIR__ . '/../modelo/noticias.php';
 
 try {
     $limit = isset($_GET['limit']) ? max(1, min(20, (int)$_GET['limit'])) : 6;
-    $stmt = $pdo->prepare('SELECT id, title, category, date_label, image_url, excerpt, content, created_at FROM noticias ORDER BY created_at DESC LIMIT :lim');
-    $stmt->bindValue(':lim', $limit, PDO::PARAM_INT);
-    $stmt->execute();
-    $news = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $news = obtenerNoticiasRecientes($pdo, $limit);
 
     $formatted = array_map(function($item) {
         $rawImg = trim((string)($item['image_url'] ?? ''));
@@ -38,7 +36,7 @@ try {
             'excerpt'    => (string) ($item['excerpt'] ?? ''),
             'content'    => (string) ($item['content'] ?? ''),
             'created_at' => (string) ($item['created_at'] ?? ''),
-            'url'        => 'php/public/noticias.php#noticia-' . (int) $item['id']
+            'url'        => 'php/controlador/noticias.php#noticia-' . (int) $item['id']
         ];
     }, $news);
 
