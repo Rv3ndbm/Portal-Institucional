@@ -12,26 +12,29 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+require_once __DIR__ . '/properties.php';
+
 /**
  * Establece conexión con MySQL y auto-crea la base de datos si no existe.
  */
 function connectDatabase(): PDO
 {
-    $host = '127.0.0.1';
-    $db   = 'gaa_colegio';
-    $user = 'root';
-    $pass = '';
+    $host    = DB_HOST;
+    $db      = DB_NAME;
+    $user    = DB_USER;
+    $pass    = DB_PASS;
+    $charset = defined('DB_CHARSET') ? DB_CHARSET : 'utf8mb4';
 
     try {
         // Conexión general para asegurar existencia de la BD
-        $pdoInit = new PDO("mysql:host={$host};charset=utf8mb4", $user, $pass, [
+        $pdoInit = new PDO("mysql:host={$host};charset={$charset}", $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
-        $pdoInit->exec("CREATE DATABASE IF NOT EXISTS `{$db}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+        $pdoInit->exec("CREATE DATABASE IF NOT EXISTS `{$db}` CHARACTER SET {$charset} COLLATE utf8mb4_unicode_ci");
 
         // Conexión a la base de datos de la institución
-        $dsn = "mysql:host={$host};dbname={$db};charset=utf8mb4";
+        $dsn = "mysql:host={$host};dbname={$db};charset={$charset}";
         $pdo = new PDO($dsn, $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,

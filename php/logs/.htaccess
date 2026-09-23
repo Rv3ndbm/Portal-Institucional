@@ -1,0 +1,18 @@
+# ============================================================
+# PROTECCIÓN DE SEGURIDAD: REGISTROS Y LOGS INTERNOS
+# I.E. Gilberto Alzate Avendaño
+# Bloquea el acceso web a los archivos de auditoría y registros
+# ============================================================
+
+# Apache 2.4+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+# Apache 2.2 y servidores heredados
+<IfModule !mod_authz_core.c>
+    Order Deny,Allow
+    Deny from all
+</IfModule>
+
+Options -Indexes

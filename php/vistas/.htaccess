@@ -1,0 +1,18 @@
+# ============================================================
+# PROTECCIÓN DE SEGURIDAD: VISTAS PRIVADAS
+# I.E. Gilberto Alzate Avendaño
+# Las vistas solo deben ser despachadas por sus controladores
+# ============================================================
+
+# Apache 2.4+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+
+# Apache 2.2 y servidores heredados
+<IfModule !mod_authz_core.c>
+    Order Deny,Allow
+    Deny from all
+</IfModule>
+
+Options -Indexes
