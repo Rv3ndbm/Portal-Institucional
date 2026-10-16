@@ -376,6 +376,7 @@ main {
     top: -130px;
     left: -260px;
     cursor: pointer;
+    transform-style: preserve-3d;
     -webkit-backface-visibility: visible;
     backface-visibility: visible;
     transition: opacity 0.5s ease;
@@ -399,26 +400,6 @@ main {
     transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/*
- * Cada tarjeta:
- * - dimensiones fijas (no depende del track)
- * - centrada en el eje (margin neg)
- * - JS asigna: rotateY(N*theta) translateZ(radius)
- */
-.cylinder-card {
-    position: absolute;
-    width: 520px;
-    height: 260px;
-    top: -130px;
-    left: -260px;
-    cursor: pointer;
-    -webkit-backface-visibility: visible;
-    backface-visibility: visible;
-    transition: opacity 0.5s ease;
-    -webkit-user-select: none;
-    user-select: none;
-}
-
 /* Glassmorphism Inner - scoped to cylinder to beat index.css conflicts */
 .cylinder-card .card-inner.glassmorphism {
     width: 100%;
@@ -437,8 +418,8 @@ main {
     overflow: hidden;
     /* Forzar aceleracion GPU para texto e imagenes completamente nítidos */
     transform: translate3d(0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
 }
 
 /* Tarjeta activa (la que está al frente) */
